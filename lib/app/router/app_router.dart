@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../features/library/presentation/add/add_args.dart';
+import '../../features/library/presentation/add/add_entry_screen.dart';
+import '../../features/library/presentation/add/add_isbn_screen.dart';
+import '../../features/library/presentation/add/add_scan_screen.dart';
+import '../../features/library/presentation/add/add_search_screen.dart';
+import '../../features/library/presentation/add/book_form_screen.dart';
 import '../../features/library/presentation/library_screen.dart';
 import '../../features/more/presentation/more_screen.dart';
 import '../../features/reading/presentation/reading_screen.dart';
@@ -55,8 +61,39 @@ GoRouter buildRouter(AppConfig config, {String initial = Routes.library}) {
                 routes: <RouteBase>[
                   GoRoute(
                     path: 'add',
-                    builder: (_, _) =>
-                        stub((l) => l.routeAddBook, KIllustration.openBook),
+                    builder: (_, _) => const AddEntryScreen(),
+                    routes: <RouteBase>[
+                      GoRoute(
+                        path: 'scan',
+                        builder: (_, _) => const AddScanScreen(),
+                      ),
+                      GoRoute(
+                        path: 'isbn',
+                        builder: (_, _) => const AddIsbnScreen(),
+                      ),
+                      GoRoute(
+                        path: 'search',
+                        builder: (_, _) => const AddSearchScreen(),
+                      ),
+                      GoRoute(
+                        path: 'manual',
+                        builder: (_, state) => BookFormScreen(
+                          args: state.extra is BookFormArgs
+                              ? state.extra! as BookFormArgs
+                              : const BookFormArgs(),
+                        ),
+                      ),
+                      GoRoute(
+                        path: 'preview',
+                        // A preview needs its data; without it (e.g. after a
+                        // browser refresh) fall back to the manual form.
+                        builder: (_, state) => BookFormScreen(
+                          args: state.extra is BookFormArgs
+                              ? state.extra! as BookFormArgs
+                              : const BookFormArgs(),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

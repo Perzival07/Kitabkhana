@@ -149,6 +149,28 @@ class DriftBookRepository implements BookRepository {
   );
 
   @override
+  Future<Result<Book>> update(String id, Book Function(Book current) change) =>
+      dbGuard(
+        () => _db.transaction(() async {
+          final row =
+              await (_db.select(_db.books)
+                    ..where((t) => t.id.equals(id) & t.deletedAt.isNull()))
+                  .getSingleOrNull();
+          if (row == null) {
+            throw const FailureException(NotFoundFailure('book'));
+          }
+          final changed = change(row.toDomain());
+          await (_db.update(_db.books)..where((t) => t.id.equals(id))).write(
+            bookToCompanion(changed, updatedAt: _clock.now(), rev: row.rev + 1),
+          );
+          final saved = await (_db.select(
+            _db.books,
+          )..where((t) => t.id.equals(id))).getSingle();
+          return saved.toDomain();
+        }),
+      );
+
+  @override
   Future<Result<void>> softDelete(String id) => dbGuard(() async {
     final n = await softDeleteById(
       _db,

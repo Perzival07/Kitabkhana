@@ -36,3 +36,10 @@ lib/data/       db/, open_library/, cache/
 lib/features/<feature>/{domain,application,data,presentation}/
 lib/ui/         design system components (K-prefixed widgets)
 ```
+
+## Concurrent writes
+
+`BookRepository.upsert` writes the whole record, so a stale copy overwrites newer changes. Use
+`update(id, (book) => ...)` for edits to an existing book: it reads and writes inside one
+transaction, so changes made by background work (cover downloads, reminders) and by the user are
+never lost. Reserve `upsert` for creating a record or saving a complete form.

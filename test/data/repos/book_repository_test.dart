@@ -192,6 +192,64 @@ void main() {
     });
   });
 
+  group('update (atomic read-modify-write)', () {
+    test('applies the change, stamps updatedAt and bumps rev', () async {
+      final b = await h.addBook(id: 'a', title: 'One');
+      h.tick(const Duration(hours: 1));
+      final r = await h.books.update('a', (x) => x.copyWith(notes: 'hi'));
+      final u = r.getOrNull()!;
+      expect(u.notes, 'hi');
+      expect(u.rev, b.rev + 1);
+      expect(u.updatedAt.isAfter(b.updatedAt), isTrue);
+      expect(u.createdAt, b.createdAt);
+    });
+
+    test('the transform sees the latest stored state', () async {
+      await h.addBook(id: 'a', title: 'One');
+      await h.books.update('a', (x) => x.copyWith(notes: 'first'));
+      final seen = <String?>[];
+      await h.books.update('a', (x) {
+        seen.add(x.notes);
+        return x.copyWith(rating: 4);
+      });
+      expect(seen, ['first']);
+      final b = (await h.books.getById('a')).getOrNull()!;
+      expect([b.notes, b.rating], ['first', 4]);
+    });
+
+    test('concurrent updates to different fields are both kept', () async {
+      await h.addBook(id: 'a', title: 'One');
+      await Future.wait([
+        h.books.update('a', (x) => x.copyWith(notes: 'n')),
+        h.books.update('a', (x) => x.copyWith(rating: 5)),
+        h.books.update('a', (x) => x.copyWith(genre: 'g')),
+      ]);
+      final b = (await h.books.getById('a')).getOrNull()!;
+      expect([b.notes, b.rating, b.genre], ['n', 5, 'g']);
+      expect(b.rev, 4);
+    });
+
+    test('missing or deleted books are NotFound', () async {
+      expect(
+        (await h.books.update('nope', (x) => x)).failureOrNull(),
+        isA<NotFoundFailure>(),
+      );
+      await h.addBook(id: 'a');
+      await h.books.softDelete('a');
+      expect(
+        (await h.books.update('a', (x) => x)).failureOrNull(),
+        isA<NotFoundFailure>(),
+      );
+    });
+
+    test('an invalid change is rejected and nothing is stored', () async {
+      await h.addBook(id: 'a');
+      final r = await h.books.update('a', (x) => x.copyWith(rating: 9));
+      expect(r.failureOrNull(), isA<ValidationFailure>());
+      expect((await h.books.getById('a')).getOrNull()!.rating, isNull);
+    });
+  });
+
   group('watching', () {
     test('watchAll is live', () async {
       final emissions = <List<String>>[];

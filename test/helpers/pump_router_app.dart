@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kitabkhana/app/app_config.dart';
@@ -13,13 +14,14 @@ Future<ProviderContainer> pumpRouterApp(
   Size size = const Size(400, 800),
   AppConfig config = const AppConfig.dev(),
   double textScale = 1,
+  List<Override> overrides = const <Override>[],
 }) async {
   tester.view
     ..physicalSize = size
     ..devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final container = ProviderContainer(
-    overrides: [appConfigProvider.overrideWithValue(config)],
+    overrides: [appConfigProvider.overrideWithValue(config), ...overrides],
   );
   addTearDown(container.dispose);
   await tester.pumpWidget(
@@ -38,8 +40,13 @@ Future<ProviderContainer> pumpRouterApp(
   return container;
 }
 
-/// Current location of the app router.
-String locationOf(ProviderContainer c) =>
-    c.read(appRouterProvider).routerDelegate.currentConfiguration.uri.path;
+/// The location of the top-most route, including routes opened with `push`
+/// (`currentConfiguration.uri` only reflects declarative navigation).
+String locationOf(ProviderContainer c) => c
+    .read(appRouterProvider)
+    .routerDelegate
+    .currentConfiguration
+    .last
+    .matchedLocation;
 
 GoRouter routerOf(ProviderContainer c) => c.read(appRouterProvider);

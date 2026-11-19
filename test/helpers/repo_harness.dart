@@ -3,6 +3,7 @@ import 'package:kitabkhana/data/db/app_database.dart';
 import 'package:kitabkhana/features/lending/data/drift_loan_repository.dart';
 import 'package:kitabkhana/features/lending/domain/loan.dart';
 import 'package:kitabkhana/features/lending/domain/loan_direction.dart';
+import 'package:kitabkhana/features/library/data/book_mapper.dart';
 import 'package:kitabkhana/features/library/data/drift_book_repository.dart';
 import 'package:kitabkhana/features/library/domain/book.dart';
 import 'package:kitabkhana/features/library/domain/book_enums.dart';
@@ -15,6 +16,23 @@ import 'package:kitabkhana/features/stats/data/drift_goal_repository.dart';
 import 'package:kitabkhana/features/tags/data/drift_tag_repository.dart';
 
 import 'test_db.dart';
+
+/// The repositories over an existing database (used by widget-test harnesses).
+class RepoHarnessForDb {
+  RepoHarnessForDb(AppDatabase db, FakeClock clock)
+    : _db = db,
+      books = DriftBookRepository(db, clock),
+      locations = DriftLocationRepository(db, clock);
+
+  final AppDatabase _db;
+  final DriftBookRepository books;
+  final DriftLocationRepository locations;
+
+  /// All live books via a one-shot query (a stream would leave a pending
+  /// timer behind when cancelled inside a widget test).
+  Future<List<Book>> allBooks() async =>
+      (await _db.liveBooks().get()).map((r) => r.toDomain()).toList();
+}
 
 /// An in-memory database, a controllable clock and every repository.
 class RepoHarness {

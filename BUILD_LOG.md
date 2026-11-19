@@ -22,7 +22,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P03.2
 
 ## Phase 04 — Library
-- [ ] P04.1
+- [x] P04.1
 - [ ] P04.2
 - [ ] P04.3
 - [ ] P04.4
@@ -86,3 +86,6 @@ Tick a task only when it is green (see Definition of Green).
 - (P03 audit, P3) Hard-deleting a book on mobile does not yet delete its cover file (there is no purge flow until "Erase all data", P09.2); `CoverStore.delete` exists and web cascades in the database.
 - (P03 audit, P3) Cover downloads are not rate limited (covers.openlibrary.org by id is not limited); add a limiter if bulk import is ever added.
 - Schema is now v2 (cover_blobs); migration tested incl. on a real persisted browser DB.
+- (P04.1) Scanning is a basic `mobile_scanner` view, untested on a device (no camera here); Android CAMERA and iOS usage strings were added but not built. The full scanner service arrives in P05.2.
+- (P04.1) Location is a plain dropdown until the picker in P04.3.
+- (P04.1) Widget tests must scroll lazily-built form rows into view and avoid `pumpAndSettle` while a loading spinner is shown (see test/features/add/add_flow_test.dart helpers).

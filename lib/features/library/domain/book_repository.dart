@@ -35,6 +35,11 @@ abstract interface class BookRepository {
   /// increments `rev`; returns the stored book.
   Future<Result<Book>> upsert(Book book);
 
+  /// Atomically reads the live book [id], applies [change] and saves it
+  /// (`updatedAt` stamped, `rev` bumped), so concurrent edits are never lost.
+  /// `NotFoundFailure` if the book is missing or deleted.
+  Future<Result<Book>> update(String id, Book Function(Book current) change);
+
   Future<Result<void>> softDelete(String id);
 
   /// Undoes [softDelete].

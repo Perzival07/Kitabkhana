@@ -190,4 +190,225 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get errorWidgetBody => 'Go back and try again. Your library is safe.';
+
+  @override
+  String get addBookTitle => 'Add a book';
+
+  @override
+  String get addScanTitle => 'Scan barcode';
+
+  @override
+  String get addScanBody => 'Point your camera at the back cover';
+
+  @override
+  String get addIsbnTitle => 'Type ISBN';
+
+  @override
+  String get addIsbnBody => 'Enter the 10 or 13 digit number';
+
+  @override
+  String get addSearchTitle => 'Search by title';
+
+  @override
+  String get addSearchBody => 'Find it in the Open Library catalogue';
+
+  @override
+  String get addManualTitle => 'Enter manually';
+
+  @override
+  String get addManualBody => 'Fill in the details yourself';
+
+  @override
+  String get scanHint => 'Point at the barcode on the back cover';
+
+  @override
+  String get scanUnavailableTitle => 'Camera scanning isn\'t available here';
+
+  @override
+  String get scanUnavailableBody =>
+      'You can still add the book by typing its ISBN.';
+
+  @override
+  String get isbnFieldLabel => 'ISBN';
+
+  @override
+  String get isbnFieldHint => '978…';
+
+  @override
+  String get isbnInvalid =>
+      'That doesn\'t look like a valid ISBN. Please check the digits.';
+
+  @override
+  String get isbnIncomplete => 'An ISBN has 10 or 13 digits.';
+
+  @override
+  String get isbnValid => 'Valid ISBN';
+
+  @override
+  String get lookUp => 'Look up';
+
+  @override
+  String get pasteFromClipboard => 'Paste';
+
+  @override
+  String get lookingUp => 'Looking it up…';
+
+  @override
+  String get lookupNotFound =>
+      'We couldn\'t find that ISBN. You can fill in the details yourself.';
+
+  @override
+  String get searchFieldHint => 'Search by title or author';
+
+  @override
+  String get searchPrompt => 'Type a title to search the catalogue.';
+
+  @override
+  String get searchNoResults =>
+      'No matches. Try different words, or enter the book manually.';
+
+  @override
+  String get searchOffline =>
+      'You\'re offline, so catalogue search isn\'t available. You can still enter the book manually.';
+
+  @override
+  String get searchFailed =>
+      'Search didn\'t work this time. You can try again or enter the book manually.';
+
+  @override
+  String get enterManually => 'Enter manually';
+
+  @override
+  String get fieldTitle => 'Title';
+
+  @override
+  String get fieldSubtitle => 'Subtitle';
+
+  @override
+  String get fieldAuthors => 'Authors';
+
+  @override
+  String get fieldPages => 'Pages';
+
+  @override
+  String get fieldGenre => 'Genre';
+
+  @override
+  String get fieldLanguage => 'Language';
+
+  @override
+  String get fieldNotes => 'Notes';
+
+  @override
+  String get fieldOwnership => 'Ownership';
+
+  @override
+  String get fieldStatus => 'Reading status';
+
+  @override
+  String get fieldLocation => 'Location';
+
+  @override
+  String get noLocation => 'No location';
+
+  @override
+  String get ownershipOwned => 'Owned';
+
+  @override
+  String get ownershipWishlist => 'Wishlist';
+
+  @override
+  String get ownershipBorrowed => 'Borrowed';
+
+  @override
+  String get titleRequired => 'Please enter a title';
+
+  @override
+  String get pagesInvalid => 'Pages must be a whole number above 0';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get saveAndAddAnother => 'Save and add another';
+
+  @override
+  String get coverSection => 'Cover';
+
+  @override
+  String get coverTakePhoto => 'Take photo';
+
+  @override
+  String get coverChoosePhoto => 'Choose photo';
+
+  @override
+  String get coverUseGenerated => 'Use generated cover';
+
+  @override
+  String get coverPhotoFailed => 'We couldn\'t use that photo.';
+
+  @override
+  String get fromCatalogue =>
+      'From the Open Library catalogue. Edit anything before saving.';
+
+  @override
+  String get duplicateTitle => 'You may already have this';
+
+  @override
+  String duplicateBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'These look like books you already have.',
+      one: 'This looks like a book you already have.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get openExisting => 'Open existing';
+
+  @override
+  String get addAnotherCopy => 'Add another copy';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String addedTo(String location) {
+    return 'Added to $location';
+  }
+
+  @override
+  String get addedToLibrary => 'Added to your library';
+
+  @override
+  String get view => 'View';
+
+  @override
+  String get saveFailed => 'We couldn\'t save that. Please try again.';
+
+  @override
+  String inLocation(String location) {
+    return 'In $location';
+  }
+
+  @override
+  String yearAndPages(int year, int pages) {
+    return '$year · $pages pages';
+  }
+
+  @override
+  String pagesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pages',
+      one: '$count page',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tryAgain => 'Try again';
 }

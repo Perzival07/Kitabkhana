@@ -2,6 +2,11 @@
 abstract final class Routes {
   static const library = '/library';
   static const libraryAdd = '/library/add';
+  static const libraryAddScan = '/library/add/scan';
+  static const libraryAddIsbn = '/library/add/isbn';
+  static const libraryAddSearch = '/library/add/search';
+  static const libraryAddManual = '/library/add/manual';
+  static const libraryAddPreview = '/library/add/preview';
   static const scan = '/scan';
   static const reading = '/reading';
   static const stats = '/stats';

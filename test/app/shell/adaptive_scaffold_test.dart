@@ -76,7 +76,7 @@ void main() {
     final c = await pumpRouterApp(t);
     routerOf(c).go('/library/add');
     await t.pumpAndSettle();
-    expect(find.text('This screen is on its way.'), findsWidgets);
+    expect(find.text('Type ISBN'), findsOneWidget);
     expect(locationOf(c), '/library/add');
 
     await t.tap(find.text('Stats'));

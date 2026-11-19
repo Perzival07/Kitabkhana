@@ -429,6 +429,390 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go back and try again. Your library is safe.'**
   String get errorWidgetBody;
+
+  /// No description provided for @addBookTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a book'**
+  String get addBookTitle;
+
+  /// No description provided for @addScanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan barcode'**
+  String get addScanTitle;
+
+  /// No description provided for @addScanBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Point your camera at the back cover'**
+  String get addScanBody;
+
+  /// No description provided for @addIsbnTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Type ISBN'**
+  String get addIsbnTitle;
+
+  /// No description provided for @addIsbnBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 10 or 13 digit number'**
+  String get addIsbnBody;
+
+  /// No description provided for @addSearchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by title'**
+  String get addSearchTitle;
+
+  /// No description provided for @addSearchBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Find it in the Open Library catalogue'**
+  String get addSearchBody;
+
+  /// No description provided for @addManualTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter manually'**
+  String get addManualTitle;
+
+  /// No description provided for @addManualBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in the details yourself'**
+  String get addManualBody;
+
+  /// No description provided for @scanHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Point at the barcode on the back cover'**
+  String get scanHint;
+
+  /// No description provided for @scanUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera scanning isn\'t available here'**
+  String get scanUnavailableTitle;
+
+  /// No description provided for @scanUnavailableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You can still add the book by typing its ISBN.'**
+  String get scanUnavailableBody;
+
+  /// No description provided for @isbnFieldLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'ISBN'**
+  String get isbnFieldLabel;
+
+  /// No description provided for @isbnFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'978…'**
+  String get isbnFieldHint;
+
+  /// No description provided for @isbnInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'That doesn\'t look like a valid ISBN. Please check the digits.'**
+  String get isbnInvalid;
+
+  /// No description provided for @isbnIncomplete.
+  ///
+  /// In en, this message translates to:
+  /// **'An ISBN has 10 or 13 digits.'**
+  String get isbnIncomplete;
+
+  /// No description provided for @isbnValid.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid ISBN'**
+  String get isbnValid;
+
+  /// No description provided for @lookUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Look up'**
+  String get lookUp;
+
+  /// No description provided for @pasteFromClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste'**
+  String get pasteFromClipboard;
+
+  /// No description provided for @lookingUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking it up…'**
+  String get lookingUp;
+
+  /// No description provided for @lookupNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t find that ISBN. You can fill in the details yourself.'**
+  String get lookupNotFound;
+
+  /// No description provided for @searchFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by title or author'**
+  String get searchFieldHint;
+
+  /// No description provided for @searchPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a title to search the catalogue.'**
+  String get searchPrompt;
+
+  /// No description provided for @searchNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No matches. Try different words, or enter the book manually.'**
+  String get searchNoResults;
+
+  /// No description provided for @searchOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re offline, so catalogue search isn\'t available. You can still enter the book manually.'**
+  String get searchOffline;
+
+  /// No description provided for @searchFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Search didn\'t work this time. You can try again or enter the book manually.'**
+  String get searchFailed;
+
+  /// No description provided for @enterManually.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter manually'**
+  String get enterManually;
+
+  /// No description provided for @fieldTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get fieldTitle;
+
+  /// No description provided for @fieldSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtitle'**
+  String get fieldSubtitle;
+
+  /// No description provided for @fieldAuthors.
+  ///
+  /// In en, this message translates to:
+  /// **'Authors'**
+  String get fieldAuthors;
+
+  /// No description provided for @fieldPages.
+  ///
+  /// In en, this message translates to:
+  /// **'Pages'**
+  String get fieldPages;
+
+  /// No description provided for @fieldGenre.
+  ///
+  /// In en, this message translates to:
+  /// **'Genre'**
+  String get fieldGenre;
+
+  /// No description provided for @fieldLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get fieldLanguage;
+
+  /// No description provided for @fieldNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get fieldNotes;
+
+  /// No description provided for @fieldOwnership.
+  ///
+  /// In en, this message translates to:
+  /// **'Ownership'**
+  String get fieldOwnership;
+
+  /// No description provided for @fieldStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading status'**
+  String get fieldStatus;
+
+  /// No description provided for @fieldLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get fieldLocation;
+
+  /// No description provided for @noLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'No location'**
+  String get noLocation;
+
+  /// No description provided for @ownershipOwned.
+  ///
+  /// In en, this message translates to:
+  /// **'Owned'**
+  String get ownershipOwned;
+
+  /// No description provided for @ownershipWishlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Wishlist'**
+  String get ownershipWishlist;
+
+  /// No description provided for @ownershipBorrowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Borrowed'**
+  String get ownershipBorrowed;
+
+  /// No description provided for @titleRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a title'**
+  String get titleRequired;
+
+  /// No description provided for @pagesInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Pages must be a whole number above 0'**
+  String get pagesInvalid;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @saveAndAddAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Save and add another'**
+  String get saveAndAddAnother;
+
+  /// No description provided for @coverSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover'**
+  String get coverSection;
+
+  /// No description provided for @coverTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take photo'**
+  String get coverTakePhoto;
+
+  /// No description provided for @coverChoosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose photo'**
+  String get coverChoosePhoto;
+
+  /// No description provided for @coverUseGenerated.
+  ///
+  /// In en, this message translates to:
+  /// **'Use generated cover'**
+  String get coverUseGenerated;
+
+  /// No description provided for @coverPhotoFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t use that photo.'**
+  String get coverPhotoFailed;
+
+  /// No description provided for @fromCatalogue.
+  ///
+  /// In en, this message translates to:
+  /// **'From the Open Library catalogue. Edit anything before saving.'**
+  String get fromCatalogue;
+
+  /// No description provided for @duplicateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You may already have this'**
+  String get duplicateTitle;
+
+  /// No description provided for @duplicateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{This looks like a book you already have.} other{These look like books you already have.}}'**
+  String duplicateBody(int count);
+
+  /// No description provided for @openExisting.
+  ///
+  /// In en, this message translates to:
+  /// **'Open existing'**
+  String get openExisting;
+
+  /// No description provided for @addAnotherCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Add another copy'**
+  String get addAnotherCopy;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @addedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to {location}'**
+  String addedTo(String location);
+
+  /// No description provided for @addedToLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to your library'**
+  String get addedToLibrary;
+
+  /// No description provided for @view.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get view;
+
+  /// No description provided for @saveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t save that. Please try again.'**
+  String get saveFailed;
+
+  /// No description provided for @inLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'In {location}'**
+  String inLocation(String location);
+
+  /// No description provided for @yearAndPages.
+  ///
+  /// In en, this message translates to:
+  /// **'{year} · {pages} pages'**
+  String yearAndPages(int year, int pages);
+
+  /// No description provided for @pagesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} page} other{{count} pages}}'**
+  String pagesCount(int count);
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgain;
 }
 
 class _AppLocalizationsDelegate

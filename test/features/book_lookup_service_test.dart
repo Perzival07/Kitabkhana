@@ -11,32 +11,8 @@ import 'package:kitabkhana/features/library/application/book_lookup_service.dart
 import 'package:kitabkhana/features/library/domain/book_info.dart';
 import 'package:kitabkhana/features/library/domain/book_info_source.dart';
 
+import '../helpers/fake_book_info_source.dart';
 import '../helpers/test_db.dart';
-
-class FakeSource implements BookInfoSource {
-  int isbnCalls = 0;
-  int searchCalls = 0;
-  Result<BookInfo> Function() onIsbn = () =>
-      const Err<BookInfo>(NotFoundFailure());
-  Result<List<BookInfo>> Function() onSearch = () =>
-      const Ok<List<BookInfo>>([]);
-
-  @override
-  Future<Result<BookInfo>> lookupIsbn(Isbn13 isbn) async {
-    isbnCalls++;
-    return onIsbn();
-  }
-
-  @override
-  Future<Result<List<BookInfo>>> searchTitle(
-    String title, {
-    String? author,
-    int limit = 10,
-  }) async {
-    searchCalls++;
-    return onSearch();
-  }
-}
 
 void main() {
   late AppDatabase db;

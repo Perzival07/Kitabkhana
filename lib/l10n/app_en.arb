@@ -78,5 +78,107 @@
   "failureUnsupported": "That isn't available on this device.",
   "failureUnexpected": "Something went wrong. Please try again.",
   "errorWidgetTitle": "Something went wrong here",
-  "errorWidgetBody": "Go back and try again. Your library is safe."
+  "errorWidgetBody": "Go back and try again. Your library is safe.",
+  "addBookTitle": "Add a book",
+  "addScanTitle": "Scan barcode",
+  "addScanBody": "Point your camera at the back cover",
+  "addIsbnTitle": "Type ISBN",
+  "addIsbnBody": "Enter the 10 or 13 digit number",
+  "addSearchTitle": "Search by title",
+  "addSearchBody": "Find it in the Open Library catalogue",
+  "addManualTitle": "Enter manually",
+  "addManualBody": "Fill in the details yourself",
+  "scanHint": "Point at the barcode on the back cover",
+  "scanUnavailableTitle": "Camera scanning isn't available here",
+  "scanUnavailableBody": "You can still add the book by typing its ISBN.",
+  "isbnFieldLabel": "ISBN",
+  "isbnFieldHint": "978…",
+  "isbnInvalid": "That doesn't look like a valid ISBN. Please check the digits.",
+  "isbnIncomplete": "An ISBN has 10 or 13 digits.",
+  "isbnValid": "Valid ISBN",
+  "lookUp": "Look up",
+  "pasteFromClipboard": "Paste",
+  "lookingUp": "Looking it up…",
+  "lookupNotFound": "We couldn't find that ISBN. You can fill in the details yourself.",
+  "searchFieldHint": "Search by title or author",
+  "searchPrompt": "Type a title to search the catalogue.",
+  "searchNoResults": "No matches. Try different words, or enter the book manually.",
+  "searchOffline": "You're offline, so catalogue search isn't available. You can still enter the book manually.",
+  "searchFailed": "Search didn't work this time. You can try again or enter the book manually.",
+  "enterManually": "Enter manually",
+  "fieldTitle": "Title",
+  "fieldSubtitle": "Subtitle",
+  "fieldAuthors": "Authors",
+  "fieldPages": "Pages",
+  "fieldGenre": "Genre",
+  "fieldLanguage": "Language",
+  "fieldNotes": "Notes",
+  "fieldOwnership": "Ownership",
+  "fieldStatus": "Reading status",
+  "fieldLocation": "Location",
+  "noLocation": "No location",
+  "ownershipOwned": "Owned",
+  "ownershipWishlist": "Wishlist",
+  "ownershipBorrowed": "Borrowed",
+  "titleRequired": "Please enter a title",
+  "pagesInvalid": "Pages must be a whole number above 0",
+  "save": "Save",
+  "saveAndAddAnother": "Save and add another",
+  "coverSection": "Cover",
+  "coverTakePhoto": "Take photo",
+  "coverChoosePhoto": "Choose photo",
+  "coverUseGenerated": "Use generated cover",
+  "coverPhotoFailed": "We couldn't use that photo.",
+  "fromCatalogue": "From the Open Library catalogue. Edit anything before saving.",
+  "duplicateTitle": "You may already have this",
+  "duplicateBody": "{count, plural, one{This looks like a book you already have.} other{These look like books you already have.}}",
+  "@duplicateBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "openExisting": "Open existing",
+  "addAnotherCopy": "Add another copy",
+  "cancel": "Cancel",
+  "addedTo": "Added to {location}",
+  "@addedTo": {
+    "placeholders": {
+      "location": {
+        "type": "String"
+      }
+    }
+  },
+  "addedToLibrary": "Added to your library",
+  "view": "View",
+  "saveFailed": "We couldn't save that. Please try again.",
+  "inLocation": "In {location}",
+  "@inLocation": {
+    "placeholders": {
+      "location": {
+        "type": "String"
+      }
+    }
+  },
+  "yearAndPages": "{year} · {pages} pages",
+  "@yearAndPages": {
+    "placeholders": {
+      "year": {
+        "type": "int"
+      },
+      "pages": {
+        "type": "int"
+      }
+    }
+  },
+  "pagesCount": "{count, plural, one{{count} page} other{{count} pages}}",
+  "@pagesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tryAgain": "Try again"
 }

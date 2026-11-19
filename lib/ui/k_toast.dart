@@ -12,7 +12,26 @@ abstract final class KToast {
     VoidCallback? onAction,
     Duration duration = KDurations.toast,
   }) {
-    final messenger = ScaffoldMessenger.of(context);
+    showWith(
+      ScaffoldMessenger.of(context),
+      message,
+      icon: icon,
+      actionLabel: actionLabel,
+      onAction: onAction,
+      duration: duration,
+    );
+  }
+
+  /// Like [show], for callers that captured the messenger before navigating
+  /// (so the toast survives the screen being replaced).
+  static void showWith(
+    ScaffoldMessengerState messenger,
+    String message, {
+    IconData icon = Icons.check_circle_rounded,
+    String? actionLabel,
+    VoidCallback? onAction,
+    Duration duration = KDurations.toast,
+  }) {
     messenger
       ..hideCurrentSnackBar()
       ..showSnackBar(
