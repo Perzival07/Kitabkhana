@@ -16,6 +16,7 @@ Calm, warm, premium, bookish. Covers are the hero.
 | secondary | #1F5C5B | #7FB8B5 |
 
 Light-only status colours: success #3E7A4F, warning #B7791F, error #B3261E; on-primary #FFFFFF.
+Primary-coloured text on tinted surfaces uses a deeper terracotta (#A64A24, `onPrimaryContainer`) because #B4532A is 4.28:1 on surface-variant. Dark theme uses lighter success/warning/error variants and a dark on-primary (#2A1308) for AA.
 
 ## Typography
 
