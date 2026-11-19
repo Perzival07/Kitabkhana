@@ -333,6 +333,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a book on the left to see its details here.'**
   String get detailPlaceholderBody;
+
+  /// No description provided for @failureOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'You appear to be offline. Everything else still works.'**
+  String get failureOffline;
+
+  /// No description provided for @failureTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'That took too long. Please try again.'**
+  String get failureTimeout;
+
+  /// No description provided for @failureServer.
+  ///
+  /// In en, this message translates to:
+  /// **'The book service is having trouble. Please try again later.'**
+  String get failureServer;
+
+  /// No description provided for @failureRateLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many lookups at once. Give it a moment.'**
+  String get failureRateLimited;
+
+  /// No description provided for @failureNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t find that.'**
+  String get failureNotFound;
+
+  /// No description provided for @failureValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check what you entered.'**
+  String get failureValidation;
+
+  /// No description provided for @failureConflict.
+  ///
+  /// In en, this message translates to:
+  /// **'That conflicts with something already saved.'**
+  String get failureConflict;
+
+  /// No description provided for @failureBookAlreadyLent.
+  ///
+  /// In en, this message translates to:
+  /// **'This book is already lent out.'**
+  String get failureBookAlreadyLent;
+
+  /// No description provided for @failureStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t save that on this device.'**
+  String get failureStorage;
+
+  /// No description provided for @failurePermissionCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera access is needed to scan barcodes.'**
+  String get failurePermissionCamera;
+
+  /// No description provided for @failurePermissionNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are needed for loan reminders.'**
+  String get failurePermissionNotifications;
+
+  /// No description provided for @failurePermissionFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'File access is needed to do that.'**
+  String get failurePermissionFiles;
+
+  /// No description provided for @failureUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'That isn\'t available on this device.'**
+  String get failureUnsupported;
+
+  /// No description provided for @failureUnexpected.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get failureUnexpected;
+
+  /// No description provided for @errorWidgetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong here'**
+  String get errorWidgetTitle;
+
+  /// No description provided for @errorWidgetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Go back and try again. Your library is safe.'**
+  String get errorWidgetBody;
 }
 
 class _AppLocalizationsDelegate

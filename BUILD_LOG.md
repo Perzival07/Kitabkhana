@@ -12,7 +12,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P01.3
 
 ## Phase 02 — Core & data
-- [ ] P02.1
+- [x] P02.1
 - [ ] P02.2
 - [ ] P02.3
 - [ ] P02.4

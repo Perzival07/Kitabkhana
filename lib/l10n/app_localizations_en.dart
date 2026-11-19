@@ -137,4 +137,57 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get detailPlaceholderBody =>
       'Choose a book on the left to see its details here.';
+
+  @override
+  String get failureOffline =>
+      'You appear to be offline. Everything else still works.';
+
+  @override
+  String get failureTimeout => 'That took too long. Please try again.';
+
+  @override
+  String get failureServer =>
+      'The book service is having trouble. Please try again later.';
+
+  @override
+  String get failureRateLimited =>
+      'Too many lookups at once. Give it a moment.';
+
+  @override
+  String get failureNotFound => 'We couldn\'t find that.';
+
+  @override
+  String get failureValidation => 'Please check what you entered.';
+
+  @override
+  String get failureConflict => 'That conflicts with something already saved.';
+
+  @override
+  String get failureBookAlreadyLent => 'This book is already lent out.';
+
+  @override
+  String get failureStorage => 'We couldn\'t save that on this device.';
+
+  @override
+  String get failurePermissionCamera =>
+      'Camera access is needed to scan barcodes.';
+
+  @override
+  String get failurePermissionNotifications =>
+      'Notifications are needed for loan reminders.';
+
+  @override
+  String get failurePermissionFiles => 'File access is needed to do that.';
+
+  @override
+  String get failureUnsupported => 'That isn\'t available on this device.';
+
+  @override
+  String get failureUnexpected => 'Something went wrong. Please try again.';
+
+  @override
+  String get errorWidgetTitle => 'Something went wrong here';
+
+  @override
+  String get errorWidgetBody => 'Go back and try again. Your library is safe.';
 }

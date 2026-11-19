@@ -62,5 +62,21 @@
   "notFoundBody": "The link may be old or mistyped.",
   "goToLibrary": "Go to your library",
   "detailPlaceholderTitle": "Pick a book",
-  "detailPlaceholderBody": "Choose a book on the left to see its details here."
+  "detailPlaceholderBody": "Choose a book on the left to see its details here.",
+  "failureOffline": "You appear to be offline. Everything else still works.",
+  "failureTimeout": "That took too long. Please try again.",
+  "failureServer": "The book service is having trouble. Please try again later.",
+  "failureRateLimited": "Too many lookups at once. Give it a moment.",
+  "failureNotFound": "We couldn't find that.",
+  "failureValidation": "Please check what you entered.",
+  "failureConflict": "That conflicts with something already saved.",
+  "failureBookAlreadyLent": "This book is already lent out.",
+  "failureStorage": "We couldn't save that on this device.",
+  "failurePermissionCamera": "Camera access is needed to scan barcodes.",
+  "failurePermissionNotifications": "Notifications are needed for loan reminders.",
+  "failurePermissionFiles": "File access is needed to do that.",
+  "failureUnsupported": "That isn't available on this device.",
+  "failureUnexpected": "Something went wrong. Please try again.",
+  "errorWidgetTitle": "Something went wrong here",
+  "errorWidgetBody": "Go back and try again. Your library is safe."
 }

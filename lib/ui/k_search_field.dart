@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import '../app/theme/tokens.dart';
+import '../core/debouncer.dart';
 
 /// A rounded search field with clear button, debounced callback and an
 /// optional trailing scan button.
@@ -40,7 +39,7 @@ class KSearchField extends StatefulWidget {
 class _KSearchFieldState extends State<KSearchField> {
   late final TextEditingController _controller =
       widget.controller ?? TextEditingController();
-  Timer? _timer;
+  late final Debouncer _debouncer = Debouncer(widget.debounce);
 
   @override
   void initState() {
@@ -56,12 +55,11 @@ class _KSearchFieldState extends State<KSearchField> {
     final text = _controller.text;
     if (text == _last) return;
     _last = text;
-    _timer?.cancel();
-    _timer = Timer(widget.debounce, () => widget.onChanged(text));
+    _debouncer.run(() => widget.onChanged(text));
   }
 
   void _clear() {
-    _timer?.cancel();
+    _debouncer.cancel();
     _controller.clear();
     _last = '';
     widget.onChanged('');
@@ -69,7 +67,7 @@ class _KSearchFieldState extends State<KSearchField> {
 
   @override
   void dispose() {
-    _timer?.cancel();
+    _debouncer.dispose();
     _controller.removeListener(_onText);
     if (widget.controller == null) _controller.dispose();
     super.dispose();
