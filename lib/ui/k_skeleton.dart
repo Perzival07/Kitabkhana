@@ -26,7 +26,7 @@ class _KSkeletonState extends State<KSkeleton>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 1400),
+    duration: KDurations.shimmer,
   );
 
   @override

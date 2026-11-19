@@ -147,8 +147,8 @@ class _SpineHighlight extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: <Color>[
-                Colors.white.withValues(alpha: 0.22),
-                Colors.white.withValues(alpha: 0),
+                KColors.highlight.withValues(alpha: 0.22),
+                KColors.highlight.withValues(alpha: 0),
               ],
             ),
           ),

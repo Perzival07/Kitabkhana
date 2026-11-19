@@ -9,7 +9,7 @@ Tick a task only when it is green (see Definition of Green).
 ## Phase 01 — Design system & shell
 - [x] P01.1
 - [x] P01.2
-- [ ] P01.3
+- [x] P01.3
 
 ## Phase 02 — Core & data
 - [ ] P02.1
@@ -70,3 +70,9 @@ Tick a task only when it is green (see Definition of Green).
 
 - Android SDK and Xcode are not installed on the dev machine yet: Android/iOS builds are unverified; only web is built locally.
 - iOS dev/prod flavors need one-time Xcode setup (see docs/IOS_FLAVORS.md).
+- Foldable hinge handling uses `DisplayFeatureSubScreen` and is untested on real hardware or emulator.
+- Two-pane (list + detail) applies to the Library tab only; other tabs are centred at max 720dp. The detail pane is a placeholder until P04.4.
+- hi/bn ARB files are empty scaffolds (fall back to English); parity test is warning-only.
+- Goldens are generated on macOS and excluded from CI (`--exclude-tags golden`).
+- Gallery (dev-only) strings are not localised by design.
+- `custom_lint` is not used: riverpod_lint 3 runs as an analyzer plugin.

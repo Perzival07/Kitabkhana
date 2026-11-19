@@ -35,6 +35,13 @@ abstract final class KColors {
   static const Color lampWarning = Color(0xFFE0B05A);
   static const Color lampError = Color(0xFFF2B8B5);
 
+  /// Ivory ink used on generated covers and avatars (sits on dark palette tones).
+  static const Color coverInk = Color(0xFFF7F1E6);
+
+  /// Highlight/shade used for cover gradients and the spine highlight.
+  static const Color highlight = Color(0xFFFFFFFF);
+  static const Color shade = Color(0xFF000000);
+
   /// Muted tones for generated covers; legible with light text in both themes.
   static const List<Color> coverPalette = <Color>[
     Color(0xFF7A3E2E),
@@ -78,6 +85,9 @@ abstract final class KDurations {
   static const Duration normal = Duration(milliseconds: 250);
   static const Duration slow = Duration(milliseconds: 350);
   static const Duration stagger = Duration(milliseconds: 30);
+  static const Duration shimmer = Duration(milliseconds: 1400);
+  static const Duration search = Duration(milliseconds: 250);
+  static const Duration toast = Duration(seconds: 4);
 }
 
 abstract final class KCurves {

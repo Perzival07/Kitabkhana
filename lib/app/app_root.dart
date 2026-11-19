@@ -3,32 +3,30 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../l10n/app_localizations.dart';
-import '../ui/gallery/dev_gallery_screen.dart';
-import 'app_config.dart';
+import 'app_config_provider.dart';
+import 'router/app_router.dart';
 import 'theme/app_theme.dart';
 import 'theme/system_ui.dart';
 import 'theme/theme_mode_provider.dart';
 
-/// Minimal placeholder app; replaced by the routed shell in P01.3.
+/// The root widget: themed, localised and routed.
 class AppRoot extends ConsumerWidget {
-  const AppRoot({required this.config, super.key});
-
-  final AppConfig config;
+  const AppRoot({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final config = ref.watch(appConfigProvider);
     final mode = ref.watch(themeModeControllerProvider);
-    return MaterialApp(
+    final router = ref.watch(appRouterProvider);
+    return MaterialApp.router(
       title: config.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: mode,
+      routerConfig: router,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      routes: <String, WidgetBuilder>{
-        if (config.isDev) '/dev/gallery': (_) => const DevGalleryScreen(),
-      },
       builder: (context, child) {
         final overlay = systemOverlayFor(Theme.of(context).brightness);
         return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -36,24 +34,6 @@ class AppRoot extends ConsumerWidget {
           child: child ?? const SizedBox.shrink(),
         );
       },
-      home: Builder(
-        builder: (context) => Scaffold(
-          floatingActionButton: config.isDev
-              ? FloatingActionButton(
-                  tooltip: 'Component gallery (dev)',
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed('/dev/gallery'),
-                  child: const Icon(Icons.widgets_rounded),
-                )
-              : null,
-          body: Center(
-            child: Text(
-              'Kitabkhana',
-              style: Theme.of(context).textTheme.displayLarge,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

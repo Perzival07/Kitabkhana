@@ -14,7 +14,7 @@ class KSearchField extends StatefulWidget {
     this.onSubmitted,
     this.onScanTap,
     this.scanTooltip,
-    this.debounce = const Duration(milliseconds: 250),
+    this.debounce = KDurations.search,
     this.autofocus = false,
     super.key,
   }) : assert(

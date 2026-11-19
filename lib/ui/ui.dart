@@ -16,3 +16,4 @@ export 'k_search_field.dart';
 export 'k_section_header.dart';
 export 'k_skeleton.dart';
 export 'k_toast.dart';
+export 'k_wordmark.dart';

@@ -153,6 +153,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{percent} percent'**
   String percentSemantics(int percent);
+
+  /// No description provided for @appName.
+  ///
+  /// In en, this message translates to:
+  /// **'Kitabkhana'**
+  String get appName;
+
+  /// No description provided for @navLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Library'**
+  String get navLibrary;
+
+  /// No description provided for @navScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan'**
+  String get navScan;
+
+  /// No description provided for @navReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading'**
+  String get navReading;
+
+  /// No description provided for @navStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Stats'**
+  String get navStats;
+
+  /// No description provided for @navMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get navMore;
+
+  /// No description provided for @libraryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your library'**
+  String get libraryTitle;
+
+  /// No description provided for @libraryEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your books will live here. Add the first one soon.'**
+  String get libraryEmptyBody;
+
+  /// No description provided for @scanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Never buy it twice'**
+  String get scanTitle;
+
+  /// No description provided for @scanEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a barcode to check whether you already own a book.'**
+  String get scanEmptyBody;
+
+  /// No description provided for @readingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Now reading'**
+  String get readingTitle;
+
+  /// No description provided for @readingEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your progress, streaks and pace will show up here.'**
+  String get readingEmptyBody;
+
+  /// No description provided for @statsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your reading year'**
+  String get statsTitle;
+
+  /// No description provided for @statsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Goals and charts will appear once you log some reading.'**
+  String get statsEmptyBody;
+
+  /// No description provided for @moreTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get moreTitle;
+
+  /// No description provided for @moreEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Loans, quotes, locations and settings live here.'**
+  String get moreEmptyBody;
+
+  /// No description provided for @routeAddBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a book'**
+  String get routeAddBook;
+
+  /// No description provided for @routeBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Book'**
+  String get routeBook;
+
+  /// No description provided for @routeEditBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit book'**
+  String get routeEditBook;
+
+  /// No description provided for @routeLoans.
+  ///
+  /// In en, this message translates to:
+  /// **'Loans'**
+  String get routeLoans;
+
+  /// No description provided for @routeQuotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Quotes'**
+  String get routeQuotes;
+
+  /// No description provided for @routeLocations.
+  ///
+  /// In en, this message translates to:
+  /// **'Locations'**
+  String get routeLocations;
+
+  /// No description provided for @routeSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get routeSettings;
+
+  /// No description provided for @routeOnboarding.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get routeOnboarding;
+
+  /// No description provided for @routeStubBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This screen is on its way.'**
+  String get routeStubBody;
+
+  /// No description provided for @notFoundTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We can\'t find that page'**
+  String get notFoundTitle;
+
+  /// No description provided for @notFoundBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The link may be old or mistyped.'**
+  String get notFoundBody;
+
+  /// No description provided for @goToLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to your library'**
+  String get goToLibrary;
+
+  /// No description provided for @detailPlaceholderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a book'**
+  String get detailPlaceholderTitle;
+
+  /// No description provided for @detailPlaceholderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a book on the left to see its details here.'**
+  String get detailPlaceholderBody;
 }
 
 class _AppLocalizationsDelegate

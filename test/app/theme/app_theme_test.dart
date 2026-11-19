@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kitabkhana/app/app_config.dart';
-import 'package:kitabkhana/app/app_root.dart';
 import 'package:kitabkhana/app/theme/app_theme.dart';
 import 'package:kitabkhana/app/theme/k_tokens.dart';
 import 'package:kitabkhana/app/theme/theme_mode_provider.dart';
 import 'package:kitabkhana/app/theme/tokens.dart';
+
+import '../../helpers/pump_router_app.dart';
 
 void main() {
   test('serif for display/headline/titleLarge, sans for body', () {
@@ -35,18 +34,11 @@ void main() {
   });
 
   testWidgets('theme mode provider switches the live theme', (tester) async {
-    final container = ProviderContainer();
-    addTearDown(container.dispose);
-    await tester.pumpWidget(
-      UncontrolledProviderScope(
-        container: container,
-        child: const AppRoot(config: AppConfig.dev()),
-      ),
-    );
-    final bg = find.byType(Scaffold);
-    expect(Theme.of(tester.element(bg)).brightness, Brightness.light);
-    container.read(themeModeControllerProvider.notifier).set(ThemeMode.dark);
+    final c = await pumpRouterApp(tester);
+    final finder = find.byType(Scaffold).first;
+    expect(Theme.of(tester.element(finder)).brightness, Brightness.light);
+    c.read(themeModeControllerProvider.notifier).set(ThemeMode.dark);
     await tester.pumpAndSettle();
-    expect(Theme.of(tester.element(bg)).brightness, Brightness.dark);
+    expect(Theme.of(tester.element(finder)).brightness, Brightness.dark);
   });
 }

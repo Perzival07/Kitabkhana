@@ -13,7 +13,7 @@ class KGeneratedCover extends StatelessWidget {
   final String title;
   final String author;
 
-  static const Color _ink = Color(0xFFF7F1E6);
+  static const Color _ink = KColors.coverInk;
 
   /// The palette colour used for [title]; stable across runs and platforms.
   static Color colorFor(String title, List<Color> palette) {
@@ -44,8 +44,8 @@ class KGeneratedCover extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: <Color>[
-                Color.lerp(base, Colors.white, 0.08) ?? base,
-                Color.lerp(base, Colors.black, 0.18) ?? base,
+                Color.lerp(base, KColors.highlight, 0.08) ?? base,
+                Color.lerp(base, KColors.shade, 0.18) ?? base,
               ],
             ),
           ),

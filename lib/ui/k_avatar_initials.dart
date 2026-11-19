@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../app/theme/k_tokens.dart';
+import '../app/theme/tokens.dart';
 import '../app/theme/type_scale.dart';
 import '../core/stable_hash.dart';
 
@@ -42,7 +43,7 @@ class KAvatarInitials extends StatelessWidget {
                   fontFamily: KFonts.sans,
                   fontWeight: FontWeight.w600,
                   fontSize: size * 0.38,
-                  color: const Color(0xFFF7F1E6),
+                  color: KColors.coverInk,
                 ),
               ),
             ),

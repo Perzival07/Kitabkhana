@@ -10,7 +10,7 @@ abstract final class KToast {
     IconData icon = Icons.check_circle_rounded,
     String? actionLabel,
     VoidCallback? onAction,
-    Duration duration = const Duration(seconds: 4),
+    Duration duration = KDurations.toast,
   }) {
     final messenger = ScaffoldMessenger.of(context);
     messenger
