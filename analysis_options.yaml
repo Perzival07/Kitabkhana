@@ -13,6 +13,8 @@ analyzer:
     - "**/*.drift.dart"
     - "**/*.freezed.dart"
     - "lib/l10n/app_localizations*.dart"
+    - "lib/data/db/schema_versions.dart"
+    - "test/drift/**/generated/**"
     - "build/**"
     - android/**
     - ios/**

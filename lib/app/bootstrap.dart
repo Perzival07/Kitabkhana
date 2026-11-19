@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/logger.dart';
+import '../data/db/database_provider.dart';
 import 'app_config.dart';
 import 'app_config_provider.dart';
 import 'app_root.dart';
@@ -21,13 +22,22 @@ Future<void> bootstrap(AppConfig config) async {
   enableEdgeToEdge();
   registerFontLicenses();
   logger.info('${config.appName} starting');
+
+  final container = ProviderContainer(
+    overrides: [
+      appConfigProvider.overrideWithValue(config),
+      appLoggerProvider.overrideWithValue(logger),
+    ],
+  );
+
+  // Open the database up front so migrations run before the first screen.
+  try {
+    await container.read(appDatabaseProvider).customSelect('SELECT 1').get();
+  } on Object catch (error, stack) {
+    logger.error('database failed to open', error: error, stack: stack);
+  }
+
   runApp(
-    ProviderScope(
-      overrides: [
-        appConfigProvider.overrideWithValue(config),
-        appLoggerProvider.overrideWithValue(logger),
-      ],
-      child: const AppRoot(),
-    ),
+    UncontrolledProviderScope(container: container, child: const AppRoot()),
   );
 }

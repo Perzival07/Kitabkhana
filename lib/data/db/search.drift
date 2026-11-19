@@ -1,0 +1,55 @@
+import 'tables.dart';
+
+-- Indexes -------------------------------------------------------------------
+CREATE INDEX idx_books_isbn13 ON books (isbn13);
+CREATE INDEX idx_books_ol_work_key ON books (ol_work_key);
+CREATE INDEX idx_books_title_key ON books (title_key);
+CREATE INDEX idx_books_location_id ON books (location_id);
+CREATE INDEX idx_books_ownership_status ON books (ownership, status);
+CREATE INDEX idx_reading_logs_book_date ON reading_logs (book_id, date);
+CREATE INDEX idx_quotes_book_id ON quotes (book_id);
+CREATE INDEX idx_loans_book_id ON loans (book_id);
+CREATE INDEX idx_loans_due_open ON loans (due_on) WHERE returned_on IS NULL;
+
+-- Only one active loan per book.
+CREATE UNIQUE INDEX uq_loans_one_active_per_book
+  ON loans (book_id) WHERE returned_on IS NULL AND deleted_at IS NULL;
+
+-- One goal per year, one tag name (any case), one location name per parent.
+CREATE UNIQUE INDEX uq_goals_year ON goals (year) WHERE deleted_at IS NULL;
+CREATE UNIQUE INDEX uq_tags_name ON tags (lower(name)) WHERE deleted_at IS NULL;
+CREATE UNIQUE INDEX uq_book_tags_pair
+  ON book_tags (book_id, tag_id) WHERE deleted_at IS NULL;
+CREATE UNIQUE INDEX uq_locations_name
+  ON locations (lower(name), coalesce(parent_id, '')) WHERE deleted_at IS NULL;
+
+-- Full-text search over live (non-deleted) books --------------------------------
+CREATE VIRTUAL TABLE books_fts USING fts5(
+  title,
+  subtitle,
+  authors,
+  content = 'books',
+  content_rowid = 'rowid',
+  tokenize = 'unicode61 remove_diacritics 2'
+);
+
+CREATE TRIGGER books_fts_ai AFTER INSERT ON books
+WHEN new.deleted_at IS NULL BEGIN
+  INSERT INTO books_fts (rowid, title, subtitle, authors)
+  VALUES (new.rowid, new.title, new.subtitle, new.authors);
+END;
+
+CREATE TRIGGER books_fts_ad AFTER DELETE ON books
+WHEN old.deleted_at IS NULL BEGIN
+  INSERT INTO books_fts (books_fts, rowid, title, subtitle, authors)
+  VALUES ('delete', old.rowid, old.title, old.subtitle, old.authors);
+END;
+
+CREATE TRIGGER books_fts_au AFTER UPDATE ON books BEGIN
+  INSERT INTO books_fts (books_fts, rowid, title, subtitle, authors)
+  SELECT 'delete', old.rowid, old.title, old.subtitle, old.authors
+  WHERE old.deleted_at IS NULL;
+  INSERT INTO books_fts (rowid, title, subtitle, authors)
+  SELECT new.rowid, new.title, new.subtitle, new.authors
+  WHERE new.deleted_at IS NULL;
+END;
