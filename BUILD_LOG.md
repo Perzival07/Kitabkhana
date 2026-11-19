@@ -14,7 +14,7 @@ Tick a task only when it is green (see Definition of Green).
 ## Phase 02 — Core & data
 - [x] P02.1
 - [x] P02.2
-- [ ] P02.3
+- [x] P02.3
 - [x] P02.4
 
 ## Phase 03 — Book data
@@ -76,3 +76,9 @@ Tick a task only when it is green (see Definition of Green).
 - Goldens are generated on macOS and excluded from CI (`--exclude-tags golden`).
 - Gallery (dev-only) strings are not localised by design.
 - `custom_lint` is not used: riverpod_lint 3 runs as an analyzer plugin.
+- (P02 audit, P3) `watchOverdue` fixes "today" when subscribed; it does not roll over at midnight until resubscribed.
+- (P02 audit, P3) `QuoteRepository.watchAll` and `LoanRepository.watchActive/History` are unpaged; add paging if lists get large (P10.5 will measure).
+- (P02 audit, P3) No index on `books.created_at` (default sort); measure with 5,000 books in P10.5.
+- (P02 audit, P3) `mapDbError` falls back to matching SQLite message text for constraint errors (Drift exposes no typed exception); business rules use explicit pre-checks instead.
+- (P02 audit, P3) The plan's P02.3 was built after P02.4 because `Isbn13` and `TitleKey` are needed by the domain.
+- Repositories double as DAOs (queries live in `Drift*Repository`), rather than separate `DatabaseAccessor` classes.
