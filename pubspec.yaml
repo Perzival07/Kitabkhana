@@ -60,6 +60,7 @@ dependencies:
   path: ^1.9.1
   flutter_localizations:
     sdk: flutter
+  unorm_dart: ^0.3.3
 
 dev_dependencies:
   flutter_test:

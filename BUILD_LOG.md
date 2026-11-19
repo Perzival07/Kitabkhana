@@ -15,7 +15,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P02.1
 - [x] P02.2
 - [ ] P02.3
-- [ ] P02.4
+- [x] P02.4
 
 ## Phase 03 — Book data
 - [ ] P03.1
