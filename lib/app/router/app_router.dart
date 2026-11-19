@@ -9,6 +9,7 @@ import '../../features/scan_check/presentation/scan_screen.dart';
 import '../../features/stats/presentation/stats_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../../ui/gallery/dev_gallery_screen.dart';
+import '../../ui/gallery/dev_lookup_screen.dart';
 import '../../ui/ui.dart';
 import '../app_config.dart';
 import '../app_config_provider.dart';
@@ -122,11 +123,16 @@ GoRouter buildRouter(AppConfig config, {String initial = Routes.library}) {
         builder: (_, _) =>
             stub((l) => l.routeOnboarding, KIllustration.emptyShelf),
       ),
-      if (config.isDev)
+      if (config.isDev) ...<RouteBase>[
         GoRoute(
           path: Routes.devGallery,
           builder: (_, _) => const DevGalleryScreen(),
         ),
+        GoRoute(
+          path: Routes.devLookup,
+          builder: (_, _) => const DevLookupScreen(),
+        ),
+      ],
     ],
   );
 }

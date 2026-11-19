@@ -12,6 +12,7 @@ abstract final class Routes {
   static const settings = '/settings';
   static const onboarding = '/onboarding';
   static const devGallery = '/dev/gallery';
+  static const devLookup = '/dev/lookup';
 
   static String book(String id) => '/book/$id';
   static String bookEdit(String id) => '/book/$id/edit';
