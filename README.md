@@ -1,5 +1,7 @@
 # Kitabkhana
 
+![CI](https://github.com/Perzival07/Kitabkhana/actions/workflows/ci.yml/badge.svg)
+
 A private, offline-first home library and reading tracker for Android, iOS and Web (PWA).
 
 It answers three questions, with no internet needed:

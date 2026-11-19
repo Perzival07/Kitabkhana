@@ -1,0 +1,1560 @@
+================================================================================
+ KITABKHANA — STEP-BY-STEP BUILD PROMPTS
+ Private, offline-first home library & reading tracker (Flutter: Android, iOS, Web)
+================================================================================
+
+ Contents
+ --------
+   PART A  How to use this file (the build → test → fix loop)
+   PART B  Master context prompt (paste at the start of EVERY session)
+   PART C  Loop prompts (VERIFY, FIX, REGRESSION, PHASE AUDIT, DESIGN REVIEW)
+   PART D  Build prompts, phase by phase (P00 → P11, 45 prompts)
+   PART E  Final release regression
+   APPENDIX  Device test matrix, Definition of Green, commit conventions
+
+
+================================================================================
+ PART A — HOW TO USE THIS FILE
+================================================================================
+
+ Every build prompt goes through the same loop. Never skip a step.
+
+   ┌──────────────────────────────────────────────────────────────────┐
+   │ 1. START   New session? Paste PART B (Master Context) first.      │
+   │ 2. BUILD   Paste the next build prompt (e.g. P04.2).             │
+   │ 3. VERIFY  Paste prompt V (Verify). It runs every automated      │
+   │            check. Then YOU do the manual checks listed under     │
+   │            that build prompt, on a real phone or emulator.       │
+   │ 4. ERRORS? Paste prompt F (Fix) with the exact error / screenshot│
+   │            description. Then go back to step 3.                  │
+   │            Repeat 3 → 4 until everything is green.               │
+   │ 5. COMMIT  Commit with the message given under the prompt.       │
+   │            Tick the task in BUILD_LOG.md.                        │
+   │ 6. NEXT    Move to the next build prompt.                        │
+   └──────────────────────────────────────────────────────────────────┘
+
+ Extra rules
+ -----------
+ • If an error appears in something built EARLIER, stop and paste prompt R
+   (Regression). Fix it before continuing. Do not build on a broken base.
+ • At the end of every phase, paste prompt PA (Phase Audit), then fix
+   anything it finds using F → V.
+ • After any prompt that builds a screen, paste prompt DR (Design Review)
+   as well, and fix what it finds.
+ • If the same error comes back 3 times, paste prompt F with the line
+   "THIS IS THE THIRD ATTEMPT — step back, find the root cause, and
+   propose a different approach before writing code."
+ • Never move on with failing tests, analyzer warnings, or a known
+   visual bug. "I'll fix it later" is how apps rot.
+ • Commit after every green step so you can always roll back with
+   `git checkout <last-green-commit>`.
+
+ "Green" means (see APPENDIX for the full list):
+   format clean · analyzer 0 issues · all tests pass · builds for
+   Android + Web (+ iOS if you have a Mac) · manual checks pass on the
+   device matrix · light + dark mode look right · no overflow at 200% text.
+
+
+================================================================================
+ PART B — MASTER CONTEXT PROMPT
+ Paste this at the start of every new chat/session, before any other prompt.
+================================================================================
+
+----- COPY FROM HERE -----
+You are a senior Flutter engineer and product designer building
+"Kitabkhana", a production-quality, private, offline-first home library and
+reading tracker for Android, iOS and Web (PWA). Work in the existing repo.
+Before writing code, read README.md, docs/ARCHITECTURE.md, docs/DESIGN.md and
+BUILD_LOG.md if they exist, and follow them.
+
+PRODUCT
+- Answers 3 questions offline: Do I own this book? Where is it? Who has it?
+- Features: add books (barcode scan, typed ISBN, title search, manual entry),
+  locations, "Don't Buy It Twice" scan check (ISBN + edition + title
+  matching, works for books without barcodes), lending/borrowing with
+  reminders and WhatsApp/SMS nudges, reading tracker (progress, streaks, pace,
+  yearly goal, stats), Snap-a-Quote (OCR on mobile, typed on web),
+  backup/restore (.kitab zip, replace or merge), CSV export.
+- No accounts, no backend, no analytics. Data stays on the device. The only
+  network calls are ISBN/title lookups to Open Library.
+
+STACK
+- Flutter (latest stable), Dart 3, Material 3.
+- Riverpod 3 with code generation (riverpod_annotation, riverpod_generator,
+  riverpod_lint). Disable automatic retry for database providers.
+- go_router with StatefulShellRoute (each tab keeps its own stack).
+- Drift + drift_flutter (SQLite; WASM on web), FTS5 for search.
+- http, mobile_scanner, google_mlkit_text_recognition (mobile only),
+  image_picker, flutter_local_notifications + timezone + flutter_timezone,
+  url_launcher, share_plus, file_picker, path_provider, archive, csv, intl,
+  fl_chart, uuid (v7), crypto, logging. Use the latest stable versions
+  that resolve together; never pin to old majors.
+- Fonts are BUNDLED as assets (offline-first). Never fetch fonts at runtime.
+
+ARCHITECTURE (strict)
+- Layers per feature: presentation → application (use cases) → domain →
+  data. Platform services sit underneath. Dependencies only point downward.
+- Domain is pure Dart (no Flutter imports).
+- UI never touches Drift or HTTP directly. Writes go through use cases.
+- Errors: sealed Failure classes + Result<T>. No raw exceptions reach UI.
+- Every platform-specific capability is an interface with mobile and web
+  implementations, injected with Riverpod (ScannerService, OcrService,
+  ReminderService, FileStore, ShareService, PermissionService).
+- All tables use UUIDv7 text IDs plus createdAt, updatedAt, deletedAt
+  (soft delete) and rev. Multi-row writes run in one transaction.
+- Folder layout:
+    lib/app/        router, shell, theme, l10n
+    lib/core/       result, failure, logger, uuid, clock, rate_limiter
+    lib/platform/   <service>/ (interface + mobile + web)
+    lib/data/       db/, open_library/, cache/
+    lib/features/<feature>/{domain,application,data,presentation}/
+    lib/ui/         design system components (K-prefixed widgets)
+
+DESIGN SYSTEM — "Ink & Paper" (must feel calm, warm, premium, bookish)
+- Light theme "Paper": background #FBF7F0 (ivory), surface #FFFFFF,
+  surface-variant #F3EDE3, ink text #1F1B16, muted text #6B6259,
+  outline #E5DDD0, primary #B4532A (terracotta), on-primary #FFFFFF,
+  secondary #1F5C5B (peacock teal), success #3E7A4F, warning #B7791F,
+  error #B3261E.
+- Dark theme "Lamplight": background #15120F, surface #1E1A16,
+  surface-variant #2A241E, text #F2EBE1, muted #B3A89A, outline #3A322A,
+  primary #E08A5B (warm amber-terracotta), secondary #7FB8B5.
+- Typography: display/headlines in "Fraunces" (serif); UI/body in
+  "Inter" (sans). Both bundled. Book titles always use Fraunces.
+  Scale: display 34/40, headline 26/32, title 20/26, body 16/24,
+  label 14/20, caption 12/16. Respect system text scaling up to 200%.
+- Spacing on a 4-pt grid: 4, 8, 12, 16, 24, 32, 48. Screen padding 20.
+- Radii: cards 20, sheets 28 (top), chips 12, buttons 14, covers 6.
+- Elevation: avoid heavy shadows. Use 1px outlines and soft, warm shadows
+  (black at 6–10%, blur 16–24). Covers get a subtle spine highlight.
+- Motion: 200–300ms, easeOutCubic. Hero transition on covers. Gentle
+  stagger (30ms) on list entrance. Respect "reduce motion" settings.
+- Icons: Material rounded icons only, 24dp, consistent stroke feel.
+- Book covers are the hero of the UI. Missing covers get a generated cover:
+  a color from a hash of the title (from a curated muted palette), the
+  title in Fraunces and the author in Inter.
+- Empty states: short warm copy plus a simple line illustration (built
+  with CustomPainter or SVG; no stock images) plus one clear action.
+- Haptics: light impact on primary actions, success notification on scan
+  match.
+
+ANY-DEVICE RULES (must work well on every phone)
+- Layout widths: compact < 600dp (bottom nav, 2-col grid; 3-col at
+  >= 400dp), medium 600–1000dp (nav rail, 3–4 cols), expanded > 1000dp
+  (rail + two-pane list/detail).
+- Must look right on a 320dp-wide small phone, a 360–412dp standard phone,
+  a 430dp+ large phone, foldables (inner + outer screen), tablets, and in
+  landscape.
+- Always respect SafeArea, notches, punch-holes, gesture nav bars and the
+  keyboard (no content hidden under it).
+- No fixed heights for text containers. No overflow at 200% text scale.
+- Minimum tap target 48x48dp. Contrast WCAG AA (4.5:1 text, 3:1 large text
+  and UI).
+- Android: support the lowest minSdk that all plugins allow, target the
+  latest SDK, edge-to-edge enabled. iOS: lowest deployment target all
+  plugins allow. Web: Chrome, Safari, Firefox, installable PWA.
+- Smooth on low-end Android: lazy lists, small thumbnails, no rebuild
+  storms, DB work off the UI thread.
+
+CODING STANDARDS
+- Null-safe, immutable models, const constructors where possible.
+- All user-facing strings go through l10n (ARB files). No hard-coded UI
+  strings, colors, sizes or durations; use theme tokens.
+- Every new piece of logic gets unit tests. Every new screen gets at least
+  one widget test. Fix the cause of an error, never silence the analyzer.
+- Keep files focused (< ~300 lines where reasonable).
+
+HOW TO RESPOND TO EVERY TASK
+1. Briefly restate the goal and list the files you will create/change.
+2. Write COMPLETE file contents. No "..." placeholders, no TODOs left in
+   code unless I ask.
+3. Run (or tell me to run): code generation, format, analyze, tests.
+4. End with: (a) files changed, (b) commands to verify, (c) the manual
+   checks I should do on a device, (d) a suggested commit message,
+   (e) a one-line BUILD_LOG.md update.
+If anything in my request conflicts with this context, stop and ask.
+----- COPY TO HERE -----
+
+
+================================================================================
+ PART C — LOOP PROMPTS (reuse these after every build prompt)
+================================================================================
+
+-------------------------------------------------------------------------------
+ V — VERIFY  (paste right after every build prompt)
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Verify the step you just completed. Run, in order, and show me the result
+of each:
+  1. dart run build_runner build --delete-conflicting-outputs
+  2. dart format --set-exit-if-changed lib test integration_test
+  3. flutter analyze            (must be 0 issues, including infos)
+  4. flutter test               (all pass; list any skipped)
+  5. flutter build apk --debug --flavor dev -t lib/main_dev.dart
+  6. flutter build web --release -t lib/main_prod.dart
+  7. (Mac only) flutter build ios --no-codesign --flavor dev -t lib/main_dev.dart
+Then review your own code for this step against the Master Context:
+  - layer rules, Result/Failure use, transactions, l10n, theme tokens
+  - SafeArea, keyboard, overflow at 200% text, 320dp width, landscape
+  - light AND dark mode, accessibility labels, 48dp tap targets
+  - web behaviour of any platform service you touched
+Report as a table: Check | Status (PASS/FAIL) | Details.
+If anything FAILS, do not continue. List each problem with its likely root
+cause and wait for me to send the Fix prompt.
+Finally, give me the exact manual test script for this step (numbered
+steps with expected results) to run on: a small phone (320–360dp),
+a standard phone, a tablet or foldable, and Chrome.
+----- COPY TO HERE -----
+
+-------------------------------------------------------------------------------
+ F — FIX  (paste when anything fails; repeat F → V until green)
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Fix the following problem(s):
+
+[PASTE THE EXACT ERROR / FAILING TEST / STACK TRACE HERE]
+[OR DESCRIBE THE VISUAL BUG: device, screen size, light/dark, text scale,
+ what you expected, what you saw]
+
+Rules:
+1. Find the ROOT cause first. Explain it in 2–3 sentences before coding.
+2. Make the smallest correct change. Do not rewrite unrelated code.
+3. Add or update a test that would have caught this bug (a regression
+   test). For visual bugs, add a widget/golden test at the failing size.
+4. Do not silence errors: no `// ignore:`, no removing tests, no catching
+   and ignoring exceptions, no `!` to hide nulls.
+5. Show complete changed files.
+6. Then re-run the full Verify checklist (prompt V) and report the table.
+If this is the third attempt at the same error, stop, list three
+different possible approaches with trade-offs, and recommend one before
+writing code.
+----- COPY TO HERE -----
+
+-------------------------------------------------------------------------------
+ R — REGRESSION  (paste when an OLD feature breaks)
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+A feature that previously worked is now broken:
+  Feature: [NAME, e.g. "Return loan restores location" from P06.1]
+  What happens now: [DESCRIBE / PASTE ERROR]
+  Last known good commit (if known): [HASH]
+
+1. Use `git log` / `git diff <last-good>..HEAD` on relevant files to find
+   which change caused it.
+2. Explain the cause.
+3. Fix it without undoing the newer feature.
+4. Add a regression test that locks in the old behaviour.
+5. Run the full test suite plus the integration tests, then the Verify
+   checklist (prompt V).
+----- COPY TO HERE -----
+
+-------------------------------------------------------------------------------
+ PA — PHASE AUDIT  (paste at the end of each phase)
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+We have finished phase [PHASE NUMBER + NAME]. Audit everything built so far
+as a strict senior reviewer:
+1. Architecture: any layer violations, UI touching DB/HTTP, logic in
+   widgets, missing use cases, missing transactions?
+2. Correctness: edge cases not handled (empty, null, offline, permission
+   denied, very long text, 0 pages, duplicate, deleted item)?
+3. Tests: what logic or screens have no tests? Write the missing tests.
+4. Design: anything inconsistent with "Ink & Paper" tokens, spacing,
+   typography, radii, motion? Any hard-coded colors/sizes/strings?
+5. Any-device: check each screen at 320dp, 412dp, 600dp, 840dp, 1200dp,
+   landscape, 200% text, dark mode. List any problems.
+6. Performance: unnecessary rebuilds, unbounded lists, heavy work on UI
+   thread, large images?
+7. Web: anything that will crash or misbehave on web?
+Output: a prioritised list (P1 = must fix now, P2 = fix this phase,
+P3 = note for later). Then fix all P1 and P2 items, run prompt V, and
+update BUILD_LOG.md with any P3 items under "Known issues".
+----- COPY TO HERE -----
+
+-------------------------------------------------------------------------------
+ DR — DESIGN REVIEW  (paste after any prompt that builds or changes a screen)
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Do a design review of the screen(s) just built, as a demanding product
+designer. Check against "Ink & Paper":
+- Visual hierarchy: is the most important thing the most prominent?
+- Spacing on the 4pt grid, consistent 20dp screen padding, aligned edges.
+- Typography: Fraunces for titles/book names, Inter for UI; correct scale.
+- Color: tokens only; accent used sparingly (one primary action per view).
+- Covers: correct aspect ratio (2:3), radius 6, soft shadow, generated
+  cover fallback looks good.
+- States: loading (skeletons, not spinners, for content), empty (warm
+  copy + illustration + action), error (friendly message + retry),
+  offline.
+- Motion: transitions present, subtle, and respect reduce-motion.
+- Touch: 48dp targets, thumb-reachable primary actions on phones.
+- Dark mode: no pure black/white; contrast still AA.
+- Any device: 320dp, standard, large phone, foldable, tablet, landscape,
+  200% text, keyboard open.
+List concrete issues with the exact fix for each, apply them, add/refresh
+golden tests for this screen (light + dark, 360dp + 800dp), and run V.
+----- COPY TO HERE -----
+
+
+================================================================================
+ PART D — BUILD PROMPTS
+ Run them in order. After each: V → (F → V)* → [DR if UI] → commit → next.
+================================================================================
+
+################################################################################
+ PHASE 00 — FOUNDATION
+################################################################################
+
+-------------------------------------------------------------------------------
+ P00.1 — Create the project and repo skeleton
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Set up the Kitabkhana project from scratch.
+1. Create the Flutter app: `flutter create --org com.<myname> --project-name
+   kitabkhana --platforms android,ios,web kitabkhana`.
+2. Create the full folder layout from the Master Context with a
+   placeholder README in each top-level lib folder explaining its purpose.
+3. Add all dependencies from the Master Context with `flutter pub add`
+   (latest compatible versions) and dev dependencies: build_runner,
+   drift_dev, riverpod_generator, riverpod_lint, custom_lint (if
+   riverpod_lint requires it), flutter_lints or very_good_analysis,
+   mocktail, integration_test (sdk), flutter_test (sdk).
+4. analysis_options.yaml: strict mode (strict-casts, strict-inference,
+   strict-raw-types), riverpod_lint enabled, prefer_const rules on,
+   exclude generated files (*.g.dart, *.drift.dart).
+5. Create two flavors, dev and prod:
+   - lib/main_dev.dart and lib/main_prod.dart calling a shared
+     bootstrap(AppConfig) function.
+   - AppConfig: flavor, appName ("Kitabkhana Dev" / "Kitabkhana"),
+     enableVerboseLogs.
+   - Android productFlavors with applicationIdSuffix ".dev" for dev and
+     a different app label. iOS schemes/configurations for dev and prod
+     (give me exact Xcode steps if they can't be scripted).
+6. A minimal app that shows "Kitabkhana" centred, wrapped in
+   ProviderScope.
+7. Create: README.md (the GitHub intro from earlier), docs/ARCHITECTURE.md
+   (summary of layers, rules, data design), docs/DESIGN.md ("Ink & Paper"
+   tokens), docs/adr/0001-uuid-v7-ids.md, 0002-riverpod-3.md,
+   0003-drift-fts5.md, 0004-inexact-reminders.md, 0005-no-analytics.md,
+   CHANGELOG.md, and BUILD_LOG.md listing every prompt ID in this file
+   (P00.1 … P11.5) as unchecked tasks with a "Known issues" section.
+8. .gitignore suitable for Flutter + IDEs + signing keys (*.jks,
+   key.properties, *.p12, *.mobileprovision, .env).
+9. git init, first commit.
+----- COPY TO HERE -----
+ Manual checks:
+   • `flutter run --flavor dev -t lib/main_dev.dart` on an Android device:
+     app label "Kitabkhana Dev", text centred.
+   • `flutter run -d chrome -t lib/main_prod.dart` works.
+   • Dev and prod can be installed side by side on one phone.
+ Commit: "chore: project skeleton, flavors, lints, docs"
+
+-------------------------------------------------------------------------------
+ P00.2 — Continuous integration
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Add GitHub Actions CI in .github/workflows/ci.yml that runs on every pull
+request and every push to main:
+- Ubuntu job: set up Flutter (stable, cached), pub get, build_runner,
+  format check, flutter analyze, flutter test --coverage, upload coverage
+  as an artifact, flutter build web, flutter build apk --debug --flavor dev.
+- Fail the job on any analyzer issue.
+- A separate optional macOS job (manual trigger) that runs
+  `flutter build ios --no-codesign --flavor dev`.
+- Add a status badge to README.md.
+- Add .github/pull_request_template.md with a checklist mirroring the
+  "Definition of Green" from the APPENDIX of this plan.
+- Add dependabot.yml for pub and github-actions, weekly.
+----- COPY TO HERE -----
+ Manual checks:
+   • Push a branch, open a PR: CI is green.
+   • Break formatting on purpose in a branch: CI fails. Revert.
+ Commit: "ci: analyze, test, build web and android on every PR"
+
+
+################################################################################
+ PHASE 01 — DESIGN SYSTEM & APP SHELL
+################################################################################
+
+-------------------------------------------------------------------------------
+ P01.1 — Design tokens, fonts and themes
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Build the "Ink & Paper" design system foundation in lib/app/theme/.
+1. Download and bundle the font files: Fraunces (variable or 400/500/600/
+   700 + italic 400) and Inter (400/500/600/700). Put them in
+   assets/fonts/, register in pubspec.yaml, include their OFL licenses
+   and register the licenses with LicenseRegistry.
+2. tokens.dart: KColors (light + dark palettes from the Master Context),
+   KSpacing (4..48), KRadii, KDurations (fast 150, normal 250, slow 350),
+   KCurves, KShadows (soft warm shadows, separate light/dark), KBreakpoints
+   (compact 600, expanded 1000).
+3. A ThemeExtension `KTokens` carrying the extra colors (success, warning,
+   muted text, cover palette) and shadows, with lerp() so theme switching
+   animates smoothly.
+4. app_theme.dart: build ThemeData for light and dark with Material 3,
+   a ColorScheme mapped carefully from tokens (not fromSeed), TextTheme
+   mapped to the type scale (Fraunces for display/headline/title-large,
+   Inter for the rest), and component themes: AppBar (flat, background
+   color, no tint), Card, FilledButton, OutlinedButton, TextButton,
+   IconButton, InputDecoration (filled, radius 14, soft outline),
+   Chip, BottomSheet (radius 28 top, drag handle), NavigationBar,
+   NavigationRail, SnackBar (floating, radius 14), Dialog, ListTile,
+   Divider, ProgressIndicator, Switch, Slider, TabBar.
+5. Page transitions: fade-through on Android/web, Cupertino on iOS.
+6. A ThemeMode provider (system / light / dark) persisted later in
+   Settings (keep it in memory for now).
+7. Edge-to-edge on Android with transparent system bars whose icon colors
+   follow the theme.
+8. Unit test: every text/background pair used in the theme meets WCAG AA
+   contrast (write a small contrast-ratio helper and test it).
+----- COPY TO HERE -----
+ Manual checks:
+   • Switch the phone between light and dark: colors change, status bar
+     icons stay readable.
+   • Fonts render offline (turn on airplane mode, cold start).
+ Commit: "feat(design): Ink & Paper tokens, bundled fonts, light/dark themes"
+
+-------------------------------------------------------------------------------
+ P01.2 — Component library + component gallery
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Create reusable, theme-driven components in lib/ui/ (all prefixed K):
+- KBookCover: 2:3 aspect ratio, radius 6, soft shadow, subtle left spine
+  highlight gradient. Shows a cached local image or network image; if
+  missing or failing, shows KGeneratedCover. Sizes: xs (40w), sm (72w),
+  md (112w), lg (160w), hero (220w). Hero tag support. Semantics label
+  "Cover of <title> by <author>".
+- KGeneratedCover: background picked by stable hash of the title from a
+  curated muted palette (8–10 tones that work in light and dark), title
+  in Fraunces (auto-sized, max 4 lines), author in Inter small caps,
+  a thin decorative rule. Must look beautiful, never generic.
+- KButton (primary/secondary/tonal/text, with loading state and optional
+  leading icon), KIconButton (48dp target).
+- KCard (outlined, radius 20, optional onTap with ink ripple).
+- KChip / KFilterChip, KStatusPill (Want / Reading / Finished / Dropped,
+  each with its own subtle tone).
+- KSearchField (rounded, leading search icon, clear button, debounce
+  callback, optional trailing scan icon).
+- KSectionHeader (Fraunces title + optional "See all").
+- KEmptyState (CustomPainter line illustration slot + title + body +
+  action). Make 4 illustrations: empty shelf, open book, scanner frame,
+  quote marks; each drawn with simple strokes in the theme's muted color.
+- KSkeleton (shimmer that respects reduce motion) + KBookTileSkeleton.
+- KBottomSheet helper (drag handle, safe-area aware, keyboard aware,
+  scrollable, max 90% height).
+- KToast helper (floating SnackBar with icon + optional action).
+- KProgressRing (for yearly goal) and KProgressBar (book progress).
+- KAvatarInitials (for borrower names; color from name hash).
+- KConfirmDialog.
+Add a dev-only route /dev/gallery (only in dev flavor) showing every
+component in all variants, with toggles for dark mode and text scale
+(1.0, 1.3, 2.0). Widget test + golden test for KBookCover,
+KGeneratedCover, KButton, KEmptyState in light and dark.
+----- COPY TO HERE -----
+ Manual checks:
+   • Open the gallery on a 320dp emulator at 2.0 text scale: nothing
+     overflows or clips.
+   • Generated covers for 10 different titles look varied and attractive
+     in both themes.
+ Then run DR. Commit: "feat(ui): K component library and dev gallery"
+
+-------------------------------------------------------------------------------
+ P01.3 — Adaptive app shell, navigation and localisation
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Build the navigation shell.
+1. go_router with StatefulShellRoute.indexedStack and 5 branches:
+   Library (/library), Scan (/scan), Reading (/reading), Stats (/stats),
+   More (/more). Placeholder screens for each using KEmptyState.
+   Other routes (placeholders for now): /library/add, /book/:id,
+   /book/:id/edit, /loans, /quotes, /locations, /settings, /onboarding,
+   /dev/gallery (dev only). Unknown routes → friendly 404 screen.
+2. AdaptiveScaffold widget:
+   - < 600dp: NavigationBar at the bottom, labels shown, rounded
+     indicator; the Scan tab is visually emphasised (filled accent icon).
+   - 600–1000dp: NavigationRail with app wordmark at top.
+   - > 1000dp: extended NavigationRail + two-pane area: list on the left
+     (fixed 400dp), detail on the right; when no item is selected the
+     right pane shows a calm placeholder illustration.
+   - Handles SafeArea, gesture bars and foldable hinges (use
+     MediaQuery.displayFeatures to avoid placing content across a hinge).
+3. Android back button / predictive back works correctly per tab.
+4. Localisation: flutter gen-l10n with lib/l10n/app_en.arb (all strings
+   so far), plus empty app_hi.arb and app_bn.arb scaffolds. Add a test
+   that every key in app_en.arb exists in other ARB files (warning only
+   for now). Set supportedLocales and delegates.
+5. A small wordmark widget "Kitabkhana" in Fraunces with a tiny book
+   glyph, used in the rail and later in onboarding.
+6. Widget tests: bottom bar shows at 400dp, rail at 800dp, two-pane at
+   1200dp; switching tabs preserves each tab's stack.
+----- COPY TO HERE -----
+ Manual checks:
+   • Rotate a phone to landscape: still usable.
+   • Tablet/foldable: rail appears; unfolding switches layout live.
+   • Chrome: resize the window across 600 and 1000px; layout adapts;
+     URL changes with tabs; browser back works.
+ Then run DR. Run PA for Phase 01.
+ Commit: "feat(shell): adaptive navigation, routes, l10n"
+
+
+################################################################################
+ PHASE 02 — CORE & DATA LAYER
+################################################################################
+
+-------------------------------------------------------------------------------
+ P02.1 — Core utilities
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Create lib/core/ (pure Dart where possible) with unit tests for each:
+- result.dart: sealed Result<T> (Ok / Err) with map, flatMap, fold,
+  getOrNull.
+- failure.dart: sealed Failure: NetworkFailure (offline, timeout,
+  server, rateLimited), NotFoundFailure, ValidationFailure (field,
+  message key), ConflictFailure (e.g. book already lent),
+  StorageFailure, PermissionFailure (camera, notifications, files),
+  UnsupportedOnPlatformFailure, UnexpectedFailure(error, stack).
+  Each has an l10n message key for user-facing text.
+- uuid.dart: uuidV7() generator (time-ordered).
+- clock.dart: Clock interface + SystemClock + FakeClock (for tests).
+  All "now" and "today" logic must use Clock, never DateTime.now()
+  directly.
+- logger.dart: leveled logger (debug/info/warn/error) writing to console
+  in dev and to an in-memory ring buffer of the last 1,000 lines (for the
+  diagnostics export later). Never log book titles, names or phone numbers
+  at info level or above.
+- rate_limiter.dart: async token bucket (rate, burst) with tests using
+  FakeClock / fake async.
+- debouncer.dart.
+- Global error handling in bootstrap: FlutterError.onError,
+  PlatformDispatcher.instance.onError, and a friendly fallback
+  ErrorWidget that matches the design system (no red screen in prod).
+----- COPY TO HERE -----
+ Manual checks: none beyond V (pure logic).
+ Commit: "feat(core): result, failures, uuidv7, clock, logger, rate limiter"
+
+-------------------------------------------------------------------------------
+ P02.2 — Database schema, constraints, FTS and migrations
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Create the Drift database in lib/data/db/.
+1. A SyncColumns mixin: id (text, uuidV7 clientDefault, primary key),
+   createdAt, updatedAt, deletedAt (nullable), rev (int, default 1).
+2. Tables (all with SyncColumns):
+   - Books: isbn13 (nullable), olWorkKey (nullable), title, subtitle
+     (nullable), authors (default ''), titleKey, coverUrl (nullable),
+     coverLocalPath (nullable), pages (nullable, CHECK > 0), genre,
+     language, ownership (enum owned|wishlist|borrowed), status (enum
+     want|reading|finished|dropped), currentPage (default 0, CHECK >= 0),
+     rating (nullable, CHECK 1..5), locationId (nullable FK Locations),
+     ownerName (nullable), notes (nullable), startedOn, finishedOn.
+   - Locations: name, parentId (nullable self-FK), sortOrder, icon
+     (nullable string key).
+   - Loans: bookId (FK), direction (enum lent|borrowed), personName,
+     personPhone (nullable), startedOn, dueOn (nullable), returnedOn
+     (nullable), previousLocationId (nullable FK), note (nullable).
+   - ReadingLogs: bookId (FK), date (date only, stored as yyyy-mm-dd
+     text or int days), pagesRead (CHECK > 0), fromPage, toPage.
+   - Quotes: bookId (FK), body (NOT "text"), page (nullable),
+     isFavourite (default false).
+   - Goals: year (unique among non-deleted), targetBooks (CHECK > 0).
+   - Tags: name (unique, case-insensitive). BookTags: bookId, tagId.
+   - LookupCache: key (unique), payloadJson, fetchedAt, isNotFound.
+   - AppMeta: key (primary), value.
+3. Indexes: Books(isbn13), Books(olWorkKey), Books(titleKey),
+   Books(locationId), Books(ownership, status), ReadingLogs(bookId, date),
+   Quotes(bookId), Loans(dueOn) WHERE returnedOn IS NULL.
+   Partial UNIQUE index: Loans(bookId) WHERE returnedOn IS NULL AND
+   deletedAt IS NULL (only one active loan per book).
+4. FTS5 virtual table books_fts(title, subtitle, authors) kept in sync
+   with triggers (insert/update/delete). Verify FTS5 is available on
+   web (drift's sqlite3 WASM). If not, implement a fallback search on
+   titleKey with LIKE behind the same repository method, and document it.
+5. On open: PRAGMA foreign_keys = ON; WAL on native.
+6. drift_flutter connection for native and web (follow drift's current
+   web setup: sqlite3.wasm + drift_worker.js in web/; give me the exact
+   steps/files).
+7. Migrations: schemaVersion = 1, MigrationStrategy with onCreate,
+   beforeOpen (pragmas, integrity check in dev), and step-by-step
+   migration scaffolding. Export the schema to drift_schemas/ with
+   `dart run drift_dev make-migrations` (or current equivalent) and
+   add generated migration tests.
+8. Tests (in-memory DB): constraints reject bad data (rating 6,
+   negative page, second active loan for same book), FTS finds by partial
+   title and author, soft-deleted rows excluded by default queries.
+----- COPY TO HERE -----
+ Manual checks:
+   • App starts on Android and Chrome with the DB created (log line
+     "db opened, schema v1").
+   • Chrome DevTools → Application: the database storage exists.
+ Commit: "feat(db): sync-ready schema, constraints, FTS5, migrations"
+
+-------------------------------------------------------------------------------
+ P02.3 — Domain models, DAOs and repositories
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. Domain entities (pure Dart, immutable, with copyWith and equality):
+   Book, Location, Loan, ReadingLog, Quote, Goal, Tag, plus enums
+   Ownership, ReadStatus, LoanDirection. Value objects: Isbn13 (validated),
+   TitleKey.
+2. Repository interfaces in each feature's domain/ folder:
+   BookRepository (watchAll with filter/sort/page, watchById, search,
+   findByIsbn, findByWorkKey, findByTitleKey, upsert, softDelete),
+   LocationRepository, LoanRepository (watchActive, watchOverdue,
+   activeFor(bookId), create, markReturned), ReadingRepository,
+   QuoteRepository, GoalRepository, TagRepository.
+3. DAOs + Drift implementations in data/ with mappers between Drift rows
+   and domain entities. Every write sets updatedAt and increments rev.
+   Soft delete instead of hard delete. Every method returns Result or a
+   Stream of domain objects.
+4. Riverpod providers for the DB and each repository (keepAlive), with
+   automatic retry disabled.
+5. Tests for every repository method with an in-memory DB and FakeClock,
+   including: soft-delete hides rows, rev increments, pagination,
+   sorting by title/author/added/recently read, filters combine.
+----- COPY TO HERE -----
+ Commit: "feat(data): domain entities, repositories and DAOs"
+
+-------------------------------------------------------------------------------
+ P02.4 — ISBN and title normalisation
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+In lib/core/text/ (pure Dart):
+1. isbn.dart: parseIsbn(String raw) → Isbn13? that strips spaces/hyphens,
+   accepts ISBN-10 (with X check digit) and ISBN-13, VALIDATES check
+   digits for both, converts ISBN-10 → 13, accepts only 978/979 prefixes
+   for 13, and returns null for anything invalid. Also formatIsbn13 for
+   display (978-0-00-000000-0 style is optional; at least groups of 3).
+2. title_key.dart: normalizeTitle(title, authors) → TitleKey:
+   Unicode NFKD, remove diacritics, lowercase, replace "&" with "and",
+   remove punctuation, drop leading articles (the, a, an), drop
+   subtitles after ":" for the key, collapse whitespace, then append
+   "|" + normalized surname of first author (if any). Make it work for
+   Devanagari and Bengali text too (don't strip their letters).
+3. similarity.dart: trigram similarity (0..1) for fuzzy matching.
+4. Exhaustive unit tests: valid/invalid ISBN-10/13, X digits, wrong
+   checksum, hyphenated input, barcodes with 5-digit price add-on,
+   non-book EANs; titles with punctuation, articles, accents, subtitles,
+   Hindi/Bengali titles, "Harry Potter and the Philosopher's Stone" vs
+   "Harry Potter & the Philosophers Stone" → same key.
+----- COPY TO HERE -----
+ Then run PA for Phase 02.
+ Commit: "feat(core): ISBN validation and title normalisation"
+
+
+################################################################################
+ PHASE 03 — BOOK DATA (OPEN LIBRARY + COVERS)
+################################################################################
+
+-------------------------------------------------------------------------------
+ P03.1 — Open Library client
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Create lib/data/open_library/:
+1. OpenLibraryClient using package:http with an injectable http.Client.
+   - Endpoints: ISBN lookup (/isbn/{isbn}.json → edition, then
+     /works/{key}.json and author names, OR /api/books?jscmd=data — choose
+     the most reliable current approach and explain why), title search
+     (/search.json?title=&author=&limit=10&fields=key,title,author_name,
+     isbn,cover_i,number_of_pages_median,first_publish_year).
+   - On mobile send header User-Agent: "Kitabkhana/<version>
+     (<contact email from AppConfig>)". Browsers don't allow setting it,
+     so skip on web.
+   - Shared RateLimiter: 1 req/s, burst 3.
+   - Timeout 8s. Retry up to 2 times with exponential backoff + jitter
+     ONLY for timeouts and 5xx. Never retry 4xx. 429 → RateLimited
+     failure and back off.
+   - Circuit breaker: after 5 consecutive failures, short-circuit for
+     2 minutes returning NetworkFailure.offline without calling.
+2. Anti-corruption mapping: map raw JSON to a domain BookInfo (title,
+   subtitle, authors list, pages, isbn13, olWorkKey, coverUrl, year).
+   Handle missing/odd fields safely (number_of_pages missing, authors as
+   keys, titles with trailing spaces).
+3. LookupCache repository: cache successes for 30 days and "not found"
+   for 7 days; the BookLookupService checks the cache first, then the
+   network, then stores the result.
+4. Connectivity: if offline, return NetworkFailure.offline immediately
+   (don't wait for timeout) where detectable.
+5. Tests with a mock http client and recorded JSON fixtures: success,
+   not found, 500 then success (retry), 429, timeout, circuit opens and
+   closes, cache hit avoids network, malformed JSON.
+----- COPY TO HERE -----
+ Manual checks:
+   • Dev-only debug screen or test button: look up 9780143127550 and a
+     made-up valid ISBN; see sensible results. Airplane mode → instant
+     offline failure, no freeze.
+ Commit: "feat(lookup): Open Library client with cache, limits, breaker"
+
+-------------------------------------------------------------------------------
+ P03.2 — Cover storage
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Create a CoverStore service (interface + mobile + web):
+- Mobile: download the cover once, decode and resize to max 360px wide
+  (off the UI thread), save as JPEG (quality 85) in app documents
+  /covers/<bookId>.jpg, return the local path. Also accept a photo taken
+  by the user (camera/gallery) and process it the same way.
+- Detect Open Library's 1x1 placeholder images and treat as "no cover".
+- Web: store the image bytes in IndexedDB via the DB (or rely on the
+  network cache) — choose the most reliable option and explain.
+- Delete the file when a book is permanently purged.
+- KBookCover uses the local file first, then network, then generated.
+- Tests for resize logic and placeholder detection.
+----- COPY TO HERE -----
+ Manual checks:
+   • Add a looked-up book online, then go offline and cold-start: cover
+     still shows.
+ Then run PA for Phase 03.
+ Commit: "feat(covers): offline cover storage and resizing"
+
+
+################################################################################
+ PHASE 04 — LIBRARY
+################################################################################
+
+-------------------------------------------------------------------------------
+ P04.1 — Add Book flow (4 ways) with duplicate detection
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Build /library/add as a beautiful, fast flow (goal: a book added in under
+10 seconds).
+1. Entry screen with 4 large, friendly options as cards with icons:
+   Scan barcode · Type ISBN · Search by title · Enter manually.
+   On web without camera support, the Scan card explains and offers
+   Type ISBN instead.
+2. Scan: reuse the ScannerService (implemented properly in P05.2; for
+   now a basic version is fine) → lookup → preview.
+3. Type ISBN: numeric keyboard, live validation with friendly message,
+   paste support → lookup → preview.
+4. Search by title: KSearchField with debounce 350ms, results list with
+   small covers, author, year; tapping a result → preview. Offline →
+   message + "Enter manually" button.
+5. Manual form: title (required), authors, pages, ISBN (optional,
+   validated if present), genre, language, ownership (segmented control:
+   Owned / Wishlist / Borrowed), status, location picker, cover (take
+   photo / choose photo / generated), notes. Proper keyboard types,
+   "next" actions, form validation messages from l10n.
+6. Preview card: big cover, title, authors, pages; edit any field;
+   choose ownership, status and location; Save.
+7. Lookup failure or not found → open the manual form with everything
+   known pre-filled. Never block the user.
+8. AddBook use case (application layer): computes titleKey, checks
+   duplicates via ISBN, work key and titleKey; if found, show a
+   KBottomSheet "You may already have this" with the existing book(s)
+   (cover + location) and options: "Open existing", "Add another copy",
+   "Cancel". Saves in a transaction; downloads cover in background.
+9. After save: success haptic + toast "Added to <location>" with
+   "View" action; option "Add another" returns to the entry screen.
+10. Widget tests: form validation, duplicate sheet appears for same ISBN
+    and for same title without ISBN, lookup failure opens manual form
+    pre-filled.
+----- COPY TO HERE -----
+ Manual checks:
+   • Add 5 books each way, including one with no ISBN and one duplicate.
+   • Keyboard never covers the focused field on a 320dp phone.
+   • Airplane mode: manual add still works.
+ Then run DR. Commit: "feat(library): add book via scan, ISBN, search, manual"
+
+-------------------------------------------------------------------------------
+ P04.2 — Library screen
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Build the Library tab, the home of the app. It must feel like a calm,
+beautiful bookshelf.
+1. Large title "Your library" (Fraunces) with a count subtitle
+   ("128 books · 6 lent out"), collapsing into a compact app bar on
+   scroll (SliverAppBar).
+2. KSearchField pinned below the title (FTS search, debounced 250ms,
+   matched words highlighted in results) with a trailing scan icon that
+   opens /scan.
+3. Horizontal filter chips: All · Reading · Want to read · Finished ·
+   Wishlist · Lent out · Borrowed, then Location and Tag dropdown chips.
+   Sort menu: Recently added, Title, Author, Recently read, Rating.
+4. Grid view (default): covers with title (2 lines, Fraunces) + author
+   (1 line); small status dot; "Lent" ribbon when lent out. Column count
+   from width (2 at <400dp, 3 at 400–600, 4–6 wider). List view toggle:
+   KBookCover sm + title, author, location, status pill, progress bar.
+   Remember the chosen view.
+5. Paginated (100 per page) lazy loading with skeletons; scroll
+   position preserved when returning from a book.
+6. Empty states: no books (empty-shelf illustration + "Add your first
+   book" + "Scan a barcode"), no results ("Nothing matches 'xyz'" +
+   clear filters).
+7. FAB / primary button "Add book" (extended on scroll-top, shrinks to
+   icon when scrolling). On >1000dp: two-pane with Book Detail on the
+   right.
+8. Long-press a book: quick actions sheet (Change status, Move, Lend,
+   Delete with undo toast).
+9. Pull-to-refresh is NOT needed (local data is live); use Drift watch
+   streams.
+10. Widget tests: filters combine, empty states, grid column counts at
+    widths 320/400/700/1200.
+----- COPY TO HERE -----
+ Manual checks:
+   • Seed 300 books with a dev-only "seed demo data" button: scroll is
+     smooth on a low-end Android device.
+   • Search "harr" finds Harry Potter titles instantly.
+ Then run DR. Commit: "feat(library): library grid/list, search, filters, sort"
+
+-------------------------------------------------------------------------------
+ P04.3 — Locations
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Build /locations (reached from More and from the location picker).
+1. List of locations with icon (shelf, box, room, bag, office, other),
+   name, and book count. Reorder by drag. Optional parent (e.g. Bedroom →
+   Shelf 2) shown as "Bedroom › Shelf 2"; UI can stay one level deep.
+2. Add / rename with a KBottomSheet (name + icon picker).
+3. Delete: if books are in it, show a sheet "Move 14 books to…" with a
+   location picker or "No location"; perform in one transaction.
+4. Tapping a location opens the Library filtered by it.
+5. Location picker component (used in Add Book, Book Detail, quick
+   actions): searchable, recent locations first, "Create new location"
+   inline.
+6. First run: suggest 3 starter locations (Living room shelf, Bedroom
+   shelf, Storage box) that the user can accept or skip.
+7. Tests: delete with reassignment, cannot create duplicate names
+   (case-insensitive), counts update live.
+----- COPY TO HERE -----
+ Then run DR. Commit: "feat(locations): manage, reorder, reassign on delete"
+
+-------------------------------------------------------------------------------
+ P04.4 — Book Detail
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Build /book/:id, a rich, elegant detail page.
+1. Header: blurred, darkened version of the cover as a soft background
+   gradient (or generated color), hero cover (Hero animation from the
+   library), title (Fraunces, large), subtitle, authors, year · pages.
+2. Status row: segmented status chips (Want / Reading / Finished /
+   Dropped). Setting Reading sets startedOn; Finished sets finishedOn and
+   currentPage = pages, then a small celebration (confetti-like subtle
+   particle burst, reduce-motion aware) and "Rate it?" stars.
+3. Progress card (when Reading): progress bar + "Page 120 of 340",
+   "Update page" button (opens a sheet with a stepper + number field,
+   or percentage if pages unknown), pace prediction (filled in P07).
+4. Location card: "📍 Bedroom › Shelf 2" with Change; if lent out, show
+   "Lent to Priya since 3 Oct · due 20 Nov" with Return and Remind
+   buttons instead.
+5. Actions row: Lend, Move, Edit, Share (share text card), More (delete).
+6. Sections: Quotes (preview of 2 + "See all", filled in P08), Notes
+   (editable inline), Tags (chips + add), Details (ISBN, language,
+   genre, owner, added on).
+7. Edit screen /book/:id/edit reusing the manual form.
+8. Delete with confirm + undo toast (soft delete).
+9. Two-pane mode on wide screens: detail renders inside the right pane
+   without its own back button.
+10. Widget tests: status transitions set dates, finishing sets
+    currentPage, delete + undo restores.
+----- COPY TO HERE -----
+ Manual checks:
+   • Hero animation is smooth from grid → detail → back.
+   • Very long titles (80+ chars) and no-cover books look good.
+ Then run DR and PA for Phase 04.
+ Commit: "feat(book): detail page with status, progress, location, actions"
+
+
+################################################################################
+ PHASE 05 — DON'T BUY IT TWICE (SCAN & MATCH)
+################################################################################
+
+-------------------------------------------------------------------------------
+ P05.1 — Matching engine
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Implement the CheckOwnership use case in features/scan_check/application.
+Input: either a scanned/typed code or free text. Output: sealed
+OwnershipResult:
+  Owned(book, locationLabel) · OtherEdition(book, locationLabel) ·
+  OnWishlist(book) · LentOut(book, loan) · BorrowedIn(book, loan) ·
+  PossibleMatch(candidates up to 3, with similarity score) ·
+  NotInLibrary(isbn?, lookedUpInfo?)
+Pipeline (stop at first confident result):
+  1. If input parses as ISBN → exact isbn13 match.
+  2. Else/then → work-key match using cached lookup (or network if
+     online and fast; never wait more than 1.5s for this step).
+  3. titleKey exact match (from lookedUpInfo title+author, or from the
+     typed text).
+  4. FTS + trigram similarity ≥ 0.8 → PossibleMatch.
+  5. NotInLibrary (include lookedUpInfo so "Add to wishlist" is one tap).
+For a matched book, resolve state in this order: ownership == wishlist
+→ OnWishlist; active loan lent → LentOut; active loan borrowed or
+ownership == borrowed → BorrowedIn; else Owned.
+Steps 1, 3, 4, 5 must work fully offline. Target < 500ms locally.
+Exhaustive unit tests for every state, offline behaviour, a book with no
+ISBN found by title, different edition found by work key, near-duplicate
+titles, soft-deleted books ignored, and a timing test with 5,000 books.
+----- COPY TO HERE -----
+ Commit: "feat(scan): ownership matching engine with 7 result states"
+
+-------------------------------------------------------------------------------
+ P05.2 — Scan screen
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Build the /scan tab — the signature screen. It must feel instant and
+delightful.
+1. ScannerService (mobile + web) using mobile_scanner: EAN-13 only,
+   accept 978/979 prefixes, require the same code on 2 consecutive
+   detections, ignore repeats for 3 seconds. Torch toggle, switch camera,
+   pause when tab not visible or app backgrounded (lifecycle aware).
+2. Full-bleed camera preview with a rounded scan window (radius 20), dim
+   overlay outside, gently pulsing corner marks, hint text "Point at the
+   barcode on the back cover".
+3. Below the camera (always visible): "No barcode? Search by title" →
+   KSearchField that runs CheckOwnership on text with debounce, and
+   "Type ISBN" option.
+4. Result card slides up as a KBottomSheet with a strong, clear verdict:
+   - Owned: big success color check, "You own this", cover, location.
+     Actions: Open book · Scan another.
+   - OtherEdition: "You own another edition" + location.
+   - OnWishlist: "On your wishlist" + "Mark as bought" (switches to owned
+     and asks location).
+   - LentOut: "Lent to Priya" + date + Remind button.
+   - BorrowedIn: "Borrowed from Rahul".
+   - PossibleMatch: "Did you mean…?" list of up to 3 with covers;
+     tapping one shows its verdict; "None of these" → NotInLibrary.
+   - NotInLibrary: "Not in your library" + looked-up cover/title if
+     available + "Add to wishlist" and "I bought it — add to library".
+   Success haptic for owned states, light haptic otherwise.
+5. Permission states: not asked (explain first, then request), denied
+   (friendly screen + open settings), permanently denied, no camera
+   (web/desktop) → title search + type ISBN only.
+6. Web: needs HTTPS; if camera unavailable, show the search UI as the
+   main view with a gentle note.
+7. Widget tests for each result card and each permission state (mock
+   ScannerService).
+----- COPY TO HERE -----
+ Manual checks:
+   • In a "shop" test: scan 10 books you own and 5 you don't, with and
+     without network. Each verdict appears in under a second.
+   • Scan a book with no barcode via title search.
+   • Low light: torch works. Deny permission: friendly screen.
+   • Chrome on Android over HTTPS (deploy preview or ngrok/localhost):
+     camera scanning works.
+ Then run DR and PA for Phase 05.
+ Commit: "feat(scan): scan check screen with title fallback and verdict cards"
+
+
+################################################################################
+ PHASE 06 — LENDING & REMINDERS
+################################################################################
+
+-------------------------------------------------------------------------------
+ P06.1 — Lend, borrow and return
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. Use cases: LendBook, RecordBorrowedBook, ReturnLoan, ExtendDueDate.
+   - LendBook: fails with ConflictFailure if an active loan exists; in
+     one transaction: create Loan (previousLocationId = book.locationId),
+     set book.locationId = null, schedule reminder.
+   - ReturnLoan: in one transaction: set returnedOn, restore locationId
+     from previousLocationId (if that location was deleted, ask the user
+     to pick one), cancel reminder. For borrowed books, offer "Remove
+     from library" or "Keep as wishlist".
+2. Lend/Borrow sheet: toggle Lend / Borrow; person name with
+   autocomplete from past borrowers (KAvatarInitials); phone (optional,
+   with "Pick from contacts" ONLY if it can be done without extra
+   permissions — otherwise manual with country code default +91,
+   configurable); start date (default today); due date quick chips
+   (1 week, 2 weeks, 1 month, custom date picker, none); note.
+3. Normalize phone numbers to international digits for wa.me links.
+4. Book Detail and Library update live ("Lent to …" ribbons).
+5. Tests: conflict on double lend, return restores location, return when
+   previous location deleted, borrowed book flow.
+----- COPY TO HERE -----
+ Then run DR. Commit: "feat(lending): lend, borrow, return with location restore"
+
+-------------------------------------------------------------------------------
+ P06.2 — Reminders and nudges
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. ReminderService interface; MobileReminderService with
+   flutter_local_notifications + timezone + flutter_timezone:
+   - Initialise with local time zone. Android channel "Loan reminders".
+   - INEXACT scheduling (no exact-alarm permission). Fire at 10:00 local
+     on the due date; if overdue, one more on +3 days.
+   - Re-schedule after device reboot (configure the plugin's boot
+     receiver) and after app update.
+   - iOS: max 64 pending — keep only the nearest due reminders and
+     reconcile on every app start (ReminderReconciler).
+   - Ask notification permission only when the first loan with a due
+     date is saved, with an explanation sheet first.
+   - Tapping a notification opens /book/:id.
+2. WebReminderStub: no scheduling; the app shows an "Overdue" banner on
+   open (Library + Loans) instead.
+3. Nudge actions: "Remind on WhatsApp" (wa.me link with pre-filled,
+   polite, l10n message including the book title) and "Send SMS"
+   (sms: link with body). Use url_launcher externalApplication; handle
+   "WhatsApp not installed" gracefully (fall back to SMS/share).
+4. Tests: reconciler keeps nearest 64, cancel on return, message text
+   encoding (emoji, quotes, Hindi text).
+----- COPY TO HERE -----
+ Manual checks:
+   • Create a loan due in 2 minutes (dev-only "test reminder" button that
+     schedules +2 min): notification arrives; tap opens the book.
+   • Reboot the phone with a pending reminder: it still fires.
+   • WhatsApp link opens with message pre-filled.
+ Commit: "feat(reminders): local reminders, reconciliation, WhatsApp/SMS"
+
+-------------------------------------------------------------------------------
+ P06.3 — Loans screen
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Build /loans (from More, and a card on the Reading/home screen):
+- Tabs: Lent out · Borrowed · Overdue (with count badges) · History.
+- Each item: cover sm, title, KAvatarInitials + person, "Since 3 Oct",
+  due date with color (normal / due soon / overdue), quick actions:
+  Return, Remind, Extend.
+- Swipe actions on mobile (return / remind) with undo.
+- Group "History" by month.
+- Empty states per tab with warm copy ("Everyone has returned your
+  books. Nice.").
+- Widget tests for tab counts and overdue coloring with FakeClock.
+----- COPY TO HERE -----
+ Then run DR and PA for Phase 06.
+ Commit: "feat(loans): loans screen with overdue and history"
+
+
+################################################################################
+ PHASE 07 — READING TRACKER & STATS
+################################################################################
+
+-------------------------------------------------------------------------------
+ P07.1 — Reading logs, streaks and pace
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. UpdateProgress use case: new page (or percent if pages unknown);
+   writes a ReadingLog for today with pagesRead = delta (merge multiple
+   updates on the same day into one row); prevents going past total
+   pages; going backwards adjusts without negative logs; reaching the
+   last page offers "Mark as finished".
+2. Streak: consecutive days with reading, alive if today or yesterday
+   has a log. Longest streak too. Use Clock and local dates (no UTC
+   off-by-one bugs at midnight IST).
+3. Pace predictor: remaining pages / average pages per day over the last
+   14 days of days-since-start (not a fixed 14 if the book was started
+   5 days ago). Return null if not enough data. Show "About 6 days left
+   at your pace" or "Finish by Sat, 23 Nov".
+4. Tests: midnight boundary, time zone, same-day merge, backwards edits,
+   pace with few logs, streak broken yesterday vs alive.
+----- COPY TO HERE -----
+ Commit: "feat(tracker): reading logs, streaks, pace prediction"
+
+-------------------------------------------------------------------------------
+ P07.2 — Reading tab ("Now")
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Build the /reading tab as the daily companion screen:
+1. Greeting header in Fraunces ("Good evening" by local time) + streak
+   flame badge ("12-day streak").
+2. "Currently reading" horizontal carousel of large cover cards with
+   progress ring, page count and pace line; a big "Update page" button
+   on each card (opens the quick sheet: stepper + number, +10 / +25
+   quick chips).
+3. Today's summary: pages today, minutes not tracked (don't invent),
+   7-day mini bar chart.
+4. Cards: Overdue loans (if any), Quote of the week (from P08, hidden
+   until quotes exist), "Up next" from Want to read (3 covers).
+5. Empty state when nothing is being read: "Pick your next read" with
+   Want-to-read covers or Add Book.
+6. Widget tests with FakeClock for greeting and streak display.
+----- COPY TO HERE -----
+ Then run DR. Commit: "feat(reading): Now tab with progress and streak"
+
+-------------------------------------------------------------------------------
+ P07.3 — Goals and Stats
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Build the /stats tab with fl_chart, styled to "Ink & Paper" (no default
+chart look: soft gridlines, rounded bars, primary/secondary tones,
+Fraunces numbers):
+1. Yearly goal ring: "18 of 24 books" with ahead/behind pace text; set
+   or edit goal via sheet.
+2. Books finished per month (bar chart, current year, tap a bar for the
+   list).
+3. Pages per week (last 12 weeks, line/area chart).
+4. Top genres and top authors (horizontal bars).
+5. Library facts: total books, owned vs wishlist, lent out now, average
+   rating, longest book read this year.
+6. Year selector.
+7. All aggregates computed with SQL (DAO queries), not in Dart loops.
+8. Empty and partial-data states that still look good.
+9. Tests for aggregate queries; golden test of the stats screen with
+   seeded data.
+----- COPY TO HERE -----
+ Then run DR and PA for Phase 07.
+ Commit: "feat(stats): goals ring and reading charts"
+
+
+################################################################################
+ PHASE 08 — SNAP-A-QUOTE
+################################################################################
+
+-------------------------------------------------------------------------------
+ P08.1 — Quote capture
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. OcrService: MobileOcrService using google_mlkit_text_recognition
+   (Latin script; structure code so Devanagari can be added later),
+   WebOcrService with isSupported = false.
+2. Capture flow from Book Detail or Quotes: Take photo / Choose photo
+   (image_picker) → crop/rotate step (simple built-in cropper, no heavy
+   dependency unless needed) → OCR runs off the UI thread → show the
+   recognised text as selectable LINES; user taps lines to include
+   (highlighted with a marker-pen effect), then edits the text in a
+   field; page number (pre-filled with currentPage) → Save.
+3. On web or if OCR unsupported: go straight to a text field.
+4. Clean OCR output: fix hyphenated line breaks, join lines into
+   paragraphs, normalize quotes and spaces.
+5. Delete the temp image after saving (we store text only, privacy).
+6. Tests: text cleanup function, flow chooses manual entry on web.
+----- COPY TO HERE -----
+ Manual checks:
+   • Photograph a real page in normal light and dim light; selected lines
+     are accurate after cleanup.
+ Commit: "feat(quotes): capture with on-device OCR and manual fallback"
+
+-------------------------------------------------------------------------------
+ P08.2 — Quotes screen and quote cards
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. /quotes: search, filter by book, favourites; each quote shown as an
+   elegant card: large opening quote mark, body in Fraunces italic,
+   "— Title, p. 42" in Inter.
+2. Quote of the week: deterministic pick per ISO week, preferring
+   favourites and not repeating recent picks; shown on the Reading tab.
+3. Share as image: render a beautiful 4:5 quote card (paper texture via
+   subtle noise painter, Fraunces body, small "Kitabkhana" wordmark) to
+   PNG and share via share_plus (download on web). Also share as text.
+4. Edit, delete with undo, mark favourite.
+5. Tests for quote-of-week selection and widget test for the card.
+----- COPY TO HERE -----
+ Then run DR and PA for Phase 08.
+ Commit: "feat(quotes): quotes library, quote of the week, share cards"
+
+
+################################################################################
+ PHASE 09 — DATA OWNERSHIP & SETTINGS
+################################################################################
+
+-------------------------------------------------------------------------------
+ P09.1 — Backup and restore (.kitab)
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. Document the format in docs/BACKUP_FORMAT.md: a zip with
+   manifest.json (formatVersion, appVersion, schemaVersion, deviceId,
+   exportedAt, counts, sha256 for each file), one JSON file per table
+   (including soft-deleted rows), covers/ folder.
+2. ExportBackup use case: runs off the UI thread, streams to a temp
+   file, then share/save (mobile) or download (web). Warn the user that
+   the file contains borrower names and phone numbers.
+3. ImportBackup use case:
+   - Validate zip, manifest, checksums, formatVersion (reject newer
+     versions with a friendly "Update the app first").
+   - ALWAYS create an automatic safety backup first.
+   - Mode Replace: wipe and insert, in ONE transaction.
+   - Mode Merge: upsert by id; newer updatedAt wins; tombstones respected.
+   - Copy covers. Re-run reminder reconciliation afterwards.
+   - Show a summary: "Imported 312 books, 14 loans, 58 quotes".
+   - Any error → full rollback + clear message.
+4. Tests: round trip export → wipe → import equals original; merge
+   conflict resolution; corrupt zip; wrong checksum; newer version.
+----- COPY TO HERE -----
+ Commit: "feat(backup): .kitab export/import with replace and merge"
+
+-------------------------------------------------------------------------------
+ P09.2 — CSV export, auto-backup, erase data
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. CSV export: books.csv (title, authors, isbn13, status, ownership,
+   location, rating, pages, startedOn, finishedOn, tags) and loans.csv;
+   UTF-8 with BOM so Excel shows Hindi/Bengali correctly.
+2. Automatic weekly backups on mobile (on app start if > 7 days since
+   last), keep the last 3, stored in app documents/backups. Show
+   "Last backup: 4 days ago" in Settings with "Back up now".
+3. Erase all data: double confirmation (type "DELETE"), wipes DB, covers,
+   backups, cancels notifications, returns to onboarding.
+4. Tests for CSV escaping (commas, quotes, newlines, Unicode) and
+   auto-backup rotation.
+----- COPY TO HERE -----
+ Commit: "feat(data): CSV export, auto backups, erase all data"
+
+-------------------------------------------------------------------------------
+ P09.3 — More & Settings screens
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. /more: grouped list — Loans, Quotes, Locations, Tags, Settings,
+   About; each with icon and live count where useful.
+2. /settings sections:
+   - Appearance: theme (System/Light/Dark), default library view, grid
+     density.
+   - Reading: yearly goal, reading reminders toggle (optional daily
+     nudge at chosen time).
+   - Lending: default loan length, default country code, reminder time.
+   - Data: Back up now, Restore, Export CSV, auto-backup toggle,
+     Erase all data.
+   - Privacy: plain-language summary ("Your library never leaves this
+     device…"), crash reports toggle (off by default; leave the
+     integration as an interface stub unless I choose a provider).
+   - Help: Export diagnostics (logs + versions, no library contents),
+     Send feedback (mailto).
+   - About: version, licenses (showLicensePage), privacy policy link,
+     "Made with care" footer with wordmark.
+3. Persist settings in AppMeta (typed SettingsRepository + providers).
+4. Widget tests: theme change applies immediately; settings persist
+   across restart.
+----- COPY TO HERE -----
+ Then run DR and PA for Phase 09.
+ Commit: "feat(settings): more and settings screens"
+
+
+################################################################################
+ PHASE 10 — POLISH, ACCESSIBILITY, ANY-DEVICE QA, PERFORMANCE
+################################################################################
+
+-------------------------------------------------------------------------------
+ P10.1 — Onboarding and first run
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Create a 3-step onboarding (skippable, shown once):
+1. "Know what you own" — illustration of a shelf.
+2. "Never buy it twice" — illustration of a scanner frame over a book.
+3. "Your books stay with you" — privacy promise, no account needed.
+Then: set up first locations (accept starter suggestions or skip) and
+"Add your first book" / "Restore from backup" / "Explore". Page
+indicator dots, Fraunces headlines, illustrations drawn with
+CustomPainter in theme colors, subtle parallax on swipe (reduce-motion
+aware). Works in landscape and on tablets (centred, max width 520).
+----- COPY TO HERE -----
+ Then run DR. Commit: "feat(onboarding): first-run experience"
+
+-------------------------------------------------------------------------------
+ P10.2 — Motion and micro-interactions
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Polish motion across the app, consistently and subtly:
+- Hero covers (library → detail → scan result).
+- Staggered fade/slide-in for grid and list items on first load only.
+- Animated progress bars/rings when values change.
+- Status chip changes animate color and icon.
+- Bottom sheets with spring-like curve; result card "pop" on scan match.
+- Finishing a book: tasteful particle burst.
+- Button press scale (0.97) on primary actions.
+- Haptics as defined in the Master Context.
+- One central MotionPrefs provider that respects
+  MediaQuery.disableAnimations and reduce-motion: all animations
+  degrade to simple fades or none.
+Profile on a low-end Android in profile mode; no animation may drop
+below 60fps. Report the results.
+----- COPY TO HERE -----
+ Commit: "feat(ui): motion and micro-interactions"
+
+-------------------------------------------------------------------------------
+ P10.3 — Accessibility pass
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Audit and fix accessibility on every screen:
+- Semantics labels for covers, icons, charts (chart summaries as text),
+  progress rings ("18 of 24 books, 75 percent").
+- Logical focus order; keyboard navigation and visible focus rings on
+  web; Escape closes sheets on web.
+- Tap targets ≥ 48dp; nothing relies on color alone (status uses icon +
+  text too).
+- Contrast AA in both themes (extend the contrast test to all tokens
+  used for text and icons).
+- 200% text scale: no clipped or overflowing text anywhere; layouts
+  switch to vertical where needed.
+- Screen reader walkthrough script for TalkBack and VoiceOver: add a
+  book, scan, lend, return.
+- Add flutter_test accessibility guidelines checks
+  (androidTapTargetGuideline, iOSTapTargetGuideline,
+  labeledTapTargetGuideline, textContrastGuideline) to widget tests of
+  every main screen.
+----- COPY TO HERE -----
+ Manual checks:
+   • TalkBack (Android) and VoiceOver (iOS) walkthrough passes.
+ Commit: "fix(a11y): full accessibility pass"
+
+-------------------------------------------------------------------------------
+ P10.4 — Any-device QA and golden tests
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Make the app look right on every phone and screen.
+1. Create a golden test matrix for every main screen (Library grid,
+   Library list, Add Book, Book Detail, Scan result cards, Loans,
+   Reading, Stats, Quotes, Settings, Onboarding):
+   sizes 320x568, 360x800, 412x915, 430x932, 600x960 (small tablet /
+   foldable inner), 800x1280, 1280x800 (landscape tablet), 1440x900
+   (web) × light/dark × text scale 1.0 and 2.0 (2.0 at 360x800 only).
+   Use bundled fonts in tests so goldens are stable.
+2. Fix every problem found: overflow, cramped spacing, orphaned
+   elements, bad wrapping, unreadable charts, wasted space on tablets
+   (use max content widths ~720 for forms/reading content).
+3. Check notch/punch-hole/gesture-bar insets, landscape on phones,
+   split-screen/multi-window on Android, and foldable hinge avoidance.
+4. Document the matrix in docs/QA.md.
+----- COPY TO HERE -----
+ Manual checks: run the APPENDIX device matrix on real devices/emulators.
+ Commit: "test(ui): golden matrix across devices and fixes"
+
+-------------------------------------------------------------------------------
+ P10.5 — Performance benchmark
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. Dev-only seeder: 5,000 books (varied titles incl. Hindi/Bengali),
+   300 loans, 20,000 reading logs, 500 quotes.
+2. Benchmarks (tests + profile-mode measurements):
+   - Cold start < 2s on low-end Android (report actual).
+   - FTS search < 50ms; CheckOwnership < 500ms; stats queries < 200ms.
+   - Library scroll: no janky frames (report raster/UI frame times).
+   - Memory: covers cached at thumbnail size (cacheWidth/cacheHeight).
+3. Fix hotspots: add missing indexes, select only needed columns,
+   avoid rebuilding whole lists (select/ family providers), move work to
+   isolates, const widgets, RepaintBoundary on covers if useful.
+4. Check app size (flutter build apk --analyze-size) and remove unused
+   assets/dependencies; split ABIs for APK builds.
+Report before/after numbers.
+----- COPY TO HERE -----
+ Commit: "perf: benchmarks and optimisations for large libraries"
+
+-------------------------------------------------------------------------------
+ P10.6 — End-to-end integration tests
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Write integration_test/ flows (with fake platform services for camera,
+OCR, notifications, and a fake Open Library client):
+1. Onboarding → add 3 books (ISBN, title search, manual no-ISBN) →
+   library shows them with locations.
+2. Scan an owned ISBN → "You own this" with location; title-search a
+   no-ISBN book → found.
+3. Lend a book → shows "Lent to X" → scan shows LentOut → return →
+   location restored.
+4. Update progress daily over 3 fake days → streak 3 → finish → stats
+   updated.
+5. Capture a quote (fake OCR) → appears in Quotes and Book Detail.
+6. Export backup → erase all → restore → everything back (counts match).
+Add them to CI (Android emulator job via a maintained action, and
+`flutter drive`/web where feasible).
+----- COPY TO HERE -----
+ Commit: "test(e2e): integration tests for core journeys"
+
+-------------------------------------------------------------------------------
+ P10.7 — Security & privacy hardening
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. Android: allowBackup=false (or restrict via dataExtractionRules to
+   exclude the DB and backups), no cleartext traffic, remove unused
+   permissions (verify the merged manifest), no SCHEDULE_EXACT_ALARM.
+2. iOS: only needed Info.plist usage strings, written warmly and
+   clearly; App Transport Security default (HTTPS only).
+3. Web: Content-Security-Policy suitable for Flutter web + WASM; HTTPS
+   only; no third-party scripts except those required by plugins.
+4. Logs: verify no titles/names/phones at info+ level; diagnostics
+   export excludes library content.
+5. Dependencies: review licenses; run `flutter pub outdated` and update
+   safely.
+6. Write docs/PRIVACY.md and a public privacy policy page (markdown →
+   HTML for hosting) stating: data stays on device, camera use, Open
+   Library requests (ISBN/title only), no analytics, optional crash
+   reports, how to export/delete data.
+----- COPY TO HERE -----
+ Then run PA for Phase 10.
+ Commit: "chore(security): privacy hardening and policy"
+
+
+################################################################################
+ PHASE 11 — RELEASE
+################################################################################
+
+-------------------------------------------------------------------------------
+ P11.1 — App icon, splash and store assets
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. Design the app icon as code-generated vector art (so it's editable):
+   an elegant open book or book spine on a terracotta (#B4532A) rounded
+   background with an ivory mark; looks good at 48px; Android adaptive
+   icon (foreground + background + monochrome for themed icons), iOS
+   1024 icon (no transparency), web favicons/PWA icons (192, 512,
+   maskable). Use flutter_launcher_icons to generate.
+2. Native splash (flutter_native_splash): ivory background, small mark,
+   dark-mode variant; Android 12+ splash API.
+3. Store screenshots: create a dev-only "screenshot mode" with seeded,
+   attractive demo data (public-domain classics) and frame templates
+   with short captions in Fraunces: "Never buy a book twice", "Know
+   where every book lives", "Lend without losing", "Keep the lines you
+   love", "Your books, your device". Sizes for phone (Play + App Store)
+   and iPad.
+4. Store text: short description (80 chars), full description, keywords,
+   release notes — in a docs/store/ folder.
+----- COPY TO HERE -----
+ Commit: "chore(release): icon, splash, store assets"
+
+-------------------------------------------------------------------------------
+ P11.2 — Android release
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. Release signing via key.properties (gitignored) and an upload keystore;
+   give me exact keytool commands.
+2. Enable R8/minify and resource shrinking with keep rules required by
+   ML Kit and other plugins; test the release build thoroughly.
+3. versionName/versionCode from pubspec; build the app bundle:
+   flutter build appbundle --release --flavor prod -t lib/main_prod.dart
+4. Play Console checklist: app content, Data safety ("No data
+   collected"; camera used on-device), content rating, target audience,
+   privacy policy URL, closed testing track and the current tester
+   requirements for new personal accounts (check current policy).
+----- COPY TO HERE -----
+ Manual checks:
+   • Install the release build on a low-end and a recent Android phone;
+     run the full manual regression (PART E).
+ Commit: "chore(android): release signing and shrinking"
+
+-------------------------------------------------------------------------------
+ P11.3 — iOS release (needs a Mac or a macOS CI runner)
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. Bundle IDs, signing (automatic), capabilities (notifications only).
+2. Deployment target as required by plugins; Podfile settings for ML
+   Kit; exclude unneeded architectures for simulators if required.
+3. Build: flutter build ipa --release --flavor prod -t lib/main_prod.dart
+4. fastlane setup for TestFlight upload (App Store Connect API key in
+   CI secrets).
+5. App Store Connect checklist: privacy nutrition labels (Data Not
+   Collected), screenshots, description, review notes explaining offline
+   use and camera purpose.
+----- COPY TO HERE -----
+ Commit: "chore(ios): release configuration and fastlane"
+
+-------------------------------------------------------------------------------
+ P11.4 — Web / PWA release
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+1. PWA manifest: name, short_name, theme_color #B4532A, background_color
+   #FBF7F0, display standalone, icons incl. maskable.
+2. Ensure drift WASM/worker files and mobile_scanner web assets are
+   served with correct MIME types and headers (application/wasm;
+   COOP/COEP only if required by the chosen drift web mode — explain).
+3. Build: flutter build web --release -t lib/main_prod.dart (WASM build
+   if all plugins support it; otherwise JS — explain the choice).
+4. Deploy to an HTTPS host (Firebase Hosting / Netlify / Vercel /
+   Cloudflare Pages — pick one and give config files) with SPA rewrites
+   for go_router paths and long cache headers for hashed assets.
+5. Test install-to-home-screen on Android Chrome and iOS Safari.
+----- COPY TO HERE -----
+ Commit: "chore(web): PWA config and hosting"
+
+-------------------------------------------------------------------------------
+ P11.5 — Release pipeline
+-------------------------------------------------------------------------------
+----- COPY FROM HERE -----
+Create .github/workflows/release.yml triggered by tags v*.*.*:
+- Run the full CI suite first (fail fast).
+- Android: build signed AAB (secrets: keystore base64, passwords) and
+  upload to Play internal track (fastlane supply or a maintained action).
+- iOS: macOS runner, build IPA, upload to TestFlight via fastlane.
+- Web: build and deploy to production hosting.
+- Create a GitHub Release with the changelog generated from
+  conventional commits and attach the AAB and web build zip.
+Document the release process step by step in docs/RELEASING.md,
+including staged rollout (10% → 50% → 100%) and how to halt a rollout.
+----- COPY TO HERE -----
+ Then run PA for Phase 11.
+ Commit: "ci(release): automated release pipeline"
+
+
+================================================================================
+ PART E — FINAL RELEASE REGRESSION (paste before every release)
+================================================================================
+----- COPY FROM HERE -----
+We are preparing release [VERSION]. Run a full release regression:
+1. Full Verify checklist (prompt V) on a clean clone.
+2. All unit, widget, golden and integration tests; report counts.
+3. Migration tests from every previous schema version.
+4. Build release artifacts for Android (prod), iOS (prod, if Mac), Web.
+5. Produce a manual regression script for me covering every feature in
+   BUILD_LOG.md, ordered by risk, with expected results, to run on the
+   APPENDIX device matrix in light/dark and at 200% text.
+6. Review CHANGELOG.md and store release notes for this version.
+7. List any open "Known issues" and whether each blocks the release.
+Do not mark the release ready until every P1/P2 item is fixed and V is
+green.
+----- COPY TO HERE -----
+
+ Manual regression highlights (always do these yourself):
+   [ ] Fresh install → onboarding → add books 4 ways
+   [ ] Scan owned / wishlist / lent / borrowed / other edition / unknown
+   [ ] Title search for a book without a barcode
+   [ ] Lend → reminder fires → WhatsApp link → return restores location
+   [ ] Update progress → streak → finish → stats
+   [ ] Capture quote via camera (mobile) and text (web) → share card
+   [ ] Backup → erase → restore (replace) and merge on second device
+   [ ] Airplane mode: everything except online lookup works
+   [ ] Light/dark, 200% text, 320dp phone, tablet, landscape, Chrome,
+       Safari, installed PWA
+   [ ] Upgrade test: install previous release, add data, upgrade → data
+       intact
+
+
+================================================================================
+ APPENDIX
+================================================================================
+
+ A. DEFINITION OF GREEN (all must pass before committing a step)
+ ---------------------------------------------------------------
+   [ ] dart run build_runner build --delete-conflicting-outputs
+   [ ] dart format --set-exit-if-changed lib test integration_test
+   [ ] flutter analyze → 0 issues
+   [ ] flutter test → all pass (goldens included)
+   [ ] Android debug build (dev flavor) builds and runs
+   [ ] Web build builds and runs in Chrome
+   [ ] iOS build (if Mac) builds and runs
+   [ ] Manual checks for this step pass on the device matrix below
+   [ ] Light and dark mode correct
+   [ ] No overflow at 200% text scale; 320dp width OK; landscape OK
+   [ ] No new hard-coded strings/colors/sizes
+   [ ] BUILD_LOG.md updated
+
+ B. DEVICE TEST MATRIX (minimum)
+ -------------------------------
+   Phones
+     • Small Android (≈320–360dp wide, low-end, older Android version)
+     • Standard Android (≈393–412dp, recent Android, gesture navigation)
+     • Large phone (≈430dp+), e.g. a "Max/Plus/Ultra" size
+     • iPhone (recent iOS), notch or Dynamic Island
+     • iPhone SE-size (small iOS) if available (simulator is fine)
+   Larger
+     • Foldable (emulator: inner and outer display, fold/unfold live)
+     • Android tablet or iPad, portrait and landscape
+   Web
+     • Chrome desktop, Safari desktop, Firefox desktop
+     • Chrome on Android, Safari on iPhone, installed PWA
+   Settings to vary
+     • Light / dark · text scale 1.0 / 1.3 / 2.0 · reduce motion on
+     • Airplane mode · camera permission denied · notifications denied
+     • Language set to Hindi (layout check once translations exist)
+
+ C. COMMIT CONVENTIONS
+ ---------------------
+   feat: new feature        fix: bug fix          perf: performance
+   test: tests only         docs: documentation   chore: tooling/release
+   ci: pipelines            refactor: no behaviour change
+   Format: "<type>(<scope>): <short summary>"  e.g. "fix(scan): debounce
+   duplicate detections". One green step = one commit.
+
+ D. WHEN YOU ARE STUCK
+ ---------------------
+   • Same error 3 times → use F with the "third attempt" line.
+   • Build tool/version conflicts → ask: "Show `flutter doctor -v`,
+     `flutter pub deps`, and resolve the version conflict with the
+     smallest change; explain each version you choose."
+   • Plugin platform setup errors (Gradle, CocoaPods, web assets) →
+     ask: "Read the plugin's current README setup section and compare
+     it line by line with our android/, ios/ and web/ config."
+   • Something looks off but no error → use DR with a screenshot
+     description.
+   • Before any big refactor → commit, then ask for a plan first,
+     approve it, then implement.
+
+================================================================================
+ END — Kitabkhana build prompts
+================================================================================
