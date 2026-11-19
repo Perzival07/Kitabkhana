@@ -22,6 +22,7 @@ part 'app_database.g.dart';
     BookTags,
     LookupCache,
     AppMeta,
+    CoverBlobs,
   ],
   include: <String>{'search.drift'},
 )
@@ -36,12 +37,17 @@ class AppDatabase extends _$AppDatabase {
   /// Bump when tables change and add a migration step in `onUpgrade`.
   /// Must stay a literal: `drift_dev make-migrations` reads it statically.
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) => m.createAll(),
-    onUpgrade: stepByStep(),
+    onUpgrade: stepByStep(
+      // v2: cover images for platforms without a file system (web).
+      from1To2: (m, schema) async {
+        await m.createTable(schema.coverBlobs);
+      },
+    ),
     beforeOpen: (details) async {
       // Must run outside a transaction, on every open.
       await customStatement('PRAGMA foreign_keys = ON');

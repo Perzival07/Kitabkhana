@@ -29,6 +29,7 @@ class KBookCover extends StatelessWidget {
     required this.title,
     this.author = '',
     this.localPath,
+    this.localImage,
     this.imageUrl,
     this.size,
     this.heroTag,
@@ -40,6 +41,7 @@ class KBookCover extends StatelessWidget {
     required this.title,
     this.author = '',
     this.localPath,
+    this.localImage,
     this.imageUrl,
     this.heroTag,
     super.key,
@@ -48,6 +50,10 @@ class KBookCover extends StatelessWidget {
   final String title;
   final String author;
   final String? localPath;
+
+  /// A resolved local image (e.g. from the cover store). Preferred over
+  /// [localPath] and [imageUrl].
+  final ImageProvider? localImage;
   final String? imageUrl;
   final KCoverSize? size;
   final Object? heroTag;
@@ -106,7 +112,10 @@ class KBookCover extends StatelessWidget {
     ImageProvider? provider;
     final path = localPath;
     final url = imageUrl;
-    if (!kIsWeb && path != null && path.isNotEmpty) {
+    final local = localImage;
+    if (local != null) {
+      provider = ResizeImage(local, width: cacheWidth);
+    } else if (!kIsWeb && path != null && path.isNotEmpty) {
       provider = ResizeImage(FileImage(File(path)), width: cacheWidth);
     } else if (url != null && url.isNotEmpty) {
       provider = ResizeImage(NetworkImage(url), width: cacheWidth);

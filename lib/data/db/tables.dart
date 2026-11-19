@@ -135,6 +135,19 @@ class BookTags extends Table with SyncColumns {
   TextColumn get tagId => text().references(Tags, #id)();
 }
 
+/// Processed cover images on platforms without a file system (web). Device
+/// local, not synced. Rows disappear with their book.
+@DataClassName('CoverBlobRow')
+class CoverBlobs extends Table {
+  TextColumn get bookId =>
+      text().references(Books, #id, onDelete: KeyAction.cascade)();
+  BlobColumn get bytes => blob()();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {bookId};
+}
+
 /// Device-local cache of Open Library lookups. Not synced or backed up.
 @DataClassName('LookupCacheRow')
 class LookupCache extends Table {

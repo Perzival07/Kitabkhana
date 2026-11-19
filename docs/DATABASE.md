@@ -2,15 +2,16 @@
 
 Drift (SQLite). Native: SQLite via FFI in WAL mode. Web: `sqlite3.wasm` plus `drift_worker.js`.
 
-## Schema (v1)
+## Schema (v2)
 
 Synced tables carry `SyncColumns`: `id` (UUIDv7 text), `createdAt`, `updatedAt`, `deletedAt`
 (soft delete), `rev`. Repositories set timestamps from the app `Clock` and bump `rev` on each write.
 
 `Books`, `Locations`, `Loans`, `ReadingLogs`, `Quotes`, `Goals`, `Tags`, `BookTags`.
 
-Two tables are device-local and deliberately have **no** `SyncColumns`: `LookupCache` (Open Library
-cache, keyed by `key`) and `AppMeta` (settings key/value). They are not backed up or merged.
+Three tables are device-local and deliberately have **no** `SyncColumns`: `LookupCache` (Open Library
+cache, keyed by `key`), `AppMeta` (settings key/value) and `CoverBlobs` (v2: processed cover JPEGs for
+web, one row per book, cascade-deleted with the book). They are not merged between devices.
 
 Timestamps are stored as ISO-8601 text. Calendar dates (`startedOn`, `finishedOn`, loan dates,
 reading-log `date`) are `yyyy-MM-dd` text via `DateOnlyConverter`, so they never shift with time zones.
@@ -61,3 +62,10 @@ needs cross-origin isolation headers; revisit in P11.4. Re-download both files w
    updates `lib/data/db/schema_versions.dart` and generated test helpers).
 4. Fill in the new `fromXToY` step in `migrationSteps()` (called by `stepByStep()`).
 5. Add a migration test using `SchemaVerifier` (see `test/drift/default/migration_test.dart`).
+
+## Version history
+
+- **v1**: initial schema.
+- **v2**: `cover_blobs` table (web cover storage). Migrated with `m.createTable` in `from1To2`,
+  covered by `test/drift/default/migration_test.dart` (data survives, new table works, cascade
+  works) and verified on a real persisted browser database.

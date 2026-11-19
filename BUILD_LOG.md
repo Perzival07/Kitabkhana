@@ -19,7 +19,7 @@ Tick a task only when it is green (see Definition of Green).
 
 ## Phase 03 — Book data
 - [x] P03.1
-- [ ] P03.2
+- [x] P03.2
 
 ## Phase 04 — Library
 - [ ] P04.1
@@ -82,3 +82,7 @@ Tick a task only when it is green (see Definition of Green).
 - (P02 audit, P3) `mapDbError` falls back to matching SQLite message text for constraint errors (Drift exposes no typed exception); business rules use explicit pre-checks instead.
 - (P02 audit, P3) The plan's P02.3 was built after P02.4 because `Isbn13` and `TitleKey` are needed by the domain.
 - Repositories double as DAOs (queries live in `Drift*Repository`), rather than separate `DatabaseAccessor` classes.
+- (P03 audit, P3) On web `compute` runs on the main thread, so processing a very large photo can briefly block the UI.
+- (P03 audit, P3) Hard-deleting a book on mobile does not yet delete its cover file (there is no purge flow until "Erase all data", P09.2); `CoverStore.delete` exists and web cascades in the database.
+- (P03 audit, P3) Cover downloads are not rate limited (covers.openlibrary.org by id is not limited); add a limiter if bulk import is ever added.
+- Schema is now v2 (cover_blobs); migration tested incl. on a real persisted browser DB.
