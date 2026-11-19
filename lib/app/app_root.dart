@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../l10n/app_localizations.dart';
+import '../ui/gallery/dev_gallery_screen.dart';
 import 'app_config.dart';
 import 'theme/app_theme.dart';
 import 'theme/system_ui.dart';
@@ -22,6 +24,11 @@ class AppRoot extends ConsumerWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: mode,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      routes: <String, WidgetBuilder>{
+        if (config.isDev) '/dev/gallery': (_) => const DevGalleryScreen(),
+      },
       builder: (context, child) {
         final overlay = systemOverlayFor(Theme.of(context).brightness);
         return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -31,6 +38,14 @@ class AppRoot extends ConsumerWidget {
       },
       home: Builder(
         builder: (context) => Scaffold(
+          floatingActionButton: config.isDev
+              ? FloatingActionButton(
+                  tooltip: 'Component gallery (dev)',
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed('/dev/gallery'),
+                  child: const Icon(Icons.widgets_rounded),
+                )
+              : null,
           body: Center(
             child: Text(
               'Kitabkhana',

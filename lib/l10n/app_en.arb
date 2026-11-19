@@ -1,0 +1,21 @@
+{
+  "@@locale": "en",
+  "coverSemantics": "Cover of {title} by {author}",
+  "@coverSemantics": {
+    "placeholders": { "title": { "type": "String" }, "author": { "type": "String" } }
+  },
+  "coverSemanticsNoAuthor": "Cover of {title}",
+  "@coverSemanticsNoAuthor": {
+    "placeholders": { "title": { "type": "String" } }
+  },
+  "statusWant": "Want to read",
+  "statusReading": "Reading",
+  "statusFinished": "Finished",
+  "statusDropped": "Dropped",
+  "seeAll": "See all",
+  "loading": "Loading",
+  "percentSemantics": "{percent} percent",
+  "@percentSemantics": {
+    "placeholders": { "percent": { "type": "int" } }
+  }
+}

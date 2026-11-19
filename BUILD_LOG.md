@@ -8,7 +8,7 @@ Tick a task only when it is green (see Definition of Green).
 
 ## Phase 01 — Design system & shell
 - [x] P01.1
-- [ ] P01.2
+- [x] P01.2
 - [ ] P01.3
 
 ## Phase 02 — Core & data

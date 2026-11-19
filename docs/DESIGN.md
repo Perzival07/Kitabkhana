@@ -38,3 +38,17 @@ Supports system text scaling up to 200%.
 
 compact < 600dp (bottom nav), medium 600-1000dp (rail), expanded > 1000dp (rail + two-pane).
 Minimum tap target 48x48dp; WCAG AA contrast.
+
+## Components
+
+All K widgets live in `lib/ui/` (barrel: `lib/ui/ui.dart`). In the dev flavor, `/dev/gallery`
+shows every component with dark-mode and text-scale (1.0/1.3/2.0) toggles. The gallery's own
+copy is intentionally not localised because it never ships in prod.
+
+## Golden tests
+
+Goldens are tagged `golden` and generated on macOS. CI (Linux) runs
+`flutter test --exclude-tags golden` because font rasterisation differs between platforms.
+Regenerate locally with `flutter test --update-goldens test/ui/goldens`.
+`test/flutter_test_config.dart` loads the bundled fonts and the Material icon font so goldens
+show real glyphs.

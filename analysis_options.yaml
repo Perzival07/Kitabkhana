@@ -12,6 +12,7 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.drift.dart"
     - "**/*.freezed.dart"
+    - "lib/l10n/app_localizations*.dart"
     - "build/**"
     - android/**
     - ios/**
