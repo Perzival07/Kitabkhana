@@ -113,3 +113,5 @@ Tick a task only when it is green (see Definition of Green).
 - (P05.2) iOS: `permission_handler` needs the camera macro enabled in `ios/Podfile` (`PERMISSION_CAMERA=1`) and `NSCameraUsageDescription` (already present). Not verifiable here (no Xcode).
 - (P05.2) Not verified on a device: the 10-owned/5-unowned shop test with and without network, low-light torch, deny-permission flow, Chrome on Android over HTTPS.
 - (Android) The local Android build needs the Android 37 SDK platform (the project targets it); the emulator setup was abandoned at your request, so no Android build has been run.
+- (PA Phase 05, P3) The verdict sheet resizes without animation (an animated resize crashed when the sheet closed mid-animation). The scan overlay's pulse stops under reduce-motion. Title search can open the verdict sheet while typing once 3 letters are in; it never opens a second sheet over the first.
+- (PA Phase 05, P3) 200% text, landscape and foldable layouts of the Scan tab are not verified (no device); the 360dp goldens (light and dark) are checked.
