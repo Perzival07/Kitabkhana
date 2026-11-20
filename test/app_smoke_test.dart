@@ -7,7 +7,8 @@ void main() {
   testWidgets('app boots into the Library tab', (tester) async {
     final c = await pumpRouterApp(tester);
     expect(locationOf(c), '/library');
-    expect(find.text('Your library'), findsOneWidget);
+    // The large app bar shows the title in its expanded and collapsed forms.
+    expect(find.text('Your library'), findsWidgets);
   });
 
   test('flavors expose the expected names', () {

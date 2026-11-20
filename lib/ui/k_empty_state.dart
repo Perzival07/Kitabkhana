@@ -13,6 +13,8 @@ class KEmptyState extends StatelessWidget {
     this.body,
     this.actionLabel,
     this.onAction,
+    this.secondaryLabel,
+    this.onSecondary,
     this.illustrationSize = 160,
     super.key,
   }) : assert(
@@ -25,6 +27,10 @@ class KEmptyState extends StatelessWidget {
   final String? body;
   final String? actionLabel;
   final VoidCallback? onAction;
+
+  /// An optional quieter second action under the main one.
+  final String? secondaryLabel;
+  final VoidCallback? onSecondary;
   final double illustrationSize;
 
   @override
@@ -78,6 +84,14 @@ class KEmptyState extends StatelessWidget {
                     if (actionLabel != null) ...<Widget>[
                       const SizedBox(height: KSpacing.xl),
                       KButton(label: actionLabel!, onPressed: onAction),
+                    ],
+                    if (secondaryLabel != null) ...<Widget>[
+                      const SizedBox(height: KSpacing.sm),
+                      KButton(
+                        label: secondaryLabel!,
+                        onPressed: onSecondary,
+                        variant: KButtonVariant.text,
+                      ),
                     ],
                   ],
                 ),

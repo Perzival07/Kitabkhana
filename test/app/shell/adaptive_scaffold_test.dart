@@ -18,7 +18,10 @@ void main() {
     expect(find.byType(NavigationBar), findsOneWidget);
     expect(find.byType(NavigationRail), findsNothing);
     for (final l in <String>['Library', 'Scan', 'Reading', 'Stats', 'More']) {
-      expect(find.text(l), findsOneWidget);
+      expect(
+        find.descendant(of: find.byType(NavigationBar), matching: find.text(l)),
+        findsOneWidget,
+      );
     }
   });
 
@@ -90,7 +93,12 @@ void main() {
 
   testWidgets('back on another tab returns to the first tab', (t) async {
     final c = await pumpRouterApp(t);
-    await t.tap(find.text('Reading'));
+    await t.tap(
+      find.descendant(
+        of: find.byType(NavigationBar),
+        matching: find.text('Reading'),
+      ),
+    );
     await t.pumpAndSettle();
     expect(locationOf(c), '/reading');
     await t.binding.handlePopRoute();

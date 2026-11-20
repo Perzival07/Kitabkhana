@@ -40,7 +40,7 @@
   "navStats": "Stats",
   "navMore": "More",
   "libraryTitle": "Your library",
-  "libraryEmptyBody": "Your books will live here. Add the first one soon.",
+  "libraryEmptyBody": "Add your first book and start building your shelf.",
   "scanTitle": "Never buy it twice",
   "scanEmptyBody": "Scan a barcode to check whether you already own a book.",
   "readingTitle": "Now reading",
@@ -180,5 +180,96 @@
       }
     }
   },
-  "tryAgain": "Try again"
+  "tryAgain": "Try again",
+  "libraryBooksCount": "{count, plural, one{{count} book} other{{count} books}}",
+  "@libraryBooksCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryLentOutCount": "{count} lent out",
+  "@libraryLentOutCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "librarySearchHint": "Search title or author",
+  "libraryScanTooltip": "Scan a barcode",
+  "filterAll": "All",
+  "filterWishlist": "Wishlist",
+  "filterLentOut": "Lent out",
+  "filterBorrowed": "Borrowed",
+  "filterLocation": "Location",
+  "filterTag": "Tag",
+  "filterAnyLocation": "Any location",
+  "filterAnyTag": "Any tag",
+  "filterNoTags": "No tags yet",
+  "sortTooltip": "Sort",
+  "sortRecentlyAdded": "Recently added",
+  "sortTitle": "Title",
+  "sortAuthor": "Author",
+  "sortRecentlyRead": "Recently read",
+  "sortRating": "Rating",
+  "viewAsGrid": "Show as grid",
+  "viewAsList": "Show as list",
+  "addBook": "Add book",
+  "libraryEmptyTitle": "Your shelf is empty",
+  "libraryAddFirst": "Add your first book",
+  "libraryScanBarcode": "Scan a barcode",
+  "libraryNoResultsQuery": "Nothing matches “{query}”",
+  "@libraryNoResultsQuery": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryNoResultsFilters": "Nothing matches these filters",
+  "libraryClearFilters": "Clear filters",
+  "lentRibbon": "Lent",
+  "quickChangeStatus": "Change status",
+  "quickMove": "Move to a location",
+  "quickDelete": "Delete",
+  "bookDeleted": "“{title}” deleted",
+  "@bookDeleted": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "undo": "Undo",
+  "bookMoved": "Moved “{title}”",
+  "@bookMoved": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "bookStatusChanged": "Marked “{title}” {status}",
+  "@bookStatusChanged": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "seedDemoData": "Add 300 demo books",
+  "seedDemoDone": "{count} demo books added",
+  "@seedDemoDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryLoadFailed": "Couldn't load your books"
 }

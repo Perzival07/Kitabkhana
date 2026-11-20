@@ -199,7 +199,7 @@ abstract class AppLocalizations {
   /// No description provided for @libraryEmptyBody.
   ///
   /// In en, this message translates to:
-  /// **'Your books will live here. Add the first one soon.'**
+  /// **'Add your first book and start building your shelf.'**
   String get libraryEmptyBody;
 
   /// No description provided for @scanTitle.
@@ -813,6 +813,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again'**
   String get tryAgain;
+
+  /// No description provided for @libraryBooksCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} book} other{{count} books}}'**
+  String libraryBooksCount(int count);
+
+  /// No description provided for @libraryLentOutCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} lent out'**
+  String libraryLentOutCount(int count);
+
+  /// No description provided for @librarySearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search title or author'**
+  String get librarySearchHint;
+
+  /// No description provided for @libraryScanTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a barcode'**
+  String get libraryScanTooltip;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// No description provided for @filterWishlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Wishlist'**
+  String get filterWishlist;
+
+  /// No description provided for @filterLentOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Lent out'**
+  String get filterLentOut;
+
+  /// No description provided for @filterBorrowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Borrowed'**
+  String get filterBorrowed;
+
+  /// No description provided for @filterLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get filterLocation;
+
+  /// No description provided for @filterTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag'**
+  String get filterTag;
+
+  /// No description provided for @filterAnyLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Any location'**
+  String get filterAnyLocation;
+
+  /// No description provided for @filterAnyTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Any tag'**
+  String get filterAnyTag;
+
+  /// No description provided for @filterNoTags.
+  ///
+  /// In en, this message translates to:
+  /// **'No tags yet'**
+  String get filterNoTags;
+
+  /// No description provided for @sortTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort'**
+  String get sortTooltip;
+
+  /// No description provided for @sortRecentlyAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Recently added'**
+  String get sortRecentlyAdded;
+
+  /// No description provided for @sortTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get sortTitle;
+
+  /// No description provided for @sortAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'Author'**
+  String get sortAuthor;
+
+  /// No description provided for @sortRecentlyRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Recently read'**
+  String get sortRecentlyRead;
+
+  /// No description provided for @sortRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating'**
+  String get sortRating;
+
+  /// No description provided for @viewAsGrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Show as grid'**
+  String get viewAsGrid;
+
+  /// No description provided for @viewAsList.
+  ///
+  /// In en, this message translates to:
+  /// **'Show as list'**
+  String get viewAsList;
+
+  /// No description provided for @addBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Add book'**
+  String get addBook;
+
+  /// No description provided for @libraryEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your shelf is empty'**
+  String get libraryEmptyTitle;
+
+  /// No description provided for @libraryAddFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first book'**
+  String get libraryAddFirst;
+
+  /// No description provided for @libraryScanBarcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a barcode'**
+  String get libraryScanBarcode;
+
+  /// No description provided for @libraryNoResultsQuery.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches “{query}”'**
+  String libraryNoResultsQuery(String query);
+
+  /// No description provided for @libraryNoResultsFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches these filters'**
+  String get libraryNoResultsFilters;
+
+  /// No description provided for @libraryClearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear filters'**
+  String get libraryClearFilters;
+
+  /// No description provided for @lentRibbon.
+  ///
+  /// In en, this message translates to:
+  /// **'Lent'**
+  String get lentRibbon;
+
+  /// No description provided for @quickChangeStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Change status'**
+  String get quickChangeStatus;
+
+  /// No description provided for @quickMove.
+  ///
+  /// In en, this message translates to:
+  /// **'Move to a location'**
+  String get quickMove;
+
+  /// No description provided for @quickDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get quickDelete;
+
+  /// No description provided for @bookDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'“{title}” deleted'**
+  String bookDeleted(String title);
+
+  /// No description provided for @undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// No description provided for @bookMoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Moved “{title}”'**
+  String bookMoved(String title);
+
+  /// No description provided for @bookStatusChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked “{title}” {status}'**
+  String bookStatusChanged(String title, String status);
+
+  /// No description provided for @seedDemoData.
+  ///
+  /// In en, this message translates to:
+  /// **'Add 300 demo books'**
+  String get seedDemoData;
+
+  /// No description provided for @seedDemoDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} demo books added'**
+  String seedDemoDone(int count);
+
+  /// No description provided for @libraryLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your books'**
+  String get libraryLoadFailed;
 }
 
 class _AppLocalizationsDelegate

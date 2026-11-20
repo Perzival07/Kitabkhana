@@ -65,7 +65,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get libraryEmptyBody =>
-      'Your books will live here. Add the first one soon.';
+      'Add your first book and start building your shelf.';
 
   @override
   String get scanTitle => 'Never buy it twice';
@@ -411,4 +411,141 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tryAgain => 'Try again';
+
+  @override
+  String libraryBooksCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count books',
+      one: '$count book',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String libraryLentOutCount(int count) {
+    return '$count lent out';
+  }
+
+  @override
+  String get librarySearchHint => 'Search title or author';
+
+  @override
+  String get libraryScanTooltip => 'Scan a barcode';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get filterWishlist => 'Wishlist';
+
+  @override
+  String get filterLentOut => 'Lent out';
+
+  @override
+  String get filterBorrowed => 'Borrowed';
+
+  @override
+  String get filterLocation => 'Location';
+
+  @override
+  String get filterTag => 'Tag';
+
+  @override
+  String get filterAnyLocation => 'Any location';
+
+  @override
+  String get filterAnyTag => 'Any tag';
+
+  @override
+  String get filterNoTags => 'No tags yet';
+
+  @override
+  String get sortTooltip => 'Sort';
+
+  @override
+  String get sortRecentlyAdded => 'Recently added';
+
+  @override
+  String get sortTitle => 'Title';
+
+  @override
+  String get sortAuthor => 'Author';
+
+  @override
+  String get sortRecentlyRead => 'Recently read';
+
+  @override
+  String get sortRating => 'Rating';
+
+  @override
+  String get viewAsGrid => 'Show as grid';
+
+  @override
+  String get viewAsList => 'Show as list';
+
+  @override
+  String get addBook => 'Add book';
+
+  @override
+  String get libraryEmptyTitle => 'Your shelf is empty';
+
+  @override
+  String get libraryAddFirst => 'Add your first book';
+
+  @override
+  String get libraryScanBarcode => 'Scan a barcode';
+
+  @override
+  String libraryNoResultsQuery(String query) {
+    return 'Nothing matches “$query”';
+  }
+
+  @override
+  String get libraryNoResultsFilters => 'Nothing matches these filters';
+
+  @override
+  String get libraryClearFilters => 'Clear filters';
+
+  @override
+  String get lentRibbon => 'Lent';
+
+  @override
+  String get quickChangeStatus => 'Change status';
+
+  @override
+  String get quickMove => 'Move to a location';
+
+  @override
+  String get quickDelete => 'Delete';
+
+  @override
+  String bookDeleted(String title) {
+    return '“$title” deleted';
+  }
+
+  @override
+  String get undo => 'Undo';
+
+  @override
+  String bookMoved(String title) {
+    return 'Moved “$title”';
+  }
+
+  @override
+  String bookStatusChanged(String title, String status) {
+    return 'Marked “$title” $status';
+  }
+
+  @override
+  String get seedDemoData => 'Add 300 demo books';
+
+  @override
+  String seedDemoDone(int count) {
+    return '$count demo books added';
+  }
+
+  @override
+  String get libraryLoadFailed => 'Couldn\'t load your books';
 }

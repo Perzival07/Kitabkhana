@@ -23,7 +23,7 @@ Tick a task only when it is green (see Definition of Green).
 
 ## Phase 04 — Library
 - [x] P04.1
-- [ ] P04.2
+- [x] P04.2
 - [ ] P04.3
 - [ ] P04.4
 
@@ -89,3 +89,9 @@ Tick a task only when it is green (see Definition of Green).
 - (P04.1) Scanning is a basic `mobile_scanner` view, untested on a device (no camera here); Android CAMERA and iOS usage strings were added but not built. The full scanner service arrives in P05.2.
 - (P04.1) Location is a plain dropdown until the picker in P04.3.
 - (P04.1) Widget tests must scroll lazily-built form rows into view and avoid `pumpAndSettle` while a loading spinner is shown (see test/features/add/add_flow_test.dart helpers).
+- (P04.2) Tapping a book opens the `/book/:id` stub route at every width; the two-pane detail pane stays a placeholder until P04.4.
+- (P04.2) The long-press menu has Change status, Move and Delete (with undo). "Lend" is left out until lending is built (Phase 06), rather than shipping a dead action.
+- (P04.2) Search highlights word prefixes case-insensitively but not across accents (the search index folds accents; the highlight does not).
+- (P04.2) Not yet checked on a device: 300-book scroll smoothness (use the dev-only flask button in the Library app bar to seed demo data) and the filter chip row with a screen reader.
+- (P04.2) Library view (grid/list) is stored in `app_meta` under `library.view`, local to the device.
+- (P04.2) Test tip: routed tests get an in-memory database by default (`pumpRouterApp`); golden tests must close the harness in `addTearDown`, not in the test body, or live Library streams stall `db.close()`.

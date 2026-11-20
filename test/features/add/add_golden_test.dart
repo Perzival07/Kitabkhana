@@ -25,6 +25,7 @@ void main() {
         final mode = dark ? 'dark' : 'light';
         testWidgets('add ${sc.key} ${s.key} ($mode)', (t) async {
           final h = AddFlowHarness();
+          addTearDown(h.dispose);
           h.source.onIsbn = () =>
               Ok(BookInfo(title: 'x', isbn13: parseIsbn('9780143127550')));
           final c = await h.pump(t, start: sc.value, size: s.value);
@@ -36,7 +37,6 @@ void main() {
             find.byType(MaterialApp),
             matchesGoldenFile('goldens/add_${sc.key}_${s.key}_$mode.png'),
           );
-          await h.dispose();
         });
       }
     }
