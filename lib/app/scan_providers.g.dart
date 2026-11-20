@@ -53,3 +53,55 @@ final class CheckOwnershipProvider
 }
 
 String _$checkOwnershipHash() => r'4d7c46cec5bf7ad6540fca0b8ae400fa8272517e';
+
+/// Camera permission, overridden in tests.
+
+@ProviderFor(cameraPermission)
+final cameraPermissionProvider = CameraPermissionProvider._();
+
+/// Camera permission, overridden in tests.
+
+final class CameraPermissionProvider
+    extends
+        $FunctionalProvider<
+          CameraPermissionService,
+          CameraPermissionService,
+          CameraPermissionService
+        >
+    with $Provider<CameraPermissionService> {
+  /// Camera permission, overridden in tests.
+  CameraPermissionProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'cameraPermissionProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$cameraPermissionHash();
+
+  @$internal
+  @override
+  $ProviderElement<CameraPermissionService> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  CameraPermissionService create(Ref ref) {
+    return cameraPermission(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CameraPermissionService value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CameraPermissionService>(value),
+    );
+  }
+}
+
+String _$cameraPermissionHash() => r'a1c2d85b52e9bd85cfd9104049580ced9cd4580d';

@@ -7,8 +7,11 @@ import 'package:kitabkhana/app/app_config.dart';
 import 'package:kitabkhana/app/app_config_provider.dart';
 import 'package:kitabkhana/app/app_root.dart';
 import 'package:kitabkhana/app/router/app_router.dart';
+import 'package:kitabkhana/app/scan_providers.dart';
 import 'package:kitabkhana/data/db/database_provider.dart';
+import 'package:kitabkhana/platform/camera_permission/camera_permission.dart';
 
+import 'fake_camera_permission.dart';
 import 'test_db.dart';
 
 /// Pumps the whole routed app at [size]; returns the container.
@@ -17,6 +20,7 @@ Future<ProviderContainer> pumpRouterApp(
   Size size = const Size(400, 800),
   AppConfig config = const AppConfig.dev(),
   double textScale = 1,
+  bool disableAnimations = false,
   List<Override> overrides = const <Override>[],
 }) async {
   tester.view
@@ -26,12 +30,20 @@ Future<ProviderContainer> pumpRouterApp(
   // Screens read the database, so every routed test gets an in-memory one
   // unless it supplies its own.
   final suppliesDb = overrides.any((o) => o.origin == appDatabaseProvider);
+  // The Scan tab asks for camera permission; tests have no camera.
+  final suppliesCamera = overrides.any(
+    (o) => o.origin == cameraPermissionProvider,
+  );
   final db = suppliesDb ? null : createTestDb();
   if (db != null) addTearDown(db.close);
   final container = ProviderContainer(
     overrides: [
       appConfigProvider.overrideWithValue(config),
       if (db != null) appDatabaseProvider.overrideWithValue(db),
+      if (!suppliesCamera)
+        cameraPermissionProvider.overrideWithValue(
+          FakeCameraPermission(current: CameraAccess.unavailable),
+        ),
       ...overrides,
     ],
   );
@@ -43,6 +55,7 @@ Future<ProviderContainer> pumpRouterApp(
         data: MediaQueryData(
           size: size,
           textScaler: TextScaler.linear(textScale),
+          disableAnimations: disableAnimations,
         ),
         child: const AppRoot(),
       ),

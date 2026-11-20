@@ -28,8 +28,8 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P04.4
 
 ## Phase 05 — Scan & match
-- [ ] P05.1
-- [ ] P05.2
+- [x] P05.1
+- [x] P05.2
 
 ## Phase 06 — Lending
 - [ ] P06.1
@@ -107,3 +107,9 @@ Tick a task only when it is green (see Definition of Green).
 - (PA Phase 04) Fixed: content screens (Detail, Edit, Locations) load with skeletons, not spinners; Locations is capped at the 720dp content width on wide screens.
 - (PA Phase 04, P3) The Detail header uses fixed white text over the darkened cover (intentional for contrast on any cover) rather than theme tokens; the status chips wrap onto two lines at 360dp; the Add Book camera screen still shows a spinner while busy (not content).
 - (PA Phase 04, P3) Not verified here (no device): 200% text, landscape and foldable layouts on the new Locations and Detail screens beyond the 320dp overflow test and 360dp goldens.
+- (P05.1) Matching: an ISBN is checked exactly, then by catalogue work key (cache first, network at most 1.5 s), then by title key, then by trigram similarity of at least 0.8 (shortlisted from full-text search). Transposed-letter typos can score under 0.8 and fall through to "not in library".
+- (P05.2) Not built: the "Remind" button on the Lent-out card (arrives with Phase 06 reminders).
+- (P05.2) The "Search by title" field checks after 3 typed letters or on submit. Camera runs only while the Scan tab is showing and the app is in front.
+- (P05.2) iOS: `permission_handler` needs the camera macro enabled in `ios/Podfile` (`PERMISSION_CAMERA=1`) and `NSCameraUsageDescription` (already present). Not verifiable here (no Xcode).
+- (P05.2) Not verified on a device: the 10-owned/5-unowned shop test with and without network, low-light torch, deny-permission flow, Chrome on Android over HTTPS.
+- (Android) The local Android build needs the Android 37 SDK platform (the project targets it); the emulator setup was abandoned at your request, so no Android build has been run.

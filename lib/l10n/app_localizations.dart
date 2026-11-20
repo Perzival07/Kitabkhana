@@ -1545,6 +1545,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Move'**
   String get detailMove;
+
+  /// No description provided for @scanSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by title'**
+  String get scanSearchHint;
+
+  /// No description provided for @scanTypeIsbn.
+  ///
+  /// In en, this message translates to:
+  /// **'Type ISBN'**
+  String get scanTypeIsbn;
+
+  /// No description provided for @scanTorch.
+  ///
+  /// In en, this message translates to:
+  /// **'Torch'**
+  String get scanTorch;
+
+  /// No description provided for @scanSwitchCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch camera'**
+  String get scanSwitchCamera;
+
+  /// No description provided for @scanPermTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Let Kitabkhana use the camera'**
+  String get scanPermTitle;
+
+  /// No description provided for @scanPermBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The camera only reads barcodes on this device. Nothing is recorded or uploaded.'**
+  String get scanPermBody;
+
+  /// No description provided for @scanPermAllow.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow camera'**
+  String get scanPermAllow;
+
+  /// No description provided for @scanDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The camera is off'**
+  String get scanDeniedTitle;
+
+  /// No description provided for @scanDeniedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Without the camera you can still search by title or type the ISBN.'**
+  String get scanDeniedBody;
+
+  /// No description provided for @scanTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get scanTryAgain;
+
+  /// No description provided for @scanBlockedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera access is blocked'**
+  String get scanBlockedTitle;
+
+  /// No description provided for @scanBlockedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn it on in Settings to scan barcodes. You can still search by title meanwhile.'**
+  String get scanBlockedBody;
+
+  /// No description provided for @scanOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open settings'**
+  String get scanOpenSettings;
+
+  /// No description provided for @scanNoCameraNote.
+  ///
+  /// In en, this message translates to:
+  /// **'No camera here, so search by title or type the ISBN.'**
+  String get scanNoCameraNote;
+
+  /// No description provided for @scanWebHttpsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera scanning on the web needs a secure (HTTPS) page.'**
+  String get scanWebHttpsNote;
+
+  /// No description provided for @scanChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking your library…'**
+  String get scanChecking;
+
+  /// No description provided for @verdictOwned.
+  ///
+  /// In en, this message translates to:
+  /// **'You own this'**
+  String get verdictOwned;
+
+  /// No description provided for @verdictOwnedWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'On {place}'**
+  String verdictOwnedWhere(String place);
+
+  /// No description provided for @verdictNoPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'No location set'**
+  String get verdictNoPlace;
+
+  /// No description provided for @verdictOtherEdition.
+  ///
+  /// In en, this message translates to:
+  /// **'You own another edition'**
+  String get verdictOtherEdition;
+
+  /// No description provided for @verdictWishlist.
+  ///
+  /// In en, this message translates to:
+  /// **'On your wishlist'**
+  String get verdictWishlist;
+
+  /// No description provided for @verdictMarkBought.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as bought'**
+  String get verdictMarkBought;
+
+  /// No description provided for @verdictLentTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Lent to {name}'**
+  String verdictLentTo(String name);
+
+  /// No description provided for @verdictSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Since {date}'**
+  String verdictSince(String date);
+
+  /// No description provided for @verdictBorrowedFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Borrowed from {name}'**
+  String verdictBorrowedFrom(String name);
+
+  /// No description provided for @verdictBorrowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Borrowed'**
+  String get verdictBorrowed;
+
+  /// No description provided for @verdictDidYouMean.
+  ///
+  /// In en, this message translates to:
+  /// **'Did you mean…?'**
+  String get verdictDidYouMean;
+
+  /// No description provided for @verdictNoneOfThese.
+  ///
+  /// In en, this message translates to:
+  /// **'None of these'**
+  String get verdictNoneOfThese;
+
+  /// No description provided for @verdictNotInLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Not in your library'**
+  String get verdictNotInLibrary;
+
+  /// No description provided for @verdictAddWishlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to wishlist'**
+  String get verdictAddWishlist;
+
+  /// No description provided for @verdictBoughtIt.
+  ///
+  /// In en, this message translates to:
+  /// **'I bought it — add to library'**
+  String get verdictBoughtIt;
+
+  /// No description provided for @verdictOpenBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Open book'**
+  String get verdictOpenBook;
+
+  /// No description provided for @verdictScanAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan another'**
+  String get verdictScanAnother;
+
+  /// No description provided for @verdictWishlistAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to your wishlist'**
+  String get verdictWishlistAdded;
+
+  /// No description provided for @verdictBoughtDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked as bought'**
+  String get verdictBoughtDone;
+
+  /// No description provided for @verdictMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% match'**
+  String verdictMatch(int percent);
+
+  /// No description provided for @verdictUnknownTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown title'**
+  String get verdictUnknownTitle;
+
+  /// No description provided for @scanSearchLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'No barcode?'**
+  String get scanSearchLabel;
 }
 
 class _AppLocalizationsDelegate

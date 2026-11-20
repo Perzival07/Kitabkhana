@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../features/scan_check/application/check_ownership.dart';
+import '../platform/camera_permission/camera_permission.dart';
 import 'lookup_providers.dart';
 import 'repositories.dart';
 
@@ -14,3 +15,8 @@ CheckOwnership checkOwnership(Ref ref) => CheckOwnership(
   locations: ref.watch(locationRepositoryProvider),
   lookup: ref.watch(bookLookupServiceProvider),
 );
+
+/// Camera permission, overridden in tests.
+@Riverpod(keepAlive: true)
+CameraPermissionService cameraPermission(Ref ref) =>
+    const SystemCameraPermissionService();

@@ -11,7 +11,6 @@ import '../../library/domain/book.dart';
 import '../../library/domain/book_enums.dart';
 import '../../library/domain/book_info.dart';
 import '../../library/domain/book_repository.dart';
-import '../../locations/domain/location.dart';
 import '../../locations/domain/location_repository.dart';
 import '../domain/ownership_result.dart';
 
@@ -159,6 +158,10 @@ class CheckOwnership {
     return byId.values.toList();
   }
 
+  /// The verdict for a book the user picked (e.g. from "Did you mean…?").
+  Future<OwnershipResult> resolveBook(Book book) =>
+      _resolve(<Book>[book], otherEdition: false);
+
   Future<OwnershipResult> _resolve(
     List<Book> matches, {
     required bool otherEdition,
@@ -185,17 +188,11 @@ class CheckOwnership {
 
   Future<String?> _label(String? locationId) async {
     if (locationId == null) return null;
-    final all = await locations.watchAll().first;
-    Location? place;
-    for (final l in all) {
-      if (l.id == locationId) place = l;
-    }
+    final place = (await locations.getById(locationId)).getOrNull();
     if (place == null) return null;
     final parentId = place.parentId;
     if (parentId == null) return place.name;
-    for (final p in all) {
-      if (p.id == parentId) return '${p.name} › ${place.name}';
-    }
-    return place.name;
+    final parent = (await locations.getById(parentId)).getOrNull();
+    return parent == null ? place.name : '${parent.name} › ${place.name}';
   }
 }

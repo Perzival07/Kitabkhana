@@ -849,4 +849,133 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get detailMove => 'Move';
+
+  @override
+  String get scanSearchHint => 'Search by title';
+
+  @override
+  String get scanTypeIsbn => 'Type ISBN';
+
+  @override
+  String get scanTorch => 'Torch';
+
+  @override
+  String get scanSwitchCamera => 'Switch camera';
+
+  @override
+  String get scanPermTitle => 'Let Kitabkhana use the camera';
+
+  @override
+  String get scanPermBody =>
+      'The camera only reads barcodes on this device. Nothing is recorded or uploaded.';
+
+  @override
+  String get scanPermAllow => 'Allow camera';
+
+  @override
+  String get scanDeniedTitle => 'The camera is off';
+
+  @override
+  String get scanDeniedBody =>
+      'Without the camera you can still search by title or type the ISBN.';
+
+  @override
+  String get scanTryAgain => 'Try again';
+
+  @override
+  String get scanBlockedTitle => 'Camera access is blocked';
+
+  @override
+  String get scanBlockedBody =>
+      'Turn it on in Settings to scan barcodes. You can still search by title meanwhile.';
+
+  @override
+  String get scanOpenSettings => 'Open settings';
+
+  @override
+  String get scanNoCameraNote =>
+      'No camera here, so search by title or type the ISBN.';
+
+  @override
+  String get scanWebHttpsNote =>
+      'Camera scanning on the web needs a secure (HTTPS) page.';
+
+  @override
+  String get scanChecking => 'Checking your library…';
+
+  @override
+  String get verdictOwned => 'You own this';
+
+  @override
+  String verdictOwnedWhere(String place) {
+    return 'On $place';
+  }
+
+  @override
+  String get verdictNoPlace => 'No location set';
+
+  @override
+  String get verdictOtherEdition => 'You own another edition';
+
+  @override
+  String get verdictWishlist => 'On your wishlist';
+
+  @override
+  String get verdictMarkBought => 'Mark as bought';
+
+  @override
+  String verdictLentTo(String name) {
+    return 'Lent to $name';
+  }
+
+  @override
+  String verdictSince(String date) {
+    return 'Since $date';
+  }
+
+  @override
+  String verdictBorrowedFrom(String name) {
+    return 'Borrowed from $name';
+  }
+
+  @override
+  String get verdictBorrowed => 'Borrowed';
+
+  @override
+  String get verdictDidYouMean => 'Did you mean…?';
+
+  @override
+  String get verdictNoneOfThese => 'None of these';
+
+  @override
+  String get verdictNotInLibrary => 'Not in your library';
+
+  @override
+  String get verdictAddWishlist => 'Add to wishlist';
+
+  @override
+  String get verdictBoughtIt => 'I bought it — add to library';
+
+  @override
+  String get verdictOpenBook => 'Open book';
+
+  @override
+  String get verdictScanAnother => 'Scan another';
+
+  @override
+  String get verdictWishlistAdded => 'Added to your wishlist';
+
+  @override
+  String get verdictBoughtDone => 'Marked as bought';
+
+  @override
+  String verdictMatch(int percent) {
+    return '$percent% match';
+  }
+
+  @override
+  String get verdictUnknownTitle => 'Unknown title';
+
+  @override
+  String get scanSearchLabel => 'No barcode?';
 }

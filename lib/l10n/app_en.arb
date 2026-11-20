@@ -471,5 +471,78 @@
   },
   "editBookTitle": "Edit book",
   "bookSavedChanges": "Changes saved",
-  "detailMove": "Move"
+  "detailMove": "Move",
+  "scanSearchHint": "Search by title",
+  "scanTypeIsbn": "Type ISBN",
+  "scanTorch": "Torch",
+  "scanSwitchCamera": "Switch camera",
+  "scanPermTitle": "Let Kitabkhana use the camera",
+  "scanPermBody": "The camera only reads barcodes on this device. Nothing is recorded or uploaded.",
+  "scanPermAllow": "Allow camera",
+  "scanDeniedTitle": "The camera is off",
+  "scanDeniedBody": "Without the camera you can still search by title or type the ISBN.",
+  "scanTryAgain": "Try again",
+  "scanBlockedTitle": "Camera access is blocked",
+  "scanBlockedBody": "Turn it on in Settings to scan barcodes. You can still search by title meanwhile.",
+  "scanOpenSettings": "Open settings",
+  "scanNoCameraNote": "No camera here, so search by title or type the ISBN.",
+  "scanWebHttpsNote": "Camera scanning on the web needs a secure (HTTPS) page.",
+  "scanChecking": "Checking your library…",
+  "verdictOwned": "You own this",
+  "verdictOwnedWhere": "On {place}",
+  "@verdictOwnedWhere": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictNoPlace": "No location set",
+  "verdictOtherEdition": "You own another edition",
+  "verdictWishlist": "On your wishlist",
+  "verdictMarkBought": "Mark as bought",
+  "verdictLentTo": "Lent to {name}",
+  "@verdictLentTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictSince": "Since {date}",
+  "@verdictSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictBorrowedFrom": "Borrowed from {name}",
+  "@verdictBorrowedFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictBorrowed": "Borrowed",
+  "verdictDidYouMean": "Did you mean…?",
+  "verdictNoneOfThese": "None of these",
+  "verdictNotInLibrary": "Not in your library",
+  "verdictAddWishlist": "Add to wishlist",
+  "verdictBoughtIt": "I bought it — add to library",
+  "verdictOpenBook": "Open book",
+  "verdictScanAnother": "Scan another",
+  "verdictWishlistAdded": "Added to your wishlist",
+  "verdictBoughtDone": "Marked as bought",
+  "verdictMatch": "{percent}% match",
+  "@verdictMatch": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "verdictUnknownTitle": "Unknown title",
+  "scanSearchLabel": "No barcode?"
 }

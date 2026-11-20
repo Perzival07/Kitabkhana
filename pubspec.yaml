@@ -62,6 +62,7 @@ dependencies:
     sdk: flutter
   unorm_dart: ^0.3.3
   image: ^4.13.1
+  permission_handler: ^13.0.2
 
 dev_dependencies:
   flutter_test:
