@@ -7,11 +7,13 @@ import 'package:kitabkhana/app/app_config.dart';
 import 'package:kitabkhana/app/app_config_provider.dart';
 import 'package:kitabkhana/app/app_root.dart';
 import 'package:kitabkhana/app/router/app_router.dart';
+import 'package:kitabkhana/app/reminder_providers.dart';
 import 'package:kitabkhana/app/scan_providers.dart';
 import 'package:kitabkhana/data/db/database_provider.dart';
 import 'package:kitabkhana/platform/camera_permission/camera_permission.dart';
 
 import 'fake_camera_permission.dart';
+import 'fake_notification_scheduler.dart';
 import 'test_db.dart';
 
 /// Pumps the whole routed app at [size]; returns the container.
@@ -34,12 +36,19 @@ Future<ProviderContainer> pumpRouterApp(
   final suppliesCamera = overrides.any(
     (o) => o.origin == cameraPermissionProvider,
   );
+  final suppliesScheduler = overrides.any(
+    (o) => o.origin == notificationSchedulerProvider,
+  );
   final db = suppliesDb ? null : createTestDb();
   if (db != null) addTearDown(db.close);
   final container = ProviderContainer(
     overrides: [
       appConfigProvider.overrideWithValue(config),
       if (db != null) appDatabaseProvider.overrideWithValue(db),
+      if (!suppliesScheduler)
+        notificationSchedulerProvider.overrideWithValue(
+          FakeNotificationScheduler(),
+        ),
       if (!suppliesCamera)
         cameraPermissionProvider.overrideWithValue(
           FakeCameraPermission(current: CameraAccess.unavailable),

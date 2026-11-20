@@ -8,18 +8,18 @@ part of 'lending_providers.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Schedules loan reminders. Swapped for the real service in P06.2.
+/// Schedules loan reminders (local notifications; none on the web).
 
 @ProviderFor(reminderService)
 final reminderServiceProvider = ReminderServiceProvider._();
 
-/// Schedules loan reminders. Swapped for the real service in P06.2.
+/// Schedules loan reminders (local notifications; none on the web).
 
 final class ReminderServiceProvider
     extends
         $FunctionalProvider<ReminderService, ReminderService, ReminderService>
     with $Provider<ReminderService> {
-  /// Schedules loan reminders. Swapped for the real service in P06.2.
+  /// Schedules loan reminders (local notifications; none on the web).
   ReminderServiceProvider._()
     : super(
         from: null,
@@ -53,7 +53,7 @@ final class ReminderServiceProvider
   }
 }
 
-String _$reminderServiceHash() => r'd79f0195a6cba668b2991013388bbc66eb63a651';
+String _$reminderServiceHash() => r'fe2a001f3efde431559826c1a6d10334f5a98f32';
 
 @ProviderFor(lendBook)
 final lendBookProvider = LendBookProvider._();

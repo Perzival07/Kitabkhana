@@ -9,6 +9,9 @@ abstract interface class LoanRepository {
   /// first, loans without a due date last.
   Stream<List<Loan>> watchActive();
 
+  /// A one-time read of the loans not yet returned (soonest due first).
+  Future<List<Loan>> listActive();
+
   /// Live active loans past their due date.
   Stream<List<Loan>> watchOverdue();
 

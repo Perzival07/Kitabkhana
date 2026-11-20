@@ -23,3 +23,8 @@ Stream<Loan?> activeLoanFor(Ref ref, String bookId) => ref
 @riverpod
 Stream<List<Tag>> bookTags(Ref ref, String bookId) =>
     ref.watch(tagRepositoryProvider).watchForBook(bookId);
+
+/// Active loans past their due date.
+@riverpod
+Stream<List<Loan>> overdueLoans(Ref ref) =>
+    ref.watch(loanRepositoryProvider).watchOverdue();

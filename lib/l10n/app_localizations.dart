@@ -1941,6 +1941,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add the person\'s name.'**
   String get failureNeedsName;
+
+  /// No description provided for @reminderChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Loan reminders'**
+  String get reminderChannelName;
+
+  /// No description provided for @reminderChannelDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders when a lent or borrowed book is due'**
+  String get reminderChannelDesc;
+
+  /// No description provided for @reminderDueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'“{book}” is due today'**
+  String reminderDueTitle(String book);
+
+  /// No description provided for @reminderLentDueBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has it. A friendly nudge?'**
+  String reminderLentDueBody(String name);
+
+  /// No description provided for @reminderBorrowedDueBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Time to return it to {name}.'**
+  String reminderBorrowedDueBody(String name);
+
+  /// No description provided for @reminderOverdueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'“{book}” is overdue'**
+  String reminderOverdueTitle(String book);
+
+  /// No description provided for @reminderLentOverdueBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} still has it. Send a reminder?'**
+  String reminderLentOverdueBody(String name);
+
+  /// No description provided for @reminderBorrowedOverdueBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Return it to {name} soon.'**
+  String reminderBorrowedOverdueBody(String name);
+
+  /// No description provided for @reminderPermTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get a nudge when it\'s due?'**
+  String get reminderPermTitle;
+
+  /// No description provided for @reminderPermBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Kitabkhana can remind you on the day a book is due. Reminders stay on this device.'**
+  String get reminderPermBody;
+
+  /// No description provided for @reminderPermAllow.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow notifications'**
+  String get reminderPermAllow;
+
+  /// No description provided for @reminderPermLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get reminderPermLater;
+
+  /// No description provided for @nudgeMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi {name}! 📚 Could you return “{book}” when you\'re done? Thanks!'**
+  String nudgeMessage(String name, String book);
+
+  /// No description provided for @nudgeWhatsApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind on WhatsApp'**
+  String get nudgeWhatsApp;
+
+  /// No description provided for @nudgeSms.
+  ///
+  /// In en, this message translates to:
+  /// **'Send SMS'**
+  String get nudgeSms;
+
+  /// No description provided for @nudgeNoPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a phone number to send a reminder.'**
+  String get nudgeNoPhone;
+
+  /// No description provided for @nudgeFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open a messaging app.'**
+  String get nudgeFailed;
+
+  /// No description provided for @overdueBannerOne.
+  ///
+  /// In en, this message translates to:
+  /// **'1 book is overdue'**
+  String get overdueBannerOne;
+
+  /// No description provided for @overdueBannerMany.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} books are overdue'**
+  String overdueBannerMany(int count);
+
+  /// No description provided for @devTestReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule test reminder (2 min)'**
+  String get devTestReminder;
+
+  /// No description provided for @devTestReminderSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Test reminder set for 2 minutes from now'**
+  String get devTestReminderSet;
+
+  /// No description provided for @detailRemind.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind'**
+  String get detailRemind;
 }
 
 class _AppLocalizationsDelegate

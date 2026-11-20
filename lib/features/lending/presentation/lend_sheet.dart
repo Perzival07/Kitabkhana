@@ -11,6 +11,7 @@ import '../../../core/text/phone.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../ui/ui.dart';
 import '../../library/domain/book.dart';
+import '../../reminders/presentation/reminder_permission.dart';
 import '../domain/loan.dart';
 import '../domain/loan_direction.dart';
 
@@ -103,6 +104,8 @@ class _LendBodyState extends ConsumerState<_LendBody> {
     });
     if (name.isEmpty || (phoneText.isNotEmpty && phone == null)) return;
 
+    if (_dueOn != null) await ensureReminderPermission(context, ref);
+    if (!mounted) return;
     setState(() => _saving = true);
     final lending = _direction == LoanDirection.lent;
     final r = lending

@@ -11,7 +11,9 @@ import 'package:share_plus/share_plus.dart';
 import '../../../app/add_book_providers.dart';
 import '../../../app/book_detail_providers.dart';
 import '../../../app/l10n/failure_message.dart';
+import '../../../app/lending_providers.dart';
 import '../../../app/providers.dart';
+import '../../../app/reminder_providers.dart';
 import '../../../app/repositories.dart';
 import '../../../app/router/routes.dart';
 import '../../../app/theme/k_tokens.dart';
@@ -22,6 +24,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../ui/ui.dart';
 import '../../lending/domain/loan.dart';
 import '../../lending/presentation/lend_sheet.dart';
+import '../../reminders/application/loan_nudge.dart';
 import '../../lending/presentation/return_flow.dart';
 import '../../lending/domain/loan_direction.dart';
 import '../../library/domain/book.dart';
@@ -107,6 +110,25 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
     if (done && loan.direction == LoanDirection.borrowed && mounted) {
       final stillThere = ref.read(bookByIdProvider(widget.bookId)).value;
       if (stillThere == null) _leave();
+    }
+  }
+
+  Future<void> _nudge(Loan loan, Book book, {required bool sms}) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final nudge = ref.read(loanNudgeProvider);
+    final cc = ref.read(defaultCountryCodeProvider);
+    final result = sms
+        ? await nudge.sms(l10n, loan, book.title, defaultCountryCode: cc)
+        : await nudge.whatsApp(l10n, loan, book.title, defaultCountryCode: cc);
+    if (!mounted) return;
+    final text = switch (result) {
+      NudgeResult.noPhone => l10n.nudgeNoPhone,
+      NudgeResult.failed => l10n.nudgeFailed,
+      _ => null,
+    };
+    if (text != null) {
+      KToast.showWith(messenger, text, icon: Icons.error_outline_rounded);
     }
   }
 
@@ -266,6 +288,11 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                           loan: loan,
                           onChange: () => _move(book),
                           onReturn: loan == null ? null : () => _return(loan),
+                          onRemind:
+                              loan == null ||
+                                  loan.direction != LoanDirection.lent
+                              ? null
+                              : (sms) => _nudge(loan, book, sms: sms),
                         ),
                         const SizedBox(height: KSpacing.lg),
                         _ActionsRow(
@@ -531,6 +558,7 @@ class _PlaceCard extends StatelessWidget {
     required this.loan,
     required this.onChange,
     required this.onReturn,
+    required this.onRemind,
   });
 
   final Location? place;
@@ -538,6 +566,9 @@ class _PlaceCard extends StatelessWidget {
   final Loan? loan;
   final VoidCallback onChange;
   final VoidCallback? onReturn;
+
+  /// Sends a nudge; the flag is true for SMS, false for WhatsApp.
+  final void Function(bool sms)? onRemind;
 
   @override
   Widget build(BuildContext context) {
@@ -559,6 +590,19 @@ class _PlaceCard extends StatelessWidget {
             Icon(Icons.swap_horiz_rounded, color: theme.colorScheme.primary),
             const SizedBox(width: KSpacing.md),
             Expanded(child: Text('$base$due')),
+            if (onRemind != null)
+              PopupMenuButton<bool>(
+                tooltip: l10n.detailRemind,
+                icon: const Icon(Icons.notifications_none_rounded),
+                onSelected: onRemind,
+                itemBuilder: (_) => <PopupMenuEntry<bool>>[
+                  PopupMenuItem<bool>(
+                    value: false,
+                    child: Text(l10n.nudgeWhatsApp),
+                  ),
+                  PopupMenuItem<bool>(value: true, child: Text(l10n.nudgeSms)),
+                ],
+              ),
             if (onReturn != null)
               TextButton(onPressed: onReturn, child: Text(l10n.detailReturn)),
           ],

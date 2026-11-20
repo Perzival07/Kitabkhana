@@ -1069,4 +1069,88 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get failureNeedsName => 'Add the person\'s name.';
+
+  @override
+  String get reminderChannelName => 'Loan reminders';
+
+  @override
+  String get reminderChannelDesc =>
+      'Reminders when a lent or borrowed book is due';
+
+  @override
+  String reminderDueTitle(String book) {
+    return '“$book” is due today';
+  }
+
+  @override
+  String reminderLentDueBody(String name) {
+    return '$name has it. A friendly nudge?';
+  }
+
+  @override
+  String reminderBorrowedDueBody(String name) {
+    return 'Time to return it to $name.';
+  }
+
+  @override
+  String reminderOverdueTitle(String book) {
+    return '“$book” is overdue';
+  }
+
+  @override
+  String reminderLentOverdueBody(String name) {
+    return '$name still has it. Send a reminder?';
+  }
+
+  @override
+  String reminderBorrowedOverdueBody(String name) {
+    return 'Return it to $name soon.';
+  }
+
+  @override
+  String get reminderPermTitle => 'Get a nudge when it\'s due?';
+
+  @override
+  String get reminderPermBody =>
+      'Kitabkhana can remind you on the day a book is due. Reminders stay on this device.';
+
+  @override
+  String get reminderPermAllow => 'Allow notifications';
+
+  @override
+  String get reminderPermLater => 'Not now';
+
+  @override
+  String nudgeMessage(String name, String book) {
+    return 'Hi $name! 📚 Could you return “$book” when you\'re done? Thanks!';
+  }
+
+  @override
+  String get nudgeWhatsApp => 'Remind on WhatsApp';
+
+  @override
+  String get nudgeSms => 'Send SMS';
+
+  @override
+  String get nudgeNoPhone => 'Add a phone number to send a reminder.';
+
+  @override
+  String get nudgeFailed => 'Couldn\'t open a messaging app.';
+
+  @override
+  String get overdueBannerOne => '1 book is overdue';
+
+  @override
+  String overdueBannerMany(int count) {
+    return '$count books are overdue';
+  }
+
+  @override
+  String get devTestReminder => 'Schedule test reminder (2 min)';
+
+  @override
+  String get devTestReminderSet => 'Test reminder set for 2 minutes from now';
+
+  @override
+  String get detailRemind => 'Remind';
 }

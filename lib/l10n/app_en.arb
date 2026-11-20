@@ -593,5 +593,86 @@
   },
   "returnBorrowedRemove": "Remove from my library",
   "returnBorrowedKeep": "Keep it on my wishlist",
-  "failureNeedsName": "Add the person's name."
+  "failureNeedsName": "Add the person's name.",
+  "reminderChannelName": "Loan reminders",
+  "reminderChannelDesc": "Reminders when a lent or borrowed book is due",
+  "reminderDueTitle": "“{book}” is due today",
+  "@reminderDueTitle": {
+    "placeholders": {
+      "book": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderLentDueBody": "{name} has it. A friendly nudge?",
+  "@reminderLentDueBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderBorrowedDueBody": "Time to return it to {name}.",
+  "@reminderBorrowedDueBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderOverdueTitle": "“{book}” is overdue",
+  "@reminderOverdueTitle": {
+    "placeholders": {
+      "book": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderLentOverdueBody": "{name} still has it. Send a reminder?",
+  "@reminderLentOverdueBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderBorrowedOverdueBody": "Return it to {name} soon.",
+  "@reminderBorrowedOverdueBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderPermTitle": "Get a nudge when it's due?",
+  "reminderPermBody": "Kitabkhana can remind you on the day a book is due. Reminders stay on this device.",
+  "reminderPermAllow": "Allow notifications",
+  "reminderPermLater": "Not now",
+  "nudgeMessage": "Hi {name}! 📚 Could you return “{book}” when you're done? Thanks!",
+  "@nudgeMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "book": {
+        "type": "String"
+      }
+    }
+  },
+  "nudgeWhatsApp": "Remind on WhatsApp",
+  "nudgeSms": "Send SMS",
+  "nudgeNoPhone": "Add a phone number to send a reminder.",
+  "nudgeFailed": "Couldn't open a messaging app.",
+  "overdueBannerOne": "1 book is overdue",
+  "overdueBannerMany": "{count} books are overdue",
+  "@overdueBannerMany": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "devTestReminder": "Schedule test reminder (2 min)",
+  "devTestReminderSet": "Test reminder set for 2 minutes from now",
+  "detailRemind": "Remind"
 }

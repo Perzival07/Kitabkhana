@@ -8,6 +8,7 @@ import 'package:kitabkhana/app/add_book_providers.dart';
 import 'package:kitabkhana/app/cover_providers.dart';
 import 'package:kitabkhana/app/lookup_providers.dart';
 import 'package:kitabkhana/app/providers.dart';
+import 'package:kitabkhana/app/reminder_providers.dart';
 import 'package:kitabkhana/app/scan_providers.dart';
 import 'package:kitabkhana/core/clock.dart';
 import 'package:kitabkhana/data/db/app_database.dart';
@@ -16,6 +17,7 @@ import 'package:kitabkhana/platform/photo_picker/photo_picker.dart';
 
 import 'fake_book_info_source.dart';
 import 'fake_camera_permission.dart';
+import 'fake_notification_scheduler.dart';
 import 'fake_cover_store.dart';
 import 'pump_router_app.dart';
 import 'repo_harness.dart';
@@ -47,6 +49,7 @@ class AddFlowHarness {
   final FakeCoverStore covers = FakeCoverStore();
   final FakePhotoPicker picker = FakePhotoPicker();
   final FakeCameraPermission camera = FakeCameraPermission();
+  final FakeNotificationScheduler scheduler = FakeNotificationScheduler();
   final List<String> scanCodes;
   final bool cameraOk;
 
@@ -57,6 +60,7 @@ class AddFlowHarness {
     coverStoreProvider.overrideWithValue(covers),
     photoPickerProvider.overrideWithValue(picker),
     cameraPermissionProvider.overrideWithValue(camera),
+    notificationSchedulerProvider.overrideWithValue(scheduler),
     barcodeViewBuilderProvider.overrideWithValue((
       context,
       onCode,

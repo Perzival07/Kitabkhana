@@ -33,7 +33,7 @@ Tick a task only when it is green (see Definition of Green).
 
 ## Phase 06 — Lending
 - [x] P06.1
-- [ ] P06.2
+- [x] P06.2
 - [ ] P06.3
 
 ## Phase 07 — Reading & stats
@@ -119,3 +119,8 @@ Tick a task only when it is green (see Definition of Green).
 - (P06.1) Phone: typed manually with a default country code (+91, stored in `app_meta` as `phone.default_cc`; no settings screen for it yet). "Pick from contacts" is not offered, because it needs the contacts permission.
 - (P06.1) Reminders: the `ReminderService` interface is wired into every use case but is a no-op until P06.2. A reminder failure never fails a loan.
 - (P06.1) Not yet checked on a device: the Lend sheet with the keyboard open on small phones and at 200% text.
+- (P06.2) Reminders are inexact local notifications at 10:00 local on the due date, plus one follow-up 3 days later, rebuilt from the loans on every app start (`LoanReminderService.reconcile`, nearest 64 kept for iOS). The web schedules nothing and shows an "N books are overdue" banner in the Library instead.
+- (P06.2) Notification text follows the device language but only English strings exist so far. Tapping a notification opens that book.
+- (P06.2) Android build changes made without being able to build: boot/package-replaced receivers, POST_NOTIFICATIONS and RECEIVE_BOOT_COMPLETED permissions, core library desugaring, and package queries for WhatsApp/SMS.
+- (P06.2) Not verified on a device: the +2 minute test reminder (More tab, dev flavour only), reboot survival, WhatsApp opening pre-filled, "WhatsApp not installed" fallback to SMS then the share sheet.
+- (P06.2) iOS: notification permission is requested only after the explanation sheet; no Xcode here to confirm.

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,6 +10,7 @@ import 'app_config_provider.dart';
 import 'app_root.dart';
 import 'error_handling.dart';
 import 'providers.dart';
+import 'reminder_providers.dart';
 import 'theme/font_licenses.dart';
 import 'theme/system_ui.dart';
 
@@ -35,6 +38,21 @@ Future<void> bootstrap(AppConfig config) async {
     await container.read(appDatabaseProvider).customSelect('SELECT 1').get();
   } on Object catch (error, stack) {
     logger.error('database failed to open', error: error, stack: stack);
+  }
+
+  // Rebuild pending reminders from the loans (after a reboot, an update or
+  // edits made elsewhere). Never blocks or breaks start-up.
+  try {
+    unawaited(
+      container
+          .read(loanReminderServiceProvider)
+          .reconcile()
+          .catchError(
+            (Object e) => logger.warn('Reminder reconcile failed: $e'),
+          ),
+    );
+  } on Object catch (e) {
+    logger.warn('Reminder reconcile failed: $e');
   }
 
   runApp(

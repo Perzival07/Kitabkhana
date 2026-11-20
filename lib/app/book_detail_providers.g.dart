@@ -242,3 +242,46 @@ final class BookTagsFamily extends $Family
   @override
   String toString() => r'bookTagsProvider';
 }
+
+/// Active loans past their due date.
+
+@ProviderFor(overdueLoans)
+final overdueLoansProvider = OverdueLoansProvider._();
+
+/// Active loans past their due date.
+
+final class OverdueLoansProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Loan>>,
+          List<Loan>,
+          Stream<List<Loan>>
+        >
+    with $FutureModifier<List<Loan>>, $StreamProvider<List<Loan>> {
+  /// Active loans past their due date.
+  OverdueLoansProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'overdueLoansProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$overdueLoansHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<Loan>> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<Loan>> create(Ref ref) {
+    return overdueLoans(ref);
+  }
+}
+
+String _$overdueLoansHash() => r'f8262f8541c55f38323e02980faec2d10cdc8369';

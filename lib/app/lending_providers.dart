@@ -5,14 +5,16 @@ import '../data/db/app_database.dart';
 import '../data/db/database_provider.dart';
 import '../features/lending/application/lending_use_cases.dart';
 import '../features/lending/domain/reminder_service.dart';
+import 'reminder_providers.dart';
 import 'providers.dart';
 import 'repositories.dart';
 
 part 'lending_providers.g.dart';
 
-/// Schedules loan reminders. Swapped for the real service in P06.2.
+/// Schedules loan reminders (local notifications; none on the web).
 @Riverpod(keepAlive: true)
-ReminderService reminderService(Ref ref) => const NoopReminderService();
+ReminderService reminderService(Ref ref) =>
+    ref.watch(loanReminderServiceProvider);
 
 @Riverpod(keepAlive: true)
 LendBook lendBook(Ref ref) => LendBook(

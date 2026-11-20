@@ -84,6 +84,17 @@ class DriftLoanRepository implements LoanRepository {
   }
 
   @override
+  Future<List<Loan>> listActive() async {
+    final q = _joined((l) => l.returnedOn.isNull())
+      ..orderBy([
+        OrderingTerm.asc(_db.loans.dueOn.isNull()),
+        OrderingTerm.asc(_db.loans.dueOn),
+        OrderingTerm.asc(_db.loans.createdAt),
+      ]);
+    return _rows(await q.get());
+  }
+
+  @override
   Stream<List<Loan>> watchOverdue() {
     final today = _dates.toSql(_clock.today());
     final q = _joined(
