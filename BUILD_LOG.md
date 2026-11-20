@@ -25,7 +25,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P04.1
 - [x] P04.2
 - [x] P04.3
-- [ ] P04.4
+- [x] P04.4
 
 ## Phase 05 — Scan & match
 - [ ] P05.1
@@ -99,3 +99,8 @@ Tick a task only when it is green (see Definition of Green).
 - (P04.3) The first-run starter suggestion (Living room shelf, Bedroom shelf, Storage box) appears on the empty Locations screen; Onboarding (a later phase) may surface it earlier.
 - (P04.3) More tab now has one entry (Manage locations); loans, quotes and settings entries arrive with their phases. The picker is used in Add Book and the Library long-press Move; Book Detail (P04.4) will reuse it.
 - (P04.3) Not yet checked on a device: drag-to-reorder feel and screen-reader labels on the drag handle.
+- (P04.4) Not built yet, by design: "Lend" action and the loan "Remind" button (Phase 06; Return works), the Quotes section (P08), and the pace prediction on the progress card (P07).
+- (P04.4) When a book's page count is unknown, "Update page" takes a plain page number (no percentage input), because progress needs the total.
+- (P04.4) Two-pane: the shell's detail pane (>1000dp, Library tab) now shows the selected book, held in `selectedBookIdProvider`; narrower widths push `/book/:id`.
+- (P04.4) The Edit screen is the manual form in edit mode (`BookFormArgs.edit`); changing status there follows the same date rules as the detail page.
+- (P04.4) Not yet checked on a device: Hero animation smoothness (grid to detail and back), the celebration burst with reduce-motion on, and the blurred header on low-end phones.

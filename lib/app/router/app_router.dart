@@ -9,6 +9,8 @@ import '../../features/library/presentation/add/add_scan_screen.dart';
 import '../../features/library/presentation/add/add_search_screen.dart';
 import '../../features/library/presentation/add/book_form_screen.dart';
 import '../../features/library/presentation/library_screen.dart';
+import '../../features/book/presentation/book_edit_screen.dart';
+import '../../features/book/presentation/book_detail_screen.dart';
 import '../../features/locations/presentation/locations_screen.dart';
 import '../../features/more/presentation/more_screen.dart';
 import '../../features/reading/presentation/reading_screen.dart';
@@ -130,12 +132,13 @@ GoRouter buildRouter(AppConfig config, {String initial = Routes.library}) {
       ),
       GoRoute(
         path: '/book/:id',
-        builder: (_, _) => stub((l) => l.routeBook, KIllustration.openBook),
+        builder: (_, state) =>
+            BookDetailScreen(bookId: state.pathParameters['id']!),
         routes: <RouteBase>[
           GoRoute(
             path: 'edit',
-            builder: (_, _) =>
-                stub((l) => l.routeEditBook, KIllustration.openBook),
+            builder: (_, state) =>
+                BookEditScreen(bookId: state.pathParameters['id']!),
           ),
         ],
       ),

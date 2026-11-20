@@ -688,4 +688,165 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get locationsManage => 'Manage locations';
+
+  @override
+  String get bookNotFound => 'This book is no longer in your library.';
+
+  @override
+  String detailPageOf(int current, int total) {
+    return 'Page $current of $total';
+  }
+
+  @override
+  String detailPercentRead(int percent) {
+    return '$percent% read';
+  }
+
+  @override
+  String get detailUpdatePage => 'Update page';
+
+  @override
+  String get detailUpdatePageTitle => 'Where are you now?';
+
+  @override
+  String get detailPageLabel => 'Page';
+
+  @override
+  String get detailPercentLabel => 'Percent read';
+
+  @override
+  String get detailPageDecrease => 'Previous page';
+
+  @override
+  String get detailPageIncrease => 'Next page';
+
+  @override
+  String detailPageInvalid(int max) {
+    return 'Enter a number from 0 to $max';
+  }
+
+  @override
+  String get detailRateIt => 'Rate it?';
+
+  @override
+  String detailRateStar(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Rate $count stars',
+      one: 'Rate 1 star',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get detailFinishedCelebration => 'Finished! Nice one.';
+
+  @override
+  String get detailChange => 'Change';
+
+  @override
+  String detailLentTo(String name, String since) {
+    return 'Lent to $name since $since';
+  }
+
+  @override
+  String detailBorrowedFrom(String name, String since) {
+    return 'Borrowed from $name since $since';
+  }
+
+  @override
+  String detailDue(String date) {
+    return 'due $date';
+  }
+
+  @override
+  String get detailReturn => 'Return';
+
+  @override
+  String get detailReturned => 'Marked as returned';
+
+  @override
+  String get detailEdit => 'Edit';
+
+  @override
+  String get detailShare => 'Share';
+
+  @override
+  String get detailMore => 'More';
+
+  @override
+  String detailShareText(String title, String authors) {
+    return '$title by $authors';
+  }
+
+  @override
+  String detailShareTextNoAuthor(String title) {
+    return '$title';
+  }
+
+  @override
+  String get detailDeleteTitle => 'Delete this book?';
+
+  @override
+  String get detailDeleteBody =>
+      'It leaves your library. You can undo right after.';
+
+  @override
+  String get detailSectionNotes => 'Notes';
+
+  @override
+  String get detailNotesHint => 'Add a note';
+
+  @override
+  String get detailNotesSaved => 'Note saved';
+
+  @override
+  String get detailSectionTags => 'Tags';
+
+  @override
+  String get detailAddTag => 'Add tag';
+
+  @override
+  String get detailTagHint => 'Tag name';
+
+  @override
+  String detailRemoveTag(String name) {
+    return 'Remove tag $name';
+  }
+
+  @override
+  String get detailSectionDetails => 'Details';
+
+  @override
+  String get detailIsbn => 'ISBN';
+
+  @override
+  String get detailOwner => 'Owner';
+
+  @override
+  String get detailAddedOn => 'Added on';
+
+  @override
+  String get detailStarted => 'Started';
+
+  @override
+  String get detailFinished => 'Finished';
+
+  @override
+  String get detailBack => 'Back';
+
+  @override
+  String detailPagesYear(int pages) {
+    return '$pages pages';
+  }
+
+  @override
+  String get editBookTitle => 'Edit book';
+
+  @override
+  String get bookSavedChanges => 'Changes saved';
+
+  @override
+  String get detailMove => 'Move';
 }

@@ -21,6 +21,9 @@ Color statusDotColor(BuildContext context, ReadStatus status) {
   };
 }
 
+/// The Hero tag shared by a book's cover in the library and on its page.
+String bookHeroTag(String id) => 'book-cover-$id';
+
 String statusLabel(AppLocalizations l10n, ReadStatus status) =>
     switch (status) {
       ReadStatus.want => l10n.statusWant,
@@ -74,7 +77,7 @@ class BookGridTile extends StatelessWidget {
           children: <Widget>[
             Stack(
               children: <Widget>[
-                BookCoverView(book: book),
+                BookCoverView(book: book, heroTag: bookHeroTag(book.id)),
                 if (lent)
                   Positioned(
                     top: KSpacing.sm,

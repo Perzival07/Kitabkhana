@@ -1281,6 +1281,270 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Manage locations'**
   String get locationsManage;
+
+  /// No description provided for @bookNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This book is no longer in your library.'**
+  String get bookNotFound;
+
+  /// No description provided for @detailPageOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {current} of {total}'**
+  String detailPageOf(int current, int total);
+
+  /// No description provided for @detailPercentRead.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% read'**
+  String detailPercentRead(int percent);
+
+  /// No description provided for @detailUpdatePage.
+  ///
+  /// In en, this message translates to:
+  /// **'Update page'**
+  String get detailUpdatePage;
+
+  /// No description provided for @detailUpdatePageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where are you now?'**
+  String get detailUpdatePageTitle;
+
+  /// No description provided for @detailPageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Page'**
+  String get detailPageLabel;
+
+  /// No description provided for @detailPercentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Percent read'**
+  String get detailPercentLabel;
+
+  /// No description provided for @detailPageDecrease.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous page'**
+  String get detailPageDecrease;
+
+  /// No description provided for @detailPageIncrease.
+  ///
+  /// In en, this message translates to:
+  /// **'Next page'**
+  String get detailPageIncrease;
+
+  /// No description provided for @detailPageInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a number from 0 to {max}'**
+  String detailPageInvalid(int max);
+
+  /// No description provided for @detailRateIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate it?'**
+  String get detailRateIt;
+
+  /// No description provided for @detailRateStar.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Rate 1 star} other{Rate {count} stars}}'**
+  String detailRateStar(int count);
+
+  /// No description provided for @detailFinishedCelebration.
+  ///
+  /// In en, this message translates to:
+  /// **'Finished! Nice one.'**
+  String get detailFinishedCelebration;
+
+  /// No description provided for @detailChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get detailChange;
+
+  /// No description provided for @detailLentTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Lent to {name} since {since}'**
+  String detailLentTo(String name, String since);
+
+  /// No description provided for @detailBorrowedFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Borrowed from {name} since {since}'**
+  String detailBorrowedFrom(String name, String since);
+
+  /// No description provided for @detailDue.
+  ///
+  /// In en, this message translates to:
+  /// **'due {date}'**
+  String detailDue(String date);
+
+  /// No description provided for @detailReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get detailReturn;
+
+  /// No description provided for @detailReturned.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked as returned'**
+  String get detailReturned;
+
+  /// No description provided for @detailEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get detailEdit;
+
+  /// No description provided for @detailShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get detailShare;
+
+  /// No description provided for @detailMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get detailMore;
+
+  /// No description provided for @detailShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} by {authors}'**
+  String detailShareText(String title, String authors);
+
+  /// No description provided for @detailShareTextNoAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'{title}'**
+  String detailShareTextNoAuthor(String title);
+
+  /// No description provided for @detailDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this book?'**
+  String get detailDeleteTitle;
+
+  /// No description provided for @detailDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It leaves your library. You can undo right after.'**
+  String get detailDeleteBody;
+
+  /// No description provided for @detailSectionNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get detailSectionNotes;
+
+  /// No description provided for @detailNotesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a note'**
+  String get detailNotesHint;
+
+  /// No description provided for @detailNotesSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Note saved'**
+  String get detailNotesSaved;
+
+  /// No description provided for @detailSectionTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get detailSectionTags;
+
+  /// No description provided for @detailAddTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Add tag'**
+  String get detailAddTag;
+
+  /// No description provided for @detailTagHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag name'**
+  String get detailTagHint;
+
+  /// No description provided for @detailRemoveTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove tag {name}'**
+  String detailRemoveTag(String name);
+
+  /// No description provided for @detailSectionDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get detailSectionDetails;
+
+  /// No description provided for @detailIsbn.
+  ///
+  /// In en, this message translates to:
+  /// **'ISBN'**
+  String get detailIsbn;
+
+  /// No description provided for @detailOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get detailOwner;
+
+  /// No description provided for @detailAddedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Added on'**
+  String get detailAddedOn;
+
+  /// No description provided for @detailStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Started'**
+  String get detailStarted;
+
+  /// No description provided for @detailFinished.
+  ///
+  /// In en, this message translates to:
+  /// **'Finished'**
+  String get detailFinished;
+
+  /// No description provided for @detailBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get detailBack;
+
+  /// No description provided for @detailPagesYear.
+  ///
+  /// In en, this message translates to:
+  /// **'{pages} pages'**
+  String detailPagesYear(int pages);
+
+  /// No description provided for @editBookTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit book'**
+  String get editBookTitle;
+
+  /// No description provided for @bookSavedChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes saved'**
+  String get bookSavedChanges;
+
+  /// No description provided for @detailMove.
+  ///
+  /// In en, this message translates to:
+  /// **'Move'**
+  String get detailMove;
 }
 
 class _AppLocalizationsDelegate

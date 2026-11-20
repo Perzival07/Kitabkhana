@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/book/presentation/book_detail_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../../ui/ui.dart';
 import '../theme/tokens.dart';
+import '../library_providers.dart';
 
 /// Tab layout kinds by window width.
 enum ShellLayout { compact, medium, expanded }
@@ -25,7 +28,7 @@ const double kMaxContentWidth = 720;
 
 /// The app shell: bottom bar on phones, rail on tablets, extended rail plus a
 /// two-pane list/detail layout on large screens.
-class AdaptiveScaffold extends StatelessWidget {
+class AdaptiveScaffold extends ConsumerWidget {
   const AdaptiveScaffold({
     required this.navigationShell,
     this.detail,
@@ -38,7 +41,7 @@ class AdaptiveScaffold extends StatelessWidget {
   final Widget? detail;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final index = navigationShell.currentIndex;
     return PopScope(
       // Back on a non-first tab returns to the first tab before leaving.
@@ -134,7 +137,7 @@ class AdaptiveScaffold extends StatelessWidget {
             children: <Widget>[
               SizedBox(width: kListPaneWidth, child: navigationShell),
               const VerticalDivider(),
-              Expanded(child: detail ?? const _DetailPlaceholder()),
+              Expanded(child: detail ?? const _SelectedBookPane()),
             ],
           )
         : Align(
@@ -193,6 +196,23 @@ class _DetailPlaceholder extends StatelessWidget {
       illustration: KIllustration.openBook,
       title: l10n.detailPlaceholderTitle,
       body: l10n.detailPlaceholderBody,
+    );
+  }
+}
+
+/// The book chosen in the list, or a calm placeholder.
+class _SelectedBookPane extends ConsumerWidget {
+  const _SelectedBookPane();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final id = ref.watch(selectedBookIdProvider);
+    if (id == null) return const _DetailPlaceholder();
+    return BookDetailScreen(
+      key: ValueKey<String>(id),
+      bookId: id,
+      embedded: true,
+      onClosed: () => ref.read(selectedBookIdProvider.notifier).select(null),
     );
   }
 }

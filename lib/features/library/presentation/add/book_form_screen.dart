@@ -19,7 +19,12 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../../platform/photo_picker/photo_picker.dart';
 import '../../../../ui/ui.dart';
 import '../../application/add_book.dart';
+import '../../../book/application/book_progress.dart';
+import '../../../../app/providers.dart';
+import '../../domain/book.dart';
 import '../../domain/book_enums.dart';
+import '../../../../app/cover_providers.dart';
+import '../../../../app/repositories.dart';
 import 'add_args.dart';
 import 'duplicate_sheet.dart';
 
@@ -119,8 +124,77 @@ class _BookFormScreenState extends ConsumerState<BookFormScreen> {
     );
   }
 
+  Future<void> _saveEdit(Book book) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final router = GoRouter.of(context);
+    final d = _buildDraft();
+    final title = d.title.trim();
+    final isbn = d.isbn13;
+    final today = ref.read(clockProvider).today();
+    setState(() => _saving = true);
+    final r = await ref
+        .read(bookRepositoryProvider)
+        .update(
+          book.id,
+          (b) => withStatus(
+            b.copyWith(
+              title: title,
+              authors: d.authors.trim(),
+              subtitle: d.subtitle?.trim().isEmpty ?? true
+                  ? null
+                  : d.subtitle!.trim(),
+              isbn13: isbn,
+              pages: d.pages,
+              genre: d.genre.trim(),
+              language: d.language.trim(),
+              ownership: d.ownership,
+              locationId: d.locationId,
+              notes: d.notes?.trim().isEmpty ?? true ? null : d.notes!.trim(),
+              coverUrl: _useCatalogueCover ? b.coverUrl : null,
+            ),
+            d.status,
+            today,
+          ),
+        );
+    if (!mounted) return;
+    switch (r) {
+      case Ok<Book>():
+        final photo = _photo;
+        if (photo != null) {
+          final ref0 = await ref
+              .read(coverStoreProvider)
+              .saveFromBytes(book.id, photo);
+          if (ref0 case Ok<String>(:final value)) {
+            await ref
+                .read(bookRepositoryProvider)
+                .update(book.id, (b) => b.copyWith(coverLocalPath: value));
+          }
+        } else if (!_useCatalogueCover && book.coverLocalPath != null) {
+          await ref
+              .read(bookRepositoryProvider)
+              .update(book.id, (b) => b.copyWith(coverLocalPath: null));
+        }
+        KToast.showWith(messenger, l10n.bookSavedChanges);
+        if (router.canPop()) {
+          router.pop();
+        } else {
+          router.go(Routes.book(book.id));
+        }
+      case Err<Book>(:final failure):
+        setState(() => _saving = false);
+        KToast.showWith(
+          messenger,
+          failureMessage(l10n, failure),
+          icon: Icons.error_outline_rounded,
+        );
+    }
+  }
+
   Future<void> _save({required bool addAnother}) async {
     if (_saving || !(_formKey.currentState?.validate() ?? false)) return;
+    final editing = widget.args.editing;
+    if (editing != null) return _saveEdit(editing);
     final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     final router = GoRouter.of(context);
@@ -188,7 +262,11 @@ class _BookFormScreenState extends ConsumerState<BookFormScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(args.isPreview ? l10n.addBookTitle : l10n.addManualTitle),
+        title: Text(
+          args.isEdit
+              ? l10n.editBookTitle
+              : (args.isPreview ? l10n.addBookTitle : l10n.addManualTitle),
+        ),
       ),
       body: SafeArea(
         child: Center(
@@ -405,13 +483,15 @@ class _BookFormScreenState extends ConsumerState<BookFormScreen> {
                     expand: true,
                     onPressed: () => _save(addAnother: false),
                   ),
-                  const SizedBox(height: KSpacing.sm),
-                  KButton(
-                    label: l10n.saveAndAddAnother,
-                    variant: KButtonVariant.text,
-                    expand: true,
-                    onPressed: _saving ? null : () => _save(addAnother: true),
-                  ),
+                  if (!args.isEdit) ...<Widget>[
+                    const SizedBox(height: KSpacing.sm),
+                    KButton(
+                      label: l10n.saveAndAddAnother,
+                      variant: KButtonVariant.text,
+                      expand: true,
+                      onPressed: _saving ? null : () => _save(addAnother: true),
+                    ),
+                  ],
                 ],
               ),
             ),

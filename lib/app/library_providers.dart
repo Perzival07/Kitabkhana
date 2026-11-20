@@ -129,6 +129,15 @@ Stream<Set<String>> lentBookIds(Ref ref) => ref
 Stream<List<Tag>> libraryTags(Ref ref) =>
     ref.watch(tagRepositoryProvider).watchAll();
 
+/// The book open in the detail pane of the two-pane layout.
+@Riverpod(keepAlive: true)
+class SelectedBookId extends _$SelectedBookId {
+  @override
+  String? build() => null;
+
+  void select(String? id) => state = id;
+}
+
 const String _viewKey = 'library.view';
 
 /// Grid or list, remembered on this device.

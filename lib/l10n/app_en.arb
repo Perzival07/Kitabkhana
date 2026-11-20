@@ -338,5 +338,138 @@
     }
   },
   "locationCreateNewPlain": "Create new location",
-  "locationsManage": "Manage locations"
+  "locationsManage": "Manage locations",
+  "bookNotFound": "This book is no longer in your library.",
+  "detailPageOf": "Page {current} of {total}",
+  "@detailPageOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "detailPercentRead": "{percent}% read",
+  "@detailPercentRead": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "detailUpdatePage": "Update page",
+  "detailUpdatePageTitle": "Where are you now?",
+  "detailPageLabel": "Page",
+  "detailPercentLabel": "Percent read",
+  "detailPageDecrease": "Previous page",
+  "detailPageIncrease": "Next page",
+  "detailPageInvalid": "Enter a number from 0 to {max}",
+  "@detailPageInvalid": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "detailRateIt": "Rate it?",
+  "detailRateStar": "{count, plural, =1{Rate 1 star} other{Rate {count} stars}}",
+  "@detailRateStar": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "detailFinishedCelebration": "Finished! Nice one.",
+  "detailChange": "Change",
+  "detailLentTo": "Lent to {name} since {since}",
+  "@detailLentTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "since": {
+        "type": "String"
+      }
+    }
+  },
+  "detailBorrowedFrom": "Borrowed from {name} since {since}",
+  "@detailBorrowedFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "since": {
+        "type": "String"
+      }
+    }
+  },
+  "detailDue": "due {date}",
+  "@detailDue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "detailReturn": "Return",
+  "detailReturned": "Marked as returned",
+  "detailEdit": "Edit",
+  "detailShare": "Share",
+  "detailMore": "More",
+  "detailShareText": "{title} by {authors}",
+  "@detailShareText": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "authors": {
+        "type": "String"
+      }
+    }
+  },
+  "detailShareTextNoAuthor": "{title}",
+  "@detailShareTextNoAuthor": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "detailDeleteTitle": "Delete this book?",
+  "detailDeleteBody": "It leaves your library. You can undo right after.",
+  "detailSectionNotes": "Notes",
+  "detailNotesHint": "Add a note",
+  "detailNotesSaved": "Note saved",
+  "detailSectionTags": "Tags",
+  "detailAddTag": "Add tag",
+  "detailTagHint": "Tag name",
+  "detailRemoveTag": "Remove tag {name}",
+  "@detailRemoveTag": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "detailSectionDetails": "Details",
+  "detailIsbn": "ISBN",
+  "detailOwner": "Owner",
+  "detailAddedOn": "Added on",
+  "detailStarted": "Started",
+  "detailFinished": "Finished",
+  "detailBack": "Back",
+  "detailPagesYear": "{pages} pages",
+  "@detailPagesYear": {
+    "placeholders": {
+      "pages": {
+        "type": "int"
+      }
+    }
+  },
+  "editBookTitle": "Edit book",
+  "bookSavedChanges": "Changes saved",
+  "detailMove": "Move"
 }

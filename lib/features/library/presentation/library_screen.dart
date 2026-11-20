@@ -6,6 +6,7 @@ import '../../../app/add_book_providers.dart';
 import '../../../app/app_config_provider.dart';
 import '../../../app/library_providers.dart';
 import '../../../app/router/routes.dart';
+import '../../../app/shell/adaptive_scaffold.dart';
 import '../../../app/theme/tokens.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../ui/ui.dart';
@@ -214,7 +215,18 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
 
     final hasMore = matches != null && loaded.length < matches;
     final text = query.filter.query;
-    void open(Book b) => context.push(Routes.book(b.id));
+    void open(Book b) {
+      // In the shell's two-pane layout the book opens beside the list.
+      final twoPane =
+          shellLayoutFor(MediaQuery.sizeOf(context).width) ==
+          ShellLayout.expanded;
+      if (twoPane) {
+        ref.read(selectedBookIdProvider.notifier).select(b.id);
+      } else {
+        context.push(Routes.book(b.id));
+      }
+    }
+
     void actions(Book b) => showQuickActions(context, ref, b);
 
     if (view == LibraryView.list) {

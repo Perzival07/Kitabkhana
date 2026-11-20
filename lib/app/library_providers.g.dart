@@ -368,6 +368,64 @@ final class LibraryTagsProvider
 
 String _$libraryTagsHash() => r'7ac1a4a12429fb18f0582f22063cb7af0ff5950d';
 
+/// The book open in the detail pane of the two-pane layout.
+
+@ProviderFor(SelectedBookId)
+final selectedBookIdProvider = SelectedBookIdProvider._();
+
+/// The book open in the detail pane of the two-pane layout.
+final class SelectedBookIdProvider
+    extends $NotifierProvider<SelectedBookId, String?> {
+  /// The book open in the detail pane of the two-pane layout.
+  SelectedBookIdProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'selectedBookIdProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$selectedBookIdHash();
+
+  @$internal
+  @override
+  SelectedBookId create() => SelectedBookId();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(String? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<String?>(value),
+    );
+  }
+}
+
+String _$selectedBookIdHash() => r'f2c6528ce4b5ef945b89caeb317d85d55b150e87';
+
+/// The book open in the detail pane of the two-pane layout.
+
+abstract class _$SelectedBookId extends $Notifier<String?> {
+  String? build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<String?, String?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<String?, String?>,
+              String?,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}
+
 /// Grid or list, remembered on this device.
 
 @ProviderFor(LibraryViewController)
