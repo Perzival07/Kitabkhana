@@ -173,7 +173,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
             ? null
             : AppBar(leading: _BackButton(onPressed: _leave)),
         body: async.isLoading
-            ? const Center(child: CircularProgressIndicator())
+            ? const KPageSkeleton()
             : KEmptyState(
                 illustration: KIllustration.openBook,
                 title: l10n.bookNotFound,

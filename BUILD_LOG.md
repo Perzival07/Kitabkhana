@@ -104,3 +104,6 @@ Tick a task only when it is green (see Definition of Green).
 - (P04.4) Two-pane: the shell's detail pane (>1000dp, Library tab) now shows the selected book, held in `selectedBookIdProvider`; narrower widths push `/book/:id`.
 - (P04.4) The Edit screen is the manual form in edit mode (`BookFormArgs.edit`); changing status there follows the same date rules as the detail page.
 - (P04.4) Not yet checked on a device: Hero animation smoothness (grid to detail and back), the celebration burst with reduce-motion on, and the blurred header on low-end phones.
+- (PA Phase 04) Fixed: content screens (Detail, Edit, Locations) load with skeletons, not spinners; Locations is capped at the 720dp content width on wide screens.
+- (PA Phase 04, P3) The Detail header uses fixed white text over the darkened cover (intentional for contrast on any cover) rather than theme tokens; the status chips wrap onto two lines at 360dp; the Add Book camera screen still shows a spinner while busy (not content).
+- (PA Phase 04, P3) Not verified here (no device): 200% text, landscape and foldable layouts on the new Locations and Detail screens beyond the 320dp overflow test and 360dp goldens.

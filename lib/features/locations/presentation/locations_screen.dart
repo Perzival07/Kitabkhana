@@ -8,6 +8,7 @@ import '../../../app/library_providers.dart';
 import '../../../app/location_providers.dart';
 import '../../../app/repositories.dart';
 import '../../../app/router/routes.dart';
+import '../../../app/shell/adaptive_scaffold.dart' show kMaxContentWidth;
 import '../../../app/theme/tokens.dart';
 import '../../../core/result.dart';
 import '../../../core/uuid.dart';
@@ -134,7 +135,7 @@ class _LocationsScreenState extends ConsumerState<LocationsScreen> {
         ],
       ),
       body: locations.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const KPageSkeleton(),
         error: (_, _) => Center(child: Text(l10n.libraryLoadFailed)),
         data: (list) {
           if (list.isEmpty) {
@@ -169,57 +170,62 @@ class _LocationsScreenState extends ConsumerState<LocationsScreen> {
                   for (final id in order)
                     if (byId[id] != null) byId[id]!,
                 ];
-          return ReorderableListView.builder(
-            buildDefaultDragHandles: false,
-            padding: const EdgeInsets.only(bottom: KSpacing.xxl),
-            itemCount: items.length,
-            onReorderItem: (a, b) => _reorder(items, a, b),
-            itemBuilder: (context, i) {
-              final loc = items[i];
-              final count = counts[loc.id] ?? 0;
-              return ListTile(
-                key: ValueKey<String>(loc.id),
-                leading: Icon(locationIcon(loc.icon)),
-                title: Text(locationPath(loc, list)),
-                subtitle: Text(l10n.locationsBookCount(count)),
-                onTap: () => _open(loc),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    PopupMenuButton<String>(
-                      tooltip: l10n.locationEdit,
-                      onSelected: (v) {
-                        if (v == 'edit') {
-                          showLocationEditor(context, existing: loc);
-                        } else {
-                          _delete(loc, count);
-                        }
-                      },
-                      itemBuilder: (_) => <PopupMenuEntry<String>>[
-                        PopupMenuItem<String>(
-                          value: 'edit',
-                          child: Text(l10n.locationRename),
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: kMaxContentWidth),
+              child: ReorderableListView.builder(
+                buildDefaultDragHandles: false,
+                padding: const EdgeInsets.only(bottom: KSpacing.xxl),
+                itemCount: items.length,
+                onReorderItem: (a, b) => _reorder(items, a, b),
+                itemBuilder: (context, i) {
+                  final loc = items[i];
+                  final count = counts[loc.id] ?? 0;
+                  return ListTile(
+                    key: ValueKey<String>(loc.id),
+                    leading: Icon(locationIcon(loc.icon)),
+                    title: Text(locationPath(loc, list)),
+                    subtitle: Text(l10n.locationsBookCount(count)),
+                    onTap: () => _open(loc),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        PopupMenuButton<String>(
+                          tooltip: l10n.locationEdit,
+                          onSelected: (v) {
+                            if (v == 'edit') {
+                              showLocationEditor(context, existing: loc);
+                            } else {
+                              _delete(loc, count);
+                            }
+                          },
+                          itemBuilder: (_) => <PopupMenuEntry<String>>[
+                            PopupMenuItem<String>(
+                              value: 'edit',
+                              child: Text(l10n.locationRename),
+                            ),
+                            PopupMenuItem<String>(
+                              value: 'delete',
+                              child: Text(l10n.locationDelete),
+                            ),
+                          ],
                         ),
-                        PopupMenuItem<String>(
-                          value: 'delete',
-                          child: Text(l10n.locationDelete),
+                        ReorderableDragStartListener(
+                          index: i,
+                          child: Tooltip(
+                            message: l10n.locationReorderHint,
+                            child: const Padding(
+                              padding: EdgeInsets.all(KSpacing.sm),
+                              child: Icon(Icons.drag_handle_rounded),
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                    ReorderableDragStartListener(
-                      index: i,
-                      child: Tooltip(
-                        message: l10n.locationReorderHint,
-                        child: const Padding(
-                          padding: EdgeInsets.all(KSpacing.sm),
-                          child: Icon(Icons.drag_handle_rounded),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
+                  );
+                },
+              ),
+            ),
           );
         },
       ),

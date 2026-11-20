@@ -27,7 +27,7 @@ class BookEditScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(),
       body: async.isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const KPageSkeleton()
           : KEmptyState(
               illustration: KIllustration.openBook,
               title: l10n.bookNotFound,

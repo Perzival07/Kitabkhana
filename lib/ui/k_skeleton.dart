@@ -110,3 +110,28 @@ class KBookTileSkeleton extends StatelessWidget {
     );
   }
 }
+
+/// A page-sized skeleton: a title bar and a few lines, for screens whose
+/// content is still loading.
+class KPageSkeleton extends StatelessWidget {
+  const KPageSkeleton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.all(KSpacing.screen),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          KSkeleton(width: 160, height: 24),
+          SizedBox(height: KSpacing.lg),
+          KSkeleton(height: 16),
+          SizedBox(height: KSpacing.sm),
+          KSkeleton(height: 16),
+          SizedBox(height: KSpacing.sm),
+          KSkeleton(width: 200, height: 16),
+        ],
+      ),
+    );
+  }
+}
