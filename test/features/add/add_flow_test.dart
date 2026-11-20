@@ -403,8 +403,8 @@ void main() {
         await enter(t, 'Notes', 'Gift');
         await tapText(t, 'Wishlist');
         await tapText(t, 'Reading');
-        await t.ensureVisible(find.byType(DropdownButtonFormField<String?>));
-        await t.tap(find.byType(DropdownButtonFormField<String?>));
+        await t.ensureVisible(find.text('No location'));
+        await t.tap(find.text('No location'));
         await t.pumpAndSettle();
         await t.tap(find.text('Bedroom shelf').last);
         await t.pumpAndSettle();

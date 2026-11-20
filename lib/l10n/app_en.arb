@@ -271,5 +271,72 @@
       }
     }
   },
-  "libraryLoadFailed": "Couldn't load your books"
+  "libraryLoadFailed": "Couldn't load your books",
+  "locationsTitle": "Locations",
+  "locationsBookCount": "{count, plural, =0{No books} =1{1 book} other{{count} books}}",
+  "@locationsBookCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "locationAdd": "Add location",
+  "locationRename": "Rename location",
+  "locationNameLabel": "Name",
+  "locationNameExists": "You already have a location with that name.",
+  "locationNameEmpty": "Give the location a name.",
+  "locationIconLabel": "Icon",
+  "locationIconShelf": "Shelf",
+  "locationIconBox": "Box",
+  "locationIconRoom": "Room",
+  "locationIconBag": "Bag",
+  "locationIconOffice": "Office",
+  "locationIconOther": "Other",
+  "locationParentLabel": "Inside (optional)",
+  "locationNoParent": "Nothing — top level",
+  "locationEdit": "Rename or change icon",
+  "locationDelete": "Delete location",
+  "locationDeleteTitle": "Delete \"{name}\"?",
+  "@locationDeleteTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "locationDeleteEmpty": "No books are in this location.",
+  "locationMoveBooksTitle": "{count, plural, =1{Move 1 book to…} other{Move {count} books to…}}",
+  "@locationMoveBooksTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "locationDeleteConfirm": "Delete and move",
+  "locationDeleted": "Location deleted",
+  "locationsEmptyTitle": "Where do your books live?",
+  "locationsEmptyBody": "Add shelves, boxes or rooms so you can find any book fast.",
+  "locationsStarterTitle": "Start with these?",
+  "locationsStarterAccept": "Add all three",
+  "locationsStarterSkip": "Skip",
+  "starterLivingRoom": "Living room shelf",
+  "starterBedroom": "Bedroom shelf",
+  "starterStorage": "Storage box",
+  "locationReorderHint": "Drag to reorder",
+  "locationPickerTitle": "Choose a location",
+  "locationPickerSearch": "Search or create",
+  "locationPickerRecent": "Recent",
+  "locationPickerAll": "All locations",
+  "locationCreateNew": "Create \"{name}\"",
+  "@locationCreateNew": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "locationCreateNewPlain": "Create new location",
+  "locationsManage": "Manage locations"
 }

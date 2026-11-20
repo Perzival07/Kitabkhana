@@ -1047,6 +1047,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t load your books'**
   String get libraryLoadFailed;
+
+  /// No description provided for @locationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Locations'**
+  String get locationsTitle;
+
+  /// No description provided for @locationsBookCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No books} =1{1 book} other{{count} books}}'**
+  String locationsBookCount(int count);
+
+  /// No description provided for @locationAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add location'**
+  String get locationAdd;
+
+  /// No description provided for @locationRename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename location'**
+  String get locationRename;
+
+  /// No description provided for @locationNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get locationNameLabel;
+
+  /// No description provided for @locationNameExists.
+  ///
+  /// In en, this message translates to:
+  /// **'You already have a location with that name.'**
+  String get locationNameExists;
+
+  /// No description provided for @locationNameEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Give the location a name.'**
+  String get locationNameEmpty;
+
+  /// No description provided for @locationIconLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get locationIconLabel;
+
+  /// No description provided for @locationIconShelf.
+  ///
+  /// In en, this message translates to:
+  /// **'Shelf'**
+  String get locationIconShelf;
+
+  /// No description provided for @locationIconBox.
+  ///
+  /// In en, this message translates to:
+  /// **'Box'**
+  String get locationIconBox;
+
+  /// No description provided for @locationIconRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Room'**
+  String get locationIconRoom;
+
+  /// No description provided for @locationIconBag.
+  ///
+  /// In en, this message translates to:
+  /// **'Bag'**
+  String get locationIconBag;
+
+  /// No description provided for @locationIconOffice.
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get locationIconOffice;
+
+  /// No description provided for @locationIconOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get locationIconOther;
+
+  /// No description provided for @locationParentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Inside (optional)'**
+  String get locationParentLabel;
+
+  /// No description provided for @locationNoParent.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing — top level'**
+  String get locationNoParent;
+
+  /// No description provided for @locationEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename or change icon'**
+  String get locationEdit;
+
+  /// No description provided for @locationDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete location'**
+  String get locationDelete;
+
+  /// No description provided for @locationDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete \"{name}\"?'**
+  String locationDeleteTitle(String name);
+
+  /// No description provided for @locationDeleteEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No books are in this location.'**
+  String get locationDeleteEmpty;
+
+  /// No description provided for @locationMoveBooksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Move 1 book to…} other{Move {count} books to…}}'**
+  String locationMoveBooksTitle(int count);
+
+  /// No description provided for @locationDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete and move'**
+  String get locationDeleteConfirm;
+
+  /// No description provided for @locationDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Location deleted'**
+  String get locationDeleted;
+
+  /// No description provided for @locationsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where do your books live?'**
+  String get locationsEmptyTitle;
+
+  /// No description provided for @locationsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add shelves, boxes or rooms so you can find any book fast.'**
+  String get locationsEmptyBody;
+
+  /// No description provided for @locationsStarterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Start with these?'**
+  String get locationsStarterTitle;
+
+  /// No description provided for @locationsStarterAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Add all three'**
+  String get locationsStarterAccept;
+
+  /// No description provided for @locationsStarterSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get locationsStarterSkip;
+
+  /// No description provided for @starterLivingRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Living room shelf'**
+  String get starterLivingRoom;
+
+  /// No description provided for @starterBedroom.
+  ///
+  /// In en, this message translates to:
+  /// **'Bedroom shelf'**
+  String get starterBedroom;
+
+  /// No description provided for @starterStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage box'**
+  String get starterStorage;
+
+  /// No description provided for @locationReorderHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to reorder'**
+  String get locationReorderHint;
+
+  /// No description provided for @locationPickerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a location'**
+  String get locationPickerTitle;
+
+  /// No description provided for @locationPickerSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search or create'**
+  String get locationPickerSearch;
+
+  /// No description provided for @locationPickerRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get locationPickerRecent;
+
+  /// No description provided for @locationPickerAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All locations'**
+  String get locationPickerAll;
+
+  /// No description provided for @locationCreateNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Create \"{name}\"'**
+  String locationCreateNew(String name);
+
+  /// No description provided for @locationCreateNewPlain.
+  ///
+  /// In en, this message translates to:
+  /// **'Create new location'**
+  String get locationCreateNewPlain;
+
+  /// No description provided for @locationsManage.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage locations'**
+  String get locationsManage;
 }
 
 class _AppLocalizationsDelegate

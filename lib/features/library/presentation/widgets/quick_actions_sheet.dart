@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../app/add_book_providers.dart';
 import '../../../../app/repositories.dart';
 import '../../../../app/l10n/failure_message.dart';
 import '../../../../core/failure.dart';
@@ -11,6 +10,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../../ui/ui.dart';
 import '../../domain/book.dart';
 import '../../domain/book_enums.dart';
+import '../../../locations/presentation/location_picker.dart';
 import 'book_tiles.dart';
 
 /// Long-press menu for a book: change status, move, delete (with undo).
@@ -34,7 +34,17 @@ Future<void> showQuickActions(
     icon: Icons.error_outline_rounded,
   );
 
-  switch (action) {
+  var resolved = action;
+  if (action is _PickMove) {
+    if (!context.mounted) return;
+    final pick = await showLocationPicker(context, selectedId: book.locationId);
+    if (pick == null) return;
+    resolved = _Move(pick.id);
+  }
+
+  switch (resolved) {
+    case _PickMove():
+      return;
     case _ChangeStatus(:final status):
       final r = await repo.update(book.id, (b) => b.copyWith(status: status));
       switch (r) {
@@ -83,6 +93,10 @@ final class _ChangeStatus extends _Action {
   final ReadStatus status;
 }
 
+final class _PickMove extends _Action {
+  const _PickMove();
+}
+
 final class _Move extends _Action {
   const _Move(this.locationId);
   final String? locationId;
@@ -92,7 +106,7 @@ final class _Delete extends _Action {
   const _Delete();
 }
 
-enum _Page { actions, status, move }
+enum _Page { actions, status }
 
 class _ActionsList extends ConsumerStatefulWidget {
   const _ActionsList({required this.book});
@@ -135,7 +149,7 @@ class _ActionsListState extends ConsumerState<_ActionsList> {
               leading: const Icon(Icons.place_outlined),
               title: Text(l10n.quickMove),
               trailing: const Icon(Icons.chevron_right_rounded),
-              onTap: () => setState(() => _page = _Page.move),
+              onTap: () => Navigator.of(context).pop(const _PickMove()),
             ),
             ListTile(
               leading: Icon(Icons.delete_outline_rounded, color: cs.error),
@@ -159,34 +173,6 @@ class _ActionsListState extends ConsumerState<_ActionsList> {
                 ),
                 title: Text(statusLabel(l10n, s)),
                 onTap: () => Navigator.of(context).pop(_ChangeStatus(s)),
-              ),
-          ],
-        );
-      case _Page.move:
-        final locations = ref.watch(locationsProvider).value ?? const [];
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            header(l10n.quickMove),
-            ListTile(
-              leading: Icon(
-                book.locationId == null
-                    ? Icons.radio_button_checked_rounded
-                    : Icons.radio_button_unchecked_rounded,
-              ),
-              title: Text(l10n.noLocation),
-              onTap: () => Navigator.of(context).pop(const _Move(null)),
-            ),
-            for (final loc in locations)
-              ListTile(
-                leading: Icon(
-                  loc.id == book.locationId
-                      ? Icons.radio_button_checked_rounded
-                      : Icons.radio_button_unchecked_rounded,
-                ),
-                title: Text(loc.name),
-                onTap: () => Navigator.of(context).pop(_Move(loc.id)),
               ),
           ],
         );

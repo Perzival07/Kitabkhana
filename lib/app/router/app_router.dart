@@ -9,6 +9,7 @@ import '../../features/library/presentation/add/add_scan_screen.dart';
 import '../../features/library/presentation/add/add_search_screen.dart';
 import '../../features/library/presentation/add/book_form_screen.dart';
 import '../../features/library/presentation/library_screen.dart';
+import '../../features/locations/presentation/locations_screen.dart';
 import '../../features/more/presentation/more_screen.dart';
 import '../../features/reading/presentation/reading_screen.dart';
 import '../../features/scan_check/presentation/scan_screen.dart';
@@ -148,8 +149,7 @@ GoRouter buildRouter(AppConfig config, {String initial = Routes.library}) {
       ),
       GoRoute(
         path: Routes.locations,
-        builder: (_, _) =>
-            stub((l) => l.routeLocations, KIllustration.emptyShelf),
+        builder: (_, _) => const LocationsScreen(),
       ),
       GoRoute(
         path: Routes.settings,

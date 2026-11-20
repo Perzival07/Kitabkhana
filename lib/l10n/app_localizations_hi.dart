@@ -548,4 +548,144 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get libraryLoadFailed => 'Couldn\'t load your books';
+
+  @override
+  String get locationsTitle => 'Locations';
+
+  @override
+  String locationsBookCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count books',
+      one: '1 book',
+      zero: 'No books',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get locationAdd => 'Add location';
+
+  @override
+  String get locationRename => 'Rename location';
+
+  @override
+  String get locationNameLabel => 'Name';
+
+  @override
+  String get locationNameExists =>
+      'You already have a location with that name.';
+
+  @override
+  String get locationNameEmpty => 'Give the location a name.';
+
+  @override
+  String get locationIconLabel => 'Icon';
+
+  @override
+  String get locationIconShelf => 'Shelf';
+
+  @override
+  String get locationIconBox => 'Box';
+
+  @override
+  String get locationIconRoom => 'Room';
+
+  @override
+  String get locationIconBag => 'Bag';
+
+  @override
+  String get locationIconOffice => 'Office';
+
+  @override
+  String get locationIconOther => 'Other';
+
+  @override
+  String get locationParentLabel => 'Inside (optional)';
+
+  @override
+  String get locationNoParent => 'Nothing — top level';
+
+  @override
+  String get locationEdit => 'Rename or change icon';
+
+  @override
+  String get locationDelete => 'Delete location';
+
+  @override
+  String locationDeleteTitle(String name) {
+    return 'Delete \"$name\"?';
+  }
+
+  @override
+  String get locationDeleteEmpty => 'No books are in this location.';
+
+  @override
+  String locationMoveBooksTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Move $count books to…',
+      one: 'Move 1 book to…',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get locationDeleteConfirm => 'Delete and move';
+
+  @override
+  String get locationDeleted => 'Location deleted';
+
+  @override
+  String get locationsEmptyTitle => 'Where do your books live?';
+
+  @override
+  String get locationsEmptyBody =>
+      'Add shelves, boxes or rooms so you can find any book fast.';
+
+  @override
+  String get locationsStarterTitle => 'Start with these?';
+
+  @override
+  String get locationsStarterAccept => 'Add all three';
+
+  @override
+  String get locationsStarterSkip => 'Skip';
+
+  @override
+  String get starterLivingRoom => 'Living room shelf';
+
+  @override
+  String get starterBedroom => 'Bedroom shelf';
+
+  @override
+  String get starterStorage => 'Storage box';
+
+  @override
+  String get locationReorderHint => 'Drag to reorder';
+
+  @override
+  String get locationPickerTitle => 'Choose a location';
+
+  @override
+  String get locationPickerSearch => 'Search or create';
+
+  @override
+  String get locationPickerRecent => 'Recent';
+
+  @override
+  String get locationPickerAll => 'All locations';
+
+  @override
+  String locationCreateNew(String name) {
+    return 'Create \"$name\"';
+  }
+
+  @override
+  String get locationCreateNewPlain => 'Create new location';
+
+  @override
+  String get locationsManage => 'Manage locations';
 }

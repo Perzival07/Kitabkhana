@@ -1,6 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
+import '../../../locations/presentation/location_name.dart';
+import '../../../locations/presentation/location_picker.dart';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -361,24 +365,29 @@ class _BookFormScreenState extends ConsumerState<BookFormScreen> {
                     ],
                   ),
                   const SizedBox(height: KSpacing.lg),
-                  DropdownButtonFormField<String?>(
-                    initialValue: locations.any((l) => l.id == _locationId)
-                        ? _locationId
-                        : null,
-                    isExpanded: true,
-                    decoration: InputDecoration(labelText: l10n.fieldLocation),
-                    items: <DropdownMenuItem<String?>>[
-                      DropdownMenuItem<String?>(child: Text(l10n.noLocation)),
-                      for (final loc in locations)
-                        DropdownMenuItem<String?>(
-                          value: loc.id,
-                          child: Text(
-                            loc.name,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                    ],
-                    onChanged: (v) => setState(() => _locationId = v),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(KRadii.input),
+                    onTap: () async {
+                      final pick = await showLocationPicker(
+                        context,
+                        selectedId: _locationId,
+                      );
+                      if (pick != null) setState(() => _locationId = pick.id);
+                    },
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: l10n.fieldLocation,
+                        suffixIcon: const Icon(Icons.arrow_drop_down_rounded),
+                      ),
+                      child: Text(
+                        locations
+                                .where((l) => l.id == _locationId)
+                                .map((l) => locationPath(l, locations))
+                                .firstOrNull ??
+                            l10n.noLocation,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: KSpacing.md),
                   TextFormField(
