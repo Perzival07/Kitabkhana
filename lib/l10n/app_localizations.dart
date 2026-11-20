@@ -1773,6 +1773,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No barcode?'**
   String get scanSearchLabel;
+
+  /// No description provided for @lendAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Lend'**
+  String get lendAction;
+
+  /// No description provided for @lendSheetTitleLend.
+  ///
+  /// In en, this message translates to:
+  /// **'Lend this book'**
+  String get lendSheetTitleLend;
+
+  /// No description provided for @lendSheetTitleBorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Borrowed this book'**
+  String get lendSheetTitleBorrow;
+
+  /// No description provided for @lendToggleLend.
+  ///
+  /// In en, this message translates to:
+  /// **'Lend'**
+  String get lendToggleLend;
+
+  /// No description provided for @lendToggleBorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Borrow'**
+  String get lendToggleBorrow;
+
+  /// No description provided for @lendPersonLent.
+  ///
+  /// In en, this message translates to:
+  /// **'Lent to'**
+  String get lendPersonLent;
+
+  /// No description provided for @lendPersonBorrowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Borrowed from'**
+  String get lendPersonBorrowed;
+
+  /// No description provided for @lendPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone (optional)'**
+  String get lendPhone;
+
+  /// No description provided for @lendPhoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Number, with country code if different'**
+  String get lendPhoneHint;
+
+  /// No description provided for @lendPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'That doesn\'t look like a phone number.'**
+  String get lendPhoneInvalid;
+
+  /// No description provided for @lendStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Started'**
+  String get lendStarted;
+
+  /// No description provided for @lendDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get lendDue;
+
+  /// No description provided for @lendDueNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get lendDueNone;
+
+  /// No description provided for @lendDue1w.
+  ///
+  /// In en, this message translates to:
+  /// **'1 week'**
+  String get lendDue1w;
+
+  /// No description provided for @lendDue2w.
+  ///
+  /// In en, this message translates to:
+  /// **'2 weeks'**
+  String get lendDue2w;
+
+  /// No description provided for @lendDue1m.
+  ///
+  /// In en, this message translates to:
+  /// **'1 month'**
+  String get lendDue1m;
+
+  /// No description provided for @lendDueCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a date'**
+  String get lendDueCustom;
+
+  /// No description provided for @lendNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get lendNote;
+
+  /// No description provided for @lendSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get lendSave;
+
+  /// No description provided for @lendNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Who has it?'**
+  String get lendNameRequired;
+
+  /// No description provided for @lendSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Lent to {name}'**
+  String lendSaved(String name);
+
+  /// No description provided for @lendSavedBorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Borrowed from {name}'**
+  String lendSavedBorrow(String name);
+
+  /// No description provided for @returnPickLocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where does it go back?'**
+  String get returnPickLocationTitle;
+
+  /// No description provided for @returnPickLocationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Its old spot was deleted. Choose a new one.'**
+  String get returnPickLocationBody;
+
+  /// No description provided for @returnBorrowedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned to {name}'**
+  String returnBorrowedTitle(String name);
+
+  /// No description provided for @returnBorrowedRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from my library'**
+  String get returnBorrowedRemove;
+
+  /// No description provided for @returnBorrowedKeep.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it on my wishlist'**
+  String get returnBorrowedKeep;
+
+  /// No description provided for @failureNeedsName.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the person\'s name.'**
+  String get failureNeedsName;
 }
 
 class _AppLocalizationsDelegate

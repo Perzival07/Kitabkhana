@@ -1,0 +1,91 @@
+import 'package:drift/drift.dart' show Value;
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../data/db/app_database.dart';
+import '../data/db/database_provider.dart';
+import '../features/lending/application/lending_use_cases.dart';
+import '../features/lending/domain/reminder_service.dart';
+import 'providers.dart';
+import 'repositories.dart';
+
+part 'lending_providers.g.dart';
+
+/// Schedules loan reminders. Swapped for the real service in P06.2.
+@Riverpod(keepAlive: true)
+ReminderService reminderService(Ref ref) => const NoopReminderService();
+
+@Riverpod(keepAlive: true)
+LendBook lendBook(Ref ref) => LendBook(
+  loans: ref.watch(loanRepositoryProvider),
+  books: ref.watch(bookRepositoryProvider),
+  clock: ref.watch(clockProvider),
+  reminders: ref.watch(reminderServiceProvider),
+);
+
+@Riverpod(keepAlive: true)
+RecordBorrowedBook recordBorrowedBook(Ref ref) => RecordBorrowedBook(
+  loans: ref.watch(loanRepositoryProvider),
+  books: ref.watch(bookRepositoryProvider),
+  clock: ref.watch(clockProvider),
+  reminders: ref.watch(reminderServiceProvider),
+);
+
+@Riverpod(keepAlive: true)
+ReturnLoan returnLoan(Ref ref) => ReturnLoan(
+  loans: ref.watch(loanRepositoryProvider),
+  locations: ref.watch(locationRepositoryProvider),
+  clock: ref.watch(clockProvider),
+  reminders: ref.watch(reminderServiceProvider),
+);
+
+@Riverpod(keepAlive: true)
+ExtendDueDate extendDueDate(Ref ref) => ExtendDueDate(
+  loans: ref.watch(loanRepositoryProvider),
+  books: ref.watch(bookRepositoryProvider),
+  clock: ref.watch(clockProvider),
+  reminders: ref.watch(reminderServiceProvider),
+);
+
+/// Names of people from past loans, for autocomplete.
+@riverpod
+Future<List<String>> recentPeople(Ref ref) =>
+    ref.watch(loanRepositoryProvider).recentPeople();
+
+const String _ccKey = 'phone.default_cc';
+
+/// The country code (digits only) assumed for phone numbers typed without
+/// one. Defaults to India (91); stored on this device.
+@Riverpod(keepAlive: true)
+class DefaultCountryCode extends _$DefaultCountryCode {
+  @override
+  String build() {
+    _load();
+    return '91';
+  }
+
+  Future<void> _load() async {
+    try {
+      final db = ref.read(appDatabaseProvider);
+      final row = await (db.select(
+        db.appMeta,
+      )..where((t) => t.key.equals(_ccKey))).getSingleOrNull();
+      if (row != null && row.value.isNotEmpty && ref.mounted) {
+        state = row.value;
+      }
+    } on Object catch (e) {
+      ref.read(appLoggerProvider).warn('Reading country code failed: $e');
+    }
+  }
+
+  Future<void> set(String code) async {
+    final digits = code.replaceAll(RegExp(r'\D'), '');
+    if (digits.isEmpty) return;
+    state = digits;
+    final db = ref.read(appDatabaseProvider);
+    await db
+        .into(db.appMeta)
+        .insertOnConflictUpdate(
+          AppMetaCompanion(key: const Value(_ccKey), value: Value(digits)),
+        );
+  }
+}

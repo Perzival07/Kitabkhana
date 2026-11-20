@@ -6,7 +6,9 @@ import '../../../core/result.dart';
 import '../../../data/db/app_database.dart';
 import '../../../data/db/converters.dart';
 import '../../../data/db/db_guard.dart';
+import '../../library/domain/book_enums.dart';
 import '../domain/loan.dart';
+import '../domain/loan_direction.dart';
 import '../domain/loan_repository.dart';
 
 Loan _toDomain(LoanRow r) => Loan(
@@ -190,4 +192,144 @@ class DriftLoanRepository implements LoanRepository {
           return _toDomain(saved);
         }),
       );
+
+  @override
+  Future<Result<Loan>> startLoan(Loan loan) => dbGuard(
+    () => _db.transaction(() async {
+      final book =
+          await (_db.liveBooks()..where((t) => t.id.equals(loan.bookId)))
+              .getSingleOrNull();
+      if (book == null) {
+        throw const FailureException(NotFoundFailure('book'));
+      }
+      if (await _activeRow(loan.bookId) != null) {
+        throw const FailureException(ConflictFailure('failureBookAlreadyLent'));
+      }
+      final now = _clock.now();
+      final lending = loan.direction == LoanDirection.lent;
+      final stored = lending
+          ? loan.copyWith(previousLocationId: book.locationId)
+          : loan;
+      await _db
+          .into(_db.loans)
+          .insert(_toCompanion(stored, createdAt: now, updatedAt: now, rev: 1));
+      if (lending) {
+        await _db.customUpdate(
+          'UPDATE books SET location_id = NULL, updated_at = ?1, '
+          'rev = rev + 1 WHERE id = ?2',
+          variables: [Variable<DateTime>(now), Variable<String>(book.id)],
+          updates: {_db.books},
+          updateKind: UpdateKind.update,
+        );
+      } else {
+        await _db.customUpdate(
+          'UPDATE books SET ownership = ?1, updated_at = ?2, '
+          'rev = rev + 1 WHERE id = ?3',
+          variables: [
+            Variable<String>(Ownership.borrowed.name),
+            Variable<DateTime>(now),
+            Variable<String>(book.id),
+          ],
+          updates: {_db.books},
+          updateKind: UpdateKind.update,
+        );
+      }
+      final saved = await (_db.select(
+        _db.loans,
+      )..where((t) => t.id.equals(loan.id))).getSingle();
+      return _toDomain(saved);
+    }),
+  );
+
+  @override
+  Future<Result<Loan>> finishLoan(
+    String loanId,
+    DateTime returnedOn, {
+    String? restoreLocationId,
+    BorrowedReturnAction borrowedAction =
+        BorrowedReturnAction.removeFromLibrary,
+  }) => dbGuard(
+    () => _db.transaction(() async {
+      final existing =
+          await (_db.liveLoans()..where((t) => t.id.equals(loanId)))
+              .getSingleOrNull();
+      if (existing == null) {
+        throw const FailureException(NotFoundFailure('loan'));
+      }
+      if (existing.returnedOn != null) {
+        throw const FailureException(ConflictFailure());
+      }
+      if (restoreLocationId != null) {
+        final place =
+            await (_db.liveLocations()
+                  ..where((t) => t.id.equals(restoreLocationId)))
+                .getSingleOrNull();
+        if (place == null) {
+          throw const FailureException(NotFoundFailure('location'));
+        }
+      }
+      final now = _clock.now();
+      await (_db.update(_db.loans)..where((t) => t.id.equals(loanId))).write(
+        LoansCompanion(
+          returnedOn: Value(returnedOn),
+          updatedAt: Value(now),
+          rev: Value(existing.rev + 1),
+        ),
+      );
+      if (existing.direction == LoanDirection.lent) {
+        await _db.customUpdate(
+          'UPDATE books SET location_id = ?1, updated_at = ?2, '
+          'rev = rev + 1 WHERE id = ?3',
+          variables: [
+            Variable<String>(restoreLocationId),
+            Variable<DateTime>(now),
+            Variable<String>(existing.bookId),
+          ],
+          updates: {_db.books},
+          updateKind: UpdateKind.update,
+        );
+      } else if (borrowedAction == BorrowedReturnAction.removeFromLibrary) {
+        await _db.customUpdate(
+          'UPDATE books SET deleted_at = ?1, updated_at = ?1, '
+          'rev = rev + 1 WHERE id = ?2',
+          variables: [
+            Variable<DateTime>(now),
+            Variable<String>(existing.bookId),
+          ],
+          updates: {_db.books},
+          updateKind: UpdateKind.update,
+        );
+      } else {
+        await _db.customUpdate(
+          'UPDATE books SET ownership = ?1, updated_at = ?2, '
+          'rev = rev + 1 WHERE id = ?3',
+          variables: [
+            Variable<String>(Ownership.wishlist.name),
+            Variable<DateTime>(now),
+            Variable<String>(existing.bookId),
+          ],
+          updates: {_db.books},
+          updateKind: UpdateKind.update,
+        );
+      }
+      final saved = await (_db.select(
+        _db.loans,
+      )..where((t) => t.id.equals(loanId))).getSingle();
+      return _toDomain(saved);
+    }),
+  );
+
+  @override
+  Future<List<String>> recentPeople({int limit = 20}) async {
+    final rows = await _db
+        .customSelect(
+          'SELECT person_name AS n, MAX(created_at) AS t FROM loans '
+          'WHERE deleted_at IS NULL GROUP BY LOWER(person_name) '
+          'ORDER BY t DESC LIMIT ?1',
+          variables: [Variable<int>(limit)],
+          readsFrom: {_db.loans},
+        )
+        .get();
+    return <String>[for (final r in rows) r.read<String>('n')];
+  }
 }

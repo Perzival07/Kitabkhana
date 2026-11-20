@@ -11,6 +11,8 @@ import '../../../../ui/ui.dart';
 import '../../domain/book.dart';
 import '../../domain/book_enums.dart';
 import '../../../locations/presentation/location_picker.dart';
+import '../../../lending/domain/loan_direction.dart';
+import '../../../lending/presentation/lend_sheet.dart';
 import 'book_tiles.dart';
 
 /// Long-press menu for a book: change status, move, delete (with undo).
@@ -45,6 +47,17 @@ Future<void> showQuickActions(
   switch (resolved) {
     case _PickMove():
       return;
+    case _Lend():
+      if (!context.mounted) return;
+      final loan = await showLendSheet(context, book: book);
+      if (loan != null) {
+        KToast.showWith(
+          messenger,
+          loan.direction == LoanDirection.lent
+              ? l10n.lendSaved(loan.personName)
+              : l10n.lendSavedBorrow(loan.personName),
+        );
+      }
     case _ChangeStatus(:final status):
       final r = await repo.update(book.id, (b) => b.copyWith(status: status));
       switch (r) {
@@ -91,6 +104,10 @@ sealed class _Action {
 final class _ChangeStatus extends _Action {
   const _ChangeStatus(this.status);
   final ReadStatus status;
+}
+
+final class _Lend extends _Action {
+  const _Lend();
 }
 
 final class _PickMove extends _Action {
@@ -150,6 +167,11 @@ class _ActionsListState extends ConsumerState<_ActionsList> {
               title: Text(l10n.quickMove),
               trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () => Navigator.of(context).pop(const _PickMove()),
+            ),
+            ListTile(
+              leading: const Icon(Icons.swap_horiz_rounded),
+              title: Text(l10n.lendAction),
+              onTap: () => Navigator.of(context).pop(const _Lend()),
             ),
             ListTile(
               leading: Icon(Icons.delete_outline_rounded, color: cs.error),

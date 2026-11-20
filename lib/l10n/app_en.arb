@@ -544,5 +544,54 @@
     }
   },
   "verdictUnknownTitle": "Unknown title",
-  "scanSearchLabel": "No barcode?"
+  "scanSearchLabel": "No barcode?",
+  "lendAction": "Lend",
+  "lendSheetTitleLend": "Lend this book",
+  "lendSheetTitleBorrow": "Borrowed this book",
+  "lendToggleLend": "Lend",
+  "lendToggleBorrow": "Borrow",
+  "lendPersonLent": "Lent to",
+  "lendPersonBorrowed": "Borrowed from",
+  "lendPhone": "Phone (optional)",
+  "lendPhoneHint": "Number, with country code if different",
+  "lendPhoneInvalid": "That doesn't look like a phone number.",
+  "lendStarted": "Started",
+  "lendDue": "Due",
+  "lendDueNone": "No due date",
+  "lendDue1w": "1 week",
+  "lendDue2w": "2 weeks",
+  "lendDue1m": "1 month",
+  "lendDueCustom": "Pick a date",
+  "lendNote": "Note (optional)",
+  "lendSave": "Save",
+  "lendNameRequired": "Who has it?",
+  "lendSaved": "Lent to {name}",
+  "@lendSaved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "lendSavedBorrow": "Borrowed from {name}",
+  "@lendSavedBorrow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "returnPickLocationTitle": "Where does it go back?",
+  "returnPickLocationBody": "Its old spot was deleted. Choose a new one.",
+  "returnBorrowedTitle": "Returned to {name}",
+  "@returnBorrowedTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "returnBorrowedRemove": "Remove from my library",
+  "returnBorrowedKeep": "Keep it on my wishlist",
+  "failureNeedsName": "Add the person's name."
 }

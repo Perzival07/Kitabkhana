@@ -978,4 +978,95 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get scanSearchLabel => 'No barcode?';
+
+  @override
+  String get lendAction => 'Lend';
+
+  @override
+  String get lendSheetTitleLend => 'Lend this book';
+
+  @override
+  String get lendSheetTitleBorrow => 'Borrowed this book';
+
+  @override
+  String get lendToggleLend => 'Lend';
+
+  @override
+  String get lendToggleBorrow => 'Borrow';
+
+  @override
+  String get lendPersonLent => 'Lent to';
+
+  @override
+  String get lendPersonBorrowed => 'Borrowed from';
+
+  @override
+  String get lendPhone => 'Phone (optional)';
+
+  @override
+  String get lendPhoneHint => 'Number, with country code if different';
+
+  @override
+  String get lendPhoneInvalid => 'That doesn\'t look like a phone number.';
+
+  @override
+  String get lendStarted => 'Started';
+
+  @override
+  String get lendDue => 'Due';
+
+  @override
+  String get lendDueNone => 'No due date';
+
+  @override
+  String get lendDue1w => '1 week';
+
+  @override
+  String get lendDue2w => '2 weeks';
+
+  @override
+  String get lendDue1m => '1 month';
+
+  @override
+  String get lendDueCustom => 'Pick a date';
+
+  @override
+  String get lendNote => 'Note (optional)';
+
+  @override
+  String get lendSave => 'Save';
+
+  @override
+  String get lendNameRequired => 'Who has it?';
+
+  @override
+  String lendSaved(String name) {
+    return 'Lent to $name';
+  }
+
+  @override
+  String lendSavedBorrow(String name) {
+    return 'Borrowed from $name';
+  }
+
+  @override
+  String get returnPickLocationTitle => 'Where does it go back?';
+
+  @override
+  String get returnPickLocationBody =>
+      'Its old spot was deleted. Choose a new one.';
+
+  @override
+  String returnBorrowedTitle(String name) {
+    return 'Returned to $name';
+  }
+
+  @override
+  String get returnBorrowedRemove => 'Remove from my library';
+
+  @override
+  String get returnBorrowedKeep => 'Keep it on my wishlist';
+
+  @override
+  String get failureNeedsName => 'Add the person\'s name.';
 }

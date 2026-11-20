@@ -32,7 +32,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P05.2
 
 ## Phase 06 — Lending
-- [ ] P06.1
+- [x] P06.1
 - [ ] P06.2
 - [ ] P06.3
 
@@ -115,3 +115,7 @@ Tick a task only when it is green (see Definition of Green).
 - (Android) The local Android build needs the Android 37 SDK platform (the project targets it); the emulator setup was abandoned at your request, so no Android build has been run.
 - (PA Phase 05, P3) The verdict sheet resizes without animation (an animated resize crashed when the sheet closed mid-animation). The scan overlay's pulse stops under reduce-motion. Title search can open the verdict sheet while typing once 3 letters are in; it never opens a second sheet over the first.
 - (PA Phase 05, P3) 200% text, landscape and foldable layouts of the Scan tab are not verified (no device); the 360dp goldens (light and dark) are checked.
+- (P06.1) Lend, borrow and return are atomic: the loan and the book change in one transaction (`LoanRepository.startLoan` / `finishLoan`). Lending clears the book's location and remembers it; returning restores it, or asks for a new one when the old place was deleted.
+- (P06.1) Phone: typed manually with a default country code (+91, stored in `app_meta` as `phone.default_cc`; no settings screen for it yet). "Pick from contacts" is not offered, because it needs the contacts permission.
+- (P06.1) Reminders: the `ReminderService` interface is wired into every use case but is a no-op until P06.2. A reminder failure never fails a loan.
+- (P06.1) Not yet checked on a device: the Lend sheet with the keyboard open on small phones and at 200% text.

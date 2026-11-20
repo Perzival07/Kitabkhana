@@ -21,6 +21,8 @@ import '../../../core/result.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../ui/ui.dart';
 import '../../lending/domain/loan.dart';
+import '../../lending/presentation/lend_sheet.dart';
+import '../../lending/presentation/return_flow.dart';
 import '../../lending/domain/loan_direction.dart';
 import '../../library/domain/book.dart';
 import '../../library/domain/book_enums.dart';
@@ -100,17 +102,25 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
   }
 
   Future<void> _return(Loan loan) async {
+    final done = await returnLoanFlow(context, ref, loan);
+    // A borrowed book that was removed leaves this page.
+    if (done && loan.direction == LoanDirection.borrowed && mounted) {
+      final stillThere = ref.read(bookByIdProvider(widget.bookId)).value;
+      if (stillThere == null) _leave();
+    }
+  }
+
+  Future<void> _lend(Book book) async {
     final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
-    final r = await ref
-        .read(loanRepositoryProvider)
-        .markReturned(loan.id, ref.read(clockProvider).today());
-    switch (r) {
-      case Ok<Loan>():
-        KToast.showWith(messenger, l10n.detailReturned);
-      case Err<Loan>(:final failure):
-        if (mounted) _toastError(failure);
-    }
+    final loan = await showLendSheet(context, book: book);
+    if (loan == null) return;
+    KToast.showWith(
+      messenger,
+      loan.direction == LoanDirection.lent
+          ? l10n.lendSaved(loan.personName)
+          : l10n.lendSavedBorrow(loan.personName),
+    );
   }
 
   Future<void> _share(Book book) async {
@@ -259,6 +269,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                         ),
                         const SizedBox(height: KSpacing.lg),
                         _ActionsRow(
+                          onLend: loan == null ? () => _lend(book) : null,
                           onMove: () => _move(book),
                           onEdit: () => context.push(Routes.bookEdit(book.id)),
                           onShare: () => _share(book),
@@ -570,11 +581,13 @@ class _PlaceCard extends StatelessWidget {
 
 class _ActionsRow extends StatelessWidget {
   const _ActionsRow({
+    required this.onLend,
     required this.onMove,
     required this.onEdit,
     required this.onShare,
   });
 
+  final VoidCallback? onLend;
   final VoidCallback onMove;
   final VoidCallback onEdit;
   final VoidCallback onShare;
@@ -582,7 +595,7 @@ class _ActionsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    Widget action(IconData icon, String label, VoidCallback onTap) => Expanded(
+    Widget action(IconData icon, String label, VoidCallback? onTap) => Expanded(
       child: InkWell(
         borderRadius: BorderRadius.circular(KRadii.button),
         onTap: onTap,
@@ -601,6 +614,8 @@ class _ActionsRow extends StatelessWidget {
     );
     return Row(
       children: <Widget>[
+        if (onLend != null)
+          action(Icons.swap_horiz_rounded, l10n.lendAction, onLend),
         action(Icons.place_outlined, l10n.detailMove, onMove),
         action(Icons.edit_outlined, l10n.detailEdit, onEdit),
         action(Icons.ios_share_rounded, l10n.detailShare, onShare),
