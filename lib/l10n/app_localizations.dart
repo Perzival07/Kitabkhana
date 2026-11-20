@@ -2073,6 +2073,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remind'**
   String get detailRemind;
+
+  /// No description provided for @loansTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Loans'**
+  String get loansTitle;
+
+  /// No description provided for @loansTabLent.
+  ///
+  /// In en, this message translates to:
+  /// **'Lent out'**
+  String get loansTabLent;
+
+  /// No description provided for @loansTabBorrowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Borrowed'**
+  String get loansTabBorrowed;
+
+  /// No description provided for @loansTabOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get loansTabOverdue;
+
+  /// No description provided for @loansTabHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get loansTabHistory;
+
+  /// No description provided for @loansEmptyLent.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone has returned your books. Nice.'**
+  String get loansEmptyLent;
+
+  /// No description provided for @loansEmptyBorrowed.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t borrowed any books right now.'**
+  String get loansEmptyBorrowed;
+
+  /// No description provided for @loansEmptyOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is overdue. Lovely.'**
+  String get loansEmptyOverdue;
+
+  /// No description provided for @loansEmptyHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned books will show up here.'**
+  String get loansEmptyHistory;
+
+  /// No description provided for @loanSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Since {date}'**
+  String loanSince(String date);
+
+  /// No description provided for @loanDueOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String loanDueOn(String date);
+
+  /// No description provided for @loanDueToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Due today'**
+  String get loanDueToday;
+
+  /// No description provided for @loanDueInDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Due tomorrow} other{Due in {count} days}}'**
+  String loanDueInDays(int count);
+
+  /// No description provided for @loanOverdueDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day overdue} other{{count} days overdue}}'**
+  String loanOverdueDays(int count);
+
+  /// No description provided for @loanNoDue.
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get loanNoDue;
+
+  /// No description provided for @loanReturnedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned {date}'**
+  String loanReturnedOn(String date);
+
+  /// No description provided for @loanActionReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get loanActionReturn;
+
+  /// No description provided for @loanActionExtend.
+  ///
+  /// In en, this message translates to:
+  /// **'Extend'**
+  String get loanActionExtend;
+
+  /// No description provided for @loanReturnedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked as returned'**
+  String get loanReturnedToast;
+
+  /// No description provided for @extendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Extend the due date'**
+  String get extendTitle;
+
+  /// No description provided for @extend1w.
+  ///
+  /// In en, this message translates to:
+  /// **'+1 week'**
+  String get extend1w;
+
+  /// No description provided for @extend2w.
+  ///
+  /// In en, this message translates to:
+  /// **'+2 weeks'**
+  String get extend2w;
+
+  /// No description provided for @extend1m.
+  ///
+  /// In en, this message translates to:
+  /// **'+1 month'**
+  String get extend1m;
+
+  /// No description provided for @extendDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Now due {date}'**
+  String extendDone(String date);
+
+  /// No description provided for @loansOpenTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Loans'**
+  String get loansOpenTooltip;
 }
 
 class _AppLocalizationsDelegate

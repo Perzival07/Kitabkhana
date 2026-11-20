@@ -28,3 +28,13 @@ Stream<List<Tag>> bookTags(Ref ref, String bookId) =>
 @riverpod
 Stream<List<Loan>> overdueLoans(Ref ref) =>
     ref.watch(loanRepositoryProvider).watchOverdue();
+
+/// Loans not yet returned, soonest due first.
+@riverpod
+Stream<List<Loan>> activeLoans(Ref ref) =>
+    ref.watch(loanRepositoryProvider).watchActive();
+
+/// Returned loans, most recent first.
+@riverpod
+Stream<List<Loan>> loanHistory(Ref ref) =>
+    ref.watch(loanRepositoryProvider).watchHistory();

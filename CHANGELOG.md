@@ -6,6 +6,7 @@ All notable changes are documented here. Format: [Keep a Changelog](https://keep
 
 ### Added
 - Project skeleton, dev/prod flavors, strict lints, docs.
+- Loans screen: lent out, borrowed, overdue and history tabs with counts, due-date colours, swipe to return with undo, extend, remind.
 - Reminders: local due-date notifications (10:00 and +3 days), reconciliation at start-up, WhatsApp and SMS nudges, overdue banner on the web.
 - Lending: lend, borrow and return with location restore, due-date chips, phone normalisation, past-people suggestions.
 - Scan tab: camera scanner with verdict cards (owned, other edition, wishlist, lent, borrowed, did you mean, not in library), title and ISBN fallback, permission states.

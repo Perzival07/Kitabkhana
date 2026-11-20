@@ -285,3 +285,89 @@ final class OverdueLoansProvider
 }
 
 String _$overdueLoansHash() => r'f8262f8541c55f38323e02980faec2d10cdc8369';
+
+/// Loans not yet returned, soonest due first.
+
+@ProviderFor(activeLoans)
+final activeLoansProvider = ActiveLoansProvider._();
+
+/// Loans not yet returned, soonest due first.
+
+final class ActiveLoansProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Loan>>,
+          List<Loan>,
+          Stream<List<Loan>>
+        >
+    with $FutureModifier<List<Loan>>, $StreamProvider<List<Loan>> {
+  /// Loans not yet returned, soonest due first.
+  ActiveLoansProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'activeLoansProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$activeLoansHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<Loan>> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<Loan>> create(Ref ref) {
+    return activeLoans(ref);
+  }
+}
+
+String _$activeLoansHash() => r'a88c61bfa8d28a08d76f6c93e59d0c67ca9f4b0f';
+
+/// Returned loans, most recent first.
+
+@ProviderFor(loanHistory)
+final loanHistoryProvider = LoanHistoryProvider._();
+
+/// Returned loans, most recent first.
+
+final class LoanHistoryProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Loan>>,
+          List<Loan>,
+          Stream<List<Loan>>
+        >
+    with $FutureModifier<List<Loan>>, $StreamProvider<List<Loan>> {
+  /// Returned loans, most recent first.
+  LoanHistoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'loanHistoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$loanHistoryHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<Loan>> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<Loan>> create(Ref ref) {
+    return loanHistory(ref);
+  }
+}
+
+String _$loanHistoryHash() => r'38b20f3ca85cf42f161a7a55fd4ad6c4dbeb4384';

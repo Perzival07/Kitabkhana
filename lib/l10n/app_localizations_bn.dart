@@ -1153,4 +1153,103 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get detailRemind => 'Remind';
+
+  @override
+  String get loansTitle => 'Loans';
+
+  @override
+  String get loansTabLent => 'Lent out';
+
+  @override
+  String get loansTabBorrowed => 'Borrowed';
+
+  @override
+  String get loansTabOverdue => 'Overdue';
+
+  @override
+  String get loansTabHistory => 'History';
+
+  @override
+  String get loansEmptyLent => 'Everyone has returned your books. Nice.';
+
+  @override
+  String get loansEmptyBorrowed => 'You haven\'t borrowed any books right now.';
+
+  @override
+  String get loansEmptyOverdue => 'Nothing is overdue. Lovely.';
+
+  @override
+  String get loansEmptyHistory => 'Returned books will show up here.';
+
+  @override
+  String loanSince(String date) {
+    return 'Since $date';
+  }
+
+  @override
+  String loanDueOn(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String get loanDueToday => 'Due today';
+
+  @override
+  String loanDueInDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Due in $count days',
+      one: 'Due tomorrow',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String loanOverdueDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days overdue',
+      one: '1 day overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get loanNoDue => 'No due date';
+
+  @override
+  String loanReturnedOn(String date) {
+    return 'Returned $date';
+  }
+
+  @override
+  String get loanActionReturn => 'Return';
+
+  @override
+  String get loanActionExtend => 'Extend';
+
+  @override
+  String get loanReturnedToast => 'Marked as returned';
+
+  @override
+  String get extendTitle => 'Extend the due date';
+
+  @override
+  String get extend1w => '+1 week';
+
+  @override
+  String get extend2w => '+2 weeks';
+
+  @override
+  String get extend1m => '+1 month';
+
+  @override
+  String extendDone(String date) {
+    return 'Now due $date';
+  }
+
+  @override
+  String get loansOpenTooltip => 'Loans';
 }

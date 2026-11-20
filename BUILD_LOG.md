@@ -34,7 +34,7 @@ Tick a task only when it is green (see Definition of Green).
 ## Phase 06 — Lending
 - [x] P06.1
 - [x] P06.2
-- [ ] P06.3
+- [x] P06.3
 
 ## Phase 07 — Reading & stats
 - [ ] P07.1
@@ -124,3 +124,8 @@ Tick a task only when it is green (see Definition of Green).
 - (P06.2) Android build changes made without being able to build: boot/package-replaced receivers, POST_NOTIFICATIONS and RECEIVE_BOOT_COMPLETED permissions, core library desugaring, and package queries for WhatsApp/SMS.
 - (P06.2) Not verified on a device: the +2 minute test reminder (More tab, dev flavour only), reboot survival, WhatsApp opening pre-filled, "WhatsApp not installed" fallback to SMS then the share sheet.
 - (P06.2) iOS: notification permission is requested only after the explanation sheet; no Xcode here to confirm.
+- (P06.3) Swipe right to return: a lent book whose old spot still exists is returned after the toast's undo window (the loan is committed when the toast closes, so Undo is a true undo). Borrowed books, and lent books whose old spot was deleted, ask their question first instead, so they cannot be undone by swiping. Swipe left on a lent loan sends a WhatsApp reminder.
+- (P06.3) The "card on the Reading/home screen" that links to Loans arrives with the Reading tab (P07.2); until then Loans is reached from More and from the web overdue banner.
+- (PA Phase 06, fixed) Toasts with an action (Undo, View) never closed on their own in current Flutter; `KToast` now sets `persist: false`. This affected every earlier undo toast.
+- (PA Phase 06, P3) On a 360x780 phone the Detail page's Lend/Move/Edit/Share row sits below the first screen because of the large header; consider a shorter header or a sticky action bar.
+- (PA Phase 06, P3) The Loans tabs (4) are tight at 320dp and 200% text; not verified on a device. Reminder wording is English only.

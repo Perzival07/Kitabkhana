@@ -37,6 +37,9 @@ abstract final class KToast {
       ..showSnackBar(
         SnackBar(
           duration: duration,
+          // Snack bars with an action stay up until dismissed by default; a
+          // toast should leave on its own.
+          persist: false,
           content: Row(
             children: <Widget>[
               Icon(icon, size: 20),

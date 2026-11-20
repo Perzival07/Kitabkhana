@@ -33,6 +33,12 @@ class MoreScreen extends ConsumerWidget {
               ),
             ),
             ListTile(
+              leading: const Icon(Icons.swap_horiz_rounded),
+              title: Text(l10n.loansTitle),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              onTap: () => context.push(Routes.loans),
+            ),
+            ListTile(
               leading: const Icon(Icons.shelves),
               title: Text(l10n.locationsManage),
               trailing: const Icon(Icons.chevron_right_rounded),

@@ -674,5 +674,72 @@
   },
   "devTestReminder": "Schedule test reminder (2 min)",
   "devTestReminderSet": "Test reminder set for 2 minutes from now",
-  "detailRemind": "Remind"
+  "detailRemind": "Remind",
+  "loansTitle": "Loans",
+  "loansTabLent": "Lent out",
+  "loansTabBorrowed": "Borrowed",
+  "loansTabOverdue": "Overdue",
+  "loansTabHistory": "History",
+  "loansEmptyLent": "Everyone has returned your books. Nice.",
+  "loansEmptyBorrowed": "You haven't borrowed any books right now.",
+  "loansEmptyOverdue": "Nothing is overdue. Lovely.",
+  "loansEmptyHistory": "Returned books will show up here.",
+  "loanSince": "Since {date}",
+  "@loanSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "loanDueOn": "Due {date}",
+  "@loanDueOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "loanDueToday": "Due today",
+  "loanDueInDays": "{count, plural, =1{Due tomorrow} other{Due in {count} days}}",
+  "@loanDueInDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "loanOverdueDays": "{count, plural, =1{1 day overdue} other{{count} days overdue}}",
+  "@loanOverdueDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "loanNoDue": "No due date",
+  "loanReturnedOn": "Returned {date}",
+  "@loanReturnedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "loanActionReturn": "Return",
+  "loanActionExtend": "Extend",
+  "loanReturnedToast": "Marked as returned",
+  "extendTitle": "Extend the due date",
+  "extend1w": "+1 week",
+  "extend2w": "+2 weeks",
+  "extend1m": "+1 month",
+  "extendDone": "Now due {date}",
+  "@extendDone": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "loansOpenTooltip": "Loans"
 }
