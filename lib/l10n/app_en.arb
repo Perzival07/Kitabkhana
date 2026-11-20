@@ -365,6 +365,24 @@
   "detailPercentLabel": "Percent read",
   "detailPageDecrease": "Previous page",
   "detailPageIncrease": "Next page",
+  "paceDaysLeft": "{count, plural, =1{About 1 day left at your pace} other{About {count} days left at your pace}}",
+  "@paceDaysLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "paceFinishBy": "Finish by {date}",
+  "@paceFinishBy": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "progressReachedEnd": "That's the last page!",
+  "progressMarkFinished": "Mark as finished",
   "detailPageInvalid": "Enter a number from 0 to {max}",
   "@detailPageInvalid": {
     "placeholders": {

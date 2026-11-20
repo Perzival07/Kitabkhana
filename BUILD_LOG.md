@@ -37,7 +37,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P06.3
 
 ## Phase 07 — Reading & stats
-- [ ] P07.1
+- [x] P07.1
 - [ ] P07.2
 - [ ] P07.3
 
@@ -129,3 +129,6 @@ Tick a task only when it is green (see Definition of Green).
 - (PA Phase 06, fixed) Toasts with an action (Undo, View) never closed on their own in current Flutter; `KToast` now sets `persist: false`. This affected every earlier undo toast.
 - (PA Phase 06, P3) On a 360x780 phone the Detail page's Lend/Move/Edit/Share row sits below the first screen because of the large header; consider a shorter header or a sticky action bar.
 - (PA Phase 06, P3) The Loans tabs (4) are tight at 320dp and 200% text; not verified on a device. Reminder wording is English only.
+- (P07.1) `UpdateProgress` keeps one log per book per day (`fromPage` = where the day began, `toPage` = now). Going back shrinks or removes today's log; earlier days are never touched. A page past the last is rejected; the last page offers "Mark as finished" in a toast. Updating from Want/Dropped starts the book.
+- (P07.1) Pages-unknown books take a plain page number (a percent can't become pages without a total), so no percent input; no pace shown for them.
+- (P07.1) Pace = pages in the last min(14, days since start) days / that many days; needs 2+ reading days. Shows "About N days left" up to 14 days, else "Finish by Sat, 23 Nov". Streak counts local calendar days, alive if today or yesterday has a log.

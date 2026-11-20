@@ -721,6 +721,28 @@ class AppLocalizationsHi extends AppLocalizations {
   String get detailPageIncrease => 'Next page';
 
   @override
+  String paceDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'About $count days left at your pace',
+      one: 'About 1 day left at your pace',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String paceFinishBy(String date) {
+    return 'Finish by $date';
+  }
+
+  @override
+  String get progressReachedEnd => 'That\'s the last page!';
+
+  @override
+  String get progressMarkFinished => 'Mark as finished';
+
+  @override
   String detailPageInvalid(int max) {
     return 'Enter a number from 0 to $max';
   }

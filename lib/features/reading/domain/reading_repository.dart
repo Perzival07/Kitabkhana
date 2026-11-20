@@ -9,6 +9,10 @@ abstract interface class ReadingRepository {
   /// oldest first. Logs of deleted books are excluded.
   Stream<List<ReadingLog>> watchBetween(DateTime from, DateTime to);
 
+  /// Live distinct days with any reading, oldest first (for streaks).
+  /// Logs of deleted books are excluded.
+  Stream<List<DateTime>> watchReadingDays();
+
   /// The log for [bookId] on [date], if any.
   Future<Result<ReadingLog?>> findForDay(String bookId, DateTime date);
 

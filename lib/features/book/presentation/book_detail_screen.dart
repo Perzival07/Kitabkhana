@@ -14,6 +14,7 @@ import '../../../app/l10n/failure_message.dart';
 import '../../../app/lending_providers.dart';
 import '../../../app/providers.dart';
 import '../../../app/reminder_providers.dart';
+import '../../../app/reading_providers.dart';
 import '../../../app/repositories.dart';
 import '../../../app/router/routes.dart';
 import '../../../app/theme/k_tokens.dart';
@@ -28,6 +29,7 @@ import '../../reminders/application/loan_nudge.dart';
 import '../../lending/presentation/return_flow.dart';
 import '../../lending/domain/loan_direction.dart';
 import '../../library/domain/book.dart';
+import '../../reading/domain/pace.dart';
 import '../../library/domain/book_enums.dart';
 import '../../library/presentation/book_cover_view.dart';
 import '../../library/presentation/widgets/book_tiles.dart';
@@ -35,6 +37,7 @@ import '../../locations/domain/location.dart';
 import '../../tags/domain/tag.dart';
 import '../../locations/presentation/location_name.dart';
 import '../../locations/presentation/location_picker.dart';
+import '../../reading/application/update_progress.dart';
 import '../application/book_progress.dart';
 import 'widgets/celebration.dart';
 import 'widgets/update_page_sheet.dart';
@@ -89,13 +92,30 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
   }
 
   Future<void> _updatePage(Book book) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
     final page = await showUpdatePageSheet(
       context,
       current: book.currentPage,
       pages: book.pages,
     );
     if (page == null) return;
-    await _change((b) => withPage(b, page));
+    final r = await ref.read(updateProgressProvider).call(book.id, page);
+    if (!mounted) return;
+    switch (r) {
+      case Err<ProgressUpdate>(:final failure):
+        _toastError(failure);
+      case Ok<ProgressUpdate>(:final value) when value.reachedEnd:
+        KToast.showWith(
+          messenger,
+          l10n.progressReachedEnd,
+          icon: Icons.auto_stories_rounded,
+          actionLabel: l10n.progressMarkFinished,
+          onAction: () => _setStatus(value.book, ReadStatus.finished),
+        );
+      case Ok<ProgressUpdate>():
+        break;
+    }
   }
 
   Future<void> _move(Book book) async {
@@ -505,14 +525,14 @@ class _StatusRow extends StatelessWidget {
   }
 }
 
-class _ProgressCard extends StatelessWidget {
+class _ProgressCard extends ConsumerWidget {
   const _ProgressCard({required this.book, required this.onUpdate});
 
   final Book book;
   final VoidCallback onUpdate;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final pages = book.pages;
@@ -537,6 +557,7 @@ class _ProgressCard extends StatelessWidget {
           if (pages != null) ...<Widget>[
             const SizedBox(height: KSpacing.sm),
             KProgressBar(value: progress),
+            ...?_paceLine(context, ref),
           ],
           const SizedBox(height: KSpacing.md),
           KButton(
@@ -548,6 +569,31 @@ class _ProgressCard extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+extension on _ProgressCard {
+  List<Widget>? _paceLine(BuildContext context, WidgetRef ref) {
+    final pages = book.pages;
+    if (pages == null) return null;
+    final pace = ref.watch(
+      bookPaceProvider(
+        book.id,
+        remainingPages: pages - book.currentPage,
+        startedOn: book.startedOn,
+      ),
+    );
+    if (pace == null) return null;
+    final l10n = AppLocalizations.of(context);
+    final text = pace.daysLeft <= paceWindowDays
+        ? l10n.paceDaysLeft(pace.daysLeft)
+        : l10n.paceFinishBy(
+            DateFormat.MMMEd(l10n.localeName).format(pace.finishBy),
+          );
+    return <Widget>[
+      const SizedBox(height: KSpacing.sm),
+      Text(text, style: Theme.of(context).textTheme.bodySmall),
+    ];
   }
 }
 

@@ -87,6 +87,21 @@ class DriftReadingRepository implements ReadingRepository {
   }
 
   @override
+  Stream<List<DateTime>> watchReadingDays() {
+    final l = _db.readingLogs;
+    final q =
+        _db.selectOnly(l, distinct: true).join([
+            innerJoin(_db.books, _db.books.id.equalsExp(l.bookId)),
+          ])
+          ..addColumns([l.date])
+          ..where(l.deletedAt.isNull() & _db.books.deletedAt.isNull())
+          ..orderBy([OrderingTerm.asc(l.date)]);
+    return q.watch().map(
+      (rows) => [for (final r in rows) r.readWithConverter(l.date)!],
+    );
+  }
+
+  @override
   Future<Result<ReadingLog?>> findForDay(String bookId, DateTime date) =>
       dbGuard(() async {
         final row =

@@ -1336,6 +1336,30 @@ abstract class AppLocalizations {
   /// **'Next page'**
   String get detailPageIncrease;
 
+  /// No description provided for @paceDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{About 1 day left at your pace} other{About {count} days left at your pace}}'**
+  String paceDaysLeft(int count);
+
+  /// No description provided for @paceFinishBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish by {date}'**
+  String paceFinishBy(String date);
+
+  /// No description provided for @progressReachedEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s the last page!'**
+  String get progressReachedEnd;
+
+  /// No description provided for @progressMarkFinished.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as finished'**
+  String get progressMarkFinished;
+
   /// No description provided for @detailPageInvalid.
   ///
   /// In en, this message translates to:
