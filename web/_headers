@@ -9,3 +9,24 @@
   Cross-Origin-Opener-Policy: same-origin
   X-Frame-Options: DENY
   Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://covers.openlibrary.org https://*.archive.org; font-src 'self' data:; connect-src 'self' blob: data: https://openlibrary.org https://covers.openlibrary.org https://*.archive.org; worker-src 'self' blob:; child-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests; frame-ancestors 'none'
+
+# Caching. Flutter's output file names are not content-hashed (main.dart.js,
+# canvaskit/, sqlite3.wasm keep one name across releases), so a long
+# max-age would leave returning visitors on an old build, or worse, an app
+# that no longer matches its sqlite3.wasm. Revalidate instead: the host sends
+# an ETag, an unchanged file costs a 304, a changed one downloads.
+/*
+  Cache-Control: no-cache
+
+# Things that really do not change between releases may be cached for a day.
+/icons/*
+  Cache-Control: public, max-age=86400
+/favicon.png
+  Cache-Control: public, max-age=86400
+
+# MIME types. Browsers refuse to compile WebAssembly served as anything other
+# than application/wasm, and module scripts need a JavaScript type.
+/*.wasm
+  Content-Type: application/wasm
+/*.mjs
+  Content-Type: text/javascript

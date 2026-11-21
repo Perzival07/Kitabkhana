@@ -1,0 +1,6 @@
+# Single-page app: go_router paths (/library, /book/123, ...) have no file of
+# their own, so any path that is not a real file serves the app's index.html and
+# the router takes over. Cloudflare Pages and Netlify only apply a rewrite (200)
+# when no static file matches, so real files such as main.dart.wasm are
+# served as themselves.
+/*  /index.html  200

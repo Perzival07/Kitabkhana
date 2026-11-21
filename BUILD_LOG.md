@@ -63,7 +63,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P11.1
 - [x] P11.2
 - [x] P11.3
-- [ ] P11.4
+- [x] P11.4
 - [ ] P11.5
 
 ## Known issues
@@ -212,3 +212,9 @@ Tick a task only when it is green (see Definition of Green).
 ## P11.3 iOS release
 - Added `ios/Podfile` (iOS 15.0, ML Kit floor, flavor configurations; the plugins also ship SwiftPM manifests), `ios/Gemfile`, `ios/fastlane/{Appfile,Fastfile}` (`beta` lane: build the prod scheme, upload to TestFlight with an App Store Connect API key from env/secrets), `ITSAppUsesNonExemptEncryption=false` in `Info.plist`, and `docs/IOS_RELEASE.md` (setup, build, fastlane, App Store checklist with "Data Not Collected" and review notes).
 - **Not verified**: nothing was built or uploaded (no CocoaPods, fastlane or signing here). The Fastfile needs the `prod` scheme from the manual `docs/IOS_FLAVORS.md` setup, which is still undone. `PrivacyInfo.xcprivacy` is described but not added (it must be registered in the Xcode project). The Podfile was written by hand from Flutter's template rather than generated.
+
+## P11.4 Web / PWA release
+- Manifest already met the spec (name, theme `#B4532A`, background `#FBF7F0`, standalone, maskable icons); icons now come from the brand painter (P11.1). Host: Cloudflare Pages (`wrangler.toml`, `web/_redirects` SPA rewrite, `web/_headers` with MIME types and cache rules). `docs/WEB_RELEASE.md` explains the choices.
+- WASM: a real `flutter build web --wasm --release --no-web-resources-cdn -t lib/main_prod.dart` succeeded (5.2 MB wasm, JS fallback included), so the release uses `--wasm`. COEP deliberately not set (Drift falls back from SharedArrayBuffer; COEP would break Open Library covers). Caching is revalidate-only because Flutter file names are not hashed.
+- Found: `mobile_scanner` falls back to a CDN-hosted ZXing script on browsers without `BarcodeDetector` (Firefox); the CSP blocks it, so camera scanning does not work there (typing an ISBN does). Documented, not fixed.
+- **Not verified**: nothing was opened in a real browser; no Cloudflare project exists; install-to-home-screen on Android Chrome and iOS Safari not tested; the CI web job still builds JS, not wasm.

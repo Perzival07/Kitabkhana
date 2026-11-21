@@ -1,0 +1,8 @@
+# Cloudflare Pages: static hosting with free HTTPS. Deploy a built app with
+#   flutter build web --wasm --release --no-web-resources-cdn -t lib/main_prod.dart
+#   npx wrangler pages deploy
+# (docs/WEB_RELEASE.md). `_headers` and `_redirects` inside build/web are read
+# by Pages itself.
+name = "kitabkhana"
+pages_build_output_dir = "build/web"
+compatibility_date = "2026-01-01"
