@@ -14,6 +14,7 @@ import '../../../app/l10n/failure_message.dart';
 import '../../../app/lending_providers.dart';
 import '../../../app/providers.dart';
 import '../../../app/reminder_providers.dart';
+import '../../../app/quote_providers.dart';
 import '../../../app/reading_providers.dart';
 import '../../../app/repositories.dart';
 import '../../../app/router/routes.dart';
@@ -314,6 +315,8 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                             ),
                           ),
                         ),
+                        const SizedBox(height: KSpacing.xl),
+                        _QuotesSection(bookId: book.id),
                         const SizedBox(height: KSpacing.xl),
                         _TagsSection(bookId: book.id, tags: tags),
                         const SizedBox(height: KSpacing.xl),
@@ -690,6 +693,72 @@ class _ActionsRow extends StatelessWidget {
         action(Icons.place_outlined, l10n.detailMove, onMove),
         action(Icons.edit_outlined, l10n.detailEdit, onEdit),
         action(Icons.ios_share_rounded, l10n.detailShare, onShare),
+      ],
+    );
+  }
+}
+
+/// The book's latest quotes, and the way to capture a new one.
+class _QuotesSection extends ConsumerWidget {
+  const _QuotesSection({required this.bookId});
+
+  final String bookId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final quotes = ref.watch(bookQuotesProvider(bookId)).value ?? const [];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(l10n.quotesSectionTitle, style: theme.textTheme.titleMedium),
+        const SizedBox(height: KSpacing.sm),
+        if (quotes.isEmpty)
+          Text(l10n.quotesSectionEmpty, style: theme.textTheme.bodyMedium)
+        else
+          for (final q in quotes.take(3))
+            Padding(
+              padding: const EdgeInsets.only(bottom: KSpacing.md),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Icon(
+                    Icons.format_quote_rounded,
+                    size: 20,
+                    color: theme.colorScheme.primary,
+                  ),
+                  const SizedBox(width: KSpacing.sm),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          q.body,
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                        if (q.page != null)
+                          Text(
+                            l10n.quotePageShort(q.page!),
+                            style: theme.textTheme.bodySmall,
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        const SizedBox(height: KSpacing.xs),
+        KButton(
+          label: l10n.quoteSnap,
+          icon: Icons.format_quote_rounded,
+          variant: KButtonVariant.tonal,
+          onPressed: () => context.push(Routes.quoteCapture(bookId)),
+        ),
       ],
     );
   }

@@ -379,7 +379,7 @@ final class YearPagesPerWeekProvider
   }
 }
 
-String _$yearPagesPerWeekHash() => r'bb091c48bb9620b6b35fd96182d3662a18a285de';
+String _$yearPagesPerWeekHash() => r'4d8c57fc7b607c03d56f5870d0c7b6ffa5a2fdbc';
 
 /// The last 12 weeks of pages: ending today for the current year, else on
 /// the year's last day.

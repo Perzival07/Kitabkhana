@@ -14,6 +14,7 @@ import '../../features/book/presentation/book_detail_screen.dart';
 import '../../features/lending/presentation/loans_screen.dart';
 import '../../features/locations/presentation/locations_screen.dart';
 import '../../features/more/presentation/more_screen.dart';
+import '../../features/quotes/presentation/quote_capture_screen.dart';
 import '../../features/reading/presentation/reading_screen.dart';
 import '../../features/scan_check/presentation/scan_screen.dart';
 import '../../features/stats/presentation/stats_screen.dart';
@@ -140,6 +141,11 @@ GoRouter buildRouter(AppConfig config, {String initial = Routes.library}) {
             path: 'edit',
             builder: (_, state) =>
                 BookEditScreen(bookId: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'quote',
+            builder: (_, state) =>
+                QuoteCaptureScreen(bookId: state.pathParameters['id']!),
           ),
         ],
       ),

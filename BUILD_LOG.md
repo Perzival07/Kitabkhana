@@ -42,7 +42,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P07.3
 
 ## Phase 08 — Quotes
-- [ ] P08.1
+- [x] P08.1
 - [ ] P08.2
 
 ## Phase 09 — Data & settings
@@ -140,3 +140,10 @@ Tick a task only when it is green (see Definition of Green).
 - (P07.3) All aggregates are SQL (`DriftStatsRepository`). A book counts toward a year by its `finishedOn`. Authors are split on commas in SQL, so "A, B" counts for both; genres are matched case-insensitively as whole strings. Average rating covers every rated book in the library, not just the year.
 - (P07.3) Pages per week uses 7-day windows ending today (current year) or on 31 Dec (past years), not calendar weeks. Library facts are library-wide except "Longest read", which is for the chosen year.
 - (P07.3) Not verified on a device: touch feel of tapping the month bars (tested only through the repository and layout, not a real tap), and 200% text beyond the 320dp overflow test.
+- (P08.1) Capture flow at `/book/:id/quote` (opened from a new Quotes section on Book Detail): photo (camera or gallery) → crop/rotate → on-device text reading → tap lines (marker highlight) → edit text + page (prefilled with the current page) → save. "Type it instead" skips the photo; where reading is unsupported (web) it opens on the text field.
+- (P08.1) Text cleanup (`cleanQuoteText`): rejoins words hyphenated across lines when the next line continues in lower case (a hyphen before a capital or digit is kept), joins lines into paragraphs (blank line = new paragraph), collapses spaces, and turns quotes into typographic ones.
+- (P08.1) Privacy: only text is saved. The photo is held in memory, handed to ML Kit through a temp file that is deleted straight after reading, and dropped from the screen once the text is read.
+- (P08.1) The cropper is built in: rotate in quarter turns, drag corners or the box; edits run off the UI thread (`compute`). Latin script only; `OcrScript` is the place to add Devanagari later (needs the extra Android dependency and its own recogniser).
+- (P08.1) The Quotes screen is still a stub, so quote capture is only reachable from Book Detail until P08.2.
+- (P08.1) iOS setup I could not do without Xcode: add `-ObjC` and `-all_load` to Other Linker Flags and add `LatinOCRResources.bundle` to Copy Bundle Resources (see the plugin README), or text reading will fail on iOS.
+- (P08.1) Not verified on a device (no emulator/Xcode here): reading a real page in normal and dim light, camera/gallery pickers, and cropper drag feel.

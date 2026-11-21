@@ -969,6 +969,85 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statsEmptyTitle => 'Your reading year starts here';
 
   @override
+  String get quoteCaptureTitle => 'Snap a quote';
+
+  @override
+  String get quoteSourceBody =>
+      'Photograph a page and tap the lines you love, or type them in. Only the text is kept; the photo is never saved.';
+
+  @override
+  String get quoteTakePhoto => 'Take a photo';
+
+  @override
+  String get quoteChoosePhoto => 'Choose a photo';
+
+  @override
+  String get quoteTypeIt => 'Type it instead';
+
+  @override
+  String get quoteRotateLeft => 'Rotate left';
+
+  @override
+  String get quoteRotateRight => 'Rotate right';
+
+  @override
+  String get quoteReadText => 'Read the text';
+
+  @override
+  String get quoteReading => 'Reading the page…';
+
+  @override
+  String get quotePickLines => 'Tap the lines you want to keep.';
+
+  @override
+  String get quoteSelectAll => 'Select all';
+
+  @override
+  String get quoteUseSelected => 'Use selected lines';
+
+  @override
+  String get quoteNoText => 'No text found. You can type the quote instead.';
+
+  @override
+  String get quoteReadFailed =>
+      'That photo could not be read. Try another, or type it.';
+
+  @override
+  String get quoteBodyLabel => 'Quote';
+
+  @override
+  String get quotePageLabel => 'Page (optional)';
+
+  @override
+  String get quotePageInvalid => 'Enter a page within the book';
+
+  @override
+  String get quoteBodyRequired => 'Add the quote first';
+
+  @override
+  String get quotePickAgain => 'Pick lines again';
+
+  @override
+  String get quoteSave => 'Save quote';
+
+  @override
+  String get quoteSaved => 'Quote saved';
+
+  @override
+  String get quotesSectionTitle => 'Quotes';
+
+  @override
+  String get quotesSectionEmpty => 'Keep the lines you love from this book.';
+
+  @override
+  String get quoteSnap => 'Snap a quote';
+
+  @override
+  String quotePageShort(int page) {
+    return 'p. $page';
+  }
+
+  @override
   String paceDaysLeft(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

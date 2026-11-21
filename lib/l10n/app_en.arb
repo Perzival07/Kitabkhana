@@ -548,6 +548,38 @@
   "statsFactNone": "None yet",
   "statsEmptyAdd": "Add a book",
   "statsEmptyTitle": "Your reading year starts here",
+  "quoteCaptureTitle": "Snap a quote",
+  "quoteSourceBody": "Photograph a page and tap the lines you love, or type them in. Only the text is kept; the photo is never saved.",
+  "quoteTakePhoto": "Take a photo",
+  "quoteChoosePhoto": "Choose a photo",
+  "quoteTypeIt": "Type it instead",
+  "quoteRotateLeft": "Rotate left",
+  "quoteRotateRight": "Rotate right",
+  "quoteReadText": "Read the text",
+  "quoteReading": "Reading the page…",
+  "quotePickLines": "Tap the lines you want to keep.",
+  "quoteSelectAll": "Select all",
+  "quoteUseSelected": "Use selected lines",
+  "quoteNoText": "No text found. You can type the quote instead.",
+  "quoteReadFailed": "That photo could not be read. Try another, or type it.",
+  "quoteBodyLabel": "Quote",
+  "quotePageLabel": "Page (optional)",
+  "quotePageInvalid": "Enter a page within the book",
+  "quoteBodyRequired": "Add the quote first",
+  "quotePickAgain": "Pick lines again",
+  "quoteSave": "Save quote",
+  "quoteSaved": "Quote saved",
+  "quotesSectionTitle": "Quotes",
+  "quotesSectionEmpty": "Keep the lines you love from this book.",
+  "quoteSnap": "Snap a quote",
+  "quotePageShort": "p. {page}",
+  "@quotePageShort": {
+    "placeholders": {
+      "page": {
+        "type": "int"
+      }
+    }
+  },
   "paceDaysLeft": "{count, plural, =1{About 1 day left at your pace} other{About {count} days left at your pace}}",
   "@paceDaysLeft": {
     "placeholders": {

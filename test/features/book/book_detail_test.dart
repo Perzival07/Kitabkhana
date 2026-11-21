@@ -223,7 +223,12 @@ void main() {
   bookTest('tags can be added and removed', (t) async {
     await seed();
     await pumpDetail(t);
-    await t.ensureVisible(find.text('Add tag'));
+    await t.scrollUntilVisible(
+      find.text('Add tag'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await advance(t);
     await t.tap(find.text('Add tag'));
     await advance(t);
     await t.enterText(find.byType(TextField).last, 'Sci-fi');

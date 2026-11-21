@@ -1684,6 +1684,156 @@ abstract class AppLocalizations {
   /// **'Your reading year starts here'**
   String get statsEmptyTitle;
 
+  /// No description provided for @quoteCaptureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Snap a quote'**
+  String get quoteCaptureTitle;
+
+  /// No description provided for @quoteSourceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Photograph a page and tap the lines you love, or type them in. Only the text is kept; the photo is never saved.'**
+  String get quoteSourceBody;
+
+  /// No description provided for @quoteTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get quoteTakePhoto;
+
+  /// No description provided for @quoteChoosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a photo'**
+  String get quoteChoosePhoto;
+
+  /// No description provided for @quoteTypeIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Type it instead'**
+  String get quoteTypeIt;
+
+  /// No description provided for @quoteRotateLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Rotate left'**
+  String get quoteRotateLeft;
+
+  /// No description provided for @quoteRotateRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Rotate right'**
+  String get quoteRotateRight;
+
+  /// No description provided for @quoteReadText.
+  ///
+  /// In en, this message translates to:
+  /// **'Read the text'**
+  String get quoteReadText;
+
+  /// No description provided for @quoteReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading the page…'**
+  String get quoteReading;
+
+  /// No description provided for @quotePickLines.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the lines you want to keep.'**
+  String get quotePickLines;
+
+  /// No description provided for @quoteSelectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Select all'**
+  String get quoteSelectAll;
+
+  /// No description provided for @quoteUseSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Use selected lines'**
+  String get quoteUseSelected;
+
+  /// No description provided for @quoteNoText.
+  ///
+  /// In en, this message translates to:
+  /// **'No text found. You can type the quote instead.'**
+  String get quoteNoText;
+
+  /// No description provided for @quoteReadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'That photo could not be read. Try another, or type it.'**
+  String get quoteReadFailed;
+
+  /// No description provided for @quoteBodyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Quote'**
+  String get quoteBodyLabel;
+
+  /// No description provided for @quotePageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Page (optional)'**
+  String get quotePageLabel;
+
+  /// No description provided for @quotePageInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a page within the book'**
+  String get quotePageInvalid;
+
+  /// No description provided for @quoteBodyRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the quote first'**
+  String get quoteBodyRequired;
+
+  /// No description provided for @quotePickAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick lines again'**
+  String get quotePickAgain;
+
+  /// No description provided for @quoteSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save quote'**
+  String get quoteSave;
+
+  /// No description provided for @quoteSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Quote saved'**
+  String get quoteSaved;
+
+  /// No description provided for @quotesSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quotes'**
+  String get quotesSectionTitle;
+
+  /// No description provided for @quotesSectionEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the lines you love from this book.'**
+  String get quotesSectionEmpty;
+
+  /// No description provided for @quoteSnap.
+  ///
+  /// In en, this message translates to:
+  /// **'Snap a quote'**
+  String get quoteSnap;
+
+  /// No description provided for @quotePageShort.
+  ///
+  /// In en, this message translates to:
+  /// **'p. {page}'**
+  String quotePageShort(int page);
+
   /// No description provided for @paceDaysLeft.
   ///
   /// In en, this message translates to:

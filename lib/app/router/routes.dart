@@ -21,4 +21,5 @@ abstract final class Routes {
 
   static String book(String id) => '/book/$id';
   static String bookEdit(String id) => '/book/$id/edit';
+  static String quoteCapture(String bookId) => '/book/$bookId/quote';
 }
