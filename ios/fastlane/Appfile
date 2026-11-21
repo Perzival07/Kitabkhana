@@ -1,0 +1,4 @@
+# Bundle ID of the production app. The team ID is not secret but is yours to
+# fill in: set APPLE_TEAM_ID in the environment (CI secret or your shell).
+app_identifier("com.kitabkhana.kitabkhana")
+team_id(ENV["APPLE_TEAM_ID"])

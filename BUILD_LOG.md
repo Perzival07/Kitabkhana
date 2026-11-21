@@ -62,7 +62,7 @@ Tick a task only when it is green (see Definition of Green).
 ## Phase 11 — Release
 - [x] P11.1
 - [x] P11.2
-- [ ] P11.3
+- [x] P11.3
 - [ ] P11.4
 - [ ] P11.5
 
@@ -208,3 +208,7 @@ Tick a task only when it is green (see Definition of Green).
 - `android/app/build.gradle.kts`: release signing from gitignored `android/key.properties` (falls back to the debug key for local runs; `bundleProd*Release` fails with a clear message if the key is missing), R8 minify + resource shrinking on, rules in `android/app/proguard-rules.pro` (ML Kit optional-recognizer `-dontwarn`, keep ML Kit/Play services, keep line numbers). Version comes from `pubspec.yaml` (`1.0.0+1`).
 - `docs/ANDROID_RELEASE.md`: exact `keytool` command, key.properties format, build commands, release-build checks, Play Console checklist (Data safety "no data collected", content rating, target audience, privacy policy URL) and the current tester rule (personal accounts after 13 Nov 2023: closed test, 12 testers, 14 days; checked on Google's help page).
 - **Not verified**: none of the Gradle/R8 changes were built (no Android SDK here). The ML Kit keep rules are written from the known missing-class failure and may need adjusting after the first real release build; the release APK has not been installed on any phone, so the manual regression is still to do.
+
+## P11.3 iOS release
+- Added `ios/Podfile` (iOS 15.0, ML Kit floor, flavor configurations; the plugins also ship SwiftPM manifests), `ios/Gemfile`, `ios/fastlane/{Appfile,Fastfile}` (`beta` lane: build the prod scheme, upload to TestFlight with an App Store Connect API key from env/secrets), `ITSAppUsesNonExemptEncryption=false` in `Info.plist`, and `docs/IOS_RELEASE.md` (setup, build, fastlane, App Store checklist with "Data Not Collected" and review notes).
+- **Not verified**: nothing was built or uploaded (no CocoaPods, fastlane or signing here). The Fastfile needs the `prod` scheme from the manual `docs/IOS_FLAVORS.md` setup, which is still undone. `PrivacyInfo.xcprivacy` is described but not added (it must be registered in the Xcode project). The Podfile was written by hand from Flutter's template rather than generated.
