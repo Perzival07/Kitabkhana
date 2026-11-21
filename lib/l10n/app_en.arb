@@ -435,6 +435,119 @@
   "readingPickNextBody": "Choose something from your want-to-read shelf, or add a new book.",
   "readingPickNextEmptyBody": "Add a book you want to read and it will wait for you here.",
   "readingAddBook": "Add a book",
+  "statsYearPrevious": "Previous year",
+  "statsYearNext": "Next year",
+  "statsGoalTitle": "Reading goal",
+  "statsGoalOf": "{finished} of {target} books",
+  "@statsGoalOf": {
+    "placeholders": {
+      "finished": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "statsGoalReached": "Goal reached. Well read!",
+  "statsGoalAhead": "{count, plural, =1{1 book ahead of pace} other{{count} books ahead of pace}}",
+  "@statsGoalAhead": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsGoalBehind": "{count, plural, =1{1 book behind pace} other{{count} books behind pace}}",
+  "@statsGoalBehind": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsGoalOnPace": "Right on pace",
+  "statsGoalMissed": "{count, plural, =1{1 book short} other{{count} books short}}",
+  "@statsGoalMissed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsGoalUpcoming": "A fresh year ahead",
+  "statsGoalSetTitle": "Set a reading goal",
+  "statsGoalSetBody": "Pick how many books you would like to finish in {year}.",
+  "@statsGoalSetBody": {
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "statsGoalCta": "Set a goal",
+  "statsGoalEdit": "Edit goal",
+  "statsGoalSheetTitle": "Books to finish in {year}",
+  "@statsGoalSheetTitle": {
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "statsGoalFewer": "Fewer books",
+  "statsGoalMore": "More books",
+  "statsGoalRemove": "Remove goal",
+  "statsGoalInvalid": "Enter a number from 1 to 999",
+  "statsMonthlyTitle": "Books finished per month",
+  "statsMonthlyEmpty": "Finish a book and its month lights up here.",
+  "statsMonthBooks": "{count, plural, =1{1 book} other{{count} books}}",
+  "@statsMonthBooks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsMonthSheetTitle": "Finished in {month}",
+  "@statsMonthSheetTitle": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "statsWeeklyTitle": "Pages per week",
+  "statsWeeklyEmpty": "Update your page as you read and your weeks will show up here.",
+  "statsWeeklyTotal": "{count} pages in 12 weeks",
+  "@statsWeeklyTotal": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsGenresTitle": "Top genres",
+  "statsAuthorsTitle": "Top authors",
+  "statsTopEmpty": "Nothing here yet for this year.",
+  "statsFactsTitle": "Your library",
+  "statsFactTotal": "Books",
+  "statsFactOwned": "Owned",
+  "statsFactWishlist": "Wishlist",
+  "statsFactLent": "Lent out",
+  "statsFactRating": "Average rating",
+  "statsFactLongest": "Longest read",
+  "statsFactPages": "{count} pages",
+  "@statsFactPages": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsFactNone": "None yet",
+  "statsEmptyAdd": "Add a book",
+  "statsEmptyTitle": "Your reading year starts here",
   "paceDaysLeft": "{count, plural, =1{About 1 day left at your pace} other{About {count} days left at your pace}}",
   "@paceDaysLeft": {
     "placeholders": {

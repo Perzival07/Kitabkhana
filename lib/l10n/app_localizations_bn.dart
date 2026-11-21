@@ -804,6 +804,171 @@ class AppLocalizationsBn extends AppLocalizations {
   String get readingAddBook => 'Add a book';
 
   @override
+  String get statsYearPrevious => 'Previous year';
+
+  @override
+  String get statsYearNext => 'Next year';
+
+  @override
+  String get statsGoalTitle => 'Reading goal';
+
+  @override
+  String statsGoalOf(int finished, int target) {
+    return '$finished of $target books';
+  }
+
+  @override
+  String get statsGoalReached => 'Goal reached. Well read!';
+
+  @override
+  String statsGoalAhead(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count books ahead of pace',
+      one: '1 book ahead of pace',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String statsGoalBehind(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count books behind pace',
+      one: '1 book behind pace',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get statsGoalOnPace => 'Right on pace';
+
+  @override
+  String statsGoalMissed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count books short',
+      one: '1 book short',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get statsGoalUpcoming => 'A fresh year ahead';
+
+  @override
+  String get statsGoalSetTitle => 'Set a reading goal';
+
+  @override
+  String statsGoalSetBody(int year) {
+    return 'Pick how many books you would like to finish in $year.';
+  }
+
+  @override
+  String get statsGoalCta => 'Set a goal';
+
+  @override
+  String get statsGoalEdit => 'Edit goal';
+
+  @override
+  String statsGoalSheetTitle(int year) {
+    return 'Books to finish in $year';
+  }
+
+  @override
+  String get statsGoalFewer => 'Fewer books';
+
+  @override
+  String get statsGoalMore => 'More books';
+
+  @override
+  String get statsGoalRemove => 'Remove goal';
+
+  @override
+  String get statsGoalInvalid => 'Enter a number from 1 to 999';
+
+  @override
+  String get statsMonthlyTitle => 'Books finished per month';
+
+  @override
+  String get statsMonthlyEmpty => 'Finish a book and its month lights up here.';
+
+  @override
+  String statsMonthBooks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count books',
+      one: '1 book',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String statsMonthSheetTitle(String month) {
+    return 'Finished in $month';
+  }
+
+  @override
+  String get statsWeeklyTitle => 'Pages per week';
+
+  @override
+  String get statsWeeklyEmpty =>
+      'Update your page as you read and your weeks will show up here.';
+
+  @override
+  String statsWeeklyTotal(int count) {
+    return '$count pages in 12 weeks';
+  }
+
+  @override
+  String get statsGenresTitle => 'Top genres';
+
+  @override
+  String get statsAuthorsTitle => 'Top authors';
+
+  @override
+  String get statsTopEmpty => 'Nothing here yet for this year.';
+
+  @override
+  String get statsFactsTitle => 'Your library';
+
+  @override
+  String get statsFactTotal => 'Books';
+
+  @override
+  String get statsFactOwned => 'Owned';
+
+  @override
+  String get statsFactWishlist => 'Wishlist';
+
+  @override
+  String get statsFactLent => 'Lent out';
+
+  @override
+  String get statsFactRating => 'Average rating';
+
+  @override
+  String get statsFactLongest => 'Longest read';
+
+  @override
+  String statsFactPages(int count) {
+    return '$count pages';
+  }
+
+  @override
+  String get statsFactNone => 'None yet';
+
+  @override
+  String get statsEmptyAdd => 'Add a book';
+
+  @override
+  String get statsEmptyTitle => 'Your reading year starts here';
+
+  @override
   String paceDaysLeft(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

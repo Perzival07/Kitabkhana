@@ -39,7 +39,7 @@ Tick a task only when it is green (see Definition of Green).
 ## Phase 07 — Reading & stats
 - [x] P07.1
 - [x] P07.2
-- [ ] P07.3
+- [x] P07.3
 
 ## Phase 08 — Quotes
 - [ ] P08.1
@@ -136,3 +136,7 @@ Tick a task only when it is green (see Definition of Green).
 - (P07.2) With large text (>=140%) or a single book, reading cards stack vertically instead of swiping sideways. Minutes read are not shown (not tracked).
 - (P07.2) Not built: "Quote of the week" (hidden until quotes exist, P08). Nothing reading and nothing wanted shows an Add a book empty state; nothing reading but books wanted shows "Pick your next read" with those covers.
 - (P07.2) From the Reading card, "Mark as finished" only sets the status (no confetti; that stays on the Detail page).
+- (P07.3) Stats tab: goal ring with ahead/behind/on-pace wording (whole books against an even pace through the year; past years show "N books short", future years "A fresh year ahead"), set/edit/remove goal sheet, books finished per month (tap a bar for that month's books), pages per week (last 12 weeks), top genres and authors, library facts, and a year selector over years that have finished books (plus this year).
+- (P07.3) All aggregates are SQL (`DriftStatsRepository`). A book counts toward a year by its `finishedOn`. Authors are split on commas in SQL, so "A, B" counts for both; genres are matched case-insensitively as whole strings. Average rating covers every rated book in the library, not just the year.
+- (P07.3) Pages per week uses 7-day windows ending today (current year) or on 31 Dec (past years), not calendar weeks. Library facts are library-wide except "Longest read", which is for the chosen year.
+- (P07.3) Not verified on a device: touch feel of tapping the month bars (tested only through the repository and layout, not a real tap), and 200% text beyond the 320dp overflow test.

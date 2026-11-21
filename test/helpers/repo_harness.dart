@@ -13,6 +13,7 @@ import 'package:kitabkhana/features/quotes/data/drift_quote_repository.dart';
 import 'package:kitabkhana/features/reading/data/drift_reading_repository.dart';
 import 'package:kitabkhana/features/reading/domain/reading_log.dart';
 import 'package:kitabkhana/features/stats/data/drift_goal_repository.dart';
+import 'package:kitabkhana/features/stats/data/drift_stats_repository.dart';
 import 'package:kitabkhana/features/tags/data/drift_tag_repository.dart';
 
 import 'test_db.dart';
@@ -24,13 +25,15 @@ class RepoHarnessForDb {
       books = DriftBookRepository(db, clock),
       locations = DriftLocationRepository(db, clock),
       loans = DriftLoanRepository(db, clock),
-      readings = DriftReadingRepository(db, clock);
+      readings = DriftReadingRepository(db, clock),
+      goals = DriftGoalRepository(db, clock);
 
   final AppDatabase _db;
   final DriftBookRepository books;
   final DriftLocationRepository locations;
   final DriftLoanRepository loans;
   final DriftReadingRepository readings;
+  final DriftGoalRepository goals;
 
   /// All live books via a one-shot query (a stream would leave a pending
   /// timer behind when cancelled inside a widget test).
@@ -48,6 +51,7 @@ class RepoHarness {
     readings = DriftReadingRepository(db, clock);
     quotes = DriftQuoteRepository(db, clock);
     goals = DriftGoalRepository(db, clock);
+    stats = DriftStatsRepository(db);
     tags = DriftTagRepository(db, clock);
   }
 
@@ -59,6 +63,7 @@ class RepoHarness {
   late final DriftReadingRepository readings;
   late final DriftQuoteRepository quotes;
   late final DriftGoalRepository goals;
+  late final DriftStatsRepository stats;
   late final DriftTagRepository tags;
 
   int _seq = 0;

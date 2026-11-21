@@ -309,3 +309,45 @@ final class TagRepositoryProvider
 }
 
 String _$tagRepositoryHash() => r'b9c5c8e03d3feb3e6fac843a64fa4accbd7801d7';
+
+@ProviderFor(statsRepository)
+final statsRepositoryProvider = StatsRepositoryProvider._();
+
+final class StatsRepositoryProvider
+    extends
+        $FunctionalProvider<StatsRepository, StatsRepository, StatsRepository>
+    with $Provider<StatsRepository> {
+  StatsRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: noRetry,
+        name: r'statsRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$statsRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<StatsRepository> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  StatsRepository create(Ref ref) {
+    return statsRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(StatsRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<StatsRepository>(value),
+    );
+  }
+}
+
+String _$statsRepositoryHash() => r'942be0b979dff64e5eff0496b18dd7dec3b138b6';

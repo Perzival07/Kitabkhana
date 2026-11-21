@@ -1444,6 +1444,246 @@ abstract class AppLocalizations {
   /// **'Add a book'**
   String get readingAddBook;
 
+  /// No description provided for @statsYearPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous year'**
+  String get statsYearPrevious;
+
+  /// No description provided for @statsYearNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next year'**
+  String get statsYearNext;
+
+  /// No description provided for @statsGoalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading goal'**
+  String get statsGoalTitle;
+
+  /// No description provided for @statsGoalOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{finished} of {target} books'**
+  String statsGoalOf(int finished, int target);
+
+  /// No description provided for @statsGoalReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal reached. Well read!'**
+  String get statsGoalReached;
+
+  /// No description provided for @statsGoalAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 book ahead of pace} other{{count} books ahead of pace}}'**
+  String statsGoalAhead(int count);
+
+  /// No description provided for @statsGoalBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 book behind pace} other{{count} books behind pace}}'**
+  String statsGoalBehind(int count);
+
+  /// No description provided for @statsGoalOnPace.
+  ///
+  /// In en, this message translates to:
+  /// **'Right on pace'**
+  String get statsGoalOnPace;
+
+  /// No description provided for @statsGoalMissed.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 book short} other{{count} books short}}'**
+  String statsGoalMissed(int count);
+
+  /// No description provided for @statsGoalUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'A fresh year ahead'**
+  String get statsGoalUpcoming;
+
+  /// No description provided for @statsGoalSetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a reading goal'**
+  String get statsGoalSetTitle;
+
+  /// No description provided for @statsGoalSetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick how many books you would like to finish in {year}.'**
+  String statsGoalSetBody(int year);
+
+  /// No description provided for @statsGoalCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a goal'**
+  String get statsGoalCta;
+
+  /// No description provided for @statsGoalEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit goal'**
+  String get statsGoalEdit;
+
+  /// No description provided for @statsGoalSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Books to finish in {year}'**
+  String statsGoalSheetTitle(int year);
+
+  /// No description provided for @statsGoalFewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Fewer books'**
+  String get statsGoalFewer;
+
+  /// No description provided for @statsGoalMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More books'**
+  String get statsGoalMore;
+
+  /// No description provided for @statsGoalRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove goal'**
+  String get statsGoalRemove;
+
+  /// No description provided for @statsGoalInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a number from 1 to 999'**
+  String get statsGoalInvalid;
+
+  /// No description provided for @statsMonthlyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Books finished per month'**
+  String get statsMonthlyTitle;
+
+  /// No description provided for @statsMonthlyEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish a book and its month lights up here.'**
+  String get statsMonthlyEmpty;
+
+  /// No description provided for @statsMonthBooks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 book} other{{count} books}}'**
+  String statsMonthBooks(int count);
+
+  /// No description provided for @statsMonthSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Finished in {month}'**
+  String statsMonthSheetTitle(String month);
+
+  /// No description provided for @statsWeeklyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pages per week'**
+  String get statsWeeklyTitle;
+
+  /// No description provided for @statsWeeklyEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your page as you read and your weeks will show up here.'**
+  String get statsWeeklyEmpty;
+
+  /// No description provided for @statsWeeklyTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} pages in 12 weeks'**
+  String statsWeeklyTotal(int count);
+
+  /// No description provided for @statsGenresTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Top genres'**
+  String get statsGenresTitle;
+
+  /// No description provided for @statsAuthorsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Top authors'**
+  String get statsAuthorsTitle;
+
+  /// No description provided for @statsTopEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing here yet for this year.'**
+  String get statsTopEmpty;
+
+  /// No description provided for @statsFactsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your library'**
+  String get statsFactsTitle;
+
+  /// No description provided for @statsFactTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Books'**
+  String get statsFactTotal;
+
+  /// No description provided for @statsFactOwned.
+  ///
+  /// In en, this message translates to:
+  /// **'Owned'**
+  String get statsFactOwned;
+
+  /// No description provided for @statsFactWishlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Wishlist'**
+  String get statsFactWishlist;
+
+  /// No description provided for @statsFactLent.
+  ///
+  /// In en, this message translates to:
+  /// **'Lent out'**
+  String get statsFactLent;
+
+  /// No description provided for @statsFactRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Average rating'**
+  String get statsFactRating;
+
+  /// No description provided for @statsFactLongest.
+  ///
+  /// In en, this message translates to:
+  /// **'Longest read'**
+  String get statsFactLongest;
+
+  /// No description provided for @statsFactPages.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} pages'**
+  String statsFactPages(int count);
+
+  /// No description provided for @statsFactNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None yet'**
+  String get statsFactNone;
+
+  /// No description provided for @statsEmptyAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a book'**
+  String get statsEmptyAdd;
+
+  /// No description provided for @statsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your reading year starts here'**
+  String get statsEmptyTitle;
+
   /// No description provided for @paceDaysLeft.
   ///
   /// In en, this message translates to:

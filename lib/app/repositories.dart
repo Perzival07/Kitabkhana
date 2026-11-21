@@ -12,6 +12,8 @@ import '../features/quotes/domain/quote_repository.dart';
 import '../features/reading/data/drift_reading_repository.dart';
 import '../features/reading/domain/reading_repository.dart';
 import '../features/stats/data/drift_goal_repository.dart';
+import '../features/stats/data/drift_stats_repository.dart';
+import '../features/stats/domain/stats_repository.dart';
 import '../features/stats/domain/goal_repository.dart';
 import '../features/tags/data/drift_tag_repository.dart';
 import '../features/tags/domain/tag_repository.dart';
@@ -63,3 +65,7 @@ TagRepository tagRepository(Ref ref) => DriftTagRepository(
   ref.watch(appDatabaseProvider),
   ref.watch(clockProvider),
 );
+
+@Riverpod(keepAlive: true, retry: noRetry)
+StatsRepository statsRepository(Ref ref) =>
+    DriftStatsRepository(ref.watch(appDatabaseProvider));
