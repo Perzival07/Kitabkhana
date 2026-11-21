@@ -175,6 +175,15 @@ jobs:
           disable-animations: true
           script: tool/android_release_smoke.sh build/app/outputs/flutter-apk/app-prod-release.apk
 
+      # The installable APK, for trying the build on a phone. It is signed with
+      # the debug key (no upload keystore in CI), so it is for sideloading only,
+      # not for the Play Store.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kitabkhana-prod-release-apk
+          path: build/app/outputs/flutter-apk/app-prod-release.apk
+          retention-days: 14
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
