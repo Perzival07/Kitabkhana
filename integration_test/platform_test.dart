@@ -5,7 +5,7 @@ import 'package:kitabkhana/platform/notifications/mobile_notification_scheduler.
 /// The platform code the journeys replace with fakes, run for real on a device
 /// or emulator: Android's notification plugin, its time zone lookup and its
 /// stored schedule. Run with
-///   flutter test integration_test/platform_test.dart --flavor dev -d <device>
+///   flutter test integration_test/platform_test.dart --flavor dev -d DEVICE
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
