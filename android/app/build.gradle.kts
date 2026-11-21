@@ -1,8 +1,20 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
+
+// Upload-key signing: android/key.properties is gitignored (see docs/RELEASING.md
+// for the keytool command). CI writes it from secrets. Without it, release
+// builds are signed with the debug key so `flutter run --release` still works
+// locally, but they are not uploadable; the release check below refuses them.
+val keyProperties = Properties().apply {
+    val f = rootProject.file("key.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+val hasReleaseKey = keyProperties.containsKey("storeFile")
 
 android {
     namespace = "com.kitabkhana.kitabkhana"
@@ -46,11 +58,31 @@ android {
         }
     }
 
+    signingConfigs {
+        if (hasReleaseKey) {
+            create("release") {
+                storeFile = rootProject.file(keyProperties.getProperty("storeFile"))
+                storePassword = keyProperties.getProperty("storePassword")
+                keyAlias = keyProperties.getProperty("keyAlias")
+                keyPassword = keyProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = if (hasReleaseKey) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
+            // R8 code shrinking and obfuscation, and resource shrinking.
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
 }
@@ -68,3 +100,14 @@ flutter {
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 }
+
+// A production bundle must carry the upload key. Fail early rather than let a
+// debug-signed bundle reach the Play Console, which rejects it late.
+tasks.matching { it.name.startsWith("bundleProd") && it.name.endsWith("Release") }
+    .configureEach {
+        doFirst {
+            check(hasReleaseKey) {
+                "android/key.properties is missing: create the upload keystore first (docs/RELEASING.md)."
+            }
+        }
+    }

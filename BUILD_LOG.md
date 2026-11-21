@@ -61,7 +61,7 @@ Tick a task only when it is green (see Definition of Green).
 
 ## Phase 11 — Release
 - [x] P11.1
-- [ ] P11.2
+- [x] P11.2
 - [ ] P11.3
 - [ ] P11.4
 - [ ] P11.5
@@ -203,3 +203,8 @@ Tick a task only when it is green (see Definition of Green).
 - The tool rewrote an unrelated Xcode build setting (`ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS`) to an invalid value; I reverted `project.pbxproj`. Re-running the tools needs the same revert. The splash tool also reformatted `Info.plist` indentation (content unchanged apart from the status-bar key).
 - Store screenshots: dev-only `StoreDemoSeeder` (14 public-domain classics, loans due soon/overdue, a 12-day streak, quotes, a goal), loaded via More > "Load store demo data (dev)" or by `test/tool/generate_store_screenshots_test.dart`, which writes 15 framed PNGs (5 captions x phone-ios 1290x2796, phone-play 1080x1920, tablet 2048x2732) to `docs/store/screenshots/`. Store text is in `docs/store/`; `test/store/store_listing_test.dart` checks store length limits and screenshot sizes.
 - Not verified here: how the icon and splash look on a real Android or iOS device (no SDK, Xcode or emulator), Android 12 splash cropping, and the iOS icon in Xcode's asset catalog. The Hindi and Bengali listings are not written.
+
+## P11.2 Android release
+- `android/app/build.gradle.kts`: release signing from gitignored `android/key.properties` (falls back to the debug key for local runs; `bundleProd*Release` fails with a clear message if the key is missing), R8 minify + resource shrinking on, rules in `android/app/proguard-rules.pro` (ML Kit optional-recognizer `-dontwarn`, keep ML Kit/Play services, keep line numbers). Version comes from `pubspec.yaml` (`1.0.0+1`).
+- `docs/ANDROID_RELEASE.md`: exact `keytool` command, key.properties format, build commands, release-build checks, Play Console checklist (Data safety "no data collected", content rating, target audience, privacy policy URL) and the current tester rule (personal accounts after 13 Nov 2023: closed test, 12 testers, 14 days; checked on Google's help page).
+- **Not verified**: none of the Gradle/R8 changes were built (no Android SDK here). The ML Kit keep rules are written from the known missing-class failure and may need adjusting after the first real release build; the release APK has not been installed on any phone, so the manual regression is still to do.
