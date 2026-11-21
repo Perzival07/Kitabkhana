@@ -86,7 +86,7 @@ final class ReadingStreakProvider
   }
 }
 
-String _$readingStreakHash() => r'87d8b111c7c697c4df86455ddaae527a231f9112';
+String _$readingStreakHash() => r'c7481d6ed43cf920b5b7333f31a4884b089f3ce2';
 
 /// Live logs of one book, newest day first.
 
@@ -243,7 +243,7 @@ final class BookPaceProvider
   }
 }
 
-String _$bookPaceHash() => r'c39bb62b3408819ad47a3b8e97eef2e5a5f35b8a';
+String _$bookPaceHash() => r'12a84f51aef3e435c3d31fad2a2145be5a2fd5c2';
 
 /// The predicted finish for a book with [remainingPages] left; null when
 /// there is not enough reading to go on.
@@ -402,4 +402,4 @@ final class PagesLast7DaysProvider
   }
 }
 
-String _$pagesLast7DaysHash() => r'9b1f47c5141c27858cb3f81aff8ff144df8dac5d';
+String _$pagesLast7DaysHash() => r'd5472626342c5e177f6e314aeaf77e53fed33430';

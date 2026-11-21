@@ -43,7 +43,7 @@ final class StatsYearProvider extends $NotifierProvider<StatsYear, int> {
   }
 }
 
-String _$statsYearHash() => r'ff1b8699223c4547040271079a07b32033852053';
+String _$statsYearHash() => r'14fd7f755c62a550e462bebe6bd5d7e7d245a8fa';
 
 /// The year the Stats tab is showing. Starts as the current year.
 
@@ -105,7 +105,7 @@ final class StatsYearsProvider
   }
 }
 
-String _$statsYearsHash() => r'31328a8b348eed446ef92b164aeeef1ebfa540e4';
+String _$statsYearsHash() => r'7dfc6e7ccee6a1eb13f26636f1f2b0abcd52e227';
 
 @ProviderFor(yearGoal)
 final yearGoalProvider = YearGoalFamily._();
@@ -379,7 +379,7 @@ final class YearPagesPerWeekProvider
   }
 }
 
-String _$yearPagesPerWeekHash() => r'4d8c57fc7b607c03d56f5870d0c7b6ffa5a2fdbc';
+String _$yearPagesPerWeekHash() => r'a6de1ef95f21e2da28cf8a7ece42e599f9eb5330';
 
 /// The last 12 weeks of pages: ending today for the current year, else on
 /// the year's last day.

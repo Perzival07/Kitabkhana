@@ -3,8 +3,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../features/library/domain/book.dart';
 import '../features/stats/domain/goal.dart';
 import '../features/stats/domain/stats.dart';
-import 'providers.dart';
 import 'repositories.dart';
+import 'today_provider.dart';
 
 part 'stats_providers.g.dart';
 
@@ -12,7 +12,7 @@ part 'stats_providers.g.dart';
 @riverpod
 class StatsYear extends _$StatsYear {
   @override
-  int build() => ref.watch(clockProvider).today().year;
+  int build() => ref.watch(todayProvider).year;
 
   void set(int year) => state = year;
 }
@@ -21,7 +21,7 @@ class StatsYear extends _$StatsYear {
 /// plus the current one, newest first.
 @riverpod
 Stream<List<int>> statsYears(Ref ref) {
-  final current = ref.watch(clockProvider).today().year;
+  final current = ref.watch(todayProvider).year;
   return ref.watch(statsRepositoryProvider).watchFinishedYears().map((ys) {
     final all = <int>{...ys, current}.toList()..sort((a, b) => b.compareTo(a));
     return all;
@@ -44,7 +44,7 @@ Stream<List<int>> yearFinishedPerMonth(Ref ref, int year) =>
 /// the year's last day.
 @riverpod
 Stream<List<WeekPages>> yearPagesPerWeek(Ref ref, int year) {
-  final today = ref.watch(clockProvider).today();
+  final today = ref.watch(todayProvider);
   final end = year == today.year ? today : DateTime(year, 12, 31);
   return ref.watch(statsRepositoryProvider).watchPagesPerWeek(end);
 }

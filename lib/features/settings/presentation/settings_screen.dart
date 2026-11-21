@@ -30,6 +30,7 @@ import '../../reminders/presentation/reminder_permission.dart';
 import '../../stats/presentation/goal_sheet.dart';
 import '../application/diagnostics.dart';
 import '../domain/app_settings.dart';
+import '../../../app/today_provider.dart';
 
 final FutureProvider<DateTime?> _lastBackupProvider =
     FutureProvider.autoDispose<DateTime?>(
@@ -238,7 +239,7 @@ class _ReadingSection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final settings = ref.watch(appSettingsProvider);
-    final year = ref.watch(clockProvider).today().year;
+    final year = ref.watch(todayProvider).year;
     final goal = ref.watch(yearGoalProvider(year)).value;
     return _Section(
       title: l10n.settingsReading,
@@ -399,7 +400,7 @@ class _DataSection extends ConsumerWidget {
     final last = ref.watch(_lastBackupProvider).value;
     final autoOn = ref.watch(_autoBackupOnProvider).value ?? true;
     final canAuto = ref.watch(backupFolderProvider).supported;
-    final since = daysSince(last, ref.watch(clockProvider).today());
+    final since = daysSince(last, ref.watch(todayProvider));
     final when = since == null
         ? null
         : switch (since.days) {

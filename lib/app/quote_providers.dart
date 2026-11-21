@@ -14,6 +14,7 @@ import '../platform/ocr/web_ocr_service.dart';
 import '../platform/share/share_service.dart';
 import 'providers.dart';
 import 'repositories.dart';
+import 'today_provider.dart';
 
 part 'quote_providers.g.dart';
 
@@ -103,7 +104,7 @@ QuoteWithBook? quoteOfWeek(Ref ref) {
   if (all == null) return null;
   final pick = quoteOfTheWeek(
     all.map((e) => e.quote),
-    ref.watch(clockProvider).today(),
+    ref.watch(todayProvider),
   );
   if (pick == null) return null;
   return all.firstWhere((e) => e.quote.id == pick.id);

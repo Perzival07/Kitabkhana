@@ -9,6 +9,7 @@ import '../features/reading/domain/reading_log.dart';
 import '../features/reading/domain/streak.dart';
 import 'providers.dart';
 import 'repositories.dart';
+import 'today_provider.dart';
 
 part 'reading_providers.g.dart';
 
@@ -22,11 +23,11 @@ UpdateProgress updateProgress(Ref ref) => UpdateProgress(
 /// The reader's current and longest streak, across all books.
 @riverpod
 Stream<Streak> readingStreak(Ref ref) {
-  final clock = ref.watch(clockProvider);
+  final today = ref.watch(todayProvider);
   return ref
       .watch(readingRepositoryProvider)
       .watchReadingDays()
-      .map((days) => computeStreak(days, clock.today()));
+      .map((days) => computeStreak(days, today));
 }
 
 /// Live logs of one book, newest day first.
@@ -48,7 +49,7 @@ PaceEstimate? bookPace(
   return predictPace(
     remainingPages: remainingPages,
     logs: logs,
-    today: ref.watch(clockProvider).today(),
+    today: ref.watch(todayProvider),
     startedOn: startedOn,
   );
 }
@@ -72,7 +73,7 @@ Stream<List<Book>> upNextBooks(Ref ref) => ref
 /// Pages read on each of the last 7 days, oldest first (today is last).
 @riverpod
 Stream<List<int>> pagesLast7Days(Ref ref) {
-  final today = ref.watch(clockProvider).today();
+  final today = ref.watch(todayProvider);
   final from = DateTime(today.year, today.month, today.day - 6);
   return ref.watch(readingRepositoryProvider).watchBetween(from, today).map((
     logs,

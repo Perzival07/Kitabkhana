@@ -67,13 +67,13 @@ Connect API key; no Apple ID password. CI does the same from secrets (see
   collected by you or any third party; the only network request is the ISBN or
   title lookup to Open Library, which carries no identifier and is not stored by
   you. Camera: used on device only. Keep this in step with the privacy policy.
-- **Privacy manifest**: add `PrivacyInfo.xcprivacy` to the Runner target
-  (Xcode: File > New > App Privacy) declaring `NSPrivacyTracking` false, no
-  tracking domains, no collected data types. Plugins ship their own manifests
-  for the required-reason APIs they use; run Xcode's "Generate Privacy Report"
-  on the archive to see the combined list and fix any gap Apple's upload check
-  emails about. (Not added here: it needs the file registered in the Xcode
-  project.)
+- **Privacy manifest**: `ios/Runner/PrivacyInfo.xcprivacy` is in the Runner
+  target (tracking false, no tracking domains, no collected data, no
+  required-reason APIs of its own). I registered it in `project.pbxproj` by hand
+  (the file parses, but it has not been opened in Xcode): confirm it shows
+  under Runner and in Build Phases > Copy Bundle Resources. Plugins ship their
+  own manifests; run Xcode's "Generate Privacy Report" on the archive to see the
+  combined list and fix any gap Apple's upload check emails about.
 - **Privacy policy URL**: required. Use the hosted `docs/privacy/index.html`.
 - **Screenshots**: `docs/store/screenshots/phone-ios/` (6.7" 1290x2796) and
   `tablet/` (iPad 12.9" 2048x2732). Both are needed because the app runs on iPad.

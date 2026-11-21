@@ -25,6 +25,7 @@ import '../domain/loan.dart';
 import '../domain/loan_direction.dart';
 import 'extend_sheet.dart';
 import 'return_flow.dart';
+import '../../../app/today_provider.dart';
 
 /// `/loans`: what you lent, what you borrowed, what is overdue, and history.
 class LoansScreen extends ConsumerStatefulWidget {
@@ -126,7 +127,7 @@ class _LoansScreenState extends ConsumerState<LoansScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final today = ref.watch(clockProvider).today();
+    final today = ref.watch(todayProvider);
     final active = ref.watch(activeLoansProvider).value ?? const <Loan>[];
     final history = ref.watch(loanHistoryProvider).value ?? const <Loan>[];
     final visible = <Loan>[

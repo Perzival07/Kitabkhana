@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/logger.dart';
 import '../data/db/database_provider.dart';
 import 'app_config.dart';
+import 'today_provider.dart';
 import 'app_config_provider.dart';
 import 'app_root.dart';
 import 'backup_providers.dart';
@@ -33,6 +34,8 @@ Future<void> bootstrap(AppConfig config) async {
     overrides: [
       appConfigProvider.overrideWithValue(config),
       appLoggerProvider.overrideWithValue(logger),
+      // Keep "today" correct for an app left open past midnight.
+      midnightTimerProvider.overrideWithValue(true),
     ],
   );
 

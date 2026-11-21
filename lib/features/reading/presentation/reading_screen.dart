@@ -21,6 +21,7 @@ import '../../quotes/domain/quote_repository.dart';
 import '../../quotes/presentation/quote_tile.dart';
 import '../domain/pace.dart';
 import 'update_page_flow.dart';
+import '../../../app/today_provider.dart';
 
 /// Which greeting suits the local time of day.
 enum DayPart { morning, afternoon, evening }
@@ -117,6 +118,7 @@ class _Header extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    ref.watch(todayProvider); // rebuild when the day changes
     final now = ref.watch(clockProvider).now();
     final greeting = switch (dayPartOf(now)) {
       DayPart.morning => l10n.readingGreetingMorning,
@@ -352,7 +354,7 @@ class _TodayCard extends ConsumerWidget {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
     final totals = ref.watch(pagesLast7DaysProvider).value ?? List.filled(7, 0);
-    final today = ref.watch(clockProvider).today();
+    final today = ref.watch(todayProvider);
     final todayPages = totals.last;
     final maxV = totals.fold<int>(1, (a, b) => b > a ? b : a);
     final sum = totals.fold<int>(0, (a, b) => a + b);

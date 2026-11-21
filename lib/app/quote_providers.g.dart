@@ -525,4 +525,4 @@ final class QuoteOfWeekProvider
   }
 }
 
-String _$quoteOfWeekHash() => r'cc793f7ab38c38cf4a87c514ce9cc08c4a83234a';
+String _$quoteOfWeekHash() => r'8df8eb376dafa4a75ca585faad1cbdee7d03bf62';

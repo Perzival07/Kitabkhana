@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../app/l10n/failure_message.dart';
-import '../../../app/providers.dart';
 import '../../../app/repositories.dart';
 import '../../../app/router/routes.dart';
 import '../../../app/stats_providers.dart';
@@ -19,6 +18,7 @@ import '../domain/goal.dart';
 import '../domain/goal_progress.dart';
 import '../domain/stats.dart';
 import 'goal_sheet.dart';
+import '../../../app/today_provider.dart';
 
 /// `/stats`: the reading year. Goal ring, books per month, pages per week,
 /// top genres and authors, and a few library facts.
@@ -215,7 +215,7 @@ class _GoalCard extends ConsumerWidget {
       );
     }
     final finished = ref.watch(yearFinishedCountProvider(year)).value ?? 0;
-    final today = ref.watch(clockProvider).today();
+    final today = ref.watch(todayProvider);
     final p = goalProgress(
       year: year,
       target: g.targetBooks,

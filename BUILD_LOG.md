@@ -227,3 +227,9 @@ Tick a task only when it is green (see Definition of Green).
 - Done here: code-drawn icon and splash with goldens, store screenshots and listing text with tests, release signing/R8 configuration, iOS Podfile and fastlane, PWA/hosting config with a WASM build trial, release workflow and docs.
 - **Everything below needs a machine, account or device I did not have** and is the real work before shipping: Android release build with R8 (and the ML Kit keep rules), install on real phones and the manual regression, TalkBack; Xcode flavors and the `prod` scheme, iOS build and TestFlight, PrivacyInfo.xcprivacy; browser tests of the wasm build, CSP and install-to-home-screen; hosting the privacy policy; creating the store and Cloudflare accounts and the secrets; the Play 12-tester closed test.
 - Known gaps: Firefox web scanning is blocked by the CSP (type an ISBN); Hindi and Bengali translations and store text are not written; "today" on the Reading tab is fixed at build.
+
+## After Phase 11: open items closed
+- **Stale "today"**: `lib/app/today_provider.dart` keeps the calendar day current (a midnight timer, armed only in the real app via `midnightTimerProvider`, plus a refresh on app resume). The reading, stats, quote, loans and settings screens and providers watch it instead of reading the clock once. Test: `test/features/reading/today_provider_test.dart` (fake time across midnight, timer cancelled on dispose). Not seen on a device.
+- **CI web job** now builds with `--wasm`, as the release does.
+- **iOS privacy manifest** `ios/Runner/PrivacyInfo.xcprivacy` added and registered in `project.pbxproj` by hand (parses; not opened in Xcode).
+- Still open: everything listed in the Phase 11 audit that needs devices, accounts or Xcode/SDKs; Firefox web scanning; Hindi and Bengali translations.

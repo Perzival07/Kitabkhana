@@ -23,7 +23,7 @@ flutter build web --wasm --release --no-web-resources-cdn -t lib/main_prod.dart
   only the variant it needs.
   Catch: wasm needs the browser to allow `'wasm-unsafe-eval'`, which the CSP
   already does and scripts are otherwise locked to `'self'`.
-- It was not tested in browsers here (no browser available): open the build in
+- CI builds the same way (`ci.yml`). It was not tested in browsers here (no browser available): open the build in
   Chrome and Safari and watch for CSP errors in the console before announcing it.
 
 ## Deploy
