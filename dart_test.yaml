@@ -3,3 +3,5 @@ tags:
     description: Pixel goldens; generated on macOS, so CI (Linux) excludes them.
   perf:
     description: Timings on a 5,000-book library; budgets assume a development machine.
+  e2e:
+    description: Whole-app journeys over fake platform services.

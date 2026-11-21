@@ -439,12 +439,25 @@ class _Fab extends StatelessWidget {
     // With reduced motion the change is instant. (An AnimatedSize with a zero
     // duration re-dirties its own layout, which Flutter rejects, so it is
     // left out rather than given no time.)
-    if (context.motion.reduce) return fab;
-    return AnimatedSize(
-      duration: KDurations.normal,
-      curve: KCurves.standard,
-      alignment: Alignment.centerRight,
-      child: fab,
+    final sized = context.motion.reduce
+        ? fab
+        : AnimatedSize(
+            duration: KDurations.normal,
+            curve: KCurves.standard,
+            alignment: Alignment.centerRight,
+            child: fab,
+          );
+    // A toast appears just above the bottom bar, right where this button
+    // sits (they belong to different Scaffolds), so step out of its way.
+    return ValueListenableBuilder<bool>(
+      valueListenable: KToast.visible,
+      child: sized,
+      builder: (context, toastUp, child) => AnimatedPadding(
+        duration: context.motion.duration(KDurations.normal),
+        curve: KCurves.standard,
+        padding: EdgeInsets.only(bottom: toastUp ? 72 : 0),
+        child: child,
+      ),
     );
   }
 }

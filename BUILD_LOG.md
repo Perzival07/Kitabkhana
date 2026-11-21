@@ -56,7 +56,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P10.3
 - [x] P10.4
 - [x] P10.5
-- [ ] P10.6
+- [x] P10.6
 - [ ] P10.7
 
 ## Phase 11 — Release
@@ -183,3 +183,7 @@ Tick a task only when it is green (see Definition of Green).
 - (P10.5) Added a dev-only bulk seeder (5,000 books incl. Hindi and Bengali titles, 300 loans, 20,000 reading logs, 500 quotes; More > "Seed 5,000 books (dev)") and benchmarks in `test/perf/` (tag `perf`). On the dev machine every query is far inside its budget (search 1-2 ms vs 50; ownership check 2-20 ms vs 500; statistics 0.1-0.2 ms vs 200), the key lookups use their indexes, and the library builds only a screenful of tiles at 5,000 books and pages in more on scroll. So no indexes or query changes were needed. Full table in `docs/PERFORMANCE.md`.
 - (P10.5) Removed unused packages `uuid` and `path` and the unused Fraunces 500 font. Covers were already decoded at thumbnail size.
 - (P10.5) NOT done (needs a low-end Android in profile mode, none here): cold-start time, real frame times while scrolling 5,000 books, and `flutter build apk --analyze-size` (no Android SDK). `docs/PERFORMANCE.md` says exactly how to measure each; use `--split-per-abi` for APKs. These numbers are a best case: a phone is several times slower than this machine.
+- (P10.6) Six whole-app journeys in `integration_test/flows.dart` (first run + three books three ways; scan owned + title search; lend, scan lent, return; three days of reading, streak, finish, stats; quote capture; backup, erase, restore), one list used by two runners: `test/e2e/` (ordinary `flutter test`, all six pass) and `integration_test/app_test.dart` (device or browser). Fake camera, text reading, notifications, Open Library, sharing, file picking and backup folder. CI gets `e2e-android` (emulator) and `e2e-web` (Chrome via `flutter drive`) jobs on pushes to main and manual runs; `docs/QA.md` has the commands.
+- (P10.6) Bug found by the journeys and fixed: the "Added to <place>" toast sat on top of the library's Add button, so a tap meant for the button hit the toast's "View" action. The button now lifts while any toast is showing (`KToast.visible`), with a regression test.
+- (P10.6) NOT verified: the two CI device jobs and `integration_test/app_test.dart` on a real emulator or browser (none here, so the YAML and the web driver setup are untested); and the journeys use fake services, so camera, ML Kit and the share sheet are not exercised end to end.
+- (P10.6) Noted, not fixed: the Reading tab computes "today" once when it builds, so an app left open across midnight shows yesterday's bar as today until it is rebuilt (the journeys relaunch the app on each day).

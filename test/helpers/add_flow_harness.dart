@@ -58,7 +58,11 @@ class AddFlowHarness {
   final List<String> scanCodes;
   final bool cameraOk;
 
+  /// Extra overrides a particular test or journey needs.
+  final List<Override> extra = <Override>[];
+
   List<Override> get overrides => <Override>[
+    ...extra,
     appDatabaseProvider.overrideWithValue(db),
     clockProvider.overrideWithValue(clock),
     bookInfoSourceProvider.overrideWithValue(source),
