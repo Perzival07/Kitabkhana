@@ -1,0 +1,168 @@
+name: Release
+
+# Push a tag like v1.0.0 to release. Everything runs from the tag's commit.
+#   git tag v1.0.0 && git push origin v1.0.0
+# Secrets and the one-time setup are listed in docs/RELEASING.md.
+on:
+  push:
+    tags: ["v*.*.*"]
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  # Fail fast: the whole CI suite (format, analyze, tests, builds) first.
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  android:
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Upload key
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/upload.jks"
+          {
+            echo "storeFile=$RUNNER_TEMP/upload.jks"
+            echo "storePassword=$ANDROID_KEYSTORE_PASSWORD"
+            echo "keyAlias=$ANDROID_KEY_ALIAS"
+            echo "keyPassword=$ANDROID_KEY_PASSWORD"
+          } > android/key.properties
+
+      - name: Build signed app bundle
+        run: |
+          flutter build appbundle --release --flavor prod -t lib/main_prod.dart \
+            --build-name="${GITHUB_REF_NAME#v}" --build-number="${{ github.run_number }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-release
+          path: |
+            build/app/outputs/bundle/prodRelease/app-prod-release.aab
+            build/app/outputs/mapping/prodRelease/mapping.txt
+
+      # Internal testing track first; promotion to closed/production is a
+      # deliberate step in the Play Console (docs/RELEASING.md).
+      - name: Upload to Play (internal track)
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.kitabkhana.kitabkhana
+          releaseFiles: build/app/outputs/bundle/prodRelease/app-prod-release.aab
+          mappingFile: build/app/outputs/mapping/prodRelease/mapping.txt
+          track: internal
+          status: completed
+
+  ios:
+    needs: ci
+    runs-on: macos-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: ios
+
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Build and upload to TestFlight
+        working-directory: ios
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: bundle exec fastlane beta
+
+  web:
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Build web (WebAssembly with JavaScript fallback)
+        run: flutter build web --wasm --release --no-web-resources-cdn -t lib/main_prod.dart
+
+      - name: Zip the build
+        run: cd build/web && zip -qr "$GITHUB_WORKSPACE/kitabkhana-web.zip" .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-release
+          path: kitabkhana-web.zip
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy build/web --project-name=kitabkhana --branch=main
+
+  github-release:
+    needs: [android, ios, web]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # the changelog needs the history and the previous tag
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Changelog from conventional commits
+        run: tool/changelog.sh > RELEASE_NOTES.md
+
+      - name: Create the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "Kitabkhana ${GITHUB_REF_NAME#v}" \
+            --notes-file RELEASE_NOTES.md \
+            artifacts/android-release/bundle/prodRelease/app-prod-release.aab \
+            artifacts/web-release/kitabkhana-web.zip

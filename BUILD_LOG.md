@@ -64,7 +64,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P11.2
 - [x] P11.3
 - [x] P11.4
-- [ ] P11.5
+- [x] P11.5
 
 ## Known issues
 
@@ -218,3 +218,12 @@ Tick a task only when it is green (see Definition of Green).
 - WASM: a real `flutter build web --wasm --release --no-web-resources-cdn -t lib/main_prod.dart` succeeded (5.2 MB wasm, JS fallback included), so the release uses `--wasm`. COEP deliberately not set (Drift falls back from SharedArrayBuffer; COEP would break Open Library covers). Caching is revalidate-only because Flutter file names are not hashed.
 - Found: `mobile_scanner` falls back to a CDN-hosted ZXing script on browsers without `BarcodeDetector` (Firefox); the CSP blocks it, so camera scanning does not work there (typing an ISBN does). Documented, not fixed.
 - **Not verified**: nothing was opened in a real browser; no Cloudflare project exists; install-to-home-screen on Android Chrome and iOS Safari not tested; the CI web job still builds JS, not wasm.
+
+## P11.5 Release pipeline
+- `.github/workflows/release.yml` (tags `v*.*.*`): CI first via `workflow_call` (added to `ci.yml`), then Android (signed AAB, upload to Play internal track with the mapping file), iOS (fastlane `beta` to TestFlight), web (wasm build, Cloudflare Pages deploy, zip), then a GitHub Release with the changelog (`tool/changelog.sh` from conventional commits), the AAB and the web zip. `docs/RELEASING.md`: setup, secrets table, step-by-step release, staged rollout 10% -> 50% -> 100%, halting and rollback.
+- **Not verified**: the workflow has never run (YAML parses; the changelog script runs locally). It depends on setup that does not exist yet: Play Console app and service account, Apple account and `prod` scheme, Cloudflare project, repository secrets.
+
+## Phase 11 audit (PA)
+- Done here: code-drawn icon and splash with goldens, store screenshots and listing text with tests, release signing/R8 configuration, iOS Podfile and fastlane, PWA/hosting config with a WASM build trial, release workflow and docs.
+- **Everything below needs a machine, account or device I did not have** and is the real work before shipping: Android release build with R8 (and the ML Kit keep rules), install on real phones and the manual regression, TalkBack; Xcode flavors and the `prod` scheme, iOS build and TestFlight, PrivacyInfo.xcprivacy; browser tests of the wasm build, CSP and install-to-home-screen; hosting the privacy policy; creating the store and Cloudflare accounts and the secrets; the Play 12-tester closed test.
+- Known gaps: Firefox web scanning is blocked by the CSP (type an ISBN); Hindi and Bengali translations and store text are not written; "today" on the Reading tab is fixed at build.
