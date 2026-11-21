@@ -138,3 +138,34 @@ final class UnexpectedFailure extends Failure {
   @override
   String? get debugMessage => error.toString();
 }
+
+/// Why a backup file could not be read.
+enum BackupProblem {
+  /// Not a zip, or no valid manifest.
+  notABackup,
+
+  /// Missing files, bad checksums or unreadable data.
+  damaged,
+
+  /// Made by a newer app version than this one understands.
+  newerVersion,
+}
+
+final class BackupFailure extends Failure {
+  const BackupFailure(this.problem, [this.detail]);
+
+  final BackupProblem problem;
+
+  /// Developer-facing detail (which file failed).
+  final String? detail;
+
+  @override
+  String get messageKey => switch (problem) {
+    BackupProblem.notABackup => 'failureBackupNotABackup',
+    BackupProblem.damaged => 'failureBackupDamaged',
+    BackupProblem.newerVersion => 'failureBackupNewer',
+  };
+
+  @override
+  String? get debugMessage => detail;
+}

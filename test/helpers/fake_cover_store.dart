@@ -26,14 +26,27 @@ class FakeCoverStore implements CoverStore {
     return Ok<String?>(urlResult);
   }
 
+  /// Image bytes by cover reference, returned by [readBytes].
+  final Map<String, Uint8List> files = <String, Uint8List>{};
+
+  /// Bytes given to [saveFromBytes], by book id.
+  final Map<String, Uint8List> saved = <String, Uint8List>{};
+
+  /// Book ids whose [saveFromBytes] fails.
+  final Set<String> failPhotoFor = <String>{};
+
   @override
   Future<Result<String>> saveFromBytes(String bookId, Uint8List bytes) async {
     photoSaves.add(bookId);
+    if (failPhotoFor.contains(bookId)) {
+      return const Err<String>(StorageFailure());
+    }
+    saved[bookId] = bytes;
     return Ok<String>('covers/$bookId.jpg?v=2');
   }
 
   @override
-  Future<Uint8List?> readBytes(String reference) async => null;
+  Future<Uint8List?> readBytes(String reference) async => files[reference];
 
   @override
   Future<ImageProvider?> imageFor(String reference) async => image;

@@ -8,6 +8,7 @@ import '../../../app/router/routes.dart';
 import '../../../app/theme/tokens.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../ui/ui.dart';
+import '../../backup/presentation/backup_flows.dart';
 
 /// The More tab: places to manage the library. More entries arrive with their
 /// phases (loans, quotes, settings).
@@ -43,6 +44,16 @@ class MoreScreen extends ConsumerWidget {
               title: Text(l10n.quotesTitle),
               trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () => context.push(Routes.quotes),
+            ),
+            ListTile(
+              leading: const Icon(Icons.ios_share_rounded),
+              title: Text(l10n.moreBackup),
+              onTap: () => exportBackupFlow(context, ref),
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings_backup_restore_rounded),
+              title: Text(l10n.moreRestore),
+              onTap: () => restoreBackupFlow(context, ref),
             ),
             ListTile(
               leading: const Icon(Icons.shelves),

@@ -46,7 +46,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P08.2
 
 ## Phase 09 — Data & settings
-- [ ] P09.1
+- [x] P09.1
 - [ ] P09.2
 - [ ] P09.3
 
@@ -151,3 +151,9 @@ Tick a task only when it is green (see Definition of Green).
 - (P08.2) Quote of the week (Reading tab, hidden until a quote exists): deterministic per week (Monday to Sunday, counted from a fixed epoch Monday, not ISO week numbers, so year ends have no quirks). Favourites are preferred: with 3+ favourites only they rotate; with fewer, they lead and other quotes top the pool up. The pool is stepped through in a stable shuffled order, one per week, so nothing repeats until all have had a turn. Adding or deleting a quote reshuffles which quote is next.
 - (P08.2) Share as image: a 1080x1350 (4:5) PNG drawn directly with a painter (paper tone, faint seeded grain, big mark, Fraunces italic sized to fit, source in Inter, Kitabkhana wordmark); always the light "paper" look. Via share_plus (a download on web).
 - (P08.2) Not verified on a device: the system share sheet and the web download; the grain's look on a real screen.
+- (P09.1) `.kitab` backups are a zip of `manifest.json`, one JSON file per table (every row, tombstones included) and `covers/<bookId>.jpg`; every file has a SHA-256 in the manifest. Format documented in `docs/BACKUP_FORMAT.md`. Entry points for now: More > Back up library / Restore from backup (P09.3 moves them into Settings).
+- (P09.1) Export warns that the file holds borrower names and phone numbers, then builds the zip off the UI thread and shares it (a download on the web). Import checks the whole file first (zip, manifest, newer format or schema, checksums, unlisted or missing files, row counts) and changes nothing if anything is wrong; friendly messages for "not a backup", "damaged" and "made by a newer version, update the app first".
+- (P09.1) Import always takes a safety copy of the current library first (phones: `<documents>/backups/before-restore-*.kitab`, newest 3 kept) and stops if that fails. The database work is one transaction with foreign keys checked at commit, so any error rolls everything back. On the web there is nowhere to keep a safety copy, so the single transaction is the only protection there.
+- (P09.1) Replace wipes and inserts. Merge: newer `updatedAt` wins per id (higher `rev` breaks a tie, a full tie keeps the local row), so a newer tombstone deletes and an older live row never revives one. Rows that would break a uniqueness rule under another id are folded into the existing one (same tag name, same location name under the same parent, same goal year with the newer target kept, a second active loan for a book is skipped, a repeated tag on a book), with references redirected.
+- (P09.1) Covers are copied after the database commit; a book whose cover file isn't in the archive loses its stale reference, and failed copies are counted in the summary rather than undoing the import. Loan reminders are reconciled afterwards.
+- (P09.1) Not verified on a device: the system file picker (it is not filtered by extension, since phone pickers don't know `.kitab`), the share sheet / web download, and timing on a large library (zipping runs in an isolate, database reads and writes on the main isolate).

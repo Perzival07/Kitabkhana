@@ -16,6 +16,9 @@ String failureMessage(AppLocalizations l10n, Failure failure) {
     'failurePermissionNotifications' => l10n.failurePermissionNotifications,
     'failurePermissionFiles' => l10n.failurePermissionFiles,
     'failureUnsupported' => l10n.failureUnsupported,
+    'failureBackupNotABackup' => l10n.failureBackupNotABackup,
+    'failureBackupDamaged' => l10n.failureBackupDamaged,
+    'failureBackupNewer' => l10n.failureBackupNewer,
     'failureUnexpected' => l10n.failureUnexpected,
     _ =>
       failure is ValidationFailure

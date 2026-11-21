@@ -58,8 +58,13 @@ void main() {
       StorageFailure() => 'storage',
       PermissionFailure() => 'permission',
       UnsupportedOnPlatformFailure() => 'unsupported',
+      BackupFailure() => 'backup',
       UnexpectedFailure() => 'unexpected',
     };
     expect(name(const ConflictFailure()), 'conflict');
+    expect(
+      const BackupFailure(BackupProblem.damaged).messageKey,
+      'failureBackupDamaged',
+    );
   });
 }

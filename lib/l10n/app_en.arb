@@ -630,6 +630,66 @@
   },
   "quoteMore": "More",
   "quoteOfWeekTitle": "Quote of the week",
+  "failureBackupNotABackup": "This isn't a Kitabkhana backup.",
+  "failureBackupDamaged": "This backup looks damaged, so nothing was changed.",
+  "failureBackupNewer": "This backup was made by a newer version. Update the app first.",
+  "moreBackup": "Back up library",
+  "moreRestore": "Restore from backup",
+  "backupExportTitle": "Back up your library",
+  "backupExportWarning": "The backup file holds everything in your library, including the names and phone numbers of people you have lent books to. Keep it somewhere private.",
+  "backupExportAction": "Create backup",
+  "backupPreparing": "Preparing your backup…",
+  "backupOpening": "Checking the file…",
+  "backupRestoring": "Restoring your library…",
+  "backupRestoreTitle": "Restore from a backup",
+  "backupFound": "Made on {date}: {books, plural, =1{1 book} other{{books} books}}, {loans, plural, =1{1 loan} other{{loans} loans}}, {quotes, plural, =1{1 quote} other{{quotes} quotes}}.",
+  "@backupFound": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "books": {
+        "type": "int"
+      },
+      "loans": {
+        "type": "int"
+      },
+      "quotes": {
+        "type": "int"
+      }
+    }
+  },
+  "backupModeMerge": "Merge with my library",
+  "backupModeMergeBody": "Add what is missing and keep the newer version of anything that is in both.",
+  "backupModeReplace": "Replace my library",
+  "backupModeReplaceBody": "Erase this library and use the backup instead.",
+  "backupReplaceConfirmTitle": "Replace your library?",
+  "backupReplaceConfirmBody": "Everything here will be swapped for the backup. A safety copy of your current library is saved first.",
+  "backupReplaceConfirm": "Replace",
+  "backupDoneTitle": "Backup restored",
+  "backupImported": "Imported {books, plural, =1{1 book} other{{books} books}}, {loans, plural, =1{1 loan} other{{loans} loans}}, {quotes, plural, =1{1 quote} other{{quotes} quotes}}.",
+  "@backupImported": {
+    "placeholders": {
+      "books": {
+        "type": "int"
+      },
+      "loans": {
+        "type": "int"
+      },
+      "quotes": {
+        "type": "int"
+      }
+    }
+  },
+  "backupCoversSkipped": "{count, plural, =1{1 cover could not be copied.} other{{count} covers could not be copied.}}",
+  "@backupCoversSkipped": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ok": "OK",
   "paceDaysLeft": "{count, plural, =1{About 1 day left at your pace} other{About {count} days left at your pace}}",
   "@paceDaysLeft": {
     "placeholders": {

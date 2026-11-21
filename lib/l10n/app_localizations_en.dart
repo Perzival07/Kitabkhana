@@ -1124,6 +1124,132 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quoteOfWeekTitle => 'Quote of the week';
 
   @override
+  String get failureBackupNotABackup => 'This isn\'t a Kitabkhana backup.';
+
+  @override
+  String get failureBackupDamaged =>
+      'This backup looks damaged, so nothing was changed.';
+
+  @override
+  String get failureBackupNewer =>
+      'This backup was made by a newer version. Update the app first.';
+
+  @override
+  String get moreBackup => 'Back up library';
+
+  @override
+  String get moreRestore => 'Restore from backup';
+
+  @override
+  String get backupExportTitle => 'Back up your library';
+
+  @override
+  String get backupExportWarning =>
+      'The backup file holds everything in your library, including the names and phone numbers of people you have lent books to. Keep it somewhere private.';
+
+  @override
+  String get backupExportAction => 'Create backup';
+
+  @override
+  String get backupPreparing => 'Preparing your backup…';
+
+  @override
+  String get backupOpening => 'Checking the file…';
+
+  @override
+  String get backupRestoring => 'Restoring your library…';
+
+  @override
+  String get backupRestoreTitle => 'Restore from a backup';
+
+  @override
+  String backupFound(String date, int books, int loans, int quotes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      books,
+      locale: localeName,
+      other: '$books books',
+      one: '1 book',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      loans,
+      locale: localeName,
+      other: '$loans loans',
+      one: '1 loan',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      quotes,
+      locale: localeName,
+      other: '$quotes quotes',
+      one: '1 quote',
+    );
+    return 'Made on $date: $_temp0, $_temp1, $_temp2.';
+  }
+
+  @override
+  String get backupModeMerge => 'Merge with my library';
+
+  @override
+  String get backupModeMergeBody =>
+      'Add what is missing and keep the newer version of anything that is in both.';
+
+  @override
+  String get backupModeReplace => 'Replace my library';
+
+  @override
+  String get backupModeReplaceBody =>
+      'Erase this library and use the backup instead.';
+
+  @override
+  String get backupReplaceConfirmTitle => 'Replace your library?';
+
+  @override
+  String get backupReplaceConfirmBody =>
+      'Everything here will be swapped for the backup. A safety copy of your current library is saved first.';
+
+  @override
+  String get backupReplaceConfirm => 'Replace';
+
+  @override
+  String get backupDoneTitle => 'Backup restored';
+
+  @override
+  String backupImported(int books, int loans, int quotes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      books,
+      locale: localeName,
+      other: '$books books',
+      one: '1 book',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      loans,
+      locale: localeName,
+      other: '$loans loans',
+      one: '1 loan',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      quotes,
+      locale: localeName,
+      other: '$quotes quotes',
+      one: '1 quote',
+    );
+    return 'Imported $_temp0, $_temp1, $_temp2.';
+  }
+
+  @override
+  String backupCoversSkipped(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count covers could not be copied.',
+      one: '1 cover could not be copied.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ok => 'OK';
+
+  @override
   String paceDaysLeft(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

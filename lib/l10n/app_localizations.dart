@@ -1972,6 +1972,150 @@ abstract class AppLocalizations {
   /// **'Quote of the week'**
   String get quoteOfWeekTitle;
 
+  /// No description provided for @failureBackupNotABackup.
+  ///
+  /// In en, this message translates to:
+  /// **'This isn\'t a Kitabkhana backup.'**
+  String get failureBackupNotABackup;
+
+  /// No description provided for @failureBackupDamaged.
+  ///
+  /// In en, this message translates to:
+  /// **'This backup looks damaged, so nothing was changed.'**
+  String get failureBackupDamaged;
+
+  /// No description provided for @failureBackupNewer.
+  ///
+  /// In en, this message translates to:
+  /// **'This backup was made by a newer version. Update the app first.'**
+  String get failureBackupNewer;
+
+  /// No description provided for @moreBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up library'**
+  String get moreBackup;
+
+  /// No description provided for @moreRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from backup'**
+  String get moreRestore;
+
+  /// No description provided for @backupExportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up your library'**
+  String get backupExportTitle;
+
+  /// No description provided for @backupExportWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'The backup file holds everything in your library, including the names and phone numbers of people you have lent books to. Keep it somewhere private.'**
+  String get backupExportWarning;
+
+  /// No description provided for @backupExportAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Create backup'**
+  String get backupExportAction;
+
+  /// No description provided for @backupPreparing.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing your backup…'**
+  String get backupPreparing;
+
+  /// No description provided for @backupOpening.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking the file…'**
+  String get backupOpening;
+
+  /// No description provided for @backupRestoring.
+  ///
+  /// In en, this message translates to:
+  /// **'Restoring your library…'**
+  String get backupRestoring;
+
+  /// No description provided for @backupRestoreTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from a backup'**
+  String get backupRestoreTitle;
+
+  /// No description provided for @backupFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Made on {date}: {books, plural, =1{1 book} other{{books} books}}, {loans, plural, =1{1 loan} other{{loans} loans}}, {quotes, plural, =1{1 quote} other{{quotes} quotes}}.'**
+  String backupFound(String date, int books, int loans, int quotes);
+
+  /// No description provided for @backupModeMerge.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge with my library'**
+  String get backupModeMerge;
+
+  /// No description provided for @backupModeMergeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add what is missing and keep the newer version of anything that is in both.'**
+  String get backupModeMergeBody;
+
+  /// No description provided for @backupModeReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace my library'**
+  String get backupModeReplace;
+
+  /// No description provided for @backupModeReplaceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase this library and use the backup instead.'**
+  String get backupModeReplaceBody;
+
+  /// No description provided for @backupReplaceConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace your library?'**
+  String get backupReplaceConfirmTitle;
+
+  /// No description provided for @backupReplaceConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything here will be swapped for the backup. A safety copy of your current library is saved first.'**
+  String get backupReplaceConfirmBody;
+
+  /// No description provided for @backupReplaceConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace'**
+  String get backupReplaceConfirm;
+
+  /// No description provided for @backupDoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup restored'**
+  String get backupDoneTitle;
+
+  /// No description provided for @backupImported.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported {books, plural, =1{1 book} other{{books} books}}, {loans, plural, =1{1 loan} other{{loans} loans}}, {quotes, plural, =1{1 quote} other{{quotes} quotes}}.'**
+  String backupImported(int books, int loans, int quotes);
+
+  /// No description provided for @backupCoversSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 cover could not be copied.} other{{count} covers could not be copied.}}'**
+  String backupCoversSkipped(int count);
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
   /// No description provided for @paceDaysLeft.
   ///
   /// In en, this message translates to:

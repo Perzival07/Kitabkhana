@@ -17,4 +17,14 @@ class FakeShareService implements ShareService {
     required String name,
     String? text,
   }) async => images.add((png: png, name: name));
+
+  final List<({Uint8List bytes, String name})> files =
+      <({Uint8List bytes, String name})>[];
+
+  @override
+  Future<void> shareFile(
+    Uint8List bytes, {
+    required String name,
+    String? mimeType,
+  }) async => files.add((bytes: bytes, name: name));
 }

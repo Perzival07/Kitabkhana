@@ -8,6 +8,14 @@ abstract interface class ShareService {
   Future<void> shareText(String text);
 
   Future<void> shareImage(Uint8List png, {required String name, String? text});
+
+  /// Shares any file (a backup, an export): the share sheet on phones, a
+  /// download on the web.
+  Future<void> shareFile(
+    Uint8List bytes, {
+    required String name,
+    String? mimeType,
+  });
 }
 
 class SharePlusShareService implements ShareService {
@@ -26,6 +34,18 @@ class SharePlusShareService implements ShareService {
     ShareParams(
       text: text,
       files: <XFile>[XFile.fromData(png, mimeType: 'image/png', name: name)],
+      fileNameOverrides: <String>[name],
+    ),
+  );
+
+  @override
+  Future<void> shareFile(
+    Uint8List bytes, {
+    required String name,
+    String? mimeType,
+  }) => SharePlus.instance.share(
+    ShareParams(
+      files: <XFile>[XFile.fromData(bytes, mimeType: mimeType, name: name)],
       fileNameOverrides: <String>[name],
     ),
   );
