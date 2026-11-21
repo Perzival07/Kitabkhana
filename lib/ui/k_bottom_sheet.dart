@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app/theme/tokens.dart';
+import 'motion.dart';
 
 /// Shows a modal bottom sheet that is safe-area and keyboard aware,
 /// scrollable, and capped at 90% of the screen height.
@@ -10,8 +11,19 @@ Future<T?> showKBottomSheet<T>({
   bool isDismissible = true,
 }) {
   final height = MediaQuery.sizeOf(context).height;
+  final motion = context.motion;
   return showModalBottomSheet<T>(
     context: context,
+    // A spring-like rise and a quicker, plain dismissal; none at all under
+    // reduce-motion.
+    sheetAnimationStyle: motion.reduce
+        ? AnimationStyle.noAnimation
+        : const AnimationStyle(
+            duration: KDurations.slow,
+            curve: KCurves.spring,
+            reverseDuration: KDurations.normal,
+            reverseCurve: Curves.easeInCubic,
+          ),
     isScrollControlled: true,
     useSafeArea: true,
     isDismissible: isDismissible,

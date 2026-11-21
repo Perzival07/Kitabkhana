@@ -92,6 +92,12 @@ abstract final class KDurations {
 
 abstract final class KCurves {
   static const Curve standard = Curves.easeOutCubic;
+
+  /// A spring-like settle: overshoots a hair, then rests. For sheets.
+  static const Curve spring = Cubic(0.22, 1.12, 0.36, 1);
+
+  /// A friendly "pop": grows slightly past its size, then settles.
+  static const Curve pop = Curves.easeOutBack;
 }
 
 abstract final class KBreakpoints {

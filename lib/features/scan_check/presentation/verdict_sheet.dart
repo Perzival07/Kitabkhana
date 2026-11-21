@@ -99,14 +99,19 @@ class _VerdictCardState extends State<VerdictCard> {
     Widget headline(IconData icon, Color color, String title, {String? sub}) =>
         Column(
           children: <Widget>[
-            DecoratedBox(
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.14),
-                shape: BoxShape.circle,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(KSpacing.md),
-                child: Icon(icon, color: color, size: 40),
+            // The badge pops in, and again when "Did you mean…?" resolves to
+            // a different verdict.
+            KPop(
+              replay: r.runtimeType,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.14),
+                  shape: BoxShape.circle,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(KSpacing.md),
+                  child: Icon(icon, color: color, size: 40),
+                ),
               ),
             ),
             const SizedBox(height: KSpacing.md),

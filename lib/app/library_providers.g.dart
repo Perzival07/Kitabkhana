@@ -485,6 +485,69 @@ abstract class _$LibraryViewController extends $Notifier<LibraryView> {
   }
 }
 
+/// Whether the library's first-load cascade has played. It plays once per
+/// app run; after that, filtering, sorting and scrolling just show the books.
+
+@ProviderFor(LibraryEntrancePlayed)
+final libraryEntrancePlayedProvider = LibraryEntrancePlayedProvider._();
+
+/// Whether the library's first-load cascade has played. It plays once per
+/// app run; after that, filtering, sorting and scrolling just show the books.
+final class LibraryEntrancePlayedProvider
+    extends $NotifierProvider<LibraryEntrancePlayed, bool> {
+  /// Whether the library's first-load cascade has played. It plays once per
+  /// app run; after that, filtering, sorting and scrolling just show the books.
+  LibraryEntrancePlayedProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'libraryEntrancePlayedProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$libraryEntrancePlayedHash();
+
+  @$internal
+  @override
+  LibraryEntrancePlayed create() => LibraryEntrancePlayed();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$libraryEntrancePlayedHash() =>
+    r'0b1a58fa19489c3a3f0e684a2600e5cdc576dee1';
+
+/// Whether the library's first-load cascade has played. It plays once per
+/// app run; after that, filtering, sorting and scrolling just show the books.
+
+abstract class _$LibraryEntrancePlayed extends $Notifier<bool> {
+  bool build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<bool, bool>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<bool, bool>,
+              bool,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}
+
 @ProviderFor(demoSeeder)
 final demoSeederProvider = DemoSeederProvider._();
 

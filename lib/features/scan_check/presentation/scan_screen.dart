@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -80,11 +79,11 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
       if (mounted) setState(() => _checking = false);
     }
     if (!mounted) return;
-    unawaited(
-      isOwnedVerdict(result)
-          ? HapticFeedback.mediumImpact()
-          : HapticFeedback.lightImpact(),
-    );
+    if (isOwnedVerdict(result)) {
+      Haptics.success();
+    } else {
+      Haptics.light();
+    }
     _sheetOpen = true;
     final outcome = await showVerdictSheet(
       context,

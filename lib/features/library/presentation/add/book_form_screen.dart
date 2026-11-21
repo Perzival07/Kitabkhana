@@ -226,7 +226,7 @@ class _BookFormScreenState extends ConsumerState<BookFormScreen> {
 
     switch (result) {
       case Ok<AddBookResult>(:final value) when value is BookAdded:
-        unawaited(HapticFeedback.lightImpact());
+        Haptics.light();
         String? place;
         for (final loc in locations) {
           if (loc.id == value.book.locationId) place = loc.name;

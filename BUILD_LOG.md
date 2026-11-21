@@ -52,7 +52,7 @@ Tick a task only when it is green (see Definition of Green).
 
 ## Phase 10 — Polish & QA
 - [x] P10.1
-- [ ] P10.2
+- [x] P10.2
 - [ ] P10.3
 - [ ] P10.4
 - [ ] P10.5
@@ -170,3 +170,7 @@ Tick a task only when it is green (see Definition of Green).
 - (P10.1) First-run onboarding at `/onboarding`: three intro pages ("Know what you own", "Never buy it twice", "Your books stay with you"), a step to pick starter places (Living room shelf, Bedroom shelf, Storage box; all ticked, untick or skip), then "Add your first book" / "Restore from backup" / "Explore the app". Skip is on every page but the last; page dots with a spoken "Step N of 5"; illustrations are painted in the theme colour (a new `privateShelf` illustration was added); subtle parallax and fade while swiping, switched off (and page changes made instant) under reduce-motion; content is centred and capped at 520dp, scrolls in landscape, and was checked at 320dp with 200% text.
 - (P10.1) Shown once: `bootstrap` reads `onboarding.done` and opens on the introduction when it is not set. Skip, Add first book, Explore and a successful restore all set it; cancelling or failing a restore does not. Erase all data wipes it, so the introduction returns. Tests open the library by default.
 - (P10.1) Fix found along the way: windows shorter than 500dp (a phone on its side) now use the bottom bar instead of the navigation rail, which overflowed by 52dp at 800x360.
+- (P10.2) One place for motion (`lib/ui/motion.dart`): `MotionPrefs` (from `MediaQuery.disableAnimations`, so it follows the system reduce-motion setting) turns every duration to zero and curves to linear; `context.motion` is how widgets ask. It is a context extension rather than a Riverpod provider because the setting lives in `MediaQuery`.
+- (P10.2) Added: a staggered fade/slide-in (`KEnter`) for library grid and list items, first load only (the first 14 items, once per app run; filtering, sorting and scrolling never replay it); a "pop" (`KPop`) on the scan verdict badge, replayed when "Did you mean…?" resolves to another verdict; a 97% press scale on primary buttons; a spring-like rise for bottom sheets (plain dismissal, none under reduce-motion); status chips on Book Detail with an outlined/filled icon that swaps with a quick fade (so the state no longer rests on colour alone). Already present from earlier phases: Hero covers, animated progress bars and rings, the finish-a-book particle burst (draws nothing under reduce-motion).
+- (P10.2) Haptics are now one vocabulary (`Haptics.light` for primary actions, `.success` for a scan match / adding by scan / finishing a book, `.selection`). Flutter has no separate "success notification" haptic, so success is a firmer tap.
+- (P10.2) NOT done: profiling on a low-end Android in profile mode (no device here), so there are no frame-time numbers and I cannot claim every animation holds 60fps. To measure: `flutter run --profile` on the device, open DevTools > Performance, and record the library first-load cascade, a sheet opening, a scan verdict and a book finishing; look for UI or raster frames over 16ms. If the cascade janks on weak hardware, lower the 14-item cap in `library_screen.dart`.

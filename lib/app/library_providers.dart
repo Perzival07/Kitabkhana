@@ -160,6 +160,16 @@ class LibraryViewController extends _$LibraryViewController {
   }
 }
 
+/// Whether the library's first-load cascade has played. It plays once per
+/// app run; after that, filtering, sorting and scrolling just show the books.
+@Riverpod(keepAlive: true)
+class LibraryEntrancePlayed extends _$LibraryEntrancePlayed {
+  @override
+  bool build() => false;
+
+  void markPlayed() => state = true;
+}
+
 @Riverpod(keepAlive: true)
 DemoSeeder demoSeeder(Ref ref) => DemoSeeder(
   books: ref.watch(bookRepositoryProvider),

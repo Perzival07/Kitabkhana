@@ -296,4 +296,20 @@ void main() {
     await pumpDetail(t, size: const Size(320, 800));
     expect(t.takeException(), isNull);
   });
+
+  bookTest('status chips carry an icon, filled for the chosen one', (t) async {
+    await seed();
+    await pumpDetail(t);
+    // Not chosen: outlined. (A fresh book is "Want to read".)
+    expect(find.byIcon(Icons.bookmark_rounded), findsOneWidget);
+    expect(find.byIcon(Icons.auto_stories_outlined), findsOneWidget);
+    expect(find.byIcon(Icons.check_circle_outline_rounded), findsOneWidget);
+    expect(find.byIcon(Icons.cancel_outlined), findsOneWidget);
+
+    await chip(t, 'Reading');
+    await advance(t);
+    expect(find.byIcon(Icons.auto_stories_rounded), findsOneWidget);
+    expect(find.byIcon(Icons.bookmark_border_rounded), findsOneWidget);
+    expect(find.byIcon(Icons.bookmark_rounded), findsNothing);
+  });
 }

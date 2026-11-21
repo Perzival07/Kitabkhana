@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,7 +29,7 @@ class _AddScanScreenState extends ConsumerState<AddScanScreen> {
     final isbn = parseIsbn(code);
     if (isbn == null) return; // not a book barcode: keep scanning
     setState(() => _busy = true);
-    unawaited(HapticFeedback.mediumImpact());
+    Haptics.success();
     await lookupIsbnAndContinue(context: context, ref: ref, isbn: isbn);
     if (mounted) setState(() => _busy = false);
   }

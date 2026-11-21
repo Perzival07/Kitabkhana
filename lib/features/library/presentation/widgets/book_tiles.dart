@@ -24,6 +24,20 @@ Color statusDotColor(BuildContext context, ReadStatus status) {
 /// The Hero tag shared by a book's cover in the library and on its page.
 String bookHeroTag(String id) => 'book-cover-$id';
 
+/// An icon for a reading status: outlined when not chosen, filled when it is.
+IconData statusIcon(
+  ReadStatus status, {
+  required bool selected,
+}) => switch (status) {
+  ReadStatus.want =>
+    selected ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
+  ReadStatus.reading =>
+    selected ? Icons.auto_stories_rounded : Icons.auto_stories_outlined,
+  ReadStatus.finished =>
+    selected ? Icons.check_circle_rounded : Icons.check_circle_outline_rounded,
+  ReadStatus.dropped => selected ? Icons.cancel_rounded : Icons.cancel_outlined,
+};
+
 String statusLabel(AppLocalizations l10n, ReadStatus status) =>
     switch (status) {
       ReadStatus.want => l10n.statusWant,

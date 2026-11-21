@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../app/theme/tokens.dart';
+import 'haptics.dart';
+import 'motion.dart';
 
 enum KButtonVariant { primary, secondary, tonal, text }
 
@@ -30,9 +31,7 @@ class KButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final enabled = onPressed != null && !loading;
     void handle() {
-      if (variant == KButtonVariant.primary) {
-        HapticFeedback.lightImpact();
-      }
+      if (variant == KButtonVariant.primary) Haptics.light();
       onPressed?.call();
     }
 
@@ -44,7 +43,13 @@ class KButton extends StatelessWidget {
       KButtonVariant.tonal => FilledButton.tonal(onPressed: cb, child: child),
       KButtonVariant.text => TextButton(onPressed: cb, child: child),
     };
-    return expand ? SizedBox(width: double.infinity, child: button) : button;
+    // Primary actions dip to 97% while pressed.
+    final pressable = variant == KButtonVariant.primary && enabled
+        ? _PressScale(child: button)
+        : button;
+    return expand
+        ? SizedBox(width: double.infinity, child: pressable)
+        : pressable;
   }
 
   Widget _content(BuildContext context) {
@@ -66,6 +71,41 @@ class KButton extends StatelessWidget {
         ],
         Flexible(child: Text(label, textAlign: TextAlign.center)),
       ],
+    );
+  }
+}
+
+/// Scales its child to 97% while a finger is down on it. The touch still
+/// reaches the child: this only listens.
+class _PressScale extends StatefulWidget {
+  const _PressScale({required this.child});
+
+  final Widget child;
+
+  @override
+  State<_PressScale> createState() => _PressScaleState();
+}
+
+class _PressScaleState extends State<_PressScale> {
+  bool _down = false;
+
+  void _set(bool v) {
+    if (_down != v) setState(() => _down = v);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final motion = context.motion;
+    return Listener(
+      onPointerDown: (_) => _set(true),
+      onPointerUp: (_) => _set(false),
+      onPointerCancel: (_) => _set(false),
+      child: AnimatedScale(
+        scale: _down && !motion.reduce ? 0.97 : 1,
+        duration: motion.duration(KDurations.fast ~/ 2),
+        curve: KCurves.standard,
+        child: widget.child,
+      ),
     );
   }
 }

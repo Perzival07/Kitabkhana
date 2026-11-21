@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -86,7 +85,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
     final wasFinished = book.status == ReadStatus.finished;
     await _change((b) => withStatus(b, status, today));
     if (status == ReadStatus.finished && !wasFinished && mounted) {
-      unawaited(HapticFeedback.mediumImpact());
+      Haptics.success();
       setState(() => _celebrate++);
     }
   }
@@ -478,6 +477,21 @@ class _StatusRow extends StatelessWidget {
           children: <Widget>[
             for (final s in ReadStatus.values)
               ChoiceChip(
+                // The icon says it as well as the colour does, and swaps
+                // with a quick fade when the status changes.
+                avatar: AnimatedSwitcher(
+                  duration: context.motion.duration(KDurations.normal),
+                  transitionBuilder: (child, anim) => FadeTransition(
+                    opacity: anim,
+                    child: ScaleTransition(scale: anim, child: child),
+                  ),
+                  child: Icon(
+                    statusIcon(s, selected: book.status == s),
+                    key: ValueKey<bool>(book.status == s),
+                    size: 18,
+                  ),
+                ),
+                showCheckmark: false,
                 label: Text(statusLabel(l10n, s)),
                 selected: book.status == s,
                 onSelected: (_) => onStatus(s),

@@ -236,6 +236,16 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
     final compact =
         ref.watch(appSettingsProvider).gridDensity == GridDensity.compact;
 
+    // The first time books appear, they cascade in; never again this run.
+    final entering = !ref.watch(libraryEntrancePlayedProvider);
+    if (entering) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          ref.read(libraryEntrancePlayedProvider.notifier).markPlayed();
+        }
+      });
+    }
+
     if (view == LibraryView.list) {
       final count = loaded.length + (hasMore ? 3 : 0);
       return <Widget>[
@@ -244,14 +254,19 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
           itemBuilder: (context, i) {
             if (i >= loaded.length) return const BookListTileSkeleton();
             final b = loaded[i];
-            return BookListTile(
+            return KEnter(
               key: ValueKey<String>(b.id),
-              book: b,
-              lent: lentIds.contains(b.id),
-              query: text,
-              locationName: locations[b.locationId],
-              onTap: () => open(b),
-              onLongPress: () => actions(b),
+              index: i,
+              play: entering && i < 14,
+              child: BookListTile(
+                key: ValueKey<String>(b.id),
+                book: b,
+                lent: lentIds.contains(b.id),
+                query: text,
+                locationName: locations[b.locationId],
+                onTap: () => open(b),
+                onLongPress: () => actions(b),
+              ),
             );
           },
         ),
@@ -279,13 +294,18 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
               itemBuilder: (context, i) {
                 if (i >= loaded.length) return const KBookTileSkeleton();
                 final b = loaded[i];
-                return BookGridTile(
+                return KEnter(
                   key: ValueKey<String>(b.id),
-                  book: b,
-                  lent: lentIds.contains(b.id),
-                  query: text,
-                  onTap: () => open(b),
-                  onLongPress: () => actions(b),
+                  index: i,
+                  play: entering && i < 14,
+                  child: BookGridTile(
+                    key: ValueKey<String>(b.id),
+                    book: b,
+                    lent: lentIds.contains(b.id),
+                    query: text,
+                    onTap: () => open(b),
+                    onLongPress: () => actions(b),
+                  ),
                 );
               },
             );
