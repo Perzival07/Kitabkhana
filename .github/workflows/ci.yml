@@ -80,8 +80,10 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: dart run build_runner build --delete-conflicting-outputs
-      - name: Build iOS (no codesign)
-        run: flutter build ios --no-codesign --flavor dev -t lib/main_dev.dart
+      # The dev/prod schemes are a manual Xcode step (docs/IOS_FLAVORS.md), so
+      # until they exist this builds the production entry point without a flavor.
+      - name: Build iOS release (no codesign)
+        run: flutter build ios --release --no-codesign -t lib/main_prod.dart
 
   # The same six journeys as test/e2e, on a real Android emulator and in a
   # They use fake camera, text reading, notifications, Open
@@ -124,3 +126,62 @@ jobs:
           profile: pixel_6
           disable-animations: true
           script: flutter test integration_test --flavor dev -d emulator-5554
+
+  # The shrunk (R8) production build: the one that ships, which debug builds and
+  # the journeys above do not exercise. Builds it, checks the permissions it
+  # asks for, then installs and launches it on an emulator.
+  android-release:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.47.9"
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+
+      # No key.properties here, so this is signed with the debug key: enough to
+      # test shrinking and start-up, not uploadable.
+      - name: Build release APK (prod, R8)
+        run: flutter build apk --release --flavor prod -t lib/main_prod.dart
+
+      - name: Size and permissions
+        run: |
+          apk=build/app/outputs/flutter-apk/app-prod-release.apk
+          ls -l "$apk"
+          test -f build/app/outputs/mapping/prodRelease/mapping.txt || { echo "no R8 mapping file: shrinking is off"; exit 1; }
+          "$ANDROID_HOME"/cmdline-tools/latest/bin/apkanalyzer manifest permissions "$apk" | tee permissions.txt
+          if grep -E "EXTERNAL_STORAGE|LOCATION|RECORD_AUDIO|CONTACTS|SCHEDULE_EXACT_ALARM|READ_PHONE|SMS" permissions.txt; then
+            echo "unexpected permission in the release manifest"; exit 1
+          fi
+
+      - name: Launch on an emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          script: tool/android_release_smoke.sh build/app/outputs/flutter-apk/app-prod-release.apk
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-release-smoke
+          path: |
+            permissions.txt
+            release-smoke-logcat.txt
+            release-smoke.png
+            build/app/outputs/mapping/prodRelease/mapping.txt
+          if-no-files-found: ignore

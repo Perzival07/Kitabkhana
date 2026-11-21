@@ -22,3 +22,13 @@
 
 # sqlite3 (Drift) loads its native library through JNI.
 -keep class org.sqlite.** { *; }
+
+# flutter_local_notifications keeps scheduled reminders as JSON through Gson
+# and reads them back by reflection (also after a reboot). The plugin ships no
+# rules of its own, and R8 renaming its classes or stripping generic type
+# information breaks scheduling in release builds ("Missing type parameter").
+-keep class com.dexterous.** { *; }
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken
