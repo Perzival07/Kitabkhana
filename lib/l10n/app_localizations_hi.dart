@@ -1135,12 +1135,6 @@ class AppLocalizationsHi extends AppLocalizations {
       'This backup was made by a newer version. Update the app first.';
 
   @override
-  String get moreBackup => 'Back up library';
-
-  @override
-  String get moreRestore => 'Restore from backup';
-
-  @override
   String get backupExportTitle => 'Back up your library';
 
   @override
@@ -1250,12 +1244,6 @@ class AppLocalizationsHi extends AppLocalizations {
   String get ok => 'OK';
 
   @override
-  String get moreExportCsv => 'Export as spreadsheet (CSV)';
-
-  @override
-  String get moreEraseAll => 'Erase all data';
-
-  @override
   String get csvPreparing => 'Preparing your spreadsheets…';
 
   @override
@@ -1294,6 +1282,301 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get eraseDone => 'All data erased. Starting fresh.';
+
+  @override
+  String get readingReminderTitle => 'Time for a few pages?';
+
+  @override
+  String get readingReminderBody => 'Keep your reading streak going.';
+
+  @override
+  String get moreGroupLibrary => 'Your library';
+
+  @override
+  String get moreGroupApp => 'App';
+
+  @override
+  String get moreLoans => 'Loans';
+
+  @override
+  String get moreQuotes => 'Quotes';
+
+  @override
+  String get moreLocations => 'Locations';
+
+  @override
+  String get moreTags => 'Tags';
+
+  @override
+  String get moreSettings => 'Settings';
+
+  @override
+  String get moreAbout => 'About';
+
+  @override
+  String moreCountOut(int count) {
+    return '$count out';
+  }
+
+  @override
+  String get tagsTitle => 'Tags';
+
+  @override
+  String get tagsEmptyTitle => 'No tags yet';
+
+  @override
+  String get tagsEmptyBody =>
+      'Add tags to a book from its page and they will be listed here.';
+
+  @override
+  String tagsBooks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count books',
+      one: '1 book',
+      zero: 'No books',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tagsRename => 'Rename';
+
+  @override
+  String get tagsRenameTitle => 'Rename tag';
+
+  @override
+  String get tagsNameLabel => 'Tag name';
+
+  @override
+  String get tagsNameTaken => 'You already have a tag with that name.';
+
+  @override
+  String get tagsDelete => 'Delete';
+
+  @override
+  String get tagsDeleteTitle => 'Delete this tag?';
+
+  @override
+  String get tagsDeleteBody =>
+      'It is removed from every book. The books themselves stay.';
+
+  @override
+  String get tagsDeleted => 'Tag deleted';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsAppearance => 'Appearance';
+
+  @override
+  String get settingsTheme => 'Theme';
+
+  @override
+  String get settingsThemeSystem => 'System';
+
+  @override
+  String get settingsThemeLight => 'Light';
+
+  @override
+  String get settingsThemeDark => 'Dark';
+
+  @override
+  String get settingsDefaultView => 'Default library view';
+
+  @override
+  String get settingsViewGrid => 'Grid';
+
+  @override
+  String get settingsViewList => 'List';
+
+  @override
+  String get settingsDensity => 'Grid density';
+
+  @override
+  String get settingsDensityComfortable => 'Comfortable';
+
+  @override
+  String get settingsDensityCompact => 'Compact';
+
+  @override
+  String get settingsReading => 'Reading';
+
+  @override
+  String get settingsGoal => 'Yearly goal';
+
+  @override
+  String settingsGoalValue(int count, int year) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count books in $year',
+      one: '1 book in $year',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String settingsGoalNone(int year) {
+    return 'Not set for $year';
+  }
+
+  @override
+  String get settingsReadingReminder => 'Daily reading reminder';
+
+  @override
+  String get settingsReadingReminderBody =>
+      'A gentle nudge at the time you choose. Skipped once you have read that day.';
+
+  @override
+  String get settingsReminderTime => 'Reminder time';
+
+  @override
+  String get settingsLending => 'Lending';
+
+  @override
+  String get settingsLoanLength => 'Default loan length';
+
+  @override
+  String get settingsLoanLengthNone => 'No due date';
+
+  @override
+  String settingsLoanLengthDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get settingsLoanLengthSheet => 'How long do you usually lend a book?';
+
+  @override
+  String get settingsLoanLengthHelp => '0 means no due date.';
+
+  @override
+  String get settingsCountryCode => 'Default country code';
+
+  @override
+  String settingsCountryCodeValue(String code) {
+    return '+$code';
+  }
+
+  @override
+  String get settingsCountryCodeSheet => 'Country code for phone numbers';
+
+  @override
+  String get settingsCountryCodeHelp =>
+      'Used when a number is typed without one. Digits only, for example 91.';
+
+  @override
+  String get settingsLoanReminderTime => 'Loan reminder time';
+
+  @override
+  String get settingsData => 'Your data';
+
+  @override
+  String get settingsBackupNow => 'Back up now';
+
+  @override
+  String settingsBackupLast(String when) {
+    return 'Last backup: $when';
+  }
+
+  @override
+  String get settingsBackupNever => 'Not backed up yet';
+
+  @override
+  String get settingsBackupToday => 'today';
+
+  @override
+  String get settingsBackupYesterday => 'yesterday';
+
+  @override
+  String settingsBackupDaysAgo(int count) {
+    return '$count days ago';
+  }
+
+  @override
+  String get settingsBackupSaved => 'Backup saved on this device.';
+
+  @override
+  String get settingsAutoBackup => 'Automatic weekly backup';
+
+  @override
+  String get settingsAutoBackupBody =>
+      'Keeps the last 3 copies in this app\'s storage.';
+
+  @override
+  String get settingsShareBackup => 'Share a backup';
+
+  @override
+  String get settingsRestore => 'Restore from backup';
+
+  @override
+  String get settingsExportCsv => 'Export as spreadsheet (CSV)';
+
+  @override
+  String get settingsErase => 'Erase all data';
+
+  @override
+  String get settingsPrivacy => 'Privacy';
+
+  @override
+  String get settingsPrivacyBody =>
+      'Your library never leaves this device unless you share a backup or an export yourself. There are no accounts and no tracking. Book details are looked up by ISBN or title on Open Library, and covers are downloaded from it; nothing else is sent.';
+
+  @override
+  String get settingsCrashReports => 'Send crash reports';
+
+  @override
+  String get settingsCrashReportsBody =>
+      'Off unless you turn it on. Reporting is not connected in this version, so nothing is sent either way.';
+
+  @override
+  String get settingsHelp => 'Help';
+
+  @override
+  String get settingsDiagnostics => 'Export diagnostics';
+
+  @override
+  String get settingsDiagnosticsBody =>
+      'Versions and recent app messages, with none of your library.';
+
+  @override
+  String get settingsFeedback => 'Send feedback';
+
+  @override
+  String get settingsFeedbackSubject => 'Kitabkhana feedback';
+
+  @override
+  String get settingsAbout => 'About';
+
+  @override
+  String get aboutTitle => 'About';
+
+  @override
+  String aboutVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get aboutLicenses => 'Open-source licenses';
+
+  @override
+  String get aboutPrivacyPolicy => 'Privacy policy';
+
+  @override
+  String get aboutTagline =>
+      'A private home for the books you own, lend and love.';
+
+  @override
+  String get aboutMadeWithCare => 'Made with care';
 
   @override
   String paceDaysLeft(int count) {

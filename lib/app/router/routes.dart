@@ -15,6 +15,8 @@ abstract final class Routes {
   static const quotes = '/quotes';
   static const locations = '/locations';
   static const settings = '/settings';
+  static const tags = '/tags';
+  static const about = '/about';
   static const onboarding = '/onboarding';
   static const devGallery = '/dev/gallery';
   static const devLookup = '/dev/lookup';

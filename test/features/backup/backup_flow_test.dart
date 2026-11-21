@@ -76,8 +76,19 @@ void main() {
       size: const Size(420, 900),
       overrides: overrides(),
     );
-    routerOf(c).go('/more');
+    routerOf(c).go('/settings');
     await t.pumpAndSettle();
+  }
+
+  /// Scrolls the settings list to [text] and taps it.
+  Future<void> tapTile(WidgetTester t, String text) async {
+    await t.scrollUntilVisible(
+      find.text(text),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await t.pumpAndSettle();
+    await t.tap(find.text(text));
   }
 
   Future<void> end(WidgetTester t) async {
@@ -114,7 +125,7 @@ void main() {
       ),
     );
     await open(t);
-    await t.tap(find.text('Back up library'));
+    await tapTile(t, 'Share a backup');
     await t.pumpAndSettle();
     expect(find.textContaining('phone numbers'), findsOneWidget);
     await t.tap(find.text('Create backup'));
@@ -131,7 +142,7 @@ void main() {
   testWidgets('cancelling the warning shares nothing', (t) async {
     h = AddFlowHarness();
     await open(t);
-    await t.tap(find.text('Back up library'));
+    await tapTile(t, 'Share a backup');
     await t.pumpAndSettle();
     await t.tap(find.text('Cancel'));
     await t.pumpAndSettle();
@@ -150,7 +161,7 @@ void main() {
     );
     picker.next = (await t.runAsync(makeBackup))!;
     await open(t);
-    await t.tap(find.text('Restore from backup'));
+    await tapTile(t, 'Restore from backup');
     await t.pumpAndSettle();
 
     expect(find.textContaining('1 book, 0 loans, 0 quotes'), findsOneWidget);
@@ -174,7 +185,7 @@ void main() {
     );
     picker.next = (await t.runAsync(makeBackup))!;
     await open(t);
-    await t.tap(find.text('Restore from backup'));
+    await tapTile(t, 'Restore from backup');
     await t.pumpAndSettle();
     await t.tap(find.text('Replace my library'));
     await t.pumpAndSettle();
@@ -185,7 +196,7 @@ void main() {
     await t.pumpAndSettle();
     expect(await t.runAsync(titles), ['Mine']);
 
-    await t.tap(find.text('Restore from backup'));
+    await tapTile(t, 'Restore from backup');
     await t.pumpAndSettle();
     await t.tap(find.text('Replace my library'));
     await t.pumpAndSettle();
@@ -201,7 +212,7 @@ void main() {
   testWidgets('cancelling the file picker does nothing', (t) async {
     h = AddFlowHarness();
     await open(t);
-    await t.tap(find.text('Restore from backup'));
+    await tapTile(t, 'Restore from backup');
     await t.pumpAndSettle();
     expect(picker.asked, 1);
     expect(find.text('Restore from a backup'), findsNothing);
@@ -217,7 +228,7 @@ void main() {
     );
     picker.next = Uint8List.fromList(utf8.encode('just some text'));
     await open(t);
-    await t.tap(find.text('Restore from backup'));
+    await tapTile(t, 'Restore from backup');
     await t.pumpAndSettle();
     expect(find.text("This isn't a Kitabkhana backup."), findsOneWidget);
     expect(await t.runAsync(titles), ['Mine']);
@@ -241,7 +252,7 @@ void main() {
     }
     picker.next = ZipEncoder().encodeBytes(out);
     await open(t);
-    await t.tap(find.text('Restore from backup'));
+    await tapTile(t, 'Restore from backup');
     await t.pumpAndSettle();
     expect(
       find.text(
@@ -266,7 +277,7 @@ void main() {
     }
     picker.next = ZipEncoder().encodeBytes(out);
     await open(t);
-    await t.tap(find.text('Restore from backup'));
+    await tapTile(t, 'Restore from backup');
     await t.pumpAndSettle();
     expect(
       find.text('This backup looks damaged, so nothing was changed.'),
@@ -281,7 +292,7 @@ void main() {
   ) async {
     h = AddFlowHarness();
     await open(t);
-    await t.tap(find.text('Back up library'));
+    await tapTile(t, 'Share a backup');
     await t.pumpAndSettle();
     await t.tap(find.text('Create backup'));
     await t.pumpAndSettle();
@@ -298,7 +309,7 @@ void main() {
       ),
     );
     await open(t);
-    await t.tap(find.text('Export as spreadsheet (CSV)'));
+    await tapTile(t, 'Export as spreadsheet (CSV)');
     await t.pumpAndSettle();
     expect(find.textContaining('phone numbers'), findsOneWidget);
     await t.tap(find.text('Export'));
@@ -319,9 +330,7 @@ void main() {
       ),
     );
     await open(t);
-    await t.drag(find.byType(ListView).first, const Offset(0, -400));
-    await t.pumpAndSettle();
-    await t.tap(find.text('Erase all data'));
+    await tapTile(t, 'Erase all data');
     await t.pumpAndSettle();
     expect(find.text('Erase all data?'), findsOneWidget);
 
@@ -330,7 +339,7 @@ void main() {
     await t.pumpAndSettle();
     expect(await t.runAsync(titles), ['Emma']);
 
-    await t.tap(find.text('Erase all data'));
+    await tapTile(t, 'Erase all data');
     await t.pumpAndSettle();
     await t.tap(find.text('Continue'));
     await t.pumpAndSettle();
@@ -364,9 +373,7 @@ void main() {
       ),
     );
     await open(t);
-    await t.drag(find.byType(ListView).first, const Offset(0, -400));
-    await t.pumpAndSettle();
-    await t.tap(find.text('Erase all data'));
+    await tapTile(t, 'Erase all data');
     await t.pumpAndSettle();
     await t.tap(find.text('Continue'));
     await t.pumpAndSettle();

@@ -56,6 +56,8 @@ Future<void> bootstrap(AppConfig config) async {
     logger.warn('Reminder reconcile failed: $e');
   }
 
+  unawaited(container.read(readingReminderServiceProvider).reconcile());
+
   // Weekly automatic backup (phones only; does nothing on the web, when it is
   // switched off, or when the last one is recent). Never blocks start-up.
   unawaited(container.read(autoBackupProvider).runIfDue());

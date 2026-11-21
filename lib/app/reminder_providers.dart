@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../features/reminders/application/loan_nudge.dart';
 import '../features/reminders/application/loan_reminder_service.dart';
+import '../features/reminders/application/reading_reminder_service.dart';
 import '../features/reminders/domain/notification_scheduler.dart';
 import '../l10n/app_localizations.dart';
 import '../l10n/app_localizations_en.dart';
@@ -12,6 +13,7 @@ import '../platform/notifications/mobile_notification_scheduler.dart';
 import '../platform/notifications/url_nudge_launcher.dart';
 import 'providers.dart';
 import 'repositories.dart';
+import 'settings_providers.dart';
 
 part 'reminder_providers.g.dart';
 
@@ -53,7 +55,22 @@ LoanReminderService loanReminderService(Ref ref) => LoanReminderService(
   books: ref.watch(bookRepositoryProvider),
   clock: ref.watch(clockProvider),
   l10n: _currentL10n,
+  reminderTime: () async {
+    final t =
+        (await ref.read(settingsRepositoryProvider).load()).loanReminderTime;
+    return (hour: t.hour, minute: t.minute);
+  },
 );
+
+@Riverpod(keepAlive: true)
+ReadingReminderService readingReminderService(Ref ref) =>
+    ReadingReminderService(
+      scheduler: ref.watch(notificationSchedulerProvider),
+      readings: ref.watch(readingRepositoryProvider),
+      clock: ref.watch(clockProvider),
+      settings: () => ref.read(settingsRepositoryProvider).load(),
+      l10n: _currentL10n,
+    );
 
 @Riverpod(keepAlive: true)
 LoanNudge loanNudge(Ref ref) => LoanNudge(const UrlNudgeLauncher());

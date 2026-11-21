@@ -165,7 +165,55 @@ final class LoanReminderServiceProvider
 }
 
 String _$loanReminderServiceHash() =>
-    r'df0994ebc94af02ca5a8de8c4a5ba9ad5a5c570b';
+    r'8e9258b24fa4c8f08762fb149f1f2f3994dd5fcf';
+
+@ProviderFor(readingReminderService)
+final readingReminderServiceProvider = ReadingReminderServiceProvider._();
+
+final class ReadingReminderServiceProvider
+    extends
+        $FunctionalProvider<
+          ReadingReminderService,
+          ReadingReminderService,
+          ReadingReminderService
+        >
+    with $Provider<ReadingReminderService> {
+  ReadingReminderServiceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'readingReminderServiceProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$readingReminderServiceHash();
+
+  @$internal
+  @override
+  $ProviderElement<ReadingReminderService> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ReadingReminderService create(Ref ref) {
+    return readingReminderService(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ReadingReminderService value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ReadingReminderService>(value),
+    );
+  }
+}
+
+String _$readingReminderServiceHash() =>
+    r'c4b302dc98aa75c4740feda146be6cb515461494';
 
 @ProviderFor(loanNudge)
 final loanNudgeProvider = LoanNudgeProvider._();

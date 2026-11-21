@@ -1,8 +1,5 @@
-import 'package:drift/drift.dart' show Value;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../data/db/app_database.dart';
-import '../data/db/database_provider.dart';
 import '../features/lending/domain/loan_direction.dart';
 import '../features/library/application/demo_seeder.dart';
 import '../features/library/application/library_query.dart';
@@ -12,6 +9,7 @@ import '../features/library/domain/book_filter.dart';
 import '../features/tags/domain/tag.dart';
 import 'providers.dart';
 import 'repositories.dart';
+import 'settings_providers.dart';
 
 part 'library_providers.g.dart';
 
@@ -138,8 +136,6 @@ class SelectedBookId extends _$SelectedBookId {
   void select(String? id) => state = id;
 }
 
-const String _viewKey = 'library.view';
-
 /// Grid or list, remembered on this device.
 @Riverpod(keepAlive: true)
 class LibraryViewController extends _$LibraryViewController {
@@ -151,15 +147,8 @@ class LibraryViewController extends _$LibraryViewController {
 
   Future<void> _load() async {
     try {
-      final db = ref.read(appDatabaseProvider);
-      final row = await (db.select(
-        db.appMeta,
-      )..where((t) => t.key.equals(_viewKey))).getSingleOrNull();
-      if (row != null && ref.mounted) {
-        state = row.value == LibraryView.list.name
-            ? LibraryView.list
-            : LibraryView.grid;
-      }
+      final s = await ref.read(settingsRepositoryProvider).load();
+      if (ref.mounted) state = s.libraryView;
     } on Object catch (e) {
       ref.read(appLoggerProvider).warn('Reading library view failed: $e');
     }
@@ -167,19 +156,7 @@ class LibraryViewController extends _$LibraryViewController {
 
   Future<void> set(LibraryView view) async {
     state = view;
-    try {
-      final db = ref.read(appDatabaseProvider);
-      await db
-          .into(db.appMeta)
-          .insertOnConflictUpdate(
-            AppMetaCompanion(
-              key: const Value(_viewKey),
-              value: Value(view.name),
-            ),
-          );
-    } on Object catch (e) {
-      ref.read(appLoggerProvider).warn('Saving library view failed: $e');
-    }
+    await ref.read(settingsRepositoryProvider).setLibraryView(view);
   }
 }
 

@@ -28,11 +28,17 @@ final class LibraryQuery {
 }
 
 /// Grid column count for a given list width: 2 below 400dp, 3 for 400–600,
-/// then one more column per 200dp up to 6.
-int libraryColumns(double width) {
-  if (width < 400) return 2;
-  if (width < 600) return 3;
-  if (width < 800) return 4;
-  if (width < 1000) return 5;
-  return 6;
+/// then one more column per 200dp up to 6. [compact] adds one more column
+/// (up to 7) for bigger libraries.
+int libraryColumns(double width, {bool compact = false}) {
+  final base = width < 400
+      ? 2
+      : width < 600
+      ? 3
+      : width < 800
+      ? 4
+      : width < 1000
+      ? 5
+      : 6;
+  return compact ? base + 1 : base;
 }

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../app/l10n/failure_message.dart';
 import '../../../app/lending_providers.dart';
 import '../../../app/providers.dart';
+import '../../../app/settings_providers.dart';
 import '../../../app/theme/tokens.dart';
 import '../../../core/result.dart';
 import '../../../core/text/phone.dart';
@@ -42,12 +43,26 @@ class _LendBodyState extends ConsumerState<_LendBody> {
   final TextEditingController _note = TextEditingController();
   late LoanDirection _direction = widget.initial;
   late DateTime _start = ref.read(clockProvider).today();
-  _Due _due = _Due.none;
-  DateTime? _customDue;
+  late _Due _due = _defaultDue();
+  late DateTime? _customDue = _defaultCustom();
   String? _nameError;
   String? _phoneError;
   String? _error;
   bool _saving = false;
+
+  /// The reader's default loan length, as one of the due-date choices.
+  int get _defaultDays => ref.read(appSettingsProvider).defaultLoanDays;
+
+  _Due _defaultDue() => switch (_defaultDays) {
+    0 => _Due.none,
+    7 => _Due.week,
+    14 => _Due.twoWeeks,
+    _ => _Due.custom,
+  };
+
+  DateTime? _defaultCustom() => _defaultDue() == _Due.custom
+      ? DateTime(_start.year, _start.month, _start.day + _defaultDays)
+      : null;
 
   @override
   void dispose() {

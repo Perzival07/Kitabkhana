@@ -8,15 +8,18 @@ part of 'theme_mode_provider.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Current [ThemeMode]; in memory for now, persisted by Settings later.
+/// The theme the app shows. Changes apply at once and are remembered on this
+/// device.
 
 @ProviderFor(ThemeModeController)
 final themeModeControllerProvider = ThemeModeControllerProvider._();
 
-/// Current [ThemeMode]; in memory for now, persisted by Settings later.
+/// The theme the app shows. Changes apply at once and are remembered on this
+/// device.
 final class ThemeModeControllerProvider
     extends $NotifierProvider<ThemeModeController, ThemeMode> {
-  /// Current [ThemeMode]; in memory for now, persisted by Settings later.
+  /// The theme the app shows. Changes apply at once and are remembered on this
+  /// device.
   ThemeModeControllerProvider._()
     : super(
         from: null,
@@ -45,9 +48,10 @@ final class ThemeModeControllerProvider
 }
 
 String _$themeModeControllerHash() =>
-    r'1c562e1ec6656e84c825eb862b0a232bb607d7ad';
+    r'df4c91512c1fb8ec4744dd76a234890c956a4759';
 
-/// Current [ThemeMode]; in memory for now, persisted by Settings later.
+/// The theme the app shows. Changes apply at once and are remembered on this
+/// device.
 
 abstract class _$ThemeModeController extends $Notifier<ThemeMode> {
   ThemeMode build();

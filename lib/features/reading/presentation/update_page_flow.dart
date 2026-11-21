@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/l10n/failure_message.dart';
 import '../../../app/reading_providers.dart';
+import '../../../app/reminder_providers.dart';
 import '../../../core/result.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../ui/ui.dart';
@@ -28,6 +31,8 @@ Future<void> updateBookPage(
   );
   if (page == null) return;
   final r = await ref.read(updateProgressProvider).call(book.id, page);
+  // Having read today, today's reading nudge is not needed.
+  if (r.isOk) unawaited(ref.read(readingReminderServiceProvider).reconcile());
   switch (r) {
     case Err<ProgressUpdate>(:final failure):
       KToast.showWith(

@@ -48,7 +48,7 @@ Tick a task only when it is green (see Definition of Green).
 ## Phase 09 — Data & settings
 - [x] P09.1
 - [x] P09.2
-- [ ] P09.3
+- [x] P09.3
 
 ## Phase 10 — Polish & QA
 - [ ] P10.1
@@ -161,3 +161,9 @@ Tick a task only when it is green (see Definition of Green).
 - (P09.2) Automatic backups (phones only): on app start, if automatic backups are on (default), the library isn't empty and the last backup is 7+ days old or missing, a `.kitab` is written to `<documents>/backups/auto-YYYYMMDD-HHMMSS.kitab` and only the newest 3 `auto-` files are kept (safety copies from restores and other files are never pruned). "Last backup" is stored in `app_meta` (`backup.last_at`) and is also updated when you share a backup by hand. There is no Settings screen yet, so the toggle and the "Last backup: 4 days ago / Back up now" row arrive with P09.3 (the service and preferences are ready: `AutoBackup`, `BackupPrefs`).
 - (P09.2) Erase all data (More, in red): a confirmation, then a second dialog that needs the word DELETE typed exactly (capitals). It clears every table (settings included), cover images, every file in the backups folder and all pending notifications, resets cached settings, and goes to `/onboarding`, which is still a placeholder screen until its phase.
 - (P09.2) Not verified on a device: that the automatic backup runs at launch on a real phone, the CSV files in real Excel/Numbers, and that deleting the backups folder works on iOS and Android file systems. The web has no folder, so there are no automatic backups there.
+- (P09.3) More is now grouped: Your library (Loans with "N out", Quotes, Locations, Tags, each with a live count) and App (Settings, About). The backup, restore, CSV and erase actions moved from More into Settings > Your data. New screens: `/settings`, `/tags` (counts, rename, delete, tap to filter the library) and `/about` (version, licences, privacy-policy link only when `--dart-define=PRIVACY_URL=…` is given, "Made with care" sign-off).
+- (P09.3) Settings are typed (`AppSettings`, `SettingsRepository`) and stored as text in `app_meta`; earlier keys (`library.view`, `phone.default_cc`, `backup.auto`) are unchanged. Theme now persists (it was memory-only). Unreadable stored values fall back to defaults. Sections: Appearance (theme, default view, grid density = one more column), Reading (yearly goal via the goal sheet, optional daily reading reminder + time), Lending (default loan length, 0 = no due date, which the Lend sheet now starts from; default country code; loan reminder time), Your data, Privacy, Help, About.
+- (P09.3) Loan reminders now fire at the chosen time (default 10:00) and are rebuilt when it changes. The daily reading reminder schedules the next 14 days at the chosen time (ids from 1,500,000,000; loan reminder ids were narrowed to 29 bits so they stay below it), rebuilt at start-up, when settings change and after you log reading (today's nudge is dropped once you've read). Notification permission is asked for when you switch it on.
+- (P09.3) Crash reports: a switch that is off by default and is only stored; no reporting provider is connected, so nothing is sent either way, and the screen says so. Diagnostics export = versions + the in-memory log lines (already masked for phone numbers and e-mail), never library contents. "Send feedback" opens a mail draft; the recipient comes from `--dart-define=FEEDBACK_EMAIL=…` and is empty by default.
+- (P09.3) Removed my duplicate `app_version.dart`; backups use `kAppVersion` from `app_config.dart` (already tied to pubspec by an existing test).
+- (P09.3) Not verified on a device: the time pickers and the daily reading reminder firing, the mail app opening, and the share sheets. Settings are English only so far.

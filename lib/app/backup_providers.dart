@@ -17,7 +17,7 @@ import '../features/backup/data/csv_store.dart';
 import '../platform/backup/backup_file_picker.dart';
 import '../platform/backup/directory_backup_folder.dart';
 import '../platform/backup/file_safety_backup.dart';
-import 'app_version.dart';
+import 'app_config.dart' show kAppVersion;
 import 'cover_providers.dart';
 import 'providers.dart';
 import 'reminder_providers.dart';
@@ -33,7 +33,7 @@ ExportBackup exportBackup(Ref ref) => ExportBackup(
   store: ref.watch(backupStoreProvider),
   covers: ref.watch(coverStoreProvider),
   clock: ref.watch(clockProvider),
-  appVersion: appVersion,
+  appVersion: kAppVersion,
   encode: (input) => compute(encodeBackupArchive, input),
 );
 

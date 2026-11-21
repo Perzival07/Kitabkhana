@@ -1990,18 +1990,6 @@ abstract class AppLocalizations {
   /// **'This backup was made by a newer version. Update the app first.'**
   String get failureBackupNewer;
 
-  /// No description provided for @moreBackup.
-  ///
-  /// In en, this message translates to:
-  /// **'Back up library'**
-  String get moreBackup;
-
-  /// No description provided for @moreRestore.
-  ///
-  /// In en, this message translates to:
-  /// **'Restore from backup'**
-  String get moreRestore;
-
   /// No description provided for @backupExportTitle.
   ///
   /// In en, this message translates to:
@@ -2116,18 +2104,6 @@ abstract class AppLocalizations {
   /// **'OK'**
   String get ok;
 
-  /// No description provided for @moreExportCsv.
-  ///
-  /// In en, this message translates to:
-  /// **'Export as spreadsheet (CSV)'**
-  String get moreExportCsv;
-
-  /// No description provided for @moreEraseAll.
-  ///
-  /// In en, this message translates to:
-  /// **'Erase all data'**
-  String get moreEraseAll;
-
   /// No description provided for @csvPreparing.
   ///
   /// In en, this message translates to:
@@ -2199,6 +2175,504 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All data erased. Starting fresh.'**
   String get eraseDone;
+
+  /// No description provided for @readingReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time for a few pages?'**
+  String get readingReminderTitle;
+
+  /// No description provided for @readingReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your reading streak going.'**
+  String get readingReminderBody;
+
+  /// No description provided for @moreGroupLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Your library'**
+  String get moreGroupLibrary;
+
+  /// No description provided for @moreGroupApp.
+  ///
+  /// In en, this message translates to:
+  /// **'App'**
+  String get moreGroupApp;
+
+  /// No description provided for @moreLoans.
+  ///
+  /// In en, this message translates to:
+  /// **'Loans'**
+  String get moreLoans;
+
+  /// No description provided for @moreQuotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Quotes'**
+  String get moreQuotes;
+
+  /// No description provided for @moreLocations.
+  ///
+  /// In en, this message translates to:
+  /// **'Locations'**
+  String get moreLocations;
+
+  /// No description provided for @moreTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get moreTags;
+
+  /// No description provided for @moreSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get moreSettings;
+
+  /// No description provided for @moreAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get moreAbout;
+
+  /// No description provided for @moreCountOut.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} out'**
+  String moreCountOut(int count);
+
+  /// No description provided for @tagsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get tagsTitle;
+
+  /// No description provided for @tagsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No tags yet'**
+  String get tagsEmptyTitle;
+
+  /// No description provided for @tagsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add tags to a book from its page and they will be listed here.'**
+  String get tagsEmptyBody;
+
+  /// No description provided for @tagsBooks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No books} =1{1 book} other{{count} books}}'**
+  String tagsBooks(int count);
+
+  /// No description provided for @tagsRename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get tagsRename;
+
+  /// No description provided for @tagsRenameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename tag'**
+  String get tagsRenameTitle;
+
+  /// No description provided for @tagsNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag name'**
+  String get tagsNameLabel;
+
+  /// No description provided for @tagsNameTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'You already have a tag with that name.'**
+  String get tagsNameTaken;
+
+  /// No description provided for @tagsDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get tagsDelete;
+
+  /// No description provided for @tagsDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this tag?'**
+  String get tagsDeleteTitle;
+
+  /// No description provided for @tagsDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It is removed from every book. The books themselves stay.'**
+  String get tagsDeleteBody;
+
+  /// No description provided for @tagsDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag deleted'**
+  String get tagsDeleted;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get settingsAppearance;
+
+  /// No description provided for @settingsTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get settingsTheme;
+
+  /// No description provided for @settingsThemeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get settingsThemeSystem;
+
+  /// No description provided for @settingsThemeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get settingsThemeLight;
+
+  /// No description provided for @settingsThemeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get settingsThemeDark;
+
+  /// No description provided for @settingsDefaultView.
+  ///
+  /// In en, this message translates to:
+  /// **'Default library view'**
+  String get settingsDefaultView;
+
+  /// No description provided for @settingsViewGrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Grid'**
+  String get settingsViewGrid;
+
+  /// No description provided for @settingsViewList.
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get settingsViewList;
+
+  /// No description provided for @settingsDensity.
+  ///
+  /// In en, this message translates to:
+  /// **'Grid density'**
+  String get settingsDensity;
+
+  /// No description provided for @settingsDensityComfortable.
+  ///
+  /// In en, this message translates to:
+  /// **'Comfortable'**
+  String get settingsDensityComfortable;
+
+  /// No description provided for @settingsDensityCompact.
+  ///
+  /// In en, this message translates to:
+  /// **'Compact'**
+  String get settingsDensityCompact;
+
+  /// No description provided for @settingsReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading'**
+  String get settingsReading;
+
+  /// No description provided for @settingsGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly goal'**
+  String get settingsGoal;
+
+  /// No description provided for @settingsGoalValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 book in {year}} other{{count} books in {year}}}'**
+  String settingsGoalValue(int count, int year);
+
+  /// No description provided for @settingsGoalNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set for {year}'**
+  String settingsGoalNone(int year);
+
+  /// No description provided for @settingsReadingReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reading reminder'**
+  String get settingsReadingReminder;
+
+  /// No description provided for @settingsReadingReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A gentle nudge at the time you choose. Skipped once you have read that day.'**
+  String get settingsReadingReminderBody;
+
+  /// No description provided for @settingsReminderTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder time'**
+  String get settingsReminderTime;
+
+  /// No description provided for @settingsLending.
+  ///
+  /// In en, this message translates to:
+  /// **'Lending'**
+  String get settingsLending;
+
+  /// No description provided for @settingsLoanLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Default loan length'**
+  String get settingsLoanLength;
+
+  /// No description provided for @settingsLoanLengthNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get settingsLoanLengthNone;
+
+  /// No description provided for @settingsLoanLengthDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day} other{{count} days}}'**
+  String settingsLoanLengthDays(int count);
+
+  /// No description provided for @settingsLoanLengthSheet.
+  ///
+  /// In en, this message translates to:
+  /// **'How long do you usually lend a book?'**
+  String get settingsLoanLengthSheet;
+
+  /// No description provided for @settingsLoanLengthHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'0 means no due date.'**
+  String get settingsLoanLengthHelp;
+
+  /// No description provided for @settingsCountryCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Default country code'**
+  String get settingsCountryCode;
+
+  /// No description provided for @settingsCountryCodeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'+{code}'**
+  String settingsCountryCodeValue(String code);
+
+  /// No description provided for @settingsCountryCodeSheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Country code for phone numbers'**
+  String get settingsCountryCodeSheet;
+
+  /// No description provided for @settingsCountryCodeHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Used when a number is typed without one. Digits only, for example 91.'**
+  String get settingsCountryCodeHelp;
+
+  /// No description provided for @settingsLoanReminderTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Loan reminder time'**
+  String get settingsLoanReminderTime;
+
+  /// No description provided for @settingsData.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data'**
+  String get settingsData;
+
+  /// No description provided for @settingsBackupNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up now'**
+  String get settingsBackupNow;
+
+  /// No description provided for @settingsBackupLast.
+  ///
+  /// In en, this message translates to:
+  /// **'Last backup: {when}'**
+  String settingsBackupLast(String when);
+
+  /// No description provided for @settingsBackupNever.
+  ///
+  /// In en, this message translates to:
+  /// **'Not backed up yet'**
+  String get settingsBackupNever;
+
+  /// No description provided for @settingsBackupToday.
+  ///
+  /// In en, this message translates to:
+  /// **'today'**
+  String get settingsBackupToday;
+
+  /// No description provided for @settingsBackupYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'yesterday'**
+  String get settingsBackupYesterday;
+
+  /// No description provided for @settingsBackupDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days ago'**
+  String settingsBackupDaysAgo(int count);
+
+  /// No description provided for @settingsBackupSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup saved on this device.'**
+  String get settingsBackupSaved;
+
+  /// No description provided for @settingsAutoBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic weekly backup'**
+  String get settingsAutoBackup;
+
+  /// No description provided for @settingsAutoBackupBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Keeps the last 3 copies in this app\'s storage.'**
+  String get settingsAutoBackupBody;
+
+  /// No description provided for @settingsShareBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Share a backup'**
+  String get settingsShareBackup;
+
+  /// No description provided for @settingsRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from backup'**
+  String get settingsRestore;
+
+  /// No description provided for @settingsExportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export as spreadsheet (CSV)'**
+  String get settingsExportCsv;
+
+  /// No description provided for @settingsErase.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase all data'**
+  String get settingsErase;
+
+  /// No description provided for @settingsPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get settingsPrivacy;
+
+  /// No description provided for @settingsPrivacyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your library never leaves this device unless you share a backup or an export yourself. There are no accounts and no tracking. Book details are looked up by ISBN or title on Open Library, and covers are downloaded from it; nothing else is sent.'**
+  String get settingsPrivacyBody;
+
+  /// No description provided for @settingsCrashReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Send crash reports'**
+  String get settingsCrashReports;
+
+  /// No description provided for @settingsCrashReportsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Off unless you turn it on. Reporting is not connected in this version, so nothing is sent either way.'**
+  String get settingsCrashReportsBody;
+
+  /// No description provided for @settingsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get settingsHelp;
+
+  /// No description provided for @settingsDiagnostics.
+  ///
+  /// In en, this message translates to:
+  /// **'Export diagnostics'**
+  String get settingsDiagnostics;
+
+  /// No description provided for @settingsDiagnosticsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Versions and recent app messages, with none of your library.'**
+  String get settingsDiagnosticsBody;
+
+  /// No description provided for @settingsFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Send feedback'**
+  String get settingsFeedback;
+
+  /// No description provided for @settingsFeedbackSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Kitabkhana feedback'**
+  String get settingsFeedbackSubject;
+
+  /// No description provided for @settingsAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get settingsAbout;
+
+  /// No description provided for @aboutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get aboutTitle;
+
+  /// No description provided for @aboutVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String aboutVersion(String version);
+
+  /// No description provided for @aboutLicenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Open-source licenses'**
+  String get aboutLicenses;
+
+  /// No description provided for @aboutPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get aboutPrivacyPolicy;
+
+  /// No description provided for @aboutTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'A private home for the books you own, lend and love.'**
+  String get aboutTagline;
+
+  /// No description provided for @aboutMadeWithCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Made with care'**
+  String get aboutMadeWithCare;
 
   /// No description provided for @paceDaysLeft.
   ///

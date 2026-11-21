@@ -27,7 +27,8 @@ class RepoHarnessForDb {
       loans = DriftLoanRepository(db, clock),
       readings = DriftReadingRepository(db, clock),
       goals = DriftGoalRepository(db, clock),
-      quotes = DriftQuoteRepository(db, clock);
+      quotes = DriftQuoteRepository(db, clock),
+      tags = DriftTagRepository(db, clock);
 
   final AppDatabase _db;
   final DriftBookRepository books;
@@ -36,6 +37,7 @@ class RepoHarnessForDb {
   final DriftReadingRepository readings;
   final DriftGoalRepository goals;
   final DriftQuoteRepository quotes;
+  final DriftTagRepository tags;
 
   /// All live books via a one-shot query (a stream would leave a pending
   /// timer behind when cancelled inside a widget test).

@@ -6,10 +6,12 @@ import '../../../app/add_book_providers.dart';
 import '../../../app/app_config_provider.dart';
 import '../../../app/library_providers.dart';
 import '../../../app/router/routes.dart';
+import '../../../app/settings_providers.dart';
 import '../../../app/shell/adaptive_scaffold.dart';
 import '../../../app/theme/tokens.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../ui/ui.dart';
+import '../../settings/domain/app_settings.dart' show GridDensity;
 import '../application/library_query.dart';
 import '../../locations/domain/location.dart';
 import '../domain/book.dart';
@@ -230,6 +232,8 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
     }
 
     void actions(Book b) => showQuickActions(context, ref, b);
+    final compact =
+        ref.watch(appSettingsProvider).gridDensity == GridDensity.compact;
 
     if (view == LibraryView.list) {
       final count = loaded.length + (hasMore ? 3 : 0);
@@ -259,7 +263,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
         sliver: SliverLayoutBuilder(
           builder: (context, constraints) {
             final width = constraints.crossAxisExtent + KSpacing.screen * 2;
-            final cols = libraryColumns(width);
+            final cols = libraryColumns(width, compact: compact);
             const gap = KSpacing.md;
             final cell =
                 (constraints.crossAxisExtent - gap * (cols - 1)) / cols;
@@ -291,6 +295,8 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
   }
 
   Widget _skeletons(LibraryView view) {
+    final compact =
+        ref.watch(appSettingsProvider).gridDensity == GridDensity.compact;
     if (view == LibraryView.list) {
       return SliverList.builder(
         itemCount: 6,
@@ -303,6 +309,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
         builder: (context, constraints) {
           final cols = libraryColumns(
             constraints.crossAxisExtent + KSpacing.screen * 2,
+            compact: compact,
           );
           const gap = KSpacing.md;
           final cell = (constraints.crossAxisExtent - gap * (cols - 1)) / cols;

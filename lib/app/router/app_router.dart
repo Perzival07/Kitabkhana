@@ -15,6 +15,9 @@ import '../../features/lending/presentation/loans_screen.dart';
 import '../../features/locations/presentation/locations_screen.dart';
 import '../../features/more/presentation/more_screen.dart';
 import '../../features/quotes/presentation/quote_capture_screen.dart';
+import '../../features/settings/presentation/about_screen.dart';
+import '../../features/settings/presentation/settings_screen.dart';
+import '../../features/tags/presentation/tags_screen.dart';
 import '../../features/quotes/presentation/quotes_screen.dart';
 import '../../features/reading/presentation/reading_screen.dart';
 import '../../features/scan_check/presentation/scan_screen.dart';
@@ -156,10 +159,9 @@ GoRouter buildRouter(AppConfig config, {String initial = Routes.library}) {
         path: Routes.locations,
         builder: (_, _) => const LocationsScreen(),
       ),
-      GoRoute(
-        path: Routes.settings,
-        builder: (_, _) => stub((l) => l.routeSettings, KIllustration.openBook),
-      ),
+      GoRoute(path: Routes.settings, builder: (_, _) => const SettingsScreen()),
+      GoRoute(path: Routes.tags, builder: (_, _) => const TagsScreen()),
+      GoRoute(path: Routes.about, builder: (_, _) => const AboutScreen()),
       GoRoute(
         path: Routes.onboarding,
         builder: (_, _) =>

@@ -633,8 +633,6 @@
   "failureBackupNotABackup": "This isn't a Kitabkhana backup.",
   "failureBackupDamaged": "This backup looks damaged, so nothing was changed.",
   "failureBackupNewer": "This backup was made by a newer version. Update the app first.",
-  "moreBackup": "Back up library",
-  "moreRestore": "Restore from backup",
   "backupExportTitle": "Back up your library",
   "backupExportWarning": "The backup file holds everything in your library, including the names and phone numbers of people you have lent books to. Keep it somewhere private.",
   "backupExportAction": "Create backup",
@@ -690,8 +688,6 @@
     }
   },
   "ok": "OK",
-  "moreExportCsv": "Export as spreadsheet (CSV)",
-  "moreEraseAll": "Erase all data",
   "csvPreparing": "Preparing your spreadsheets…",
   "csvExportTitle": "Export as spreadsheet",
   "csvExportWarning": "books.csv and loans.csv open in Excel, Numbers or Google Sheets. Loans include the names and phone numbers of the people you lent to or borrowed from.",
@@ -711,6 +707,155 @@
   "eraseAction": "Erase everything",
   "eraseWorking": "Erasing…",
   "eraseDone": "All data erased. Starting fresh.",
+  "readingReminderTitle": "Time for a few pages?",
+  "readingReminderBody": "Keep your reading streak going.",
+  "moreGroupLibrary": "Your library",
+  "moreGroupApp": "App",
+  "moreLoans": "Loans",
+  "moreQuotes": "Quotes",
+  "moreLocations": "Locations",
+  "moreTags": "Tags",
+  "moreSettings": "Settings",
+  "moreAbout": "About",
+  "moreCountOut": "{count} out",
+  "@moreCountOut": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tagsTitle": "Tags",
+  "tagsEmptyTitle": "No tags yet",
+  "tagsEmptyBody": "Add tags to a book from its page and they will be listed here.",
+  "tagsBooks": "{count, plural, =0{No books} =1{1 book} other{{count} books}}",
+  "@tagsBooks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tagsRename": "Rename",
+  "tagsRenameTitle": "Rename tag",
+  "tagsNameLabel": "Tag name",
+  "tagsNameTaken": "You already have a tag with that name.",
+  "tagsDelete": "Delete",
+  "tagsDeleteTitle": "Delete this tag?",
+  "tagsDeleteBody": "It is removed from every book. The books themselves stay.",
+  "tagsDeleted": "Tag deleted",
+  "settingsTitle": "Settings",
+  "settingsAppearance": "Appearance",
+  "settingsTheme": "Theme",
+  "settingsThemeSystem": "System",
+  "settingsThemeLight": "Light",
+  "settingsThemeDark": "Dark",
+  "settingsDefaultView": "Default library view",
+  "settingsViewGrid": "Grid",
+  "settingsViewList": "List",
+  "settingsDensity": "Grid density",
+  "settingsDensityComfortable": "Comfortable",
+  "settingsDensityCompact": "Compact",
+  "settingsReading": "Reading",
+  "settingsGoal": "Yearly goal",
+  "settingsGoalValue": "{count, plural, =1{1 book in {year}} other{{count} books in {year}}}",
+  "@settingsGoalValue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsGoalNone": "Not set for {year}",
+  "@settingsGoalNone": {
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsReadingReminder": "Daily reading reminder",
+  "settingsReadingReminderBody": "A gentle nudge at the time you choose. Skipped once you have read that day.",
+  "settingsReminderTime": "Reminder time",
+  "settingsLending": "Lending",
+  "settingsLoanLength": "Default loan length",
+  "settingsLoanLengthNone": "No due date",
+  "settingsLoanLengthDays": "{count, plural, =1{1 day} other{{count} days}}",
+  "@settingsLoanLengthDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsLoanLengthSheet": "How long do you usually lend a book?",
+  "settingsLoanLengthHelp": "0 means no due date.",
+  "settingsCountryCode": "Default country code",
+  "settingsCountryCodeValue": "+{code}",
+  "@settingsCountryCodeValue": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsCountryCodeSheet": "Country code for phone numbers",
+  "settingsCountryCodeHelp": "Used when a number is typed without one. Digits only, for example 91.",
+  "settingsLoanReminderTime": "Loan reminder time",
+  "settingsData": "Your data",
+  "settingsBackupNow": "Back up now",
+  "settingsBackupLast": "Last backup: {when}",
+  "@settingsBackupLast": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsBackupNever": "Not backed up yet",
+  "settingsBackupToday": "today",
+  "settingsBackupYesterday": "yesterday",
+  "settingsBackupDaysAgo": "{count} days ago",
+  "@settingsBackupDaysAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsBackupSaved": "Backup saved on this device.",
+  "settingsAutoBackup": "Automatic weekly backup",
+  "settingsAutoBackupBody": "Keeps the last 3 copies in this app's storage.",
+  "settingsShareBackup": "Share a backup",
+  "settingsRestore": "Restore from backup",
+  "settingsExportCsv": "Export as spreadsheet (CSV)",
+  "settingsErase": "Erase all data",
+  "settingsPrivacy": "Privacy",
+  "settingsPrivacyBody": "Your library never leaves this device unless you share a backup or an export yourself. There are no accounts and no tracking. Book details are looked up by ISBN or title on Open Library, and covers are downloaded from it; nothing else is sent.",
+  "settingsCrashReports": "Send crash reports",
+  "settingsCrashReportsBody": "Off unless you turn it on. Reporting is not connected in this version, so nothing is sent either way.",
+  "settingsHelp": "Help",
+  "settingsDiagnostics": "Export diagnostics",
+  "settingsDiagnosticsBody": "Versions and recent app messages, with none of your library.",
+  "settingsFeedback": "Send feedback",
+  "settingsFeedbackSubject": "Kitabkhana feedback",
+  "settingsAbout": "About",
+  "aboutTitle": "About",
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutLicenses": "Open-source licenses",
+  "aboutPrivacyPolicy": "Privacy policy",
+  "aboutTagline": "A private home for the books you own, lend and love.",
+  "aboutMadeWithCare": "Made with care",
   "paceDaysLeft": "{count, plural, =1{About 1 day left at your pace} other{About {count} days left at your pace}}",
   "@paceDaysLeft": {
     "placeholders": {

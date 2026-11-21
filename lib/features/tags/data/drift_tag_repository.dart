@@ -38,6 +38,63 @@ class DriftTagRepository implements TagRepository {
   }
 
   @override
+  Stream<List<TagWithCount>> watchWithCounts() => _db
+      .customSelect(
+        'SELECT t.*, (SELECT COUNT(*) FROM book_tags bt '
+        'JOIN books b ON b.id = bt.book_id '
+        'WHERE bt.tag_id = t.id AND bt.deleted_at IS NULL '
+        'AND b.deleted_at IS NULL) AS n '
+        'FROM tags t WHERE t.deleted_at IS NULL '
+        'ORDER BY lower(t.name), t.id',
+        readsFrom: <TableInfo<Table, dynamic>>{
+          _db.tags,
+          _db.bookTags,
+          _db.books,
+        },
+      )
+      .watch()
+      .map(
+        (rows) => [
+          for (final r in rows)
+            TagWithCount(_toDomain(_db.tags.map(r.data)), r.read<int>('n')),
+        ],
+      );
+
+  @override
+  Future<Result<Tag>> rename(String tagId, String name) => dbGuard(
+    () => _db.transaction(() async {
+      final clean = name.trim();
+      if (clean.isEmpty) {
+        throw const FailureException(
+          ValidationFailure(field: 'name', messageKey: 'failureValidation'),
+        );
+      }
+      final all = await _db.liveTags().get();
+      final mine = all.where((t) => t.id == tagId).firstOrNull;
+      if (mine == null) throw const FailureException(NotFoundFailure('tag'));
+      final wanted = clean.toLowerCase();
+      if (all.any(
+        (t) => t.id != tagId && t.name.trim().toLowerCase() == wanted,
+      )) {
+        throw const FailureException(ConflictFailure());
+      }
+      if (mine.name == clean) return _toDomain(mine);
+      await (_db.update(_db.tags)..where((t) => t.id.equals(tagId))).write(
+        TagsCompanion(
+          name: Value(clean),
+          updatedAt: Value(_clock.now()),
+          rev: Value(mine.rev + 1),
+        ),
+      );
+      return _toDomain(
+        await (_db.select(
+          _db.tags,
+        )..where((t) => t.id.equals(tagId))).getSingle(),
+      );
+    }),
+  );
+
+  @override
   Stream<List<Tag>> watchForBook(String bookId) {
     final links = _db.bookTags;
     final query =

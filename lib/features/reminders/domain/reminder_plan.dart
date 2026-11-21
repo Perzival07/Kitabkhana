@@ -5,8 +5,9 @@ import '../../../core/stable_hash.dart';
 /// Which reminder of a loan this is.
 enum ReminderKind { due, overdue }
 
-/// Hour of the day (local time) reminders fire at.
+/// Default time of day (local) reminders fire at; changeable in Settings.
 const int kReminderHour = 10;
+const int kReminderMinute = 0;
 
 /// Days after the due date for the one overdue follow-up.
 const int kOverdueFollowUpDays = 3;
@@ -38,21 +39,38 @@ final class PlannedReminder {
   final String personName;
 }
 
-/// The notification id for [loanId] and [kind]: stable across runs, within
-/// the positive 31-bit range the platforms accept.
+/// First notification id of the daily reading reminder. Loan reminder ids
+/// stay below it (see [reminderId]), so the two never collide.
+const int kReadingReminderIdBase = 1500000000;
+
+/// How many days ahead the reading reminder is scheduled.
+const int kReadingReminderDays = 14;
+
+bool isReadingReminderId(int id) =>
+    id >= kReadingReminderIdBase &&
+    id < kReadingReminderIdBase + kReadingReminderDays;
+
+/// The notification id for [loanId] and [kind]: stable across runs, below
+/// [kReadingReminderIdBase] and within the range the platforms accept.
 int reminderId(String loanId, ReminderKind kind) =>
-    (stableHash('$loanId#${kind.name}') & 0x3fffffff) * 2 +
+    (stableHash('$loanId#${kind.name}') & 0x1fffffff) * 2 +
     (kind == ReminderKind.overdue ? 1 : 0);
 
-/// The reminders [loan] needs as of [now]: 10:00 on the due date, and once
-/// more three days later. Past times are skipped, and loans without a due
-/// date, returned loans and deleted loans have none.
-List<PlannedReminder> planFor(Loan loan, DateTime now) {
+/// The reminders [loan] needs as of [now]: at [hour]:[minute] (10:00 unless
+/// set otherwise) on the due date, and once more three days later. Past times
+/// are skipped, and loans without a due date, returned loans and deleted
+/// loans have none.
+List<PlannedReminder> planFor(
+  Loan loan,
+  DateTime now, {
+  int hour = kReminderHour,
+  int minute = kReminderMinute,
+}) {
   final due = loan.dueOn;
   if (!loan.isActive || due == null) return const <PlannedReminder>[];
   final out = <PlannedReminder>[];
   void add(ReminderKind kind, DateTime day) {
-    final at = DateTime(day.year, day.month, day.day, kReminderHour);
+    final at = DateTime(day.year, day.month, day.day, hour, minute);
     if (at.isAfter(now)) {
       out.add(
         PlannedReminder(
@@ -81,8 +99,11 @@ List<PlannedReminder> planAll(
   Iterable<Loan> loans,
   DateTime now, {
   int limit = kMaxPendingReminders,
+  int hour = kReminderHour,
+  int minute = kReminderMinute,
 }) {
-  final all = <PlannedReminder>[for (final l in loans) ...planFor(l, now)]
-    ..sort((a, b) => a.fireAt.compareTo(b.fireAt));
+  final all = <PlannedReminder>[
+    for (final l in loans) ...planFor(l, now, hour: hour, minute: minute),
+  ]..sort((a, b) => a.fireAt.compareTo(b.fireAt));
   return all.take(limit).toList();
 }

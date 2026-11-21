@@ -463,7 +463,7 @@ final class LibraryViewControllerProvider
 }
 
 String _$libraryViewControllerHash() =>
-    r'41817ec4496ac8e0c36bbcf0e86705de315b0af4';
+    r'a2e5d51de29eeaf516674470f6bf38614433e84b';
 
 /// Grid or list, remembered on this device.
 

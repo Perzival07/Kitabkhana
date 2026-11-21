@@ -41,6 +41,7 @@ class LoanReminderService implements ReminderService {
     required this.books,
     required this.clock,
     required this.l10n,
+    this.reminderTime,
   });
 
   final NotificationScheduler scheduler;
@@ -50,6 +51,9 @@ class LoanReminderService implements ReminderService {
 
   /// Returns the strings for the current language.
   final AppLocalizations Function() l10n;
+
+  /// The time of day reminders arrive, from Settings (10:00 when null).
+  final Future<({int hour, int minute})> Function()? reminderTime;
 
   Future<void> _scheduleOne(PlannedReminder r, String bookTitle) {
     final text = reminderText(l10n(), r, bookTitle);
@@ -86,10 +90,18 @@ class LoanReminderService implements ReminderService {
   Future<void> reconcile() async {
     if (!scheduler.supported) return;
     final active = await loans.listActive();
-    final wanted = planAll(active, clock.now());
+    final time = await reminderTime?.call();
+    final wanted = planAll(
+      active,
+      clock.now(),
+      hour: time?.hour ?? kReminderHour,
+      minute: time?.minute ?? kReminderMinute,
+    );
     final wantedIds = <int>{for (final r in wanted) r.id};
     for (final id in await scheduler.pendingIds()) {
-      if (!wantedIds.contains(id)) await scheduler.cancel(id);
+      if (!wantedIds.contains(id) && !isReadingReminderId(id)) {
+        await scheduler.cancel(id);
+      }
     }
     for (final r in wanted) {
       final book = (await books.getById(r.bookId)).getOrNull();
