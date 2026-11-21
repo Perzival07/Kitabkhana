@@ -1,8 +1,6 @@
-// These tests use ProviderScope as the root of a tiny app, not as a nested
-// scope, so the lint about listing dependencies does not apply.
-// ignore_for_file: scoped_providers_should_specify_dependencies
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kitabkhana/app/cover_providers.dart';
 import 'package:kitabkhana/features/library/domain/book.dart';
@@ -35,6 +33,15 @@ class FakeCoverStore implements CoverStore {
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
+/// The app's providers for a test, as a root scope. (An uncontrolled scope on
+/// a container the test owns: a plain nested ProviderScope would need a
+/// dependencies list under riverpod_lint.)
+Widget rootScope(List<Override> overrides, Widget child) {
+  final container = ProviderContainer(overrides: overrides);
+  addTearDown(container.dispose);
+  return UncontrolledProviderScope(container: container, child: child);
+}
+
 void main() {
   final now = DateTime(2025, 3, 10);
   Book book({String? ref, String? url}) => Book.create(
@@ -52,9 +59,9 @@ void main() {
   }) async {
     await pumpThemed(
       t,
-      ProviderScope(
-        overrides: [coverStoreProvider.overrideWithValue(store)],
-        child: Center(
+      rootScope(
+        [coverStoreProvider.overrideWithValue(store)],
+        Center(
           child: BookCoverView(book: b, size: size),
         ),
       ),
@@ -101,10 +108,9 @@ void main() {
     final store = FakeCoverStore(null);
     await pumpThemed(
       t,
-      ProviderScope(
-        overrides: [coverStoreProvider.overrideWithValue(store)],
-        child: SizedBox(width: 150, child: BookCoverView(book: book())),
-      ),
+      rootScope([
+        coverStoreProvider.overrideWithValue(store),
+      ], SizedBox(width: 150, child: BookCoverView(book: book()))),
     );
     expect(t.getSize(find.byType(KBookCover)).width, 150);
   });

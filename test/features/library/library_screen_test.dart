@@ -1,8 +1,6 @@
-// These tests use ProviderScope as the root of a tiny app, not as a nested
-// scope, so the lint about listing dependencies does not apply.
-// ignore_for_file: scoped_providers_should_specify_dependencies
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kitabkhana/app/app_config.dart';
 import 'package:kitabkhana/app/app_config_provider.dart';
@@ -18,6 +16,15 @@ import 'package:kitabkhana/features/library/presentation/widgets/highlight_text.
 import '../../helpers/add_flow_harness.dart';
 import '../../helpers/pump_app.dart';
 import '../../helpers/pump_router_app.dart';
+
+/// The app's providers for a test, as a root scope. (An uncontrolled scope on
+/// a container the test owns: a plain nested ProviderScope would need a
+/// dependencies list under riverpod_lint.)
+Widget rootScope(List<Override> overrides, Widget child) {
+  final container = ProviderContainer(overrides: overrides);
+  addTearDown(container.dispose);
+  return UncontrolledProviderScope(container: container, child: child);
+}
 
 void main() {
   late AddFlowHarness h;
@@ -88,13 +95,10 @@ void main() {
   }) async {
     await pumpThemed(
       t,
-      ProviderScope(
-        overrides: [
-          ...h.overrides,
-          appConfigProvider.overrideWithValue(const AppConfig.prod()),
-        ],
-        child: const LibraryScreen(),
-      ),
+      rootScope([
+        ...h.overrides,
+        appConfigProvider.overrideWithValue(const AppConfig.prod()),
+      ], const LibraryScreen()),
       size: size,
       scaffold: false,
     );
