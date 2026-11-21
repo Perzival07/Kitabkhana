@@ -57,7 +57,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P10.4
 - [x] P10.5
 - [x] P10.6
-- [ ] P10.7
+- [x] P10.7
 
 ## Phase 11 — Release
 - [ ] P11.1
@@ -187,3 +187,12 @@ Tick a task only when it is green (see Definition of Green).
 - (P10.6) Bug found by the journeys and fixed: the "Added to <place>" toast sat on top of the library's Add button, so a tap meant for the button hit the toast's "View" action. The button now lifts while any toast is showing (`KToast.visible`), with a regression test.
 - (P10.6) NOT verified: the two CI device jobs and `integration_test/app_test.dart` on a real emulator or browser (none here, so the YAML and the web driver setup are untested); and the journeys use fake services, so camera, ML Kit and the share sheet are not exercised end to end.
 - (P10.6) Noted, not fixed: the Reading tab computes "today" once when it builds, so an app left open across midnight shows yesterday's bar as today until it is rebuilt (the journeys relaunch the app on each day).
+- (P10.7) Android: `INTERNET` was missing from the main manifest (debug builds add it, a release build would have been offline for good), so it is declared. Cloud backup and device-to-device copy are off (`allowBackup=false`, `fullBackupContent=false`, data-extraction rules excluding every domain), cleartext HTTP is off (`usesCleartextTraffic=false` + a network security config), the permission list is exactly INTERNET, CAMERA, POST_NOTIFICATIONS, RECEIVE_BOOT_COMPLETED (plus VIBRATE from the notifications plugin), and there is no SCHEDULE_EXACT_ALARM. iOS: camera and photo strings rewritten to say what they are for and that nothing is uploaded; no ATS exceptions. Web: a Content Security Policy in `index.html` (scripts from this origin plus `wasm-unsafe-eval` only, connections to Open Library only, HTTP upgraded), `web/_headers` for what a meta tag cannot set (HSTS, frame-ancestors, nosniff, permissions), proper name/colours in the manifest; CI builds web with `--no-web-resources-cdn` so CanvasKit is not fetched from gstatic.com. All of this is guarded by `test/security/`.
+- (P10.7) Logs: a test now checks every log call at info and above uses constant text or an exception's type. It caught a real leak: the global error handler logged the first line of exception messages (which can quote on-screen content); it now logs only the type. The `$e` interpolations in warnings were reduced to `runtimeType` too.
+- (P10.7) Dependencies: all licences are permissive (`docs/LICENSES.md`); every direct dependency is current except `cupertino_icons` (major bump, font only); a few transitive packages updated; `sqlite3` is deliberately held back because `web/sqlite3.wasm` must match it. Docs: `docs/PRIVACY.md` (each promise and what enforces it), the public policy in `docs/privacy/privacy-policy.md`, and `docs/privacy/index.html` (self-contained page built by `dart run tool/build_privacy_page.dart`; a test fails if it is stale or if its claims drift from the code).
+- (P10.7) NOT done / known gaps: the merged Android manifest and a signed iOS build were not inspected (no Android SDK or Xcode); the iOS database is included in the user's own iCloud/device backup (excluding it needs native code: `isExcludedFromBackup`); crash reporting is a switch with nothing behind it; the privacy page needs hosting and its URL passed as `--dart-define=PRIVACY_URL=…`.
+
+## Phase 10 audit (PA)
+- Done and tested here: onboarding, motion, accessibility, device matrix, performance benchmarks, six end-to-end journeys, security and privacy hardening.
+- Needs a device, browser or other tool I did not have (each listed in its own entry above and in `docs/QA.md`, `docs/A11Y.md`, `docs/PERFORMANCE.md`, `docs/PRIVACY.md`): TalkBack/VoiceOver walkthrough, profile-mode frame times and cold start, release APK size and merged manifest, foldable hinge, the emulator and Chrome CI jobs, real-browser CSP behaviour.
+- Open small issues: the Reading tab's notion of "today" is fixed when it builds (an app left open past midnight shows yesterday until rebuilt); the iOS backup exclusion above.

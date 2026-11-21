@@ -67,8 +67,8 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>Kitabkhana uses the camera to scan book barcodes and to photograph covers and quotes. Photos stay on your device.</string>
+	<string>Kitabkhana uses the camera to scan a book's barcode (so you never buy it twice) and to photograph a cover or a line you love. Scans and photos are read on your phone and are never uploaded.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Choose a photo from your library to use as a book cover or to capture a quote. It stays on your device.</string>
+	<string>Choose a photo of a book cover, or of a page with a quote you want to keep. Only the photo you pick is used, and it stays on your phone.</string>
 </dict>
 </plist>

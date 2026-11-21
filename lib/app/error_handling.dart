@@ -10,8 +10,10 @@ import 'error_fallback.dart';
 void installGlobalErrorHandlers(AppConfig config, AppLogger logger) {
   final previous = FlutterError.onError;
   FlutterError.onError = (details) {
+    // Constant text only: the exception's message can quote what was on the
+    // screen. The logger records the exception's type from `error:`.
     logger.error(
-      'FlutterError: ${details.exceptionAsString().split('\n').first}',
+      'FlutterError',
       error: details.exception,
       stack: details.stack,
     );

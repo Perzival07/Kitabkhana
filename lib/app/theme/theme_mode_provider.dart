@@ -36,7 +36,9 @@ class ThemeModeController extends _$ThemeModeController {
       final s = await ref.read(settingsRepositoryProvider).load();
       if (ref.mounted) state = _toMode(s.theme);
     } on Object catch (e) {
-      ref.read(appLoggerProvider).warn('Reading theme failed: $e');
+      ref
+          .read(appLoggerProvider)
+          .warn('Reading theme failed: ${e.runtimeType}');
     }
   }
 

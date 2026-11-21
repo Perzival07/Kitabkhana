@@ -45,7 +45,9 @@ class RecentLocations extends _$RecentLocations {
         state = raw.split(',');
       }
     } on Object catch (e) {
-      ref.read(appLoggerProvider).warn('Reading recent locations failed: $e');
+      ref
+          .read(appLoggerProvider)
+          .warn('Reading recent locations failed: ${e.runtimeType}');
     }
   }
 
@@ -59,7 +61,9 @@ class RecentLocations extends _$RecentLocations {
         next.join(','),
       );
     } on Object catch (e) {
-      ref.read(appLoggerProvider).warn('Saving recent locations failed: $e');
+      ref
+          .read(appLoggerProvider)
+          .warn('Saving recent locations failed: ${e.runtimeType}');
     }
   }
 }
@@ -78,7 +82,9 @@ class StarterLocationsDone extends _$StarterLocationsDone {
       final raw = await _readMeta(ref.read(appDatabaseProvider), _starterKey);
       if (raw == '1' && ref.mounted) state = true;
     } on Object catch (e) {
-      ref.read(appLoggerProvider).warn('Reading starter flag failed: $e');
+      ref
+          .read(appLoggerProvider)
+          .warn('Reading starter flag failed: ${e.runtimeType}');
     }
   }
 
@@ -87,7 +93,9 @@ class StarterLocationsDone extends _$StarterLocationsDone {
     try {
       await _writeMeta(ref.read(appDatabaseProvider), _starterKey, '1');
     } on Object catch (e) {
-      ref.read(appLoggerProvider).warn('Saving starter flag failed: $e');
+      ref
+          .read(appLoggerProvider)
+          .warn('Saving starter flag failed: ${e.runtimeType}');
     }
   }
 }

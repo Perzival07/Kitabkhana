@@ -29,9 +29,15 @@ void main() {
     final log = AppLogger();
     installGlobalErrorHandlers(const AppConfig.prod(), log);
     FlutterError.onError!(
-      FlutterErrorDetails(exception: StateError('first line\nsecond')),
+      FlutterErrorDetails(
+        exception: StateError('Dune by Frank Herbert\nsecond line'),
+      ),
     );
-    expect(log.lines.single, contains('FlutterError: Bad state: first line'));
+    // The type is logged; what the message says (it can quote the screen) is not.
+    expect(log.lines.single, contains('FlutterError'));
+    expect(log.lines.single, contains('StateError'));
+    expect(log.lines.single, isNot(contains('Dune')));
+    expect(log.lines.single, isNot(contains('Herbert')));
     expect(log.lines.single, isNot(contains('second')));
   });
 

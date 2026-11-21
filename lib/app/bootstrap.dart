@@ -52,7 +52,7 @@ Future<void> bootstrap(AppConfig config) async {
       container.read(initialRouteProvider.notifier).set(Routes.onboarding);
     }
   } on Object catch (error) {
-    logger.warn('Reading onboarding flag failed: $error');
+    logger.warn('Reading onboarding flag failed: ${error.runtimeType}');
   }
 
   // Rebuild pending reminders from the loans (after a reboot, an update or
@@ -63,11 +63,12 @@ Future<void> bootstrap(AppConfig config) async {
           .read(loanReminderServiceProvider)
           .reconcile()
           .catchError(
-            (Object e) => logger.warn('Reminder reconcile failed: $e'),
+            (Object e) =>
+                logger.warn('Reminder reconcile failed: ${e.runtimeType}'),
           ),
     );
   } on Object catch (e) {
-    logger.warn('Reminder reconcile failed: $e');
+    logger.warn('Reminder reconcile failed: ${e.runtimeType}');
   }
 
   unawaited(container.read(readingReminderServiceProvider).reconcile());

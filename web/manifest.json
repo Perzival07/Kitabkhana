@@ -1,11 +1,11 @@
 {
-    "name": "kitabkhana",
-    "short_name": "kitabkhana",
+    "name": "Kitabkhana",
+    "short_name": "Kitabkhana",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#FBF7F0",
+    "theme_color": "#B4532A",
+    "description": "A private home for the books you own, lend and love.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

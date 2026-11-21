@@ -152,7 +152,9 @@ class LibraryViewController extends _$LibraryViewController {
       final s = await ref.read(settingsRepositoryProvider).load();
       if (ref.mounted) state = s.libraryView;
     } on Object catch (e) {
-      ref.read(appLoggerProvider).warn('Reading library view failed: $e');
+      ref
+          .read(appLoggerProvider)
+          .warn('Reading library view failed: ${e.runtimeType}');
     }
   }
 

@@ -53,7 +53,9 @@ jobs:
           if-no-files-found: warn
 
       - name: Build web
-        run: flutter build web --release -t lib/main_prod.dart
+        # --no-web-resources-cdn serves CanvasKit from this origin instead of
+        # gstatic.com, which the policy and the CSP promise.
+        run: flutter build web --release --no-web-resources-cdn -t lib/main_prod.dart
 
       - name: Build Android debug APK (dev flavor)
         run: flutter build apk --debug --flavor dev -t lib/main_dev.dart

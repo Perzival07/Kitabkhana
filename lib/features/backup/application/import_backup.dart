@@ -92,13 +92,13 @@ class ImportBackup {
       }
       skipped = await _restoreCovers(contents);
     } on Object catch (e) {
-      logger?.warn('Restoring covers failed: $e');
+      logger?.warn('Restoring covers failed: ${e.runtimeType}');
     }
 
     try {
       await afterImport?.call();
     } on Object catch (e) {
-      logger?.warn('After-import step failed: $e');
+      logger?.warn('After-import step failed: ${e.runtimeType}');
     }
 
     return Ok(

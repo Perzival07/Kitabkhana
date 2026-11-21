@@ -18,18 +18,33 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--
+    Content Security Policy. Everything is served from this origin except
+    book data and covers from Open Library (and the archive.org hosts its
+    covers redirect to). Scripts: this origin only, plus 'wasm-unsafe-eval'
+    for the Flutter engine's WebAssembly (no 'unsafe-eval', no inline scripts).
+    Styles allow 'unsafe-inline' because Flutter writes inline styles. Plain
+    HTTP is upgraded. Build with `--no-web-resources-cdn` so CanvasKit is
+    served from here and not from gstatic.com; docs/PRIVACY.md lists the rest
+    (frame-ancestors, HSTS) which a page cannot set and web/_headers does.
+    test/security/web_csp_test.dart guards this policy.
+  -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://covers.openlibrary.org https://*.archive.org; font-src 'self' data:; connect-src 'self' blob: data: https://openlibrary.org https://covers.openlibrary.org https://*.archive.org; worker-src 'self' blob:; child-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="A private home for the books you own, lend and love. Your library stays on your device.">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="kitabkhana">
+  <meta name="apple-mobile-web-app-title" content="Kitabkhana">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>kitabkhana</title>
+  <title>Kitabkhana</title>
   <link rel="manifest" href="manifest.json">
 </head>
 <body>

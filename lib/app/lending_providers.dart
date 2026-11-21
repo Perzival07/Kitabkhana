@@ -67,7 +67,9 @@ class DefaultCountryCode extends _$DefaultCountryCode {
       final s = await ref.read(settingsRepositoryProvider).load();
       if (ref.mounted) state = s.defaultCountryCode;
     } on Object catch (e) {
-      ref.read(appLoggerProvider).warn('Reading country code failed: $e');
+      ref
+          .read(appLoggerProvider)
+          .warn('Reading country code failed: ${e.runtimeType}');
     }
   }
 
