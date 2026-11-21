@@ -62,7 +62,7 @@ jobs:
           flutter build appbundle --release --flavor prod -t lib/main_prod.dart \
             --build-name="${GITHUB_REF_NAME#v}" --build-number="${{ github.run_number }}"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: android-release
           path: |
@@ -139,7 +139,7 @@ jobs:
       - name: Zip the build
         run: cd build/web && zip -qr "$GITHUB_WORKSPACE/kitabkhana-web.zip" .
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: web-release
           path: kitabkhana-web.zip
