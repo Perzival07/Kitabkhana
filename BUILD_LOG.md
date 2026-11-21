@@ -43,7 +43,7 @@ Tick a task only when it is green (see Definition of Green).
 
 ## Phase 08 — Quotes
 - [x] P08.1
-- [ ] P08.2
+- [x] P08.2
 
 ## Phase 09 — Data & settings
 - [ ] P09.1
@@ -147,3 +147,7 @@ Tick a task only when it is green (see Definition of Green).
 - (P08.1) The Quotes screen is still a stub, so quote capture is only reachable from Book Detail until P08.2.
 - (P08.1) iOS setup I could not do without Xcode: add `-ObjC` and `-all_load` to Other Linker Flags and add `LatinOCRResources.bundle` to Copy Bundle Resources (see the plugin README), or text reading will fail on iOS.
 - (P08.1) Not verified on a device (no emulator/Xcode here): reading a real page in normal and dim light, camera/gallery pickers, and cropper drag feel.
+- (P08.2) `/quotes` (also in More): search over text, book title and author; Favourites filter; filter by book; cards with a big opening mark, Fraunces italic body and "— Title, p. 42"; favourite heart; menu with Edit, Share as image, Share as text, Delete (with Undo). A "Snap a quote" button asks which book, then opens the capture flow.
+- (P08.2) Quote of the week (Reading tab, hidden until a quote exists): deterministic per week (Monday to Sunday, counted from a fixed epoch Monday, not ISO week numbers, so year ends have no quirks). Favourites are preferred: with 3+ favourites only they rotate; with fewer, they lead and other quotes top the pool up. The pool is stepped through in a stable shuffled order, one per week, so nothing repeats until all have had a turn. Adding or deleting a quote reshuffles which quote is next.
+- (P08.2) Share as image: a 1080x1350 (4:5) PNG drawn directly with a painter (paper tone, faint seeded grain, big mark, Fraunces italic sized to fit, source in Inter, Kitabkhana wordmark); always the light "paper" look. Via share_plus (a download on web).
+- (P08.2) Not verified on a device: the system share sheet and the web download; the grain's look on a real screen.

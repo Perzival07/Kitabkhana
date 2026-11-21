@@ -580,6 +580,56 @@
       }
     }
   },
+  "quotesTitle": "Quotes",
+  "quotesSearchHint": "Search your quotes",
+  "quotesFavourites": "Favourites",
+  "quotesAllBooks": "All books",
+  "quotesPickBook": "Which book is it from?",
+  "quotesBookFilterTitle": "Show quotes from",
+  "quotesEmptyTitle": "No quotes yet",
+  "quotesEmptyBody": "Snap a page or type a line, and the passages you love will live here.",
+  "quotesNoMatch": "No quotes match.",
+  "quotesNoBooksYet": "Add a book first, then save quotes from it.",
+  "quoteAttribution": "{title}",
+  "@quoteAttribution": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "quoteAttributionPage": "{title}, p. {page}",
+  "@quoteAttributionPage": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "page": {
+        "type": "int"
+      }
+    }
+  },
+  "quoteFavourite": "Mark as favourite",
+  "quoteUnfavourite": "Remove from favourites",
+  "quoteEdit": "Edit",
+  "quoteEditTitle": "Edit quote",
+  "quoteShareImage": "Share as image",
+  "quoteShareText": "Share as text",
+  "quoteDelete": "Delete",
+  "quoteDeleted": "Quote deleted",
+  "quoteShareTextBody": "“{body}”\n— {attribution}",
+  "@quoteShareTextBody": {
+    "placeholders": {
+      "body": {
+        "type": "String"
+      },
+      "attribution": {
+        "type": "String"
+      }
+    }
+  },
+  "quoteMore": "More",
+  "quoteOfWeekTitle": "Quote of the week",
   "paceDaysLeft": "{count, plural, =1{About 1 day left at your pace} other{About {count} days left at your pace}}",
   "@paceDaysLeft": {
     "placeholders": {

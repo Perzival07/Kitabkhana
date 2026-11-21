@@ -1834,6 +1834,144 @@ abstract class AppLocalizations {
   /// **'p. {page}'**
   String quotePageShort(int page);
 
+  /// No description provided for @quotesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quotes'**
+  String get quotesTitle;
+
+  /// No description provided for @quotesSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search your quotes'**
+  String get quotesSearchHint;
+
+  /// No description provided for @quotesFavourites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favourites'**
+  String get quotesFavourites;
+
+  /// No description provided for @quotesAllBooks.
+  ///
+  /// In en, this message translates to:
+  /// **'All books'**
+  String get quotesAllBooks;
+
+  /// No description provided for @quotesPickBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Which book is it from?'**
+  String get quotesPickBook;
+
+  /// No description provided for @quotesBookFilterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show quotes from'**
+  String get quotesBookFilterTitle;
+
+  /// No description provided for @quotesEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No quotes yet'**
+  String get quotesEmptyTitle;
+
+  /// No description provided for @quotesEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Snap a page or type a line, and the passages you love will live here.'**
+  String get quotesEmptyBody;
+
+  /// No description provided for @quotesNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No quotes match.'**
+  String get quotesNoMatch;
+
+  /// No description provided for @quotesNoBooksYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a book first, then save quotes from it.'**
+  String get quotesNoBooksYet;
+
+  /// No description provided for @quoteAttribution.
+  ///
+  /// In en, this message translates to:
+  /// **'{title}'**
+  String quoteAttribution(String title);
+
+  /// No description provided for @quoteAttributionPage.
+  ///
+  /// In en, this message translates to:
+  /// **'{title}, p. {page}'**
+  String quoteAttributionPage(String title, int page);
+
+  /// No description provided for @quoteFavourite.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as favourite'**
+  String get quoteFavourite;
+
+  /// No description provided for @quoteUnfavourite.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favourites'**
+  String get quoteUnfavourite;
+
+  /// No description provided for @quoteEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get quoteEdit;
+
+  /// No description provided for @quoteEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit quote'**
+  String get quoteEditTitle;
+
+  /// No description provided for @quoteShareImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Share as image'**
+  String get quoteShareImage;
+
+  /// No description provided for @quoteShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'Share as text'**
+  String get quoteShareText;
+
+  /// No description provided for @quoteDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get quoteDelete;
+
+  /// No description provided for @quoteDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Quote deleted'**
+  String get quoteDeleted;
+
+  /// No description provided for @quoteShareTextBody.
+  ///
+  /// In en, this message translates to:
+  /// **'“{body}”\n— {attribution}'**
+  String quoteShareTextBody(String body, String attribution);
+
+  /// No description provided for @quoteMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get quoteMore;
+
+  /// No description provided for @quoteOfWeekTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quote of the week'**
+  String get quoteOfWeekTitle;
+
   /// No description provided for @paceDaysLeft.
   ///
   /// In en, this message translates to:

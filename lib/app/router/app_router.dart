@@ -15,6 +15,7 @@ import '../../features/lending/presentation/loans_screen.dart';
 import '../../features/locations/presentation/locations_screen.dart';
 import '../../features/more/presentation/more_screen.dart';
 import '../../features/quotes/presentation/quote_capture_screen.dart';
+import '../../features/quotes/presentation/quotes_screen.dart';
 import '../../features/reading/presentation/reading_screen.dart';
 import '../../features/scan_check/presentation/scan_screen.dart';
 import '../../features/stats/presentation/stats_screen.dart';
@@ -150,10 +151,7 @@ GoRouter buildRouter(AppConfig config, {String initial = Routes.library}) {
         ],
       ),
       GoRoute(path: Routes.loans, builder: (_, _) => const LoansScreen()),
-      GoRoute(
-        path: Routes.quotes,
-        builder: (_, _) => stub((l) => l.routeQuotes, KIllustration.quoteMarks),
-      ),
+      GoRoute(path: Routes.quotes, builder: (_, _) => const QuotesScreen()),
       GoRoute(
         path: Routes.locations,
         builder: (_, _) => const LocationsScreen(),

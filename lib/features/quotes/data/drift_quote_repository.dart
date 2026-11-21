@@ -44,28 +44,45 @@ class DriftQuoteRepository implements QuoteRepository {
   final AppDatabase _db;
   final Clock _clock;
 
-  @override
-  Stream<List<Quote>> watchAll({String? bookId, bool favouritesOnly = false}) {
+  JoinedSelectStatement<HasResultSet, dynamic> _query({
+    String? bookId,
+    bool favouritesOnly = false,
+  }) {
     final q = _db.quotes;
-    final query =
-        _db.select(q).join([
-            innerJoin(_db.books, _db.books.id.equalsExp(q.bookId)),
-          ])
-          ..where(
-            q.deletedAt.isNull() &
-                _db.books.deletedAt.isNull() &
-                (bookId == null
-                    ? const Constant(true)
-                    : q.bookId.equals(bookId)) &
-                (favouritesOnly
-                    ? q.isFavourite.equals(true)
-                    : const Constant(true)),
-          )
-          ..orderBy([OrderingTerm.desc(q.createdAt), OrderingTerm.desc(q.id)]);
-    return query.watch().map(
-      (rows) => rows.map((r) => _toDomain(r.readTable(q))).toList(),
-    );
+    return _db.select(q).join([
+        innerJoin(_db.books, _db.books.id.equalsExp(q.bookId)),
+      ])
+      ..where(
+        q.deletedAt.isNull() &
+            _db.books.deletedAt.isNull() &
+            (bookId == null ? const Constant(true) : q.bookId.equals(bookId)) &
+            (favouritesOnly
+                ? q.isFavourite.equals(true)
+                : const Constant(true)),
+      )
+      ..orderBy([OrderingTerm.desc(q.createdAt), OrderingTerm.desc(q.id)]);
   }
+
+  @override
+  Stream<List<Quote>> watchAll({String? bookId, bool favouritesOnly = false}) =>
+      _query(bookId: bookId, favouritesOnly: favouritesOnly).watch().map(
+        (rows) => rows.map((r) => _toDomain(r.readTable(_db.quotes))).toList(),
+      );
+
+  @override
+  Stream<List<QuoteWithBook>> watchWithBooks({
+    String? bookId,
+    bool favouritesOnly = false,
+  }) => _query(bookId: bookId, favouritesOnly: favouritesOnly).watch().map(
+    (rows) => [
+      for (final r in rows)
+        QuoteWithBook(
+          _toDomain(r.readTable(_db.quotes)),
+          r.readTable(_db.books).title,
+          r.readTable(_db.books).authors,
+        ),
+    ],
+  );
 
   @override
   Future<Result<Quote?>> getById(String id) => dbGuard(() async {

@@ -4,6 +4,7 @@ import 'package:kitabkhana/features/lending/domain/loan.dart';
 import 'package:kitabkhana/features/lending/domain/loan_direction.dart';
 import 'package:kitabkhana/features/library/domain/book.dart';
 import 'package:kitabkhana/features/library/domain/book_enums.dart';
+import 'package:kitabkhana/features/quotes/domain/quote.dart';
 import 'package:kitabkhana/features/reading/domain/reading_log.dart';
 import 'package:kitabkhana/features/reading/presentation/reading_screen.dart';
 
@@ -199,6 +200,35 @@ void main() {
     await t.runAsync(() => book('a'));
     await open(t);
     expect(find.textContaining('out past'), findsNothing);
+    await end(t);
+  });
+
+  testWidgets('quote of the week shows once a quote exists', (t) async {
+    h = AddFlowHarness();
+    await t.runAsync(() async {
+      await book('a');
+      await h.repos.quotes.upsert(
+        Quote.create(
+          id: 'q',
+          bookId: 'a',
+          body: 'Every limit is a beginning.',
+          page: 9,
+          now: today,
+        ),
+      );
+    });
+    await open(t);
+    expect(find.text('Quote of the week'), findsOneWidget);
+    expect(find.text('“Every limit is a beginning.”'), findsOneWidget);
+    expect(find.text('— Title a, p. 9'), findsOneWidget);
+    await end(t);
+  });
+
+  testWidgets('no quote card while there are no quotes', (t) async {
+    h = AddFlowHarness();
+    await t.runAsync(() => book('a'));
+    await open(t);
+    expect(find.text('Quote of the week'), findsNothing);
     await end(t);
   });
 }

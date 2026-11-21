@@ -20,6 +20,7 @@ import 'fake_book_info_source.dart';
 import 'fake_camera_permission.dart';
 import 'fake_notification_scheduler.dart';
 import 'fake_ocr_service.dart';
+import 'fake_share_service.dart';
 import 'fake_cover_store.dart';
 import 'pump_router_app.dart';
 import 'repo_harness.dart';
@@ -51,6 +52,7 @@ class AddFlowHarness {
   final FakeCoverStore covers = FakeCoverStore();
   final FakePhotoPicker picker = FakePhotoPicker();
   FakeOcrService ocr = FakeOcrService();
+  final FakeShareService share = FakeShareService();
   final FakeCameraPermission camera = FakeCameraPermission();
   final FakeNotificationScheduler scheduler = FakeNotificationScheduler();
   final List<String> scanCodes;
@@ -63,6 +65,7 @@ class AddFlowHarness {
     coverStoreProvider.overrideWithValue(covers),
     photoPickerProvider.overrideWithValue(picker),
     ocrServiceProvider.overrideWithValue(ocr),
+    shareServiceProvider.overrideWithValue(share),
     pageEditorProvider.overrideWithValue((edit) async => edit.bytes),
     cameraPermissionProvider.overrideWithValue(camera),
     notificationSchedulerProvider.overrideWithValue(scheduler),

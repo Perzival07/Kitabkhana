@@ -55,3 +55,28 @@ class SaveQuote {
 
 ValidationFailure _bad(String field) =>
     ValidationFailure(field: field, messageKey: 'failureValidation');
+
+/// Changes a quote's text and page, with the same rules as [SaveQuote].
+class EditQuote {
+  EditQuote({required this.quotes, required this.books});
+
+  final QuoteRepository quotes;
+  final BookRepository books;
+
+  Future<Result<Quote>> call(
+    Quote quote, {
+    required String body,
+    int? page,
+  }) async {
+    final text = body.trim();
+    if (text.isEmpty) return Err(_bad('body'));
+    if (page != null && page < 1) return Err(_bad('page'));
+    final book = await books.getById(quote.bookId);
+    if (book case Err(:final failure)) return Err(failure);
+    final total = book.getOrNull()?.pages;
+    if (page != null && total != null && page > total) {
+      return Err(_bad('page'));
+    }
+    return quotes.upsert(quote.copyWith(body: text, page: page));
+  }
+}

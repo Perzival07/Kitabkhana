@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../app/book_detail_providers.dart';
 import '../../../app/library_providers.dart';
 import '../../../app/providers.dart';
+import '../../../app/quote_providers.dart';
 import '../../../app/reading_providers.dart';
 import '../../../app/repositories.dart';
 import '../../../app/router/routes.dart';
@@ -16,6 +17,8 @@ import '../../book/application/book_progress.dart';
 import '../../library/domain/book.dart';
 import '../../library/domain/book_enums.dart';
 import '../../library/presentation/book_cover_view.dart';
+import '../../quotes/domain/quote_repository.dart';
+import '../../quotes/presentation/quote_tile.dart';
 import '../domain/pace.dart';
 import 'update_page_flow.dart';
 
@@ -65,6 +68,11 @@ class ReadingScreen extends ConsumerWidget {
                         _Carousel(books: reading),
                         const SizedBox(height: KSpacing.xl),
                         const _TodayCard(),
+                      ],
+                      if (ref.watch(quoteOfWeekProvider)
+                          case final qow?) ...<Widget>[
+                        const SizedBox(height: KSpacing.xl),
+                        _QuoteOfWeekCard(entry: qow),
                       ],
                       if (overdue > 0) ...<Widget>[
                         const SizedBox(height: KSpacing.xl),
@@ -407,6 +415,45 @@ class _TodayCard extends ConsumerWidget {
                 ],
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// This week's featured quote; opens the Quotes screen.
+class _QuoteOfWeekCard extends StatelessWidget {
+  const _QuoteOfWeekCard({required this.entry});
+
+  final QuoteWithBook entry;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return KCard(
+      onTap: () => context.push(Routes.quotes),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(l10n.quoteOfWeekTitle, style: theme.textTheme.labelLarge),
+          const SizedBox(height: KSpacing.sm),
+          Text(
+            '“${entry.quote.body}”',
+            maxLines: 6,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontFamily: 'Fraunces',
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.w400,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: KSpacing.sm),
+          Text(
+            '— ${quoteAttributionOf(l10n, entry)}',
+            style: theme.textTheme.bodySmall,
           ),
         ],
       ),

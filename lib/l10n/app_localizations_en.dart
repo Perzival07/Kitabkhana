@@ -1048,6 +1048,82 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get quotesTitle => 'Quotes';
+
+  @override
+  String get quotesSearchHint => 'Search your quotes';
+
+  @override
+  String get quotesFavourites => 'Favourites';
+
+  @override
+  String get quotesAllBooks => 'All books';
+
+  @override
+  String get quotesPickBook => 'Which book is it from?';
+
+  @override
+  String get quotesBookFilterTitle => 'Show quotes from';
+
+  @override
+  String get quotesEmptyTitle => 'No quotes yet';
+
+  @override
+  String get quotesEmptyBody =>
+      'Snap a page or type a line, and the passages you love will live here.';
+
+  @override
+  String get quotesNoMatch => 'No quotes match.';
+
+  @override
+  String get quotesNoBooksYet => 'Add a book first, then save quotes from it.';
+
+  @override
+  String quoteAttribution(String title) {
+    return '$title';
+  }
+
+  @override
+  String quoteAttributionPage(String title, int page) {
+    return '$title, p. $page';
+  }
+
+  @override
+  String get quoteFavourite => 'Mark as favourite';
+
+  @override
+  String get quoteUnfavourite => 'Remove from favourites';
+
+  @override
+  String get quoteEdit => 'Edit';
+
+  @override
+  String get quoteEditTitle => 'Edit quote';
+
+  @override
+  String get quoteShareImage => 'Share as image';
+
+  @override
+  String get quoteShareText => 'Share as text';
+
+  @override
+  String get quoteDelete => 'Delete';
+
+  @override
+  String get quoteDeleted => 'Quote deleted';
+
+  @override
+  String quoteShareTextBody(String body, String attribution) {
+    return '“$body”\n— $attribution';
+  }
+
+  @override
+  String get quoteMore => 'More';
+
+  @override
+  String get quoteOfWeekTitle => 'Quote of the week';
+
+  @override
   String paceDaysLeft(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
