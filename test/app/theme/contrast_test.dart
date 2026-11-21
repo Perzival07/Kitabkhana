@@ -79,6 +79,120 @@ void main() {
         4.5,
       );
       expectRatio('outline (UI) on background', cs.outline, cs.surface, 3);
+
+      // Every other pairing the app draws text or icons in.
+      surfaces.forEach((name, bg) {
+        expectRatio(
+          'on-surface-variant text on $name',
+          cs.onSurfaceVariant,
+          bg,
+          4.5,
+        );
+        expectRatio('hint text on $name', tokens.mutedText, bg, 4.5);
+        expectRatio('tertiary on $name', cs.tertiary, bg, 3);
+      });
+      expectRatio(
+        'on-primary-container on primary-container',
+        cs.onPrimaryContainer,
+        cs.primaryContainer,
+        4.5,
+      );
+      expectRatio(
+        'on-secondary-container on secondary-container',
+        cs.onSecondaryContainer,
+        cs.secondaryContainer,
+        4.5,
+      );
+      expectRatio(
+        'on-error-container on error-container',
+        cs.onErrorContainer,
+        cs.errorContainer,
+        4.5,
+      );
+      expectRatio('on-tertiary on tertiary', cs.onTertiary, cs.tertiary, 4.5);
+      expectRatio(
+        'on-surface on the navigation indicator',
+        cs.onSurface,
+        theme.navigationBarTheme.indicatorColor!,
+        4.5,
+      );
+      expectRatio(
+        'selected tab icon on the navigation bar',
+        theme.navigationBarTheme.iconTheme!.resolve(<WidgetState>{
+          WidgetState.selected,
+        })!.color!,
+        theme.navigationBarTheme.backgroundColor!,
+        3,
+      );
+      expectRatio(
+        'unselected tab icon on the navigation bar',
+        theme.navigationBarTheme.iconTheme!.resolve(<WidgetState>{})!.color!,
+        theme.navigationBarTheme.backgroundColor!,
+        3,
+      );
+      expectRatio(
+        'tab label on the navigation bar',
+        theme.navigationBarTheme.labelTextStyle!
+            .resolve(<WidgetState>{})!
+            .color!,
+        theme.navigationBarTheme.backgroundColor!,
+        4.5,
+      );
+      expectRatio(
+        'selected rail label on the surface',
+        theme.navigationRailTheme.selectedLabelTextStyle!.color!,
+        theme.navigationRailTheme.backgroundColor!,
+        4.5,
+      );
+      expectRatio(
+        'unselected rail label on the surface',
+        theme.navigationRailTheme.unselectedLabelTextStyle!.color!,
+        theme.navigationRailTheme.backgroundColor!,
+        4.5,
+      );
+      expectRatio(
+        'selected rail icon on the indicator',
+        theme.navigationRailTheme.selectedIconTheme!.color!,
+        theme.navigationRailTheme.indicatorColor!,
+        3,
+      );
+      expectRatio(
+        'focus ring colour on the background',
+        cs.primary,
+        cs.surface,
+        3,
+      );
+    });
+  }
+
+  for (final entry in <String, ThemeData>{
+    'light': AppTheme.light,
+    'dark': AppTheme.dark,
+  }.entries) {
+    group('${entry.key} keyboard focus', () {
+      final theme = entry.value;
+      final focused = <WidgetState>{WidgetState.focused};
+
+      test('buttons grow a 3dp ring that contrasts with the page', () {
+        for (final style in <ButtonStyle?>[
+          theme.filledButtonTheme.style,
+          theme.outlinedButtonTheme.style,
+          theme.textButtonTheme.style,
+          theme.iconButtonTheme.style,
+        ]) {
+          final ring = style!.side!.resolve(focused)!;
+          expect(ring.width, 3);
+          expect(
+            contrastRatio(ring.color, theme.colorScheme.surface),
+            greaterThanOrEqualTo(3),
+          );
+        }
+      });
+
+      test('there is no ring until focused, and outlined keeps its border', () {
+        expect(theme.filledButtonTheme.style!.side!.resolve({}), isNull);
+        expect(theme.outlinedButtonTheme.style!.side!.resolve({}), isNotNull);
+      });
     });
   }
 }

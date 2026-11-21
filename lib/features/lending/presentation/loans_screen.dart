@@ -159,13 +159,22 @@ class _LoansScreenState extends ConsumerState<LoansScreen> {
       ),
     );
 
+    final scrollTabs =
+        MediaQuery.textScalerOf(context).scale(1) > 1.2 ||
+        MediaQuery.sizeOf(context).width < 360;
     return DefaultTabController(
       length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.loansTitle),
           bottom: TabBar(
-            labelPadding: const EdgeInsets.symmetric(horizontal: KSpacing.xs),
+            // With big text or a narrow screen four tabs cannot share the
+            // width, so let them scroll instead of being squeezed.
+            isScrollable: scrollTabs,
+            tabAlignment: scrollTabs ? TabAlignment.start : TabAlignment.fill,
+            labelPadding: EdgeInsets.symmetric(
+              horizontal: scrollTabs ? KSpacing.md : KSpacing.xs,
+            ),
             tabs: <Widget>[
               tabLabel(l10n.loansTabLent, lent.length),
               tabLabel(l10n.loansTabBorrowed, borrowed.length),

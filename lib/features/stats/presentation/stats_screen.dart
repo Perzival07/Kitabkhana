@@ -236,7 +236,8 @@ class _GoalCard extends ConsumerWidget {
             value: p.fraction,
             size: 96,
             strokeWidth: 10,
-            semanticLabel: summary,
+            semanticLabel:
+                '$summary, ${l10n.percentSemantics((p.fraction * 100).round())}',
             child: Text('$finished', style: theme.textTheme.headlineMedium),
           ),
           const SizedBox(width: KSpacing.xl),

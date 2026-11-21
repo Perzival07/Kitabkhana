@@ -59,6 +59,21 @@ double gridTextHeight(BuildContext context) {
 
 /// A book in the grid: cover, two-line title, one-line author, a status dot
 /// and a "Lent" ribbon when it is out.
+/// What a screen reader says for a book in a list or grid: title, authors,
+/// status, whether it is lent out, and where it is.
+String bookTileLabel(
+  AppLocalizations l10n,
+  Book book, {
+  required bool lent,
+  String? locationName,
+}) => <String>[
+  book.title,
+  if (book.authors.isNotEmpty) l10n.bookTileByAuthor(book.authors),
+  statusLabel(l10n, book.status),
+  if (lent) l10n.lentRibbon,
+  if (locationName != null) l10n.bookTileAt(locationName),
+].join(', ');
+
 class BookGridTile extends StatelessWidget {
   const BookGridTile({
     required this.book,
@@ -80,8 +95,12 @@ class BookGridTile extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     return Semantics(
+      container: true,
       button: true,
+      label: bookTileLabel(l10n, book, lent: lent),
+      onTap: onTap,
       onLongPress: onLongPress,
+      excludeSemantics: true,
       child: InkWell(
         onTap: onTap,
         onLongPress: onLongPress,
@@ -103,7 +122,7 @@ class BookGridTile extends StatelessWidget {
                   bottom: KSpacing.sm,
                   child: _StatusDot(
                     color: statusDotColor(context, book.status),
-                    label: statusLabel(l10n, book.status),
+                    status: book.status,
                   ),
                 ),
               ],
@@ -130,27 +149,36 @@ class BookGridTile extends StatelessWidget {
 }
 
 class _StatusDot extends StatelessWidget {
-  const _StatusDot({required this.color, required this.label});
+  const _StatusDot({required this.color, required this.status});
 
   final Color color;
-  final String label;
+  final ReadStatus status;
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    return Semantics(
-      label: label,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: cs.surface,
-          shape: BoxShape.circle,
-          boxShadow: context.kTokens.shadows,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(3),
-          child: DecoratedBox(
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-            child: const SizedBox.square(dimension: 10),
+    // Dark icon on a light dot and the other way round, so it always reads.
+    final ink = ThemeData.estimateBrightnessForColor(color) == Brightness.dark
+        ? Colors.white
+        : Colors.black87;
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: cs.surface,
+        shape: BoxShape.circle,
+        boxShadow: context.kTokens.shadows,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        // The icon says the status as well as the colour does.
+        child: DecoratedBox(
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          child: SizedBox.square(
+            dimension: 20,
+            child: Icon(
+              statusIcon(status, selected: true),
+              size: 13,
+              color: ink,
+            ),
           ),
         ),
       ),
@@ -214,8 +242,12 @@ class BookListTile extends StatelessWidget {
     final theme = Theme.of(context);
     final progress = book.status == ReadStatus.reading ? book.progress : null;
     return Semantics(
+      container: true,
       button: true,
+      label: bookTileLabel(l10n, book, lent: lent, locationName: locationName),
+      onTap: onTap,
       onLongPress: onLongPress,
+      excludeSemantics: true,
       child: InkWell(
         onTap: onTap,
         onLongPress: onLongPress,

@@ -2782,6 +2782,18 @@ abstract class AppLocalizations {
   /// **'Explore the app'**
   String get onboardingExplore;
 
+  /// No description provided for @bookTileByAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'by {authors}'**
+  String bookTileByAuthor(String authors);
+
+  /// No description provided for @bookTileAt.
+  ///
+  /// In en, this message translates to:
+  /// **'at {place}'**
+  String bookTileAt(String place);
+
   /// No description provided for @paceDaysLeft.
   ///
   /// In en, this message translates to:

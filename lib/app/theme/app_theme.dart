@@ -134,21 +134,29 @@ abstract final class AppTheme {
           side: BorderSide(color: outline),
         ),
       ),
+      // Keyboard focus: a clear 3dp ring in the text colour (which contrasts
+      // with the page and with a filled button alike), not just a tint.
+      focusColor: primary.withValues(alpha: 0.18),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           minimumSize: buttonSize,
           shape: buttonShape,
           textStyle: textTheme.labelLarge,
-        ),
+        ).copyWith(side: _focusRing(text, null)),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          minimumSize: buttonSize,
-          shape: buttonShape,
-          side: BorderSide(color: muted.withValues(alpha: 0.5)),
-          foregroundColor: text,
-          textStyle: textTheme.labelLarge,
-        ),
+        style:
+            OutlinedButton.styleFrom(
+              minimumSize: buttonSize,
+              shape: buttonShape,
+              foregroundColor: text,
+              textStyle: textTheme.labelLarge,
+            ).copyWith(
+              side: _focusRing(
+                text,
+                BorderSide(color: muted.withValues(alpha: 0.5)),
+              ),
+            ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
@@ -156,13 +164,13 @@ abstract final class AppTheme {
           shape: buttonShape,
           foregroundColor: primary,
           textStyle: textTheme.labelLarge,
-        ),
+        ).copyWith(side: _focusRing(text, null)),
       ),
       iconButtonTheme: IconButtonThemeData(
         style: IconButton.styleFrom(
           minimumSize: buttonSize,
           foregroundColor: text,
-        ),
+        ).copyWith(side: _focusRing(text, null)),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
@@ -301,3 +309,11 @@ abstract final class AppTheme {
     );
   }
 }
+
+/// A border that appears only while the button has keyboard focus.
+WidgetStateProperty<BorderSide?> _focusRing(Color color, BorderSide? resting) =>
+    WidgetStateProperty.resolveWith<BorderSide?>(
+      (states) => states.contains(WidgetState.focused)
+          ? BorderSide(color: color, width: 3)
+          : resting,
+    );

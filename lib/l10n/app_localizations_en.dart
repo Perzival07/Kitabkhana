@@ -1640,6 +1640,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingExplore => 'Explore the app';
 
   @override
+  String bookTileByAuthor(String authors) {
+    return 'by $authors';
+  }
+
+  @override
+  String bookTileAt(String place) {
+    return 'at $place';
+  }
+
+  @override
   String paceDaysLeft(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

@@ -53,7 +53,7 @@ Tick a task only when it is green (see Definition of Green).
 ## Phase 10 — Polish & QA
 - [x] P10.1
 - [x] P10.2
-- [ ] P10.3
+- [x] P10.3
 - [ ] P10.4
 - [ ] P10.5
 - [ ] P10.6
@@ -174,3 +174,7 @@ Tick a task only when it is green (see Definition of Green).
 - (P10.2) Added: a staggered fade/slide-in (`KEnter`) for library grid and list items, first load only (the first 14 items, once per app run; filtering, sorting and scrolling never replay it); a "pop" (`KPop`) on the scan verdict badge, replayed when "Did you mean…?" resolves to another verdict; a 97% press scale on primary buttons; a spring-like rise for bottom sheets (plain dismissal, none under reduce-motion); status chips on Book Detail with an outlined/filled icon that swaps with a quick fade (so the state no longer rests on colour alone). Already present from earlier phases: Hero covers, animated progress bars and rings, the finish-a-book particle burst (draws nothing under reduce-motion).
 - (P10.2) Haptics are now one vocabulary (`Haptics.light` for primary actions, `.success` for a scan match / adding by scan / finishing a book, `.selection`). Flutter has no separate "success notification" haptic, so success is a firmer tap.
 - (P10.2) NOT done: profiling on a low-end Android in profile mode (no device here), so there are no frame-time numbers and I cannot claim every animation holds 60fps. To measure: `flutter run --profile` on the device, open DevTools > Performance, and record the library first-load cascade, a sheet opening, a scan verdict and a book finishing; look for UI or raster frames over 16ms. If the cascade janks on weak hardware, lower the 14-item cap in `library_screen.dart`.
+- (P10.3) New `test/a11y/accessibility_test.dart` runs Flutter's four accessibility guidelines (Android and iOS tap targets, labelled tap targets, text contrast) on 15 screens plus the library as a list, the Update-page and Lend sheets, in light and dark; checks 200% text at 320dp on every screen; and checks Escape closes a bottom sheet. The contrast test now covers every text/icon pairing the theme draws (container colours, navigation bar and rail, hints, focus ring), and checks the keyboard-focus ring.
+- (P10.3) Fixes it found: library tiles (grid and list) had no spoken label, so a screen reader read nothing useful; each tile is now one labelled button ("Title, by Authors, Status, Lent out, at Place") with tap and long-press actions. The library status dot is now an icon in a coloured disc (it was colour only). The Stats goal ring speaks its percent too ("5 of 12 books, 42 percent"). The Loans tabs scroll at big text or under 360dp instead of overflowing. Buttons now show a 3dp focus ring for keyboard users.
+- (P10.3) Walkthrough scripts for TalkBack and VoiceOver (add, scan, lend, return) and the full list of what is built in are in `docs/A11Y.md`.
+- (P10.3) NOT done: the actual TalkBack and VoiceOver walkthrough, focus rings and Escape in real browsers, and iOS "Larger Accessibility Sizes" on small phones; all need a device or browser session.
