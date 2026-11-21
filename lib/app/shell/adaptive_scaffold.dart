@@ -121,7 +121,9 @@ class AdaptiveScaffold extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final tabs = _tabs(l10n);
     return Scaffold(
-      body: navigationShell,
+      // Keep clear of a notch or camera on the left and right in landscape;
+      // each screen looks after the top, and the bar after the bottom.
+      body: SafeArea(top: false, bottom: false, child: navigationShell),
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
         onDestinationSelected: _select,
@@ -150,10 +152,17 @@ class AdaptiveScaffold extends ConsumerWidget {
               Expanded(child: detail ?? const _SelectedBookPane()),
             ],
           )
-        : Align(
-            alignment: Alignment.topCenter,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: kMaxContentWidth),
+        // Centre the content at most [kMaxContentWidth] wide with padding, not
+        // an Align: Align would loosen the height too, and screens inside
+        // expect to fill it.
+        : LayoutBuilder(
+            builder: (context, c) => Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: ((c.maxWidth - kMaxContentWidth) / 2).clamp(
+                  0.0,
+                  double.infinity,
+                ),
+              ),
               child: navigationShell,
             ),
           );

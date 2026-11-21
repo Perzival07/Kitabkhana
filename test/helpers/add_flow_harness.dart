@@ -93,12 +93,14 @@ class AddFlowHarness {
     Size size = const Size(400, 900),
     double textScale = 1,
     bool disableAnimations = false,
+    EdgeInsets padding = EdgeInsets.zero,
   }) async {
     final c = await pumpRouterApp(
       tester,
       size: size,
       textScale: textScale,
       disableAnimations: disableAnimations,
+      padding: padding,
       overrides: overrides,
     );
     routerOf(c).go(start);

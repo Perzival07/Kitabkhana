@@ -360,6 +360,64 @@ class _Header extends StatelessWidget {
     final top = MediaQuery.paddingOf(context).top + kToolbarHeight;
     final pages = book.pages;
     final facts = <String>[if (pages != null) l10n.pagesCount(pages)];
+
+    // A short, wide window (a landscape phone or tablet) puts the cover
+    // beside the titles so the header does not eat the screen; tall windows
+    // keep it stacked with a cover sized to the height.
+    final size = MediaQuery.sizeOf(context);
+    final landscape = size.width > size.height;
+    final sideBySide = landscape && size.width >= 560;
+    final coverSize = sideBySide
+        ? (size.height >= 700 ? KCoverSize.lg : KCoverSize.md)
+        : (size.height >= 700 ? KCoverSize.hero : KCoverSize.lg);
+    final cover = BookCoverView(
+      book: book,
+      size: coverSize,
+      heroTag: hero ? bookHeroTag(book.id) : null,
+    );
+    Widget titles(CrossAxisAlignment align) {
+      final center = align == CrossAxisAlignment.center;
+      final textAlign = center ? TextAlign.center : TextAlign.start;
+      return Column(
+        crossAxisAlignment: align,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            book.title,
+            textAlign: textAlign,
+            style: theme.textTheme.headlineMedium?.copyWith(
+              color: Colors.white,
+            ),
+          ),
+          if ((book.subtitle ?? '').isNotEmpty) ...<Widget>[
+            const SizedBox(height: KSpacing.xs),
+            Text(
+              book.subtitle!,
+              textAlign: textAlign,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: Colors.white70,
+              ),
+            ),
+          ],
+          if (book.authors.isNotEmpty) ...<Widget>[
+            const SizedBox(height: KSpacing.sm),
+            Text(
+              book.authors,
+              textAlign: textAlign,
+              style: theme.textTheme.titleSmall?.copyWith(color: Colors.white),
+            ),
+          ],
+          if (facts.isNotEmpty) ...<Widget>[
+            const SizedBox(height: KSpacing.xs),
+            Text(
+              facts.join(' · '),
+              style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70),
+            ),
+          ],
+        ],
+      );
+    }
+
     return Stack(
       children: <Widget>[
         Positioned.fill(
@@ -399,52 +457,22 @@ class _Header extends StatelessWidget {
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 640),
-              child: Column(
-                children: <Widget>[
-                  BookCoverView(
-                    book: book,
-                    size: KCoverSize.hero,
-                    heroTag: hero ? bookHeroTag(book.id) : null,
-                  ),
-                  const SizedBox(height: KSpacing.lg),
-                  Text(
-                    book.title,
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.headlineMedium?.copyWith(
-                      color: Colors.white,
+              child: sideBySide
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        cover,
+                        const SizedBox(width: KSpacing.xl),
+                        Expanded(child: titles(CrossAxisAlignment.start)),
+                      ],
+                    )
+                  : Column(
+                      children: <Widget>[
+                        cover,
+                        const SizedBox(height: KSpacing.lg),
+                        titles(CrossAxisAlignment.center),
+                      ],
                     ),
-                  ),
-                  if ((book.subtitle ?? '').isNotEmpty) ...<Widget>[
-                    const SizedBox(height: KSpacing.xs),
-                    Text(
-                      book.subtitle!,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ],
-                  if (book.authors.isNotEmpty) ...<Widget>[
-                    const SizedBox(height: KSpacing.sm),
-                    Text(
-                      book.authors,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                  if (facts.isNotEmpty) ...<Widget>[
-                    const SizedBox(height: KSpacing.xs),
-                    Text(
-                      facts.join(' · '),
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ],
-                ],
-              ),
             ),
           ),
         ),

@@ -54,7 +54,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P10.1
 - [x] P10.2
 - [x] P10.3
-- [ ] P10.4
+- [x] P10.4
 - [ ] P10.5
 - [ ] P10.6
 - [ ] P10.7
@@ -178,3 +178,5 @@ Tick a task only when it is green (see Definition of Green).
 - (P10.3) Fixes it found: library tiles (grid and list) had no spoken label, so a screen reader read nothing useful; each tile is now one labelled button ("Title, by Authors, Status, Lent out, at Place") with tap and long-press actions. The library status dot is now an icon in a coloured disc (it was colour only). The Stats goal ring speaks its percent too ("5 of 12 books, 42 percent"). The Loans tabs scroll at big text or under 360dp instead of overflowing. Buttons now show a 3dp focus ring for keyboard users.
 - (P10.3) Walkthrough scripts for TalkBack and VoiceOver (add, scan, lend, return) and the full list of what is built in are in `docs/A11Y.md`.
 - (P10.3) NOT done: the actual TalkBack and VoiceOver walkthrough, focus rings and Escape in real browsers, and iOS "Larger Accessibility Sizes" on small phones; all need a device or browser session.
+- (P10.4) A device matrix in `test/matrix/` (documented in `docs/QA.md`): every main screen at 9 sizes (320x568 to 1440x900, including a phone on its side) in light and dark, plus 200% text, checked for overflow (260 tests); 91 golden images at the key sizes; and a notch/gesture-bar insets test. It found and fixed: the navigation rail overflowing on short windows (now the bottom bar under 500dp tall), a layout error under reduce-motion on tablet widths (zero-length `AnimatedSize`), generated covers breaking words mid-word, the detail header eating a landscape screen, the blurred backdrop overflowing, content under a landscape notch, loading skeletons overflowing, and the Loans tabs.
+- (P10.4) Goldens are only kept for 7 of the 18 size/theme combinations per screen (5.6 MB); the rest are overflow-checked only. Real devices, foldables (hinge), split-screen and browsers are still to do by hand (list in `docs/QA.md`).

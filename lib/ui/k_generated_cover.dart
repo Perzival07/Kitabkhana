@@ -27,16 +27,28 @@ class KGeneratedCover extends StatelessWidget {
     final base = colorFor(title, palette);
     return LayoutBuilder(
       builder: (context, constraints) {
-        final w = constraints.maxWidth.isFinite ? constraints.maxWidth : 112.0;
+        final width = constraints.maxWidth.isFinite
+            ? constraints.maxWidth
+            : 112.0;
+        // Size everything by the smaller of the width and a 2:3 cover's
+        // width for this height, so a very wide, short area (the blurred
+        // backdrop on a landscape screen) cannot push the text out of it.
+        final height = constraints.maxHeight.isFinite
+            ? constraints.maxHeight
+            : width * 1.5;
+        final w = width < height / 1.5 ? width : height / 1.5;
         final pad = w * 0.11;
         final length = title.trim().length;
-        final titleSize =
+        final baseSize =
             w *
             (length <= 18
                 ? 0.15
                 : length <= 36
                 ? 0.12
                 : 0.1);
+        // Room for text inside the frame and its padding.
+        final room = w - pad * 0.6 * 2 - pad * 0.7 * 2 - 2;
+        final titleSize = _fitLongestWord(context, title, baseSize, room);
         final authorSize = (w * 0.075).clamp(7.0, 18.0);
         return DecoratedBox(
           decoration: BoxDecoration(
@@ -109,5 +121,41 @@ class KGeneratedCover extends StatelessWidget {
         );
       },
     );
+  }
+
+  /// [size], shrunk (but never below 62% of it) so the longest word fits on
+  /// one line instead of breaking in the middle.
+  static double _fitLongestWord(
+    BuildContext context,
+    String title,
+    double size,
+    double room,
+  ) {
+    final words = title.trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty);
+    if (words.isEmpty || room <= 0) return size;
+    final longest = words.reduce((a, b) => a.length >= b.length ? a : b);
+    final painter = TextPainter(
+      text: TextSpan(
+        text: longest,
+        // The same style the title is drawn in, including what it inherits
+        // (letter spacing, for one), or the measure comes out too small.
+        style: DefaultTextStyle.of(context).style.merge(
+          TextStyle(
+            fontFamily: KFonts.serif,
+            fontWeight: FontWeight.w600,
+            fontSize: size,
+            height: 1.12,
+          ),
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+      maxLines: 1,
+    )..layout();
+    final width = painter.width;
+    painter.dispose();
+    // A little slack for rounding.
+    final fitted = room * 0.96;
+    if (width <= fitted) return size;
+    return (size * fitted / width).clamp(size * 0.62, size);
   }
 }

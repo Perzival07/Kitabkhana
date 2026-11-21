@@ -23,6 +23,9 @@ Future<ProviderContainer> pumpRouterApp(
   AppConfig config = const AppConfig.dev(),
   double textScale = 1,
   bool disableAnimations = false,
+
+  /// System insets (a notch, the gesture bar) to simulate.
+  EdgeInsets padding = EdgeInsets.zero,
   List<Override> overrides = const <Override>[],
 }) async {
   tester.view
@@ -63,6 +66,8 @@ Future<ProviderContainer> pumpRouterApp(
       child: MediaQuery(
         data: MediaQueryData(
           size: size,
+          padding: padding,
+          viewPadding: padding,
           textScaler: TextScaler.linear(textScale),
           disableAnimations: disableAnimations,
         ),

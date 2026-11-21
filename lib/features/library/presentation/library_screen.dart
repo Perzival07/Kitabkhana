@@ -423,24 +423,28 @@ class _Fab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reduce = MediaQuery.disableAnimationsOf(context);
+    final fab = extended
+        ? FloatingActionButton.extended(
+            heroTag: 'library-add',
+            onPressed: onPressed,
+            icon: const Icon(Icons.add_rounded),
+            label: Text(label),
+          )
+        : FloatingActionButton(
+            heroTag: 'library-add',
+            tooltip: label,
+            onPressed: onPressed,
+            child: const Icon(Icons.add_rounded),
+          );
+    // With reduced motion the change is instant. (An AnimatedSize with a zero
+    // duration re-dirties its own layout, which Flutter rejects, so it is
+    // left out rather than given no time.)
+    if (context.motion.reduce) return fab;
     return AnimatedSize(
-      duration: reduce ? Duration.zero : KDurations.normal,
+      duration: KDurations.normal,
       curve: KCurves.standard,
       alignment: Alignment.centerRight,
-      child: extended
-          ? FloatingActionButton.extended(
-              heroTag: 'library-add',
-              onPressed: onPressed,
-              icon: const Icon(Icons.add_rounded),
-              label: Text(label),
-            )
-          : FloatingActionButton(
-              heroTag: 'library-add',
-              tooltip: label,
-              onPressed: onPressed,
-              child: const Icon(Icons.add_rounded),
-            ),
+      child: fab,
     );
   }
 }

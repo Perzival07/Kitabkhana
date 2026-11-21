@@ -95,7 +95,9 @@ class _Loading extends StatelessWidget {
   const _Loading();
 
   @override
-  Widget build(BuildContext context) => const Padding(
+  Widget build(BuildContext context) => const SingleChildScrollView(
+    // Placeholders only: they must fit any window, so let them scroll.
+    physics: NeverScrollableScrollPhysics(),
     padding: EdgeInsets.all(KSpacing.screen),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
