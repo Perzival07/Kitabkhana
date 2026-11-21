@@ -87,14 +87,16 @@ They run three ways from the same code:
 * `flutter test test/e2e`: in the ordinary runner (and so in CI's `verify`).
 * `flutter test integration_test --flavor dev -d <device>`: on a device or
   emulator (CI job `e2e-android`).
-* `flutter drive --driver=test_driver/integration_test.dart
-  --target=integration_test/app_test.dart -d web-server --browser-name=chrome`:
-  in a browser (CI job `e2e-web`).
 
-The two CI device jobs run on pushes to `main` and on manual runs, not on every
-pull request. I could not run them here (no emulator or Chrome driver), so
-their first run may need small adjustments; the journeys themselves pass in
-the ordinary runner.
+There is **no browser run** of the journeys. They share test helpers that open a
+native SQLite database (`dart:ffi`), which cannot compile for the web, and a
+first attempt in CI (`flutter drive` on Chrome) failed on exactly that. Doing it
+properly means a web-capable database in the harness; until then the web app
+is covered by the same journeys on the VM and Android, and by the manual checks
+in `docs/WEB_RELEASE.md`.
+
+The emulator job runs on pushes to `main` and on manual runs, not on every pull
+request.
 
 What writing them found: the confirmation toast covered the library's Add
 button (the toast and the button belong to different Scaffolds); the button

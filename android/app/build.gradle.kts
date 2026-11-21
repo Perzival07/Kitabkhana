@@ -18,7 +18,9 @@ val hasReleaseKey = keyProperties.containsKey("storeFile")
 
 android {
     namespace = "com.kitabkhana.kitabkhana"
-    compileSdk = flutter.compileSdkVersion
+    // Plugins (notifications, permissions) and AndroidX 1.19 require compiling
+    // against Android 37, newer than Flutter's default; targetSdk is unchanged.
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
