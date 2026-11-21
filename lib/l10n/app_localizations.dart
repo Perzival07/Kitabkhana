@@ -2116,6 +2116,90 @@ abstract class AppLocalizations {
   /// **'OK'**
   String get ok;
 
+  /// No description provided for @moreExportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export as spreadsheet (CSV)'**
+  String get moreExportCsv;
+
+  /// No description provided for @moreEraseAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase all data'**
+  String get moreEraseAll;
+
+  /// No description provided for @csvPreparing.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing your spreadsheets…'**
+  String get csvPreparing;
+
+  /// No description provided for @csvExportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export as spreadsheet'**
+  String get csvExportTitle;
+
+  /// No description provided for @csvExportWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'books.csv and loans.csv open in Excel, Numbers or Google Sheets. Loans include the names and phone numbers of the people you lent to or borrowed from.'**
+  String get csvExportWarning;
+
+  /// No description provided for @csvExportAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get csvExportAction;
+
+  /// No description provided for @eraseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase all data?'**
+  String get eraseTitle;
+
+  /// No description provided for @eraseBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently deletes every book, loan, quote and reading record, your covers, settings and the backups kept on this device. It cannot be undone. Share a backup first if you might want your library again.'**
+  String get eraseBody;
+
+  /// No description provided for @eraseContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get eraseContinue;
+
+  /// No description provided for @eraseTypeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Type {word} to confirm'**
+  String eraseTypeTitle(String word);
+
+  /// No description provided for @eraseTypeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the word exactly, in capitals.'**
+  String get eraseTypeHint;
+
+  /// No description provided for @eraseAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase everything'**
+  String get eraseAction;
+
+  /// No description provided for @eraseWorking.
+  ///
+  /// In en, this message translates to:
+  /// **'Erasing…'**
+  String get eraseWorking;
+
+  /// No description provided for @eraseDone.
+  ///
+  /// In en, this message translates to:
+  /// **'All data erased. Starting fresh.'**
+  String get eraseDone;
+
   /// No description provided for @paceDaysLeft.
   ///
   /// In en, this message translates to:

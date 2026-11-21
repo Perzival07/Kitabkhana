@@ -56,10 +56,27 @@ class MoreScreen extends ConsumerWidget {
               onTap: () => restoreBackupFlow(context, ref),
             ),
             ListTile(
+              leading: const Icon(Icons.table_chart_outlined),
+              title: Text(l10n.moreExportCsv),
+              onTap: () => exportCsvFlow(context, ref),
+            ),
+            ListTile(
               leading: const Icon(Icons.shelves),
               title: Text(l10n.locationsManage),
               trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () => context.push(Routes.locations),
+            ),
+            const Divider(),
+            ListTile(
+              leading: Icon(
+                Icons.delete_forever_outlined,
+                color: Theme.of(context).colorScheme.error,
+              ),
+              title: Text(
+                l10n.moreEraseAll,
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
+              onTap: () => eraseAllDataFlow(context, ref),
             ),
             if (ref.watch(appConfigProvider).isDev)
               ListTile(

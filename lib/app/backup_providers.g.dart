@@ -228,3 +228,213 @@ final class BackupFilePickerProvider
 }
 
 String _$backupFilePickerHash() => r'b45a50638d4f466efff270d50c34abbb39f5f7f7';
+
+@ProviderFor(exportCsv)
+final exportCsvProvider = ExportCsvProvider._();
+
+final class ExportCsvProvider
+    extends $FunctionalProvider<ExportCsv, ExportCsv, ExportCsv>
+    with $Provider<ExportCsv> {
+  ExportCsvProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'exportCsvProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$exportCsvHash();
+
+  @$internal
+  @override
+  $ProviderElement<ExportCsv> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ExportCsv create(Ref ref) {
+    return exportCsv(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ExportCsv value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ExportCsv>(value),
+    );
+  }
+}
+
+String _$exportCsvHash() => r'80c11311964bc83cff325ef4f8e7fb0e19a90af5';
+
+/// `<documents>/backups` on phones; nothing on the web.
+
+@ProviderFor(backupFolder)
+final backupFolderProvider = BackupFolderProvider._();
+
+/// `<documents>/backups` on phones; nothing on the web.
+
+final class BackupFolderProvider
+    extends $FunctionalProvider<BackupFolder, BackupFolder, BackupFolder>
+    with $Provider<BackupFolder> {
+  /// `<documents>/backups` on phones; nothing on the web.
+  BackupFolderProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'backupFolderProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$backupFolderHash();
+
+  @$internal
+  @override
+  $ProviderElement<BackupFolder> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  BackupFolder create(Ref ref) {
+    return backupFolder(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(BackupFolder value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<BackupFolder>(value),
+    );
+  }
+}
+
+String _$backupFolderHash() => r'7f64e4dc9b4e5c2c651191d42a928c127d19d3ee';
+
+@ProviderFor(backupPrefs)
+final backupPrefsProvider = BackupPrefsProvider._();
+
+final class BackupPrefsProvider
+    extends $FunctionalProvider<BackupPrefs, BackupPrefs, BackupPrefs>
+    with $Provider<BackupPrefs> {
+  BackupPrefsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'backupPrefsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$backupPrefsHash();
+
+  @$internal
+  @override
+  $ProviderElement<BackupPrefs> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  BackupPrefs create(Ref ref) {
+    return backupPrefs(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(BackupPrefs value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<BackupPrefs>(value),
+    );
+  }
+}
+
+String _$backupPrefsHash() => r'c64afed5da088ef78c2c91c471deba603efb1bdf';
+
+@ProviderFor(autoBackup)
+final autoBackupProvider = AutoBackupProvider._();
+
+final class AutoBackupProvider
+    extends $FunctionalProvider<AutoBackup, AutoBackup, AutoBackup>
+    with $Provider<AutoBackup> {
+  AutoBackupProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'autoBackupProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$autoBackupHash();
+
+  @$internal
+  @override
+  $ProviderElement<AutoBackup> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  AutoBackup create(Ref ref) {
+    return autoBackup(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AutoBackup value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AutoBackup>(value),
+    );
+  }
+}
+
+String _$autoBackupHash() => r'6b416048e0b0da69a20920265df2d32b7807036e';
+
+@ProviderFor(eraseAllData)
+final eraseAllDataProvider = EraseAllDataProvider._();
+
+final class EraseAllDataProvider
+    extends $FunctionalProvider<EraseAllData, EraseAllData, EraseAllData>
+    with $Provider<EraseAllData> {
+  EraseAllDataProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'eraseAllDataProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$eraseAllDataHash();
+
+  @$internal
+  @override
+  $ProviderElement<EraseAllData> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  EraseAllData create(Ref ref) {
+    return eraseAllData(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(EraseAllData value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<EraseAllData>(value),
+    );
+  }
+}
+
+String _$eraseAllDataHash() => r'0d010287af7441c2e600bc5cef8a11ce6549b68e';

@@ -16,7 +16,13 @@ abstract interface class ShareService {
     required String name,
     String? mimeType,
   });
+
+  /// Shares several files at once.
+  Future<void> shareFiles(List<ShareableFile> files);
 }
+
+/// A file to hand to the share sheet.
+typedef ShareableFile = ({Uint8List bytes, String name, String? mimeType});
 
 class SharePlusShareService implements ShareService {
   const SharePlusShareService();
@@ -49,4 +55,16 @@ class SharePlusShareService implements ShareService {
       fileNameOverrides: <String>[name],
     ),
   );
+
+  @override
+  Future<void> shareFiles(List<ShareableFile> files) =>
+      SharePlus.instance.share(
+        ShareParams(
+          files: <XFile>[
+            for (final f in files)
+              XFile.fromData(f.bytes, mimeType: f.mimeType, name: f.name),
+          ],
+          fileNameOverrides: <String>[for (final f in files) f.name],
+        ),
+      );
 }

@@ -8,6 +8,7 @@ import '../data/db/database_provider.dart';
 import 'app_config.dart';
 import 'app_config_provider.dart';
 import 'app_root.dart';
+import 'backup_providers.dart';
 import 'error_handling.dart';
 import 'providers.dart';
 import 'reminder_providers.dart';
@@ -54,6 +55,10 @@ Future<void> bootstrap(AppConfig config) async {
   } on Object catch (e) {
     logger.warn('Reminder reconcile failed: $e');
   }
+
+  // Weekly automatic backup (phones only; does nothing on the web, when it is
+  // switched off, or when the last one is recent). Never blocks start-up.
+  unawaited(container.read(autoBackupProvider).runIfDue());
 
   runApp(
     UncontrolledProviderScope(container: container, child: const AppRoot()),

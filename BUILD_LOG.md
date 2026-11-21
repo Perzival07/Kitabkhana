@@ -47,7 +47,7 @@ Tick a task only when it is green (see Definition of Green).
 
 ## Phase 09 — Data & settings
 - [x] P09.1
-- [ ] P09.2
+- [x] P09.2
 - [ ] P09.3
 
 ## Phase 10 — Polish & QA
@@ -157,3 +157,7 @@ Tick a task only when it is green (see Definition of Green).
 - (P09.1) Replace wipes and inserts. Merge: newer `updatedAt` wins per id (higher `rev` breaks a tie, a full tie keeps the local row), so a newer tombstone deletes and an older live row never revives one. Rows that would break a uniqueness rule under another id are folded into the existing one (same tag name, same location name under the same parent, same goal year with the newer target kept, a second active loan for a book is skipped, a repeated tag on a book), with references redirected.
 - (P09.1) Covers are copied after the database commit; a book whose cover file isn't in the archive loses its stale reference, and failed copies are counted in the summary rather than undoing the import. Loan reminders are reconciled afterwards.
 - (P09.1) Not verified on a device: the system file picker (it is not filtered by extension, since phone pickers don't know `.kitab`), the share sheet / web download, and timing on a large library (zipping runs in an isolate, database reads and writes on the main isolate).
+- (P09.2) CSV export (More > Export as spreadsheet): `books.csv` (title, authors, isbn13, status, ownership, location as "Room / Shelf", rating, pages, startedOn, finishedOn, tags joined by "; ") and `loans.csv` (title, authors, direction, person, phone, startedOn, dueOn, returnedOn, note); UTF-8 with a byte-order mark, CRLF line ends, quoting only where needed, so Hindi/Bengali open correctly in Excel. Deleted books and their loans are left out. Text that starts like a formula (`=`, `+`, `@`, a leading tab/return, or `-` before a non-digit) gets a leading apostrophe so spreadsheets don't run it. Headers are always English.
+- (P09.2) Automatic backups (phones only): on app start, if automatic backups are on (default), the library isn't empty and the last backup is 7+ days old or missing, a `.kitab` is written to `<documents>/backups/auto-YYYYMMDD-HHMMSS.kitab` and only the newest 3 `auto-` files are kept (safety copies from restores and other files are never pruned). "Last backup" is stored in `app_meta` (`backup.last_at`) and is also updated when you share a backup by hand. There is no Settings screen yet, so the toggle and the "Last backup: 4 days ago / Back up now" row arrive with P09.3 (the service and preferences are ready: `AutoBackup`, `BackupPrefs`).
+- (P09.2) Erase all data (More, in red): a confirmation, then a second dialog that needs the word DELETE typed exactly (capitals). It clears every table (settings included), cover images, every file in the backups folder and all pending notifications, resets cached settings, and goes to `/onboarding`, which is still a placeholder screen until its phase.
+- (P09.2) Not verified on a device: that the automatic backup runs at launch on a real phone, the CSV files in real Excel/Numbers, and that deleting the backups folder works on iOS and Android file systems. The web has no folder, so there are no automatic backups there.

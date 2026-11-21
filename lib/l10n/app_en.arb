@@ -690,6 +690,27 @@
     }
   },
   "ok": "OK",
+  "moreExportCsv": "Export as spreadsheet (CSV)",
+  "moreEraseAll": "Erase all data",
+  "csvPreparing": "Preparing your spreadsheets…",
+  "csvExportTitle": "Export as spreadsheet",
+  "csvExportWarning": "books.csv and loans.csv open in Excel, Numbers or Google Sheets. Loans include the names and phone numbers of the people you lent to or borrowed from.",
+  "csvExportAction": "Export",
+  "eraseTitle": "Erase all data?",
+  "eraseBody": "This permanently deletes every book, loan, quote and reading record, your covers, settings and the backups kept on this device. It cannot be undone. Share a backup first if you might want your library again.",
+  "eraseContinue": "Continue",
+  "eraseTypeTitle": "Type {word} to confirm",
+  "@eraseTypeTitle": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "eraseTypeHint": "Type the word exactly, in capitals.",
+  "eraseAction": "Erase everything",
+  "eraseWorking": "Erasing…",
+  "eraseDone": "All data erased. Starting fresh.",
   "paceDaysLeft": "{count, plural, =1{About 1 day left at your pace} other{About {count} days left at your pace}}",
   "@paceDaysLeft": {
     "placeholders": {

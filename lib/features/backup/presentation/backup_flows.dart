@@ -3,17 +3,24 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../app/backup_providers.dart';
 import '../../../app/l10n/failure_message.dart';
+import '../../../app/app_providers_reset.dart';
+import '../../../app/providers.dart';
 import '../../../app/quote_providers.dart';
+import '../../../app/router/routes.dart';
 import '../../../app/theme/tokens.dart';
 import '../../../core/failure.dart';
 import '../../../core/result.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../ui/ui.dart';
+import '../../../platform/share/share_service.dart';
 import '../application/backup_codec.dart';
+import '../application/csv_export.dart';
+import '../application/erase_all_data.dart';
 import '../application/export_backup.dart';
 import '../domain/backup_format.dart';
 
@@ -92,6 +99,9 @@ Future<void> exportBackupFlow(BuildContext context, WidgetRef ref) async {
               name: value.name,
               mimeType: 'application/zip',
             );
+        await ref
+            .read(backupPrefsProvider)
+            .setLastBackupAt(ref.read(clockProvider).now());
       } on Object {
         if (context.mounted) _error(context, const UnexpectedFailure('share'));
       }
@@ -226,4 +236,123 @@ Future<void> _showSummary(BuildContext context, ImportSummary s) {
       ],
     ),
   );
+}
+
+/// Builds books.csv and loans.csv and shares them.
+Future<void> exportCsvFlow(BuildContext context, WidgetRef ref) async {
+  final l10n = AppLocalizations.of(context);
+  final ok = await showKConfirmDialog(
+    context: context,
+    title: l10n.csvExportTitle,
+    message: l10n.csvExportWarning,
+    confirmLabel: l10n.csvExportAction,
+    cancelLabel: l10n.cancel,
+  );
+  if (!ok || !context.mounted) return;
+  final made = await _withProgress(
+    context,
+    l10n.csvPreparing,
+    () => ref.read(exportCsvProvider).call(),
+  );
+  if (!context.mounted) return;
+  switch (made) {
+    case Err<List<CsvFile>>(:final failure):
+      _error(context, failure);
+    case Ok<List<CsvFile>>(:final value):
+      try {
+        await ref.read(shareServiceProvider).shareFiles(<ShareableFile>[
+          for (final f in value)
+            (bytes: f.bytes, name: f.name, mimeType: 'text/csv'),
+        ]);
+      } on Object {
+        if (context.mounted) _error(context, const UnexpectedFailure('share'));
+      }
+  }
+}
+
+/// Erases everything after two confirmations (the second asks for the word
+/// DELETE), then returns to the start of the app.
+Future<void> eraseAllDataFlow(BuildContext context, WidgetRef ref) async {
+  final l10n = AppLocalizations.of(context);
+  final first = await showKConfirmDialog(
+    context: context,
+    title: l10n.eraseTitle,
+    message: l10n.eraseBody,
+    confirmLabel: l10n.eraseContinue,
+    cancelLabel: l10n.cancel,
+    destructive: true,
+  );
+  if (!first || !context.mounted) return;
+  final typed = await showDialog<bool>(
+    context: context,
+    builder: (_) => const _TypeToConfirm(),
+  );
+  if (typed != true || !context.mounted) return;
+
+  final messenger = ScaffoldMessenger.of(context);
+  final router = GoRouter.of(context);
+  final r = await _withProgress(
+    context,
+    l10n.eraseWorking,
+    () => ref.read(eraseAllDataProvider).call(),
+  );
+  if (!context.mounted) return;
+  switch (r) {
+    case Err<void>(:final failure):
+      _error(context, failure);
+    case Ok<void>():
+      resetSettingsState(ref);
+      router.go(Routes.onboarding);
+      KToast.showWith(messenger, l10n.eraseDone, icon: Icons.check_rounded);
+  }
+}
+
+class _TypeToConfirm extends StatefulWidget {
+  const _TypeToConfirm();
+
+  @override
+  State<_TypeToConfirm> createState() => _TypeToConfirmState();
+}
+
+class _TypeToConfirmState extends State<_TypeToConfirm> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final cs = Theme.of(context).colorScheme;
+    final ready = isEraseConfirmed(_controller.text);
+    return AlertDialog(
+      title: Text(l10n.eraseTypeTitle(eraseConfirmWord)),
+      content: TextField(
+        controller: _controller,
+        autofocus: true,
+        autocorrect: false,
+        enableSuggestions: false,
+        textCapitalization: TextCapitalization.characters,
+        onChanged: (_) => setState(() {}),
+        decoration: InputDecoration(helperText: l10n.eraseTypeHint),
+      ),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: Text(l10n.cancel),
+        ),
+        FilledButton(
+          style: FilledButton.styleFrom(
+            backgroundColor: cs.error,
+            foregroundColor: cs.onError,
+          ),
+          onPressed: ready ? () => Navigator.of(context).pop(true) : null,
+          child: Text(l10n.eraseAction),
+        ),
+      ],
+    );
+  }
 }

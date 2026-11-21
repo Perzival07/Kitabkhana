@@ -1250,6 +1250,52 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ok => 'OK';
 
   @override
+  String get moreExportCsv => 'Export as spreadsheet (CSV)';
+
+  @override
+  String get moreEraseAll => 'Erase all data';
+
+  @override
+  String get csvPreparing => 'Preparing your spreadsheets…';
+
+  @override
+  String get csvExportTitle => 'Export as spreadsheet';
+
+  @override
+  String get csvExportWarning =>
+      'books.csv and loans.csv open in Excel, Numbers or Google Sheets. Loans include the names and phone numbers of the people you lent to or borrowed from.';
+
+  @override
+  String get csvExportAction => 'Export';
+
+  @override
+  String get eraseTitle => 'Erase all data?';
+
+  @override
+  String get eraseBody =>
+      'This permanently deletes every book, loan, quote and reading record, your covers, settings and the backups kept on this device. It cannot be undone. Share a backup first if you might want your library again.';
+
+  @override
+  String get eraseContinue => 'Continue';
+
+  @override
+  String eraseTypeTitle(String word) {
+    return 'Type $word to confirm';
+  }
+
+  @override
+  String get eraseTypeHint => 'Type the word exactly, in capitals.';
+
+  @override
+  String get eraseAction => 'Erase everything';
+
+  @override
+  String get eraseWorking => 'Erasing…';
+
+  @override
+  String get eraseDone => 'All data erased. Starting fresh.';
+
+  @override
   String paceDaysLeft(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

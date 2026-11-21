@@ -27,4 +27,10 @@ class FakeShareService implements ShareService {
     required String name,
     String? mimeType,
   }) async => files.add((bytes: bytes, name: name));
+
+  final List<List<ShareableFile>> batches = <List<ShareableFile>>[];
+
+  @override
+  Future<void> shareFiles(List<ShareableFile> files) async =>
+      batches.add(files);
 }
