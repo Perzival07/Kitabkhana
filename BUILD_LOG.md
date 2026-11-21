@@ -55,7 +55,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P10.2
 - [x] P10.3
 - [x] P10.4
-- [ ] P10.5
+- [x] P10.5
 - [ ] P10.6
 - [ ] P10.7
 
@@ -180,3 +180,6 @@ Tick a task only when it is green (see Definition of Green).
 - (P10.3) NOT done: the actual TalkBack and VoiceOver walkthrough, focus rings and Escape in real browsers, and iOS "Larger Accessibility Sizes" on small phones; all need a device or browser session.
 - (P10.4) A device matrix in `test/matrix/` (documented in `docs/QA.md`): every main screen at 9 sizes (320x568 to 1440x900, including a phone on its side) in light and dark, plus 200% text, checked for overflow (260 tests); 91 golden images at the key sizes; and a notch/gesture-bar insets test. It found and fixed: the navigation rail overflowing on short windows (now the bottom bar under 500dp tall), a layout error under reduce-motion on tablet widths (zero-length `AnimatedSize`), generated covers breaking words mid-word, the detail header eating a landscape screen, the blurred backdrop overflowing, content under a landscape notch, loading skeletons overflowing, and the Loans tabs.
 - (P10.4) Goldens are only kept for 7 of the 18 size/theme combinations per screen (5.6 MB); the rest are overflow-checked only. Real devices, foldables (hinge), split-screen and browsers are still to do by hand (list in `docs/QA.md`).
+- (P10.5) Added a dev-only bulk seeder (5,000 books incl. Hindi and Bengali titles, 300 loans, 20,000 reading logs, 500 quotes; More > "Seed 5,000 books (dev)") and benchmarks in `test/perf/` (tag `perf`). On the dev machine every query is far inside its budget (search 1-2 ms vs 50; ownership check 2-20 ms vs 500; statistics 0.1-0.2 ms vs 200), the key lookups use their indexes, and the library builds only a screenful of tiles at 5,000 books and pages in more on scroll. So no indexes or query changes were needed. Full table in `docs/PERFORMANCE.md`.
+- (P10.5) Removed unused packages `uuid` and `path` and the unused Fraunces 500 font. Covers were already decoded at thumbnail size.
+- (P10.5) NOT done (needs a low-end Android in profile mode, none here): cold-start time, real frame times while scrolling 5,000 books, and `flutter build apk --analyze-size` (no Android SDK). `docs/PERFORMANCE.md` says exactly how to measure each; use `--split-per-abi` for APKs. These numbers are a best case: a phone is several times slower than this machine.

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/app_config_provider.dart';
 import '../../../app/book_detail_providers.dart';
+import '../../../app/library_providers.dart';
 import '../../../app/add_book_providers.dart';
 import '../../../app/quote_providers.dart';
 import '../../../app/reminder_providers.dart';
@@ -76,6 +77,20 @@ class MoreScreen extends ConsumerWidget {
               title: l10n.moreAbout,
               route: Routes.about,
             ),
+            if (ref.watch(appConfigProvider).isDev)
+              ListTile(
+                leading: const Icon(Icons.dataset_outlined),
+                title: Text(l10n.devSeedPerf),
+                onTap: () async {
+                  final messenger = ScaffoldMessenger.of(context);
+                  KToast.showWith(messenger, l10n.devSeedPerfBusy);
+                  final summary = await ref.read(perfSeederProvider).seed();
+                  KToast.showWith(
+                    messenger,
+                    l10n.devSeedPerfDone(summary.toString()),
+                  );
+                },
+              ),
             if (ref.watch(appConfigProvider).isDev)
               ListTile(
                 leading: const Icon(Icons.notifications_active_outlined),

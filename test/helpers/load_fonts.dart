@@ -6,7 +6,6 @@ Future<void> loadAppFonts() async {
   const families = <String, List<String>>{
     'Fraunces': <String>[
       'assets/fonts/Fraunces-400.ttf',
-      'assets/fonts/Fraunces-500.ttf',
       'assets/fonts/Fraunces-600.ttf',
       'assets/fonts/Fraunces-700.ttf',
       'assets/fonts/Fraunces-Italic-400.ttf',

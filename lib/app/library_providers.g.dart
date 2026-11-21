@@ -548,6 +548,52 @@ abstract class _$LibraryEntrancePlayed extends $Notifier<bool> {
   }
 }
 
+/// Dev-only bulk seeder (5,000 books, loans, logs, quotes) for measuring.
+
+@ProviderFor(perfSeeder)
+final perfSeederProvider = PerfSeederProvider._();
+
+/// Dev-only bulk seeder (5,000 books, loans, logs, quotes) for measuring.
+
+final class PerfSeederProvider
+    extends $FunctionalProvider<PerfSeeder, PerfSeeder, PerfSeeder>
+    with $Provider<PerfSeeder> {
+  /// Dev-only bulk seeder (5,000 books, loans, logs, quotes) for measuring.
+  PerfSeederProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'perfSeederProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$perfSeederHash();
+
+  @$internal
+  @override
+  $ProviderElement<PerfSeeder> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  PerfSeeder create(Ref ref) {
+    return perfSeeder(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PerfSeeder value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PerfSeeder>(value),
+    );
+  }
+}
+
+String _$perfSeederHash() => r'91cdae8e01649408702f47d92d71c242096e822d';
+
 @ProviderFor(demoSeeder)
 final demoSeederProvider = DemoSeederProvider._();
 

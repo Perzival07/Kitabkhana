@@ -2794,6 +2794,24 @@ abstract class AppLocalizations {
   /// **'at {place}'**
   String bookTileAt(String place);
 
+  /// No description provided for @devSeedPerf.
+  ///
+  /// In en, this message translates to:
+  /// **'Seed 5,000 books (dev)'**
+  String get devSeedPerf;
+
+  /// No description provided for @devSeedPerfBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Seeding…'**
+  String get devSeedPerfBusy;
+
+  /// No description provided for @devSeedPerfDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Seeded: {summary}'**
+  String devSeedPerfDone(String summary);
+
   /// No description provided for @paceDaysLeft.
   ///
   /// In en, this message translates to:

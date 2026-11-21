@@ -1650,6 +1650,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get devSeedPerf => 'Seed 5,000 books (dev)';
+
+  @override
+  String get devSeedPerfBusy => 'Seeding…';
+
+  @override
+  String devSeedPerfDone(String summary) {
+    return 'Seeded: $summary';
+  }
+
+  @override
   String paceDaysLeft(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

@@ -900,6 +900,16 @@
       }
     }
   },
+  "devSeedPerf": "Seed 5,000 books (dev)",
+  "devSeedPerfBusy": "Seeding…",
+  "devSeedPerfDone": "Seeded: {summary}",
+  "@devSeedPerfDone": {
+    "placeholders": {
+      "summary": {
+        "type": "String"
+      }
+    }
+  },
   "paceDaysLeft": "{count, plural, =1{About 1 day left at your pace} other{About {count} days left at your pace}}",
   "@paceDaysLeft": {
     "placeholders": {
