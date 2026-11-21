@@ -79,6 +79,16 @@ class MoreScreen extends ConsumerWidget {
             ),
             if (ref.watch(appConfigProvider).isDev)
               ListTile(
+                leading: const Icon(Icons.photo_library_outlined),
+                title: Text(l10n.devSeedStore),
+                onTap: () async {
+                  final messenger = ScaffoldMessenger.of(context);
+                  final n = await ref.read(storeDemoSeederProvider).seed();
+                  KToast.showWith(messenger, l10n.seedDemoDone(n));
+                },
+              ),
+            if (ref.watch(appConfigProvider).isDev)
+              ListTile(
                 leading: const Icon(Icons.dataset_outlined),
                 title: Text(l10n.devSeedPerf),
                 onTap: () async {

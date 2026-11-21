@@ -1650,6 +1650,9 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
+  String get devSeedStore => 'Load store demo data (dev)';
+
+  @override
   String get devSeedPerf => 'Seed 5,000 books (dev)';
 
   @override

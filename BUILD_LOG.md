@@ -60,7 +60,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P10.7
 
 ## Phase 11 — Release
-- [ ] P11.1
+- [x] P11.1
 - [ ] P11.2
 - [ ] P11.3
 - [ ] P11.4
@@ -196,3 +196,10 @@ Tick a task only when it is green (see Definition of Green).
 - Done and tested here: onboarding, motion, accessibility, device matrix, performance benchmarks, six end-to-end journeys, security and privacy hardening.
 - Needs a device, browser or other tool I did not have (each listed in its own entry above and in `docs/QA.md`, `docs/A11Y.md`, `docs/PERFORMANCE.md`, `docs/PRIVACY.md`): TalkBack/VoiceOver walkthrough, profile-mode frame times and cold start, release APK size and merged manifest, foldable hinge, the emulator and Chrome CI jobs, real-browser CSP behaviour.
 - Open small issues: the Reading tab's notion of "today" is fixed when it builds (an app left open past midnight shows yesterday until rebuilt); the iOS backup exclusion above.
+
+## P11.1 Icon, splash, store assets
+- Icon is code-drawn: `lib/ui/brand/book_mark_painter.dart` (ivory open book with a bookmark on a terracotta tile; layers: full, glyph, monochrome). `test/tool/generate_brand_assets_test.dart` (run with `GENERATE_ASSETS=1`) writes `assets/brand/*.png` and the web icons/favicon; `flutter_launcher_icons` and `flutter_native_splash` (configured in `pubspec.yaml`) put them into the Android and iOS projects. Android has adaptive and themed (monochrome) icons; the iOS 1024 icon has no alpha. Golden: `test/ui/goldens/brand_mark.png`.
+- Splash: ivory with the book, dark variant, Android 12 variant. One icon set serves both flavours.
+- The tool rewrote an unrelated Xcode build setting (`ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS`) to an invalid value; I reverted `project.pbxproj`. Re-running the tools needs the same revert. The splash tool also reformatted `Info.plist` indentation (content unchanged apart from the status-bar key).
+- Store screenshots: dev-only `StoreDemoSeeder` (14 public-domain classics, loans due soon/overdue, a 12-day streak, quotes, a goal), loaded via More > "Load store demo data (dev)" or by `test/tool/generate_store_screenshots_test.dart`, which writes 15 framed PNGs (5 captions x phone-ios 1290x2796, phone-play 1080x1920, tablet 2048x2732) to `docs/store/screenshots/`. Store text is in `docs/store/`; `test/store/store_listing_test.dart` checks store length limits and screenshot sizes.
+- Not verified here: how the icon and splash look on a real Android or iOS device (no SDK, Xcode or emulator), Android 12 splash cropping, and the iOS icon in Xcode's asset catalog. The Hindi and Bengali listings are not written.

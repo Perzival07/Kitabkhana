@@ -2794,6 +2794,12 @@ abstract class AppLocalizations {
   /// **'at {place}'**
   String bookTileAt(String place);
 
+  /// No description provided for @devSeedStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Load store demo data (dev)'**
+  String get devSeedStore;
+
   /// No description provided for @devSeedPerf.
   ///
   /// In en, this message translates to:

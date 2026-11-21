@@ -48,7 +48,7 @@ final class ThemeModeControllerProvider
 }
 
 String _$themeModeControllerHash() =>
-    r'df4c91512c1fb8ec4744dd76a234890c956a4759';
+    r'3d0bbdacf9b956e95793d7d2ee083055d6b2263e';
 
 /// The theme the app shows. Changes apply at once and are remembered on this
 /// device.

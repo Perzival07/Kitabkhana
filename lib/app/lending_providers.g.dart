@@ -310,7 +310,7 @@ final class DefaultCountryCodeProvider
 }
 
 String _$defaultCountryCodeHash() =>
-    r'af6ea29da7a1883251c3287998cdcd6e19ee120f';
+    r'532362b6edf11b88425705b740a7bf415a7a8d95';
 
 /// The country code (digits only) assumed for phone numbers typed without
 /// one. Defaults to India (91); stored on this device.

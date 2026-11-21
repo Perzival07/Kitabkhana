@@ -4,6 +4,7 @@ import '../features/lending/domain/loan_direction.dart';
 import '../features/library/application/demo_seeder.dart';
 import '../features/library/application/library_query.dart';
 import '../features/library/application/perf_seeder.dart';
+import '../features/library/application/store_demo_seeder.dart';
 import '../features/library/domain/book.dart';
 import '../features/library/domain/book_enums.dart';
 import '../features/library/domain/book_filter.dart';
@@ -177,6 +178,19 @@ class LibraryEntrancePlayed extends _$LibraryEntrancePlayed {
 /// Dev-only bulk seeder (5,000 books, loans, logs, quotes) for measuring.
 @Riverpod(keepAlive: true)
 PerfSeeder perfSeeder(Ref ref) => PerfSeeder(ref.watch(appDatabaseProvider));
+
+/// Dev-only classics library for store screenshots.
+@Riverpod(keepAlive: true)
+StoreDemoSeeder storeDemoSeeder(Ref ref) => StoreDemoSeeder(
+  books: ref.watch(bookRepositoryProvider),
+  locations: ref.watch(locationRepositoryProvider),
+  loans: ref.watch(loanRepositoryProvider),
+  readings: ref.watch(readingRepositoryProvider),
+  quotes: ref.watch(quoteRepositoryProvider),
+  goals: ref.watch(goalRepositoryProvider),
+  tags: ref.watch(tagRepositoryProvider),
+  clock: ref.watch(clockProvider),
+);
 
 @Riverpod(keepAlive: true)
 DemoSeeder demoSeeder(Ref ref) => DemoSeeder(

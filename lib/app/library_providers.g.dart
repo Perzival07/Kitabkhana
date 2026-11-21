@@ -463,7 +463,7 @@ final class LibraryViewControllerProvider
 }
 
 String _$libraryViewControllerHash() =>
-    r'a2e5d51de29eeaf516674470f6bf38614433e84b';
+    r'e5c5fdb31600df4b15c7c70151985afec0886578';
 
 /// Grid or list, remembered on this device.
 
@@ -593,6 +593,53 @@ final class PerfSeederProvider
 }
 
 String _$perfSeederHash() => r'91cdae8e01649408702f47d92d71c242096e822d';
+
+/// Dev-only classics library for store screenshots.
+
+@ProviderFor(storeDemoSeeder)
+final storeDemoSeederProvider = StoreDemoSeederProvider._();
+
+/// Dev-only classics library for store screenshots.
+
+final class StoreDemoSeederProvider
+    extends
+        $FunctionalProvider<StoreDemoSeeder, StoreDemoSeeder, StoreDemoSeeder>
+    with $Provider<StoreDemoSeeder> {
+  /// Dev-only classics library for store screenshots.
+  StoreDemoSeederProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'storeDemoSeederProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$storeDemoSeederHash();
+
+  @$internal
+  @override
+  $ProviderElement<StoreDemoSeeder> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  StoreDemoSeeder create(Ref ref) {
+    return storeDemoSeeder(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(StoreDemoSeeder value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<StoreDemoSeeder>(value),
+    );
+  }
+}
+
+String _$storeDemoSeederHash() => r'876b054b25a6e82214a26d53616fd4654c1fb461';
 
 @ProviderFor(demoSeeder)
 final demoSeederProvider = DemoSeederProvider._();

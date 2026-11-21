@@ -900,6 +900,7 @@
       }
     }
   },
+  "devSeedStore": "Load store demo data (dev)",
   "devSeedPerf": "Seed 5,000 books (dev)",
   "devSeedPerfBusy": "Seeding…",
   "devSeedPerfDone": "Seeded: {summary}",

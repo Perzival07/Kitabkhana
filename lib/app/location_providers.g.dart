@@ -89,7 +89,7 @@ final class RecentLocationsProvider
   }
 }
 
-String _$recentLocationsHash() => r'f62253a7d240f594f43362aa69a817d95ae74510';
+String _$recentLocationsHash() => r'c960ac8002bf9cac313ab84ca38057a3624bae2f';
 
 /// Ids of recently chosen locations, newest first. Kept on this device.
 
@@ -148,7 +148,7 @@ final class StarterLocationsDoneProvider
 }
 
 String _$starterLocationsDoneHash() =>
-    r'078a9a1b482bcf08bb9a635d5bf6a8c3ec337618';
+    r'2787a638eb68c08468cbaadb8d8a55faac732818';
 
 /// Whether the first-run starter suggestion was accepted or skipped.
 
