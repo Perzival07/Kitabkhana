@@ -112,6 +112,27 @@ void main() {
           await render(const BookMarkPainter(glyphScale: 0.8), px),
         );
       }
+      // Android status-bar (notification) icon: a silhouette on transparent,
+      // 24dp at each density. The system tints it, so it must be one colour.
+      const statDensities = <(String, int)>[
+        ('mdpi', 24),
+        ('hdpi', 36),
+        ('xhdpi', 48),
+        ('xxhdpi', 72),
+        ('xxxhdpi', 96),
+      ];
+      for (final (density, px) in statDensities) {
+        await write(
+          'android/app/src/main/res/drawable-$density/ic_stat_book.png',
+          await render(
+            const BookMarkPainter(
+              layer: BrandLayer.monochrome,
+              glyphScale: 1.32,
+            ),
+            px,
+          ),
+        );
+      }
       await write('web/favicon.png', await render(rounded, 64));
       await write(
         'assets/brand/splash_dark.png',
