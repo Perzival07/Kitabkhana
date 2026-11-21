@@ -1,3 +1,6 @@
+// These tests use ProviderScope as the root of a tiny app, not as a nested
+// scope, so the lint about listing dependencies does not apply.
+// ignore_for_file: scoped_providers_should_specify_dependencies
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
