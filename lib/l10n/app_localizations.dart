@@ -2674,6 +2674,114 @@ abstract class AppLocalizations {
   /// **'Made with care'**
   String get aboutMadeWithCare;
 
+  /// No description provided for @onboardingSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingSkip;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String onboardingStep(int current, int total);
+
+  /// No description provided for @onboarding1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Know what you own'**
+  String get onboarding1Title;
+
+  /// No description provided for @onboarding1Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Every book and every shelf in one calm place, including the ones you have lent out.'**
+  String get onboarding1Body;
+
+  /// No description provided for @onboarding2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Never buy it twice'**
+  String get onboarding2Title;
+
+  /// No description provided for @onboarding2Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a barcode in the shop and Kitabkhana tells you at once whether it is already on your shelf.'**
+  String get onboarding2Body;
+
+  /// No description provided for @onboarding3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your books stay with you'**
+  String get onboarding3Title;
+
+  /// No description provided for @onboarding3Body.
+  ///
+  /// In en, this message translates to:
+  /// **'No account, no sign-up and no tracking. Your library lives on this device, and you decide if it ever leaves.'**
+  String get onboarding3Body;
+
+  /// No description provided for @onboardingPlacesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where do your books live?'**
+  String get onboardingPlacesTitle;
+
+  /// No description provided for @onboardingPlacesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a few places to start with. You can rename or add more any time.'**
+  String get onboardingPlacesBody;
+
+  /// No description provided for @onboardingPlacesUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Use these places'**
+  String get onboardingPlacesUse;
+
+  /// No description provided for @onboardingPlacesSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get onboardingPlacesSkip;
+
+  /// No description provided for @onboardingReadyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You are all set'**
+  String get onboardingReadyTitle;
+
+  /// No description provided for @onboardingReadyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first book, bring your library back from a backup, or just look around.'**
+  String get onboardingReadyBody;
+
+  /// No description provided for @onboardingAddFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first book'**
+  String get onboardingAddFirst;
+
+  /// No description provided for @onboardingRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from backup'**
+  String get onboardingRestore;
+
+  /// No description provided for @onboardingExplore.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore the app'**
+  String get onboardingExplore;
+
   /// No description provided for @paceDaysLeft.
   ///
   /// In en, this message translates to:

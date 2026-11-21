@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kitabkhana/app/library_providers.dart';
 import 'package:kitabkhana/core/failure.dart';
@@ -25,7 +26,7 @@ void main() {
     }
   });
 
-  Future<dynamic> open(WidgetTester t, String at) async {
+  Future<ProviderContainer> open(WidgetTester t, String at) async {
     final c = await pumpRouterApp(
       t,
       size: const Size(420, 900),
@@ -41,7 +42,7 @@ void main() {
     await t.pump(const Duration(milliseconds: 400));
   }
 
-  Loan _loan(String bookId) => Loan.create(
+  Loan makeLoan(String bookId) => Loan.create(
     id: 'ln-$bookId',
     bookId: bookId,
     direction: LoanDirection.lent,
@@ -50,7 +51,7 @@ void main() {
     now: now,
   );
 
-  Location _loc() => Location.create(id: 'loc', name: 'Shelf', now: now);
+  Location makeLoc() => Location.create(id: 'loc', name: 'Shelf', now: now);
 
   Future<void> book(String id, String title) =>
       h.repos.books.upsert(Book.create(id: id, title: title, now: now));
@@ -61,14 +62,14 @@ void main() {
       await t.runAsync(() async {
         await book('a', 'Emma');
         await book('b', 'Dune');
-        await h.repos.loans.startLoan(_loan('a'));
+        await h.repos.loans.startLoan(makeLoan('a'));
         await h.repos.quotes.upsert(
           Quote.create(id: 'q1', bookId: 'a', body: 'x', now: now),
         );
         await h.repos.quotes.upsert(
           Quote.create(id: 'q2', bookId: 'a', body: 'y', now: now),
         );
-        await h.repos.locations.upsert(_loc());
+        await h.repos.locations.upsert(makeLoc());
         await h.repos.tags.createIfAbsent('one');
         await h.repos.tags.createIfAbsent('two');
         await h.repos.tags.createIfAbsent('three');

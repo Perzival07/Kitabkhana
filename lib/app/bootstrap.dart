@@ -12,6 +12,8 @@ import 'backup_providers.dart';
 import 'error_handling.dart';
 import 'providers.dart';
 import 'reminder_providers.dart';
+import 'router/routes.dart';
+import 'settings_providers.dart';
 import 'theme/font_licenses.dart';
 import 'theme/system_ui.dart';
 
@@ -39,6 +41,18 @@ Future<void> bootstrap(AppConfig config) async {
     await container.read(appDatabaseProvider).customSelect('SELECT 1').get();
   } on Object catch (error, stack) {
     logger.error('database failed to open', error: error, stack: stack);
+  }
+
+  // First run (or after erasing everything): open on the introduction.
+  try {
+    final done = await container
+        .read(settingsRepositoryProvider)
+        .onboardingDone();
+    if (!done) {
+      container.read(initialRouteProvider.notifier).set(Routes.onboarding);
+    }
+  } on Object catch (error) {
+    logger.warn('Reading onboarding flag failed: $error');
   }
 
   // Rebuild pending reminders from the loans (after a reboot, an update or

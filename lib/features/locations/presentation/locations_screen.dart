@@ -6,14 +6,15 @@ import '../../../app/add_book_providers.dart';
 import '../../../app/l10n/failure_message.dart';
 import '../../../app/library_providers.dart';
 import '../../../app/location_providers.dart';
+import '../../../app/providers.dart';
 import '../../../app/repositories.dart';
 import '../../../app/router/routes.dart';
 import '../../../app/shell/adaptive_scaffold.dart' show kMaxContentWidth;
 import '../../../app/theme/tokens.dart';
 import '../../../core/result.dart';
-import '../../../core/uuid.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../ui/ui.dart';
+import '../application/starter_locations.dart';
 import '../domain/location.dart';
 import 'location_editor_sheet.dart';
 import 'location_icons.dart';
@@ -89,23 +90,15 @@ class _LocationsScreenState extends ConsumerState<LocationsScreen> {
 
   Future<void> _addStarters() async {
     final l10n = AppLocalizations.of(context);
-    final repo = ref.read(locationRepositoryProvider);
-    final names = <(String, String)>[
-      (l10n.starterLivingRoom, 'shelf'),
-      (l10n.starterBedroom, 'shelf'),
-      (l10n.starterStorage, 'box'),
-    ];
-    for (var i = 0; i < names.length; i++) {
-      await repo.upsert(
-        Location.create(
-          id: uuidV7(),
-          name: names[i].$1,
-          now: DateTime.now(),
-          sortOrder: i,
-          icon: names[i].$2,
-        ),
-      );
-    }
+    await addStarterLocations(
+      ref.read(locationRepositoryProvider),
+      ref.read(clockProvider),
+      <StarterLocation>[
+        StarterLocation(l10n.starterLivingRoom, 'shelf'),
+        StarterLocation(l10n.starterBedroom, 'shelf'),
+        StarterLocation(l10n.starterStorage, 'box'),
+      ],
+    );
     await ref.read(starterLocationsDoneProvider.notifier).markDone();
   }
 

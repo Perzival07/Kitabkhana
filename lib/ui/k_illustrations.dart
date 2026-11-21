@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 /// The line illustrations available to [KEmptyState].
-enum KIllustration { emptyShelf, openBook, scannerFrame, quoteMarks }
+enum KIllustration {
+  emptyShelf,
+  openBook,
+  scannerFrame,
+  quoteMarks,
+
+  /// A phone holding a book, with a lock: your books stay on your device.
+  privateShelf,
+}
 
 /// Draws a [KIllustration] with simple strokes on a 160x160 canvas.
 class KIllustrationPainter extends CustomPainter {
@@ -30,6 +38,8 @@ class KIllustrationPainter extends CustomPainter {
         _scanner(canvas, stroke);
       case KIllustration.quoteMarks:
         _quotes(canvas, stroke);
+      case KIllustration.privateShelf:
+        _private(canvas, stroke);
     }
     canvas.restore();
   }
@@ -140,6 +150,48 @@ class KIllustrationPainter extends CustomPainter {
     mark(88);
     p.strokeWidth = 2.5;
     c.drawLine(const Offset(40, 134), const Offset(120, 134), p);
+  }
+
+  void _private(Canvas c, Paint p) {
+    // The phone.
+    c.drawRRect(
+      RRect.fromRectAndRadius(
+        const Rect.fromLTWH(44, 14, 72, 132),
+        const Radius.circular(14),
+      ),
+      p,
+    );
+    c.drawLine(const Offset(70, 24), const Offset(90, 24), p);
+    // An open book on its screen.
+    final book = Path()
+      ..moveTo(80, 74)
+      ..cubicTo(72, 66, 60, 64, 54, 66)
+      ..lineTo(54, 100)
+      ..cubicTo(60, 98, 72, 100, 80, 108)
+      ..cubicTo(88, 100, 100, 98, 106, 100)
+      ..lineTo(106, 66)
+      ..cubicTo(100, 64, 88, 66, 80, 74)
+      ..close();
+    c
+      ..drawPath(book, p)
+      ..drawLine(const Offset(80, 74), const Offset(80, 108), p);
+    // A little padlock hanging off the phone's corner.
+    final fill = Paint()
+      ..color = p.color
+      ..style = PaintingStyle.fill;
+    c.drawRRect(
+      RRect.fromRectAndRadius(
+        const Rect.fromLTWH(104, 112, 32, 26),
+        const Radius.circular(5),
+      ),
+      fill,
+    );
+    c.drawArc(const Rect.fromLTWH(110, 96, 20, 24), 3.14159, 3.14159, false, p);
+    c.drawCircle(
+      const Offset(120, 124),
+      3,
+      Paint()..color = const Color(0xFFFFFFFF),
+    );
   }
 
   @override

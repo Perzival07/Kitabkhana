@@ -24,4 +24,9 @@ abstract interface class SettingsRepository {
   Future<Result<void>> setReadingReminderEnabled({required bool enabled});
   Future<Result<void>> setReadingReminderTime(DayTime value);
   Future<Result<void>> setCrashReports({required bool enabled});
+
+  /// Whether the first-run introduction has been seen (or skipped).
+  Future<bool> onboardingDone();
+
+  Future<Result<void>> markOnboardingDone();
 }

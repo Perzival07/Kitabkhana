@@ -51,7 +51,7 @@ Tick a task only when it is green (see Definition of Green).
 - [x] P09.3
 
 ## Phase 10 — Polish & QA
-- [ ] P10.1
+- [x] P10.1
 - [ ] P10.2
 - [ ] P10.3
 - [ ] P10.4
@@ -167,3 +167,6 @@ Tick a task only when it is green (see Definition of Green).
 - (P09.3) Crash reports: a switch that is off by default and is only stored; no reporting provider is connected, so nothing is sent either way, and the screen says so. Diagnostics export = versions + the in-memory log lines (already masked for phone numbers and e-mail), never library contents. "Send feedback" opens a mail draft; the recipient comes from `--dart-define=FEEDBACK_EMAIL=…` and is empty by default.
 - (P09.3) Removed my duplicate `app_version.dart`; backups use `kAppVersion` from `app_config.dart` (already tied to pubspec by an existing test).
 - (P09.3) Not verified on a device: the time pickers and the daily reading reminder firing, the mail app opening, and the share sheets. Settings are English only so far.
+- (P10.1) First-run onboarding at `/onboarding`: three intro pages ("Know what you own", "Never buy it twice", "Your books stay with you"), a step to pick starter places (Living room shelf, Bedroom shelf, Storage box; all ticked, untick or skip), then "Add your first book" / "Restore from backup" / "Explore the app". Skip is on every page but the last; page dots with a spoken "Step N of 5"; illustrations are painted in the theme colour (a new `privateShelf` illustration was added); subtle parallax and fade while swiping, switched off (and page changes made instant) under reduce-motion; content is centred and capped at 520dp, scrolls in landscape, and was checked at 320dp with 200% text.
+- (P10.1) Shown once: `bootstrap` reads `onboarding.done` and opens on the introduction when it is not set. Skip, Add first book, Explore and a successful restore all set it; cancelling or failing a restore does not. Erase all data wipes it, so the introduction returns. Tests open the library by default.
+- (P10.1) Fix found along the way: windows shorter than 500dp (a phone on its side) now use the bottom bar instead of the navigation rail, which overflowed by 52dp at 800x360.

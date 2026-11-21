@@ -11,6 +11,11 @@ void main() {
     expect(shellLayoutFor(600), ShellLayout.medium);
     expect(shellLayoutFor(1000), ShellLayout.medium);
     expect(shellLayoutFor(1001), ShellLayout.expanded);
+    // Too short for a rail: the bottom bar, whatever the width.
+    expect(shellLayoutFor(800, height: 360), ShellLayout.compact);
+    expect(shellLayoutFor(1440, height: 499), ShellLayout.compact);
+    expect(shellLayoutFor(800, height: 500), ShellLayout.medium);
+    expect(shellLayoutFor(1280, height: 800), ShellLayout.expanded);
   });
 
   testWidgets('bottom bar at 400dp', (t) async {

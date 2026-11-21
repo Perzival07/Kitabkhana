@@ -6,6 +6,7 @@ import '../features/settings/domain/app_settings.dart';
 import '../features/reminders/application/loan_nudge.dart';
 import '../features/settings/domain/settings_repository.dart';
 import '../platform/notifications/url_nudge_launcher.dart';
+import 'router/routes.dart';
 
 part 'settings_providers.g.dart';
 
@@ -26,3 +27,14 @@ AppSettings appSettings(Ref ref) =>
 /// Opens links and mail apps. Tests swap in a fake.
 @Riverpod(keepAlive: true)
 NudgeLauncher externalLauncher(Ref ref) => const UrlNudgeLauncher();
+
+/// Where the app opens: the introduction on first run (and after erasing
+/// everything), the library otherwise. `bootstrap` sets it before the first
+/// screen; tests leave it at the library.
+@Riverpod(keepAlive: true)
+class InitialRoute extends _$InitialRoute {
+  @override
+  String build() => Routes.library;
+
+  void set(String route) => state = route;
+}

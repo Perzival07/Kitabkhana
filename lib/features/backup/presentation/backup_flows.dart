@@ -109,26 +109,26 @@ Future<void> exportBackupFlow(BuildContext context, WidgetRef ref) async {
 }
 
 /// Picks a backup, checks it, asks merge or replace, imports it and shows
-/// what was imported.
-Future<void> restoreBackupFlow(BuildContext context, WidgetRef ref) async {
+/// what was imported. Returns true when something was imported.
+Future<bool> restoreBackupFlow(BuildContext context, WidgetRef ref) async {
   final l10n = AppLocalizations.of(context);
   final Uint8List? bytes = await ref.read(backupFilePickerProvider).pick();
-  if (bytes == null || !context.mounted) return;
+  if (bytes == null || !context.mounted) return false;
 
   final opened = await _withProgress(
     context,
     l10n.backupOpening,
     () => ref.read(importBackupProvider).open(bytes),
   );
-  if (!context.mounted) return;
+  if (!context.mounted) return false;
   if (opened case Err<BackupContents>(:final failure)) {
     _error(context, failure);
-    return;
+    return false;
   }
   final contents = (opened as Ok<BackupContents>).value;
 
   final mode = await _askMode(context, contents);
-  if (mode == null || !context.mounted) return;
+  if (mode == null || !context.mounted) return false;
   if (mode == ImportMode.replace) {
     final sure = await showKConfirmDialog(
       context: context,
@@ -138,7 +138,7 @@ Future<void> restoreBackupFlow(BuildContext context, WidgetRef ref) async {
       cancelLabel: l10n.cancel,
       destructive: true,
     );
-    if (!sure || !context.mounted) return;
+    if (!sure || !context.mounted) return false;
   }
 
   final done = await _withProgress(
@@ -146,12 +146,14 @@ Future<void> restoreBackupFlow(BuildContext context, WidgetRef ref) async {
     l10n.backupRestoring,
     () => ref.read(importBackupProvider).call(contents, mode),
   );
-  if (!context.mounted) return;
+  if (!context.mounted) return false;
   switch (done) {
     case Err<ImportSummary>(:final failure):
       _error(context, failure);
+      return false;
     case Ok<ImportSummary>(:final value):
       await _showSummary(context, value);
+      return true;
   }
 }
 

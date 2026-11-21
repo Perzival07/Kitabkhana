@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -14,6 +13,7 @@ import '../../features/book/presentation/book_detail_screen.dart';
 import '../../features/lending/presentation/loans_screen.dart';
 import '../../features/locations/presentation/locations_screen.dart';
 import '../../features/more/presentation/more_screen.dart';
+import '../../features/onboarding/presentation/onboarding_screen.dart';
 import '../../features/quotes/presentation/quote_capture_screen.dart';
 import '../../features/settings/presentation/about_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
@@ -22,14 +22,12 @@ import '../../features/quotes/presentation/quotes_screen.dart';
 import '../../features/reading/presentation/reading_screen.dart';
 import '../../features/scan_check/presentation/scan_screen.dart';
 import '../../features/stats/presentation/stats_screen.dart';
-import '../../l10n/app_localizations.dart';
 import '../../ui/gallery/dev_gallery_screen.dart';
 import '../../ui/gallery/dev_lookup_screen.dart';
-import '../../ui/ui.dart';
 import '../app_config.dart';
 import '../app_config_provider.dart';
+import '../settings_providers.dart';
 import '../shell/adaptive_scaffold.dart';
-import '../shell/placeholder_screen.dart';
 import 'not_found_screen.dart';
 import 'routes.dart';
 
@@ -37,23 +35,6 @@ part 'app_router.g.dart';
 
 /// Builds the app's [GoRouter]. Exposed for tests with a custom [initial].
 GoRouter buildRouter(AppConfig config, {String initial = Routes.library}) {
-  Widget stub(
-    String Function(AppLocalizations) title,
-    KIllustration illustration,
-  ) {
-    return Builder(
-      builder: (context) {
-        final l10n = AppLocalizations.of(context);
-        return PlaceholderScreen(
-          illustration: illustration,
-          title: title(l10n),
-          body: l10n.routeStubBody,
-          appBarTitle: title(l10n),
-        );
-      },
-    );
-  }
-
   return GoRouter(
     initialLocation: initial,
     errorBuilder: (context, state) => const NotFoundScreen(),
@@ -164,8 +145,7 @@ GoRouter buildRouter(AppConfig config, {String initial = Routes.library}) {
       GoRoute(path: Routes.about, builder: (_, _) => const AboutScreen()),
       GoRoute(
         path: Routes.onboarding,
-        builder: (_, _) =>
-            stub((l) => l.routeOnboarding, KIllustration.emptyShelf),
+        builder: (_, _) => const OnboardingScreen(),
       ),
       if (config.isDev) ...<RouteBase>[
         GoRoute(
@@ -184,7 +164,10 @@ GoRouter buildRouter(AppConfig config, {String initial = Routes.library}) {
 /// The app router, one per [ProviderScope].
 @Riverpod(keepAlive: true)
 GoRouter appRouter(Ref ref) {
-  final router = buildRouter(ref.watch(appConfigProvider));
+  final router = buildRouter(
+    ref.watch(appConfigProvider),
+    initial: ref.watch(initialRouteProvider),
+  );
   ref.onDispose(router.dispose);
   return router;
 }

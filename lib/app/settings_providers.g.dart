@@ -192,3 +192,69 @@ final class ExternalLauncherProvider
 }
 
 String _$externalLauncherHash() => r'52fe645d0c49bfb3685e74dc4db95a772af7b473';
+
+/// Where the app opens: the introduction on first run (and after erasing
+/// everything), the library otherwise. `bootstrap` sets it before the first
+/// screen; tests leave it at the library.
+
+@ProviderFor(InitialRoute)
+final initialRouteProvider = InitialRouteProvider._();
+
+/// Where the app opens: the introduction on first run (and after erasing
+/// everything), the library otherwise. `bootstrap` sets it before the first
+/// screen; tests leave it at the library.
+final class InitialRouteProvider
+    extends $NotifierProvider<InitialRoute, String> {
+  /// Where the app opens: the introduction on first run (and after erasing
+  /// everything), the library otherwise. `bootstrap` sets it before the first
+  /// screen; tests leave it at the library.
+  InitialRouteProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'initialRouteProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$initialRouteHash();
+
+  @$internal
+  @override
+  InitialRoute create() => InitialRoute();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(String value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<String>(value),
+    );
+  }
+}
+
+String _$initialRouteHash() => r'cf28eb92cafaa3e9f9888c62ec853ddbf6b068ce';
+
+/// Where the app opens: the introduction on first run (and after erasing
+/// everything), the library otherwise. `bootstrap` sets it before the first
+/// screen; tests leave it at the library.
+
+abstract class _$InitialRoute extends $Notifier<String> {
+  String build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<String, String>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<String, String>,
+              String,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

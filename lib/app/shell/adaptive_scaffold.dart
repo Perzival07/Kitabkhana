@@ -11,7 +11,14 @@ import '../library_providers.dart';
 /// Tab layout kinds by window width.
 enum ShellLayout { compact, medium, expanded }
 
-ShellLayout shellLayoutFor(double width) {
+/// A navigation rail needs room for its five destinations; windows shorter
+/// than this (a phone on its side, a split-screen strip) use the bottom bar
+/// whatever their width.
+const double kMinRailHeight = 500;
+
+/// The shell layout for a window of [width] (and [height], when known).
+ShellLayout shellLayoutFor(double width, {double? height}) {
+  if (height != null && height < kMinRailHeight) return ShellLayout.compact;
   if (width < KBreakpoints.compact) return ShellLayout.compact;
   if (width <= KBreakpoints.expanded) return ShellLayout.medium;
   return ShellLayout.expanded;
@@ -52,7 +59,10 @@ class AdaptiveScaffold extends ConsumerWidget {
       child: DisplayFeatureSubScreen(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final layout = shellLayoutFor(constraints.maxWidth);
+            final layout = shellLayoutFor(
+              constraints.maxWidth,
+              height: constraints.maxHeight,
+            );
             return switch (layout) {
               ShellLayout.compact => _compact(context, index),
               ShellLayout.medium => _rail(context, index, extended: false),

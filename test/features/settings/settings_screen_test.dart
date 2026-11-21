@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kitabkhana/app/backup_providers.dart';
@@ -10,7 +11,6 @@ import 'package:kitabkhana/app/theme/theme_mode_provider.dart';
 import 'package:kitabkhana/features/backup/application/auto_backup.dart';
 import 'package:kitabkhana/features/backup/application/export_backup.dart';
 import 'package:kitabkhana/features/backup/data/backup_store.dart';
-import 'package:kitabkhana/features/library/application/library_query.dart';
 import 'package:kitabkhana/features/library/domain/book.dart';
 import 'package:kitabkhana/features/reminders/domain/reminder_plan.dart';
 import 'package:kitabkhana/features/settings/application/diagnostics.dart';
@@ -49,7 +49,7 @@ void main() {
     ),
   ];
 
-  Future<ProviderContainerLike> open(
+  Future<ProviderContainer> open(
     WidgetTester t, {
     String at = '/settings',
     Size size = const Size(420, 900),
@@ -440,8 +440,6 @@ void main() {
     });
   });
 }
-
-typedef ProviderContainerLike = dynamic;
 
 /// Reads the stored automatic-backup flag the way the app does.
 class DbBackupPrefsProbe {

@@ -1579,6 +1579,67 @@ class AppLocalizationsBn extends AppLocalizations {
   String get aboutMadeWithCare => 'Made with care';
 
   @override
+  String get onboardingSkip => 'Skip';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String onboardingStep(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get onboarding1Title => 'Know what you own';
+
+  @override
+  String get onboarding1Body =>
+      'Every book and every shelf in one calm place, including the ones you have lent out.';
+
+  @override
+  String get onboarding2Title => 'Never buy it twice';
+
+  @override
+  String get onboarding2Body =>
+      'Scan a barcode in the shop and Kitabkhana tells you at once whether it is already on your shelf.';
+
+  @override
+  String get onboarding3Title => 'Your books stay with you';
+
+  @override
+  String get onboarding3Body =>
+      'No account, no sign-up and no tracking. Your library lives on this device, and you decide if it ever leaves.';
+
+  @override
+  String get onboardingPlacesTitle => 'Where do your books live?';
+
+  @override
+  String get onboardingPlacesBody =>
+      'Pick a few places to start with. You can rename or add more any time.';
+
+  @override
+  String get onboardingPlacesUse => 'Use these places';
+
+  @override
+  String get onboardingPlacesSkip => 'Not now';
+
+  @override
+  String get onboardingReadyTitle => 'You are all set';
+
+  @override
+  String get onboardingReadyBody =>
+      'Add your first book, bring your library back from a backup, or just look around.';
+
+  @override
+  String get onboardingAddFirst => 'Add your first book';
+
+  @override
+  String get onboardingRestore => 'Restore from backup';
+
+  @override
+  String get onboardingExplore => 'Explore the app';
+
+  @override
   String paceDaysLeft(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

@@ -856,6 +856,34 @@
   "aboutPrivacyPolicy": "Privacy policy",
   "aboutTagline": "A private home for the books you own, lend and love.",
   "aboutMadeWithCare": "Made with care",
+  "onboardingSkip": "Skip",
+  "onboardingNext": "Next",
+  "onboardingStep": "Step {current} of {total}",
+  "@onboardingStep": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "onboarding1Title": "Know what you own",
+  "onboarding1Body": "Every book and every shelf in one calm place, including the ones you have lent out.",
+  "onboarding2Title": "Never buy it twice",
+  "onboarding2Body": "Scan a barcode in the shop and Kitabkhana tells you at once whether it is already on your shelf.",
+  "onboarding3Title": "Your books stay with you",
+  "onboarding3Body": "No account, no sign-up and no tracking. Your library lives on this device, and you decide if it ever leaves.",
+  "onboardingPlacesTitle": "Where do your books live?",
+  "onboardingPlacesBody": "Pick a few places to start with. You can rename or add more any time.",
+  "onboardingPlacesUse": "Use these places",
+  "onboardingPlacesSkip": "Not now",
+  "onboardingReadyTitle": "You are all set",
+  "onboardingReadyBody": "Add your first book, bring your library back from a backup, or just look around.",
+  "onboardingAddFirst": "Add your first book",
+  "onboardingRestore": "Restore from backup",
+  "onboardingExplore": "Explore the app",
   "paceDaysLeft": "{count, plural, =1{About 1 day left at your pace} other{About {count} days left at your pace}}",
   "@paceDaysLeft": {
     "placeholders": {

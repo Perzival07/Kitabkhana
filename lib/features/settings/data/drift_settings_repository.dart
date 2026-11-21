@@ -22,6 +22,7 @@ class DriftSettingsRepository implements SettingsRepository {
   static const readingOnKey = 'settings.reading_reminder';
   static const readingTimeKey = 'settings.reading_reminder_time';
   static const crashKey = 'settings.crash_reports';
+  static const onboardingKey = 'onboarding.done';
 
   AppSettings _from(Map<String, String> m) {
     T pick<T extends Enum>(List<T> values, String? name, T fallback) {
@@ -132,4 +133,15 @@ class DriftSettingsRepository implements SettingsRepository {
   @override
   Future<Result<void>> setCrashReports({required bool enabled}) =>
       _put(crashKey, enabled ? 'on' : 'off');
+
+  @override
+  Future<bool> onboardingDone() async {
+    final row = await (_db.select(
+      _db.appMeta,
+    )..where((t) => t.key.equals(onboardingKey))).getSingleOrNull();
+    return row?.value == '1';
+  }
+
+  @override
+  Future<Result<void>> markOnboardingDone() => _put(onboardingKey, '1');
 }

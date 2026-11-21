@@ -8,6 +8,7 @@ import 'package:kitabkhana/features/backup/application/erase_all_data.dart';
 import 'package:kitabkhana/features/backup/application/export_backup.dart';
 import 'package:kitabkhana/features/backup/data/backup_prefs_store.dart';
 import 'package:kitabkhana/features/backup/data/backup_store.dart';
+import 'package:kitabkhana/features/settings/data/drift_settings_repository.dart';
 import 'package:kitabkhana/features/library/domain/book_enums.dart';
 
 import '../../helpers/fake_backup_folder.dart';
@@ -253,6 +254,14 @@ void main() {
       expect(folder.files, isEmpty);
       expect(scheduler.pending, isEmpty);
       expect((await h.books.search('Dune')).getOrNull(), isEmpty);
+    });
+
+    test('erasing brings the introduction back', () async {
+      final settings = DriftSettingsRepository(h.db);
+      await settings.markOnboardingDone();
+      expect(await settings.onboardingDone(), isTrue);
+      await erase();
+      expect(await settings.onboardingDone(), isFalse);
     });
 
     test('the app works again afterwards', () async {

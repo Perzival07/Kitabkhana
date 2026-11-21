@@ -221,8 +221,9 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
     final text = query.filter.query;
     void open(Book b) {
       // In the shell's two-pane layout the book opens beside the list.
+      final size = MediaQuery.sizeOf(context);
       final twoPane =
-          shellLayoutFor(MediaQuery.sizeOf(context).width) ==
+          shellLayoutFor(size.width, height: size.height) ==
           ShellLayout.expanded;
       if (twoPane) {
         ref.read(selectedBookIdProvider.notifier).select(b.id);
