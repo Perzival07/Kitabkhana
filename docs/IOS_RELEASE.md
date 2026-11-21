@@ -24,19 +24,20 @@ to fix small things on the first run, and treat this file as the plan.
    `false` (the app only uses the system's HTTPS), so TestFlight won't ask the
    export-compliance question on every upload.
 
-## 2. Deployment target and ML Kit
+## 2. Deployment target, ML Kit and CocoaPods
 
 - Deployment target is **iOS 15.0**: the plugins' ML Kit packages (text
-  recognition and barcode scanning) require 15.0, and `mobile_scanner` 12.0.
-  Don't lower it.
-- `ios/Podfile` pins `platform :ios, '15.0'`, forces pods up to 15.0 and
-  declares the flavor configurations. These plugins also ship Swift Package
-  Manager manifests, so Flutter may use SwiftPM instead of CocoaPods for them;
-  both paths are set up.
-- Simulator on Apple Silicon: if a pod complains about `arm64` for the
-  simulator, add `config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] =
-  'i386'` (or, for old ML Kit builds, `arm64`, and run under Rosetta) in the
-  Podfile's `post_install`. Not needed so far; unverified.
+  recognition and barcode scanning) require 15.0. Don't lower it.
+- **There is no `Podfile` on purpose.** Every plugin in the app ships a Swift
+  Package Manager manifest (ML Kit comes from `google-mlkit-swiftpm`), so
+  Flutter builds them as Swift packages and needs no CocoaPods at all. A first
+  attempt with a hand-written `Podfile` failed in CI ("The sandbox is not in sync
+  with the Podfile.lock") because it forced CocoaPods integration onto a project
+  that doesn't use it. If a future plugin has no SwiftPM support, Flutter prints
+  which one; only then add a Podfile (`flutter build ios` can generate one).
+- First build fetches the Swift packages from GitHub (a few minutes).
+- Simulator on Apple Silicon: ML Kit's SwiftPM package is the thing to watch;
+  if it fails for the simulator architecture, say so in BUILD_LOG.
 
 ## 3. Build
 

@@ -233,3 +233,8 @@ Tick a task only when it is green (see Definition of Green).
 - **CI web job** now builds with `--wasm`, as the release does.
 - **iOS privacy manifest** `ios/Runner/PrivacyInfo.xcprivacy` added and registered in `project.pbxproj` by hand (parses; not opened in Xcode).
 - Still open: everything listed in the Phase 11 audit that needs devices, accounts or Xcode/SDKs; Firefox web scanning; Hindi and Bengali translations.
+
+## Production audit
+- **iOS**: first real CI build (macOS runner) failed because my hand-written `ios/Podfile` forced CocoaPods onto a project where every plugin is a Swift package; the Podfile (and the `cocoapods` gem) is removed and `docs/IOS_RELEASE.md` corrected.
+- **Android notifications**: `flutter_local_notifications` keeps reminders as Gson JSON and ships no R8 rules, so a minified build could fail to schedule; rules added to `android/app/proguard-rules.pro`. The notification small icon was the full-colour launcher icon (a solid square on Android); added a monochrome `ic_stat_book` and a resource-shrinker keep rule.
+- New CI: `android-release` (builds the R8 prod APK, checks the manifest for unexpected permissions, installs and launches it on an emulator and fails on crashes), and `integration_test/platform_test.dart` (the real notification scheduler on the emulator).
