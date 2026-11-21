@@ -278,3 +278,128 @@ final class BookPaceFamily extends $Family
   @override
   String toString() => r'bookPaceProvider';
 }
+
+/// Books being read now, most recently read first.
+
+@ProviderFor(currentlyReading)
+final currentlyReadingProvider = CurrentlyReadingProvider._();
+
+/// Books being read now, most recently read first.
+
+final class CurrentlyReadingProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Book>>,
+          List<Book>,
+          Stream<List<Book>>
+        >
+    with $FutureModifier<List<Book>>, $StreamProvider<List<Book>> {
+  /// Books being read now, most recently read first.
+  CurrentlyReadingProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'currentlyReadingProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$currentlyReadingHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<Book>> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<Book>> create(Ref ref) {
+    return currentlyReading(ref);
+  }
+}
+
+String _$currentlyReadingHash() => r'9b3372b4f1de80110adceaf328fd4cce37b676be';
+
+/// A few books from the want-to-read shelf, newest first.
+
+@ProviderFor(upNextBooks)
+final upNextBooksProvider = UpNextBooksProvider._();
+
+/// A few books from the want-to-read shelf, newest first.
+
+final class UpNextBooksProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Book>>,
+          List<Book>,
+          Stream<List<Book>>
+        >
+    with $FutureModifier<List<Book>>, $StreamProvider<List<Book>> {
+  /// A few books from the want-to-read shelf, newest first.
+  UpNextBooksProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'upNextBooksProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$upNextBooksHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<Book>> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<Book>> create(Ref ref) {
+    return upNextBooks(ref);
+  }
+}
+
+String _$upNextBooksHash() => r'76ae21af9048a7b434547b2ff5bc90b2972400e9';
+
+/// Pages read on each of the last 7 days, oldest first (today is last).
+
+@ProviderFor(pagesLast7Days)
+final pagesLast7DaysProvider = PagesLast7DaysProvider._();
+
+/// Pages read on each of the last 7 days, oldest first (today is last).
+
+final class PagesLast7DaysProvider
+    extends
+        $FunctionalProvider<AsyncValue<List<int>>, List<int>, Stream<List<int>>>
+    with $FutureModifier<List<int>>, $StreamProvider<List<int>> {
+  /// Pages read on each of the last 7 days, oldest first (today is last).
+  PagesLast7DaysProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'pagesLast7DaysProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$pagesLast7DaysHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<int>> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<int>> create(Ref ref) {
+    return pagesLast7Days(ref);
+  }
+}
+
+String _$pagesLast7DaysHash() => r'9b1f47c5141c27858cb3f81aff8ff144df8dac5d';

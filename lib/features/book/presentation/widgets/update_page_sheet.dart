@@ -43,6 +43,8 @@ class _UpdatePageBodyState extends State<_UpdatePageBody> {
     });
   }
 
+  void _add(int n) => _step(n);
+
   void _save() {
     final l10n = AppLocalizations.of(context);
     final v = _value;
@@ -103,6 +105,18 @@ class _UpdatePageBodyState extends State<_UpdatePageBody> {
               icon: const Icon(Icons.add_rounded),
               onPressed: () => _step(1),
             ),
+          ],
+        ),
+        const SizedBox(height: KSpacing.md),
+        Wrap(
+          spacing: KSpacing.sm,
+          children: <Widget>[
+            for (final n in const <int>[10, 25])
+              ActionChip(
+                label: Text('+$n'),
+                tooltip: l10n.detailPageAddPages(n),
+                onPressed: () => _add(n),
+              ),
           ],
         ),
         const SizedBox(height: KSpacing.xl),

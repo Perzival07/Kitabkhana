@@ -721,6 +721,89 @@ class AppLocalizationsBn extends AppLocalizations {
   String get detailPageIncrease => 'Next page';
 
   @override
+  String detailPageAddPages(int count) {
+    return 'Add $count pages';
+  }
+
+  @override
+  String get readingGreetingMorning => 'Good morning';
+
+  @override
+  String get readingGreetingAfternoon => 'Good afternoon';
+
+  @override
+  String get readingGreetingEvening => 'Good evening';
+
+  @override
+  String readingStreakDays(int count) {
+    return '$count-day streak';
+  }
+
+  @override
+  String readingStreakLongest(int count) {
+    return 'Longest: $count';
+  }
+
+  @override
+  String get readingCurrentlyReading => 'Currently reading';
+
+  @override
+  String readingPageOf(int current, int total) {
+    return 'Page $current of $total';
+  }
+
+  @override
+  String get readingToday => 'Today';
+
+  @override
+  String readingPagesToday(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pages today',
+      one: '1 page today',
+      zero: 'No pages yet today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String readingLast7Days(int count) {
+    return 'Last 7 days: $count pages';
+  }
+
+  @override
+  String readingOverdueTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count books are out past their date',
+      one: '1 book is out past its date',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get readingOverdueBody => 'See who has them';
+
+  @override
+  String get readingUpNext => 'Up next';
+
+  @override
+  String get readingPickNext => 'Pick your next read';
+
+  @override
+  String get readingPickNextBody =>
+      'Choose something from your want-to-read shelf, or add a new book.';
+
+  @override
+  String get readingPickNextEmptyBody =>
+      'Add a book you want to read and it will wait for you here.';
+
+  @override
+  String get readingAddBook => 'Add a book';
+
+  @override
   String paceDaysLeft(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

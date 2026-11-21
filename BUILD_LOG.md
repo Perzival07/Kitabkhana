@@ -38,7 +38,7 @@ Tick a task only when it is green (see Definition of Green).
 
 ## Phase 07 — Reading & stats
 - [x] P07.1
-- [ ] P07.2
+- [x] P07.2
 - [ ] P07.3
 
 ## Phase 08 — Quotes
@@ -132,3 +132,7 @@ Tick a task only when it is green (see Definition of Green).
 - (P07.1) `UpdateProgress` keeps one log per book per day (`fromPage` = where the day began, `toPage` = now). Going back shrinks or removes today's log; earlier days are never touched. A page past the last is rejected; the last page offers "Mark as finished" in a toast. Updating from Want/Dropped starts the book.
 - (P07.1) Pages-unknown books take a plain page number (a percent can't become pages without a total), so no percent input; no pace shown for them.
 - (P07.1) Pace = pages in the last min(14, days since start) days / that many days; needs 2+ reading days. Shows "About N days left" up to 14 days, else "Finish by Sat, 23 Nov". Streak counts local calendar days, alive if today or yesterday has a log.
+- (P07.2) The Reading tab: greeting by local time (morning before 12:00, afternoon before 17:00), streak badge (hidden at 0), a "Currently reading" carousel with progress ring, page count, pace line and an Update page button, a Today card (pages today + 7-day bars), an Overdue loans card linking to Loans (so Loans is now reachable from here too), and "Up next" (3 want-to-read books). The Update page sheet now has +10 / +25 chips; Detail and the Reading tab share `updateBookPage`.
+- (P07.2) With large text (>=140%) or a single book, reading cards stack vertically instead of swiping sideways. Minutes read are not shown (not tracked).
+- (P07.2) Not built: "Quote of the week" (hidden until quotes exist, P08). Nothing reading and nothing wanted shows an Add a book empty state; nothing reading but books wanted shows "Pick your next read" with those covers.
+- (P07.2) From the Reading card, "Mark as finished" only sets the status (no confetti; that stays on the Detail page).

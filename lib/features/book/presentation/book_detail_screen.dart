@@ -37,10 +37,9 @@ import '../../locations/domain/location.dart';
 import '../../tags/domain/tag.dart';
 import '../../locations/presentation/location_name.dart';
 import '../../locations/presentation/location_picker.dart';
-import '../../reading/application/update_progress.dart';
+import '../../reading/presentation/update_page_flow.dart';
 import '../application/book_progress.dart';
 import 'widgets/celebration.dart';
-import 'widgets/update_page_sheet.dart';
 
 /// A book's page: header, status, progress, location or loan, actions, notes,
 /// tags and details. With [embedded] (the right pane on wide screens) it has
@@ -91,32 +90,14 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
     }
   }
 
-  Future<void> _updatePage(Book book) async {
-    final l10n = AppLocalizations.of(context);
-    final messenger = ScaffoldMessenger.of(context);
-    final page = await showUpdatePageSheet(
-      context,
-      current: book.currentPage,
-      pages: book.pages,
-    );
-    if (page == null) return;
-    final r = await ref.read(updateProgressProvider).call(book.id, page);
-    if (!mounted) return;
-    switch (r) {
-      case Err<ProgressUpdate>(:final failure):
-        _toastError(failure);
-      case Ok<ProgressUpdate>(:final value) when value.reachedEnd:
-        KToast.showWith(
-          messenger,
-          l10n.progressReachedEnd,
-          icon: Icons.auto_stories_rounded,
-          actionLabel: l10n.progressMarkFinished,
-          onAction: () => _setStatus(value.book, ReadStatus.finished),
-        );
-      case Ok<ProgressUpdate>():
-        break;
-    }
-  }
+  Future<void> _updatePage(Book book) => updateBookPage(
+    context,
+    ref,
+    book,
+    onMarkFinished: (b) async {
+      if (mounted) await _setStatus(b, ReadStatus.finished);
+    },
+  );
 
   Future<void> _move(Book book) async {
     final pick = await showLocationPicker(context, selectedId: book.locationId);

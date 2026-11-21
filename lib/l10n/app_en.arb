@@ -365,6 +365,76 @@
   "detailPercentLabel": "Percent read",
   "detailPageDecrease": "Previous page",
   "detailPageIncrease": "Next page",
+  "detailPageAddPages": "Add {count} pages",
+  "@detailPageAddPages": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "readingGreetingMorning": "Good morning",
+  "readingGreetingAfternoon": "Good afternoon",
+  "readingGreetingEvening": "Good evening",
+  "readingStreakDays": "{count}-day streak",
+  "@readingStreakDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "readingStreakLongest": "Longest: {count}",
+  "@readingStreakLongest": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "readingCurrentlyReading": "Currently reading",
+  "readingPageOf": "Page {current} of {total}",
+  "@readingPageOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "readingToday": "Today",
+  "readingPagesToday": "{count, plural, =0{No pages yet today} =1{1 page today} other{{count} pages today}}",
+  "@readingPagesToday": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "readingLast7Days": "Last 7 days: {count} pages",
+  "@readingLast7Days": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "readingOverdueTitle": "{count, plural, =1{1 book is out past its date} other{{count} books are out past their date}}",
+  "@readingOverdueTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "readingOverdueBody": "See who has them",
+  "readingUpNext": "Up next",
+  "readingPickNext": "Pick your next read",
+  "readingPickNextBody": "Choose something from your want-to-read shelf, or add a new book.",
+  "readingPickNextEmptyBody": "Add a book you want to read and it will wait for you here.",
+  "readingAddBook": "Add a book",
   "paceDaysLeft": "{count, plural, =1{About 1 day left at your pace} other{About {count} days left at your pace}}",
   "@paceDaysLeft": {
     "placeholders": {

@@ -1336,6 +1336,114 @@ abstract class AppLocalizations {
   /// **'Next page'**
   String get detailPageIncrease;
 
+  /// No description provided for @detailPageAddPages.
+  ///
+  /// In en, this message translates to:
+  /// **'Add {count} pages'**
+  String detailPageAddPages(int count);
+
+  /// No description provided for @readingGreetingMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning'**
+  String get readingGreetingMorning;
+
+  /// No description provided for @readingGreetingAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon'**
+  String get readingGreetingAfternoon;
+
+  /// No description provided for @readingGreetingEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening'**
+  String get readingGreetingEvening;
+
+  /// No description provided for @readingStreakDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}-day streak'**
+  String readingStreakDays(int count);
+
+  /// No description provided for @readingStreakLongest.
+  ///
+  /// In en, this message translates to:
+  /// **'Longest: {count}'**
+  String readingStreakLongest(int count);
+
+  /// No description provided for @readingCurrentlyReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Currently reading'**
+  String get readingCurrentlyReading;
+
+  /// No description provided for @readingPageOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {current} of {total}'**
+  String readingPageOf(int current, int total);
+
+  /// No description provided for @readingToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get readingToday;
+
+  /// No description provided for @readingPagesToday.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No pages yet today} =1{1 page today} other{{count} pages today}}'**
+  String readingPagesToday(int count);
+
+  /// No description provided for @readingLast7Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 7 days: {count} pages'**
+  String readingLast7Days(int count);
+
+  /// No description provided for @readingOverdueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 book is out past its date} other{{count} books are out past their date}}'**
+  String readingOverdueTitle(int count);
+
+  /// No description provided for @readingOverdueBody.
+  ///
+  /// In en, this message translates to:
+  /// **'See who has them'**
+  String get readingOverdueBody;
+
+  /// No description provided for @readingUpNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Up next'**
+  String get readingUpNext;
+
+  /// No description provided for @readingPickNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick your next read'**
+  String get readingPickNext;
+
+  /// No description provided for @readingPickNextBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose something from your want-to-read shelf, or add a new book.'**
+  String get readingPickNextBody;
+
+  /// No description provided for @readingPickNextEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a book you want to read and it will wait for you here.'**
+  String get readingPickNextEmptyBody;
+
+  /// No description provided for @readingAddBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a book'**
+  String get readingAddBook;
+
   /// No description provided for @paceDaysLeft.
   ///
   /// In en, this message translates to:
