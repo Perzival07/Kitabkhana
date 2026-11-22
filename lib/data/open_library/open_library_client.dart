@@ -22,9 +22,12 @@ import 'open_library_mapper.dart';
 /// book, marked incomplete. `/api/books?jscmd=data` was rejected because it
 /// omits the work key.
 ///
-/// Resilience: shared [RateLimiter]; 8 s timeout; two retries with exponential
-/// backoff and jitter for timeouts and 5xx only; 429 starts a cool-down;
-/// five consecutive failures open a circuit breaker for two minutes.
+/// Resilience: shared [RateLimiter]; 15 s timeout per request (a phone on a
+/// slow mobile connection, talking to a service on another continent, is not
+/// unusual); two retries with exponential backoff and jitter for timeouts and
+/// 5xx only; 429 starts a cool-down; five consecutive failures open a circuit
+/// breaker for 30 seconds, during which calls answer with the last real
+/// failure (so a run of timeouts says "took too long", not "offline").
 class OpenLibraryClient implements BookInfoSource {
   OpenLibraryClient({
     required this._client,
@@ -32,11 +35,11 @@ class OpenLibraryClient implements BookInfoSource {
     this._clock = const SystemClock(),
     this.userAgent,
     this.baseUrl = 'https://openlibrary.org',
-    this.timeout = const Duration(seconds: 8),
+    this.timeout = const Duration(seconds: 15),
     this.maxRetries = 2,
     this.backoffBase = const Duration(milliseconds: 500),
     this.breakerThreshold = 5,
-    this.breakerCooldown = const Duration(minutes: 2),
+    this.breakerCooldown = const Duration(seconds: 30),
     this.defaultRateLimitCooldown = const Duration(seconds: 30),
     this.maxAuthors = 3,
     this._isOnline,
@@ -66,6 +69,7 @@ class OpenLibraryClient implements BookInfoSource {
   int _consecutiveFailures = 0;
   DateTime? _breakerOpenUntil;
   DateTime? _rateLimitedUntil;
+  Failure? _lastFailure;
 
   /// True while the breaker is short-circuiting calls.
   bool get isBreakerOpen {
@@ -98,9 +102,13 @@ class OpenLibraryClient implements BookInfoSource {
       }
     }
 
+    // Authors are independent of each other: fetch them together rather than
+    // one round trip after another (each trip can take seconds on a phone).
+    final authorResults = await Future.wait(<Future<Result<Object?>>>[
+      for (final key in authorKeys.take(maxAuthors)) _getJson('$key.json'),
+    ]);
     final names = <String>[];
-    for (final key in authorKeys.take(maxAuthors)) {
-      final r = await _getJson('$key.json');
+    for (final r in authorResults) {
       final name = r is Ok<Object?>
           ? OpenLibraryMapper.authorName(r.value)
           : null;
@@ -148,7 +156,7 @@ class OpenLibraryClient implements BookInfoSource {
     final now = _clock.now();
     final open = _breakerOpenUntil;
     if (open != null && now.isBefore(open)) {
-      return const Err<Object?>(NetworkFailure.offline());
+      return Err<Object?>(_lastFailure ?? const NetworkFailure.offline());
     }
     final cooldown = _rateLimitedUntil;
     if (cooldown != null && now.isBefore(cooldown)) {
@@ -230,6 +238,7 @@ class OpenLibraryClient implements BookInfoSource {
   }
 
   Err<Object?> _recordFailure(Failure failure) {
+    _lastFailure = failure;
     _consecutiveFailures++;
     if (_consecutiveFailures >= breakerThreshold) {
       _breakerOpenUntil = _clock.now().add(breakerCooldown);

@@ -357,7 +357,7 @@ void main() {
 
   group('circuit breaker', () {
     test(
-      'opens after 5 consecutive failures and short-circuits for 2 minutes',
+      'opens after 5 consecutive failures and short-circuits for 30 seconds',
       () async {
         handler = (_) => throw http.ClientException('down');
         final client = makeClient();
@@ -371,9 +371,27 @@ void main() {
         expect(r.failureOrNull(), const NetworkFailure.offline());
         expect(requests, hasLength(5)); // no call made
 
-        clock.advance(const Duration(minutes: 1, seconds: 59));
+        clock.advance(const Duration(seconds: 29));
         await client.lookupIsbn(isbn);
         expect(requests, hasLength(5));
+      },
+    );
+
+    test(
+      'while open it reports the last real failure, not "offline"',
+      () async {
+        // A slow network is not an offline one: a run of timeouts must not turn
+        // into "you appear to be offline" once the breaker opens.
+        handler = (_) => throw TimeoutException('slow');
+        final client = makeClient();
+        for (var i = 0; i < 5; i++) {
+          await client.lookupIsbn(isbn);
+        }
+        expect(client.isBreakerOpen, isTrue);
+        final before = requests.length;
+        final r = await client.lookupIsbn(isbn);
+        expect(r.failureOrNull(), const NetworkFailure.timeout());
+        expect(requests, hasLength(before)); // short-circuited
       },
     );
 
@@ -397,7 +415,7 @@ void main() {
       expect(client.isBreakerOpen, isTrue);
 
       up = true;
-      clock.advance(const Duration(minutes: 2, seconds: 1));
+      clock.advance(const Duration(seconds: 31));
       expect(client.isBreakerOpen, isFalse);
       expect((await client.lookupIsbn(isbn)).isOk, isTrue);
       expect(client.isBreakerOpen, isFalse);
@@ -415,7 +433,7 @@ void main() {
       for (var i = 0; i < 5; i++) {
         await client.lookupIsbn(isbn);
       }
-      clock.advance(const Duration(minutes: 2, seconds: 1));
+      clock.advance(const Duration(seconds: 31));
       await client.lookupIsbn(isbn); // trial
       expect(client.isBreakerOpen, isTrue);
     });
