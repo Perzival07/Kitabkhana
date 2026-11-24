@@ -76,7 +76,7 @@ jobs:
           flutter build appbundle --release --flavor prod -t lib/main_prod.dart \
             --build-name="${GITHUB_REF_NAME#v}" --build-number="${{ github.run_number }}"
 
-      # The installable APK for the GitHub Release (sideloading, Obtainium).
+      # The installable APK for the GitHub Release (sideloading).
       # Same key as the bundle, so each release installs over the last one.
       - name: Build signed APK
         run: |

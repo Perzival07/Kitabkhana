@@ -33,11 +33,6 @@ lines you love (snap a page, tap the lines, keep the text).
 2. Tap it, and allow your browser to "install unknown apps" when Android asks.
 3. **To update**, download the newer APK and install it over the old one. Your library stays.
 
-**Automatic updates:** install [Obtainium](https://obtainium.imranr.dev), tap *Add App* and
-paste `https://github.com/Perzival07/Kitabkhana`. It checks each new release and updates
-the app for you. The app itself never checks for updates, so the only data it ever sends is
-still the ISBN or title you look up on Open Library.
-
 Every release is signed with the same key, so updates always install over the previous
 version.
 
