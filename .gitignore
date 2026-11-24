@@ -56,3 +56,6 @@ key.properties
 .env
 .env.*
 android/key.properties
+
+# Golden-test failure diffs (written by flutter test, never committed)
+**/failures/*.png

@@ -2722,6 +2722,72 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{No new books added} =1{Added 1 book} other{Added {count} books}}'**
   String importDone(int count);
 
+  /// No description provided for @batchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a shelf'**
+  String get batchTitle;
+
+  /// No description provided for @batchBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan one barcode after another, then add them all at once'**
+  String get batchBody;
+
+  /// No description provided for @batchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan each book\'s barcode; the camera stays open'**
+  String get batchHint;
+
+  /// No description provided for @batchEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Books you scan appear here. Uncheck any you don\'t want.'**
+  String get batchEmpty;
+
+  /// No description provided for @batchOwned.
+  ///
+  /// In en, this message translates to:
+  /// **'Already in your library'**
+  String get batchOwned;
+
+  /// No description provided for @batchNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Not found; add it by hand later'**
+  String get batchNotFound;
+
+  /// No description provided for @batchFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t look it up; check your connection'**
+  String get batchFailed;
+
+  /// No description provided for @batchRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get batchRemove;
+
+  /// No description provided for @batchPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Put them on'**
+  String get batchPlace;
+
+  /// No description provided for @batchAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Add books} =1{Add 1 book} other{Add {count} books}}'**
+  String batchAdd(int count);
+
+  /// No description provided for @batchAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No books added} =1{Added 1 book} other{Added {count} books}}'**
+  String batchAdded(int count);
+
   /// No description provided for @settingsReportProblem.
   ///
   /// In en, this message translates to:

@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/library/presentation/add/add_args.dart';
+import '../../features/library/presentation/add/add_batch_screen.dart';
 import '../../features/library/presentation/add/add_entry_screen.dart';
 import '../../features/library/presentation/add/add_isbn_screen.dart';
 import '../../features/library/presentation/add/add_scan_screen.dart';
@@ -56,6 +57,10 @@ GoRouter buildRouter(AppConfig config, {String initial = Routes.library}) {
                       GoRoute(
                         path: 'scan',
                         builder: (_, _) => const AddScanScreen(),
+                      ),
+                      GoRoute(
+                        path: 'batch',
+                        builder: (_, _) => const AddBatchScreen(),
                       ),
                       GoRoute(
                         path: 'isbn',

@@ -902,6 +902,31 @@
       }
     }
   },
+  "batchTitle": "Scan a shelf",
+  "batchBody": "Scan one barcode after another, then add them all at once",
+  "batchHint": "Scan each book's barcode; the camera stays open",
+  "batchEmpty": "Books you scan appear here. Uncheck any you don't want.",
+  "batchOwned": "Already in your library",
+  "batchNotFound": "Not found; add it by hand later",
+  "batchFailed": "Couldn't look it up; check your connection",
+  "batchRemove": "Remove",
+  "batchPlace": "Put them on",
+  "batchAdd": "{count, plural, =0{Add books} =1{Add 1 book} other{Add {count} books}}",
+  "@batchAdd": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "batchAdded": "{count, plural, =0{No books added} =1{Added 1 book} other{Added {count} books}}",
+  "@batchAdded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "settingsReportProblem": "Report a problem",
   "settingsReportProblemBody": "Email the developer, with recent app messages attached.",
   "crashPromptTitle": "Something went wrong",

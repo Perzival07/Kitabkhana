@@ -97,7 +97,7 @@ once its secrets are added (see [docs/RELEASING.md](docs/RELEASING.md)).
 
 | | |
 | --- | --- |
-| **Add a book four ways** | Barcode scan, typed ISBN (10 or 13), title search in the Open Library catalogue, or by hand. Duplicates are caught before saving. |
+| **Add books five ways** | Barcode scan, **scan a whole shelf in one go**, typed ISBN (10 or 13), title search in the catalogue, or by hand. Duplicates are caught before saving. |
 | **Don't buy it twice** | Scan in a shop: *You own this* (and where it is), *Other edition*, *On your wishlist*, *Lent to Priya*, *Borrowed*, *Did you mean…?* (fuzzy title match), or *Not in your library* with a one-tap "Add to wishlist". Works offline for everything you own. |
 | **Places** | Nested locations ("Bedroom › Shelf 2") with icons, drag to reorder, delete with reassign. |
 | **Lending and borrowing** | Who has it, since when, due when. Local reminders on the due date and 3 days later, WhatsApp / SMS nudges, and a returned book goes back to its own shelf by itself. |
@@ -159,6 +159,10 @@ Enter manually ─────────────────────�
 | :---: | :---: | :---: | :---: | :---: |
 | <img src="docs/screenshots/add-entry.png" width="170"> | <img src="docs/screenshots/add-scan.png" width="170"> | <img src="docs/screenshots/add-isbn.png" width="170"> | <img src="docs/screenshots/add-search.png" width="170"> | <img src="docs/screenshots/add-manual.png" width="170"> |
 
+- **Scan a shelf** (`/library/add/batch`): the camera stays open while you scan book after
+  book. Each barcode is looked up and listed (repeat scans and non-book barcodes are
+  ignored); books already in your library are listed but unticked. Choose a place for all
+  of them, then *Add N books*.
 - **Type ISBN**: numeric keyboard, live ISBN-10/13 validation (checksums), paste button.
 - **Search by title**: 350 ms debounce, loading skeletons, stale answers ignored.
 - **Form**: cover (take or choose a photo), title, subtitle, authors, pages, ISBN, genre,
@@ -595,7 +599,7 @@ presentation  →  application (use cases)  →  domain  ←  data
 | Path | Screen |
 | --- | --- |
 | `/library` | Library (tab) |
-| `/library/add` · `/scan` · `/isbn` · `/search` · `/manual` · `/preview` | Add flow |
+| `/library/add` · `/scan` · `/batch` · `/isbn` · `/search` · `/manual` · `/preview` | Add flow |
 | `/scan` | Scan check (tab) |
 | `/reading` | Reading (tab) |
 | `/stats` | Stats (tab) |

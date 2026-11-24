@@ -1641,6 +1641,59 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
+  String get batchTitle => 'Scan a shelf';
+
+  @override
+  String get batchBody =>
+      'Scan one barcode after another, then add them all at once';
+
+  @override
+  String get batchHint => 'Scan each book\'s barcode; the camera stays open';
+
+  @override
+  String get batchEmpty =>
+      'Books you scan appear here. Uncheck any you don\'t want.';
+
+  @override
+  String get batchOwned => 'Already in your library';
+
+  @override
+  String get batchNotFound => 'Not found; add it by hand later';
+
+  @override
+  String get batchFailed => 'Couldn\'t look it up; check your connection';
+
+  @override
+  String get batchRemove => 'Remove';
+
+  @override
+  String get batchPlace => 'Put them on';
+
+  @override
+  String batchAdd(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Add $count books',
+      one: 'Add 1 book',
+      zero: 'Add books',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String batchAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Added $count books',
+      one: 'Added 1 book',
+      zero: 'No books added',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get settingsReportProblem => 'Report a problem';
 
   @override

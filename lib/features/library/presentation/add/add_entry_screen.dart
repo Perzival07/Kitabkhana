@@ -21,6 +21,12 @@ class AddEntryScreen extends StatelessWidget {
         route: Routes.libraryAddScan,
       ),
       _Option(
+        icon: Icons.burst_mode_outlined,
+        title: l10n.batchTitle,
+        body: l10n.batchBody,
+        route: Routes.libraryAddBatch,
+      ),
+      _Option(
         icon: Icons.pin_outlined,
         title: l10n.addIsbnTitle,
         body: l10n.addIsbnBody,
