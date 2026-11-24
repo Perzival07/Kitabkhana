@@ -39,8 +39,11 @@ class FakePhotoPicker implements PhotoPicker {
 
 /// Everything the add-book screens need, backed by an in-memory database.
 class AddFlowHarness {
-  AddFlowHarness({this.scanCodes = const <String>[], this.cameraOk = true})
-    : clock = FakeClock(DateTime(2025, 3, 10, 9)) {
+  AddFlowHarness({
+    this.scanCodes = const <String>[],
+    this.cameraOk = true,
+    this.cameraFeed,
+  }) : clock = FakeClock(DateTime(2025, 3, 10, 9)) {
     db = createTestDb();
     repos = RepoHarnessForDb(db, clock);
   }
@@ -57,6 +60,9 @@ class AddFlowHarness {
   final FakeNotificationScheduler scheduler = FakeNotificationScheduler();
   final List<String> scanCodes;
   final bool cameraOk;
+
+  /// Stands in for the camera picture when set (screenshots).
+  final WidgetBuilder? cameraFeed;
 
   /// Extra overrides a particular test or journey needs.
   final List<Override> extra = <Override>[];
@@ -79,6 +85,7 @@ class AddFlowHarness {
       unavailable,
     ) {
       if (!cameraOk) return unavailable(context);
+      if (cameraFeed != null) return cameraFeed!(context);
       return Column(
         children: <Widget>[
           for (final code in scanCodes)
