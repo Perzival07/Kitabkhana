@@ -19,10 +19,24 @@ jobs:
   ci:
     uses: ./.github/workflows/ci.yml
 
+  # Which store uploads are set up. A missing secret skips that upload instead
+  # of failing the release, so the GitHub Release (with the APK) always ships.
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      ios: ${{ steps.check.outputs.ios }}
+    steps:
+      - id: check
+        env:
+          ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
+        run: echo "ios=${ASC_KEY_CONTENT:+yes}" >> "$GITHUB_OUTPUT"
+
   android:
     needs: ci
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    env:
+      HAS_PLAY: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -62,16 +76,26 @@ jobs:
           flutter build appbundle --release --flavor prod -t lib/main_prod.dart \
             --build-name="${GITHUB_REF_NAME#v}" --build-number="${{ github.run_number }}"
 
+      # The installable APK for the GitHub Release (sideloading, Obtainium).
+      # Same key as the bundle, so each release installs over the last one.
+      - name: Build signed APK
+        run: |
+          flutter build apk --release --flavor prod -t lib/main_prod.dart \
+            --build-name="${GITHUB_REF_NAME#v}" --build-number="${{ github.run_number }}"
+          cp build/app/outputs/flutter-apk/app-prod-release.apk kitabkhana.apk
+
       - uses: actions/upload-artifact@v4
         with:
           name: android-release
           path: |
             build/app/outputs/bundle/prodRelease/app-prod-release.aab
             build/app/outputs/mapping/prodRelease/mapping.txt
+            kitabkhana.apk
 
       # Internal testing track first; promotion to closed/production is a
       # deliberate step in the Play Console (docs/RELEASING.md).
       - name: Upload to Play (internal track)
+        if: env.HAS_PLAY == 'true'
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
@@ -82,7 +106,8 @@ jobs:
           status: completed
 
   ios:
-    needs: ci
+    needs: [ci, config]
+    if: needs.config.outputs.ios == 'yes'
     runs-on: macos-latest
     timeout-minutes: 60
     steps:
@@ -119,6 +144,8 @@ jobs:
     needs: ci
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      HAS_CLOUDFLARE: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -145,6 +172,7 @@ jobs:
           path: kitabkhana-web.zip
 
       - name: Deploy to Cloudflare Pages
+        if: env.HAS_CLOUDFLARE == 'true'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -153,6 +181,11 @@ jobs:
 
   github-release:
     needs: [android, ios, web]
+    # iOS is skipped until its secrets exist; a skipped job is fine, a failed
+    # one is not.
+    if: >-
+      !cancelled() && needs.android.result == 'success' &&
+      needs.web.result == 'success' && needs.ios.result != 'failure'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -173,5 +206,6 @@ jobs:
           gh release create "$GITHUB_REF_NAME" \
             --title "Kitabkhana ${GITHUB_REF_NAME#v}" \
             --notes-file RELEASE_NOTES.md \
-            artifacts/android-release/bundle/prodRelease/app-prod-release.aab \
+            artifacts/android-release/kitabkhana.apk \
+            artifacts/android-release/build/app/outputs/bundle/prodRelease/app-prod-release.aab \
             artifacts/web-release/kitabkhana-web.zip

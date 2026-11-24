@@ -7,6 +7,14 @@ the first tag. Try it first with a throwaway tag such as `v0.0.1` before 1.0.0.
 
 ## One-time setup
 
+Only the Android signing key is required. The Play upload, the iOS job and the
+Cloudflare deploy each **skip themselves when their secrets are missing**, so a
+tag always produces a GitHub Release with a signed APK
+(`releases/latest/download/kitabkhana.apk`, linked from the README). The upload
+key was created on 2026-11-24 and its four `ANDROID_*` secrets are set; the
+keystore must be backed up outside the repository, because every future APK
+and AAB has to be signed with it.
+
 Do these once; the details are in the linked files.
 
 1. **Android**: upload keystore and Play Console app (docs/ANDROID_RELEASE.md).
@@ -59,7 +67,8 @@ if more than one person can push tags.
    live as soon as its job is done), so check which ones ran.
 6. **Result**: the signed AAB is on the Play **internal** track, the IPA is in
    TestFlight (processing takes some minutes), the web app is live, and a GitHub
-   Release has the changelog, the AAB and `kitabkhana-web.zip`. The changelog is
+   Release has the changelog, `kitabkhana.apk` (signed, installable),
+   the AAB and `kitabkhana-web.zip`. The changelog is
    from conventional commits (`tool/changelog.sh`): `feat`, `fix` and `perf`
    become sections, `test` and `docs` are left out.
 7. **Test the uploaded builds** from the Play internal link and TestFlight on
