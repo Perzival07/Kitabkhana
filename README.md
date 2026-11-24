@@ -4,6 +4,7 @@
 ![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)
 ![Platforms](https://img.shields.io/badge/platforms-Android%20·%20iOS%20·%20Web%20(PWA)-B4532A)
 ![Privacy](https://img.shields.io/badge/accounts-none-1F5C5B)
+![Licence](https://img.shields.io/badge/licence-all%20rights%20reserved-6B6259)
 
 **A private, offline-first home library and reading tracker for Android, iOS and the web.**
 
@@ -90,6 +91,7 @@ once its secrets are added (see [docs/RELEASING.md](docs/RELEASING.md)).
 - [Localisation](#localisation)
 - [Known limits](#known-limits)
 - [Documentation index](#documentation-index)
+- [Licence](#licence)
 
 ---
 
@@ -852,3 +854,13 @@ To add a language, copy `app_en.arb` to `app_<code>.arb`, translate the values (
 | [RELEASING](docs/RELEASING.md) and platform guides | Shipping to Play, App Store and the web |
 | [ADRs](docs/adr/) | UUIDv7 ids · Riverpod 3 · Drift + FTS5 · Inexact reminders · No analytics |
 | [BUILD_LOG](BUILD_LOG.md) · [CHANGELOG](CHANGELOG.md) | How it was built, what changed |
+
+---
+
+## Licence
+
+Copyright © 2026 Perzival07. **All rights reserved.**
+
+The code is shared for viewing only: you may not copy, modify, publish or use it, in
+whole or in part, without written permission. To ask, [open an issue](https://github.com/Perzival07/Kitabkhana/issues).
+Downloading and installing the released app for your own use is fine. See [LICENSE](LICENSE).
