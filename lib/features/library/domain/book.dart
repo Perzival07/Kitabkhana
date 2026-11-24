@@ -177,7 +177,10 @@ final class Book extends Entity {
       startedOn: pick<DateTime>(startedOn, this.startedOn),
       finishedOn: pick<DateTime>(finishedOn, this.finishedOn),
       series: pick<String>(series, this.series),
-      seriesNumber: pick<double>(seriesNumber, this.seriesNumber),
+      // Accept a whole number too (`seriesNumber: 4`).
+      seriesNumber: seriesNumber is num
+          ? seriesNumber.toDouble()
+          : pick<double>(seriesNumber, this.seriesNumber),
     );
   }
 

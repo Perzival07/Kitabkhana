@@ -2,7 +2,7 @@
 enum Flavor { dev, prod }
 
 /// The app version; kept equal to `pubspec.yaml` (a test enforces it).
-const String kAppVersion = '1.0.0';
+const String kAppVersion = '1.1.0';
 
 /// Contact address sent in the Open Library User-Agent, as Open Library asks
 /// API clients to do. Supply with `--dart-define=CONTACT_EMAIL=you@example.com`;

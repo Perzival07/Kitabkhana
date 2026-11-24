@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -10,6 +11,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kitabkhana/app/app_config.dart';
 import 'package:kitabkhana/app/app_config_provider.dart';
 import 'package:kitabkhana/app/app_root.dart';
+import 'package:kitabkhana/app/crash_providers.dart';
+import 'package:kitabkhana/features/backup/data/backup_prefs_store.dart';
+import 'package:kitabkhana/features/crash/domain/crash_report.dart';
+import 'package:kitabkhana/features/library/domain/book.dart';
+import 'package:kitabkhana/platform/crash/crash_store.dart';
 import 'package:kitabkhana/app/library_providers.dart';
 import 'package:kitabkhana/app/router/app_router.dart';
 import 'package:kitabkhana/app/scan_providers.dart';
@@ -44,12 +50,14 @@ void main() {
     _Shot('onboarding-places', '/onboarding', after: _next(3)),
     // Library.
     const _Shot('library-grid', '/library'),
+    const _Shot('library-backup-reminder', '/library', backupReminder: true),
     const _Shot('library-list', '/library', after: _listView),
     _Shot('library-sort', '/library', after: _tapTooltip('Sort')),
     _Shot('library-search', '/library', after: _search('the')),
     // Adding books.
     const _Shot('add-entry', '/library/add'),
     const _Shot('add-scan', '/library/add/scan'),
+    const _Shot('add-batch', '/library/add/batch'),
     const _Shot('add-isbn', '/library/add/isbn'),
     const _Shot('add-search', '/library/add/search', after: _titleSearch),
     const _Shot('add-manual', '/library/add/manual'),
@@ -63,6 +71,7 @@ void main() {
     const _Shot('book-detail-lent', '/book/demo-frankenstein'),
     const _Shot('book-detail-finished', '/book/${StoreDemoSeeder.prideId}'),
     const _Shot('book-detail-wishlist', '/book/demo-little-women'),
+    _Shot('book-detail-series', '/book/demo-jos-boys', after: _scroll(420)),
     _Shot('lend-sheet', '/book/demo-dorian', after: _tapText('Lend')),
     const _Shot('book-edit', '/book/${StoreDemoSeeder.middlemarchId}/edit'),
     const _Shot(
@@ -77,6 +86,7 @@ void main() {
     const _Shot('stats', '/stats'),
     _Shot('stats-more', '/stats', after: _scroll(700)),
     _Shot('goal-sheet', '/stats', after: _tapText('Edit goal')),
+    const _Shot('crash-prompt', '/library', crash: true),
     // More.
     const _Shot('more', '/more'),
     const _Shot('loans-lent', '/loans'),
@@ -159,6 +169,7 @@ void main() {
           year: 1902,
         ),
       ]);
+      final crashes = MemoryCrashStore();
       await t.runAsync(() async {
         await StoreDemoSeeder(
           books: h.repos.books,
@@ -172,6 +183,42 @@ void main() {
         ).seed();
         // A goal the demo year is on pace for.
         await h.repos.goals.setTarget(2026, 7);
+        // A series with a gap: Little Women (1) and Jo's Boys (3).
+        await h.repos.books.update(
+          'demo-little-women',
+          (b) => b.copyWith(series: 'Little Women', seriesNumber: 1),
+        );
+        await h.repos.books.upsert(
+          Book.create(
+            id: 'demo-jos-boys',
+            title: "Jo's Boys",
+            authors: 'Louisa May Alcott',
+            pages: 368,
+            genre: 'Classics',
+            now: DateTime(2026, 1, 5),
+            series: 'Little Women',
+            seriesNumber: 3,
+          ),
+        );
+        if (!shot.backupReminder) {
+          await DbBackupPrefs(h.db).setLastOffDeviceAt(h.clock.now());
+        }
+        if (shot.crash) {
+          await crashes.save(
+            CrashReport(
+              at: h.clock.now(),
+              kind: 'flutter',
+              errorType: 'StateError',
+              message: 'Bad state: example',
+              stack: '',
+              logLines: const <String>[],
+              appVersion: '1.1.0',
+              platform: 'android',
+              osVersion: 'Android 15',
+            ),
+            screenshot: Uint8List.fromList(const <int>[1]),
+          );
+        }
       });
 
       const ratio = 2.0;
@@ -184,6 +231,7 @@ void main() {
         overrides: <Override>[
           appConfigProvider.overrideWithValue(const AppConfig.prod()),
           ...h.overrides,
+          crashStoreProvider.overrideWithValue(crashes),
         ],
       );
       addTearDown(container.dispose);
@@ -305,6 +353,8 @@ class _Shot {
     this.dark = false,
     this.verdict = false,
     this.size = const Size(390, 844),
+    this.backupReminder = false,
+    this.crash = false,
   });
 
   final String name;
@@ -313,4 +363,10 @@ class _Shot {
   final bool dark;
   final bool verdict;
   final Size size;
+
+  /// Leave the "only on this phone" reminder showing in the Library.
+  final bool backupReminder;
+
+  /// Start with a kept problem report, so the crash prompt shows.
+  final bool crash;
 }

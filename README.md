@@ -134,9 +134,9 @@ Borrowed, by place, by tag), five sort orders, and grid or list views. Long-pres
 quick actions with undo. Covers come from Open Library or your own photo. Books without a
 cover get a generated, typeset cover in a colour picked from the title.
 
-| Grid | List | Search | Sort |
-| :---: | :---: | :---: | :---: |
-| <img src="docs/screenshots/library-grid.png" width="200"> | <img src="docs/screenshots/library-list.png" width="200"> | <img src="docs/screenshots/library-search.png" width="200"> | <img src="docs/screenshots/library-sort.png" width="200"> |
+| Grid | List | Search | Sort | Backup reminder |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="docs/screenshots/library-grid.png" width="170"> | <img src="docs/screenshots/library-list.png" width="170"> | <img src="docs/screenshots/library-search.png" width="170"> | <img src="docs/screenshots/library-sort.png" width="170"> | <img src="docs/screenshots/library-backup-reminder.png" width="170"> |
 
 Sort orders: **Recently added, Title, Author, Recently read, Rating.** Grid density
 (*Comfortable* / *Compact*) and the default view are set in Settings.
@@ -155,9 +155,9 @@ Search title ─┴─ result tapped ───────► Preview
 Enter manually ───────────────────────► Manual form
 ```
 
-| Add a book | Scan barcode | Type ISBN | Search by title | Enter manually |
-| :---: | :---: | :---: | :---: | :---: |
-| <img src="docs/screenshots/add-entry.png" width="170"> | <img src="docs/screenshots/add-scan.png" width="170"> | <img src="docs/screenshots/add-isbn.png" width="170"> | <img src="docs/screenshots/add-search.png" width="170"> | <img src="docs/screenshots/add-manual.png" width="170"> |
+| Add a book | Scan barcode | Scan a shelf | Type ISBN | Search by title | Enter manually |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| <img src="docs/screenshots/add-entry.png" width="140"> | <img src="docs/screenshots/add-scan.png" width="140"> | <img src="docs/screenshots/add-batch.png" width="140"> | <img src="docs/screenshots/add-isbn.png" width="140"> | <img src="docs/screenshots/add-search.png" width="140"> | <img src="docs/screenshots/add-manual.png" width="140"> |
 
 - **Scan a shelf** (`/library/add/batch`): the camera stays open while you scan book after
   book. Each barcode is looked up and listed (repeat scans and non-book barcodes are
@@ -184,9 +184,9 @@ a 1–5 star rating and details. Delete has undo. Finishing a book plays a small
 | :---: | :---: | :---: | :---: | :---: |
 | <img src="docs/screenshots/book-detail.png" width="170"> | <img src="docs/screenshots/book-detail-more.png" width="170"> | <img src="docs/screenshots/book-detail-finished.png" width="170"> | <img src="docs/screenshots/book-detail-lent.png" width="170"> | <img src="docs/screenshots/book-detail-wishlist.png" width="170"> |
 
-| Lend sheet | Edit book | Snap a quote |
-| :---: | :---: | :---: |
-| <img src="docs/screenshots/lend-sheet.png" width="200"> | <img src="docs/screenshots/book-edit.png" width="200"> | <img src="docs/screenshots/quote-capture.png" width="200"> |
+| In a series | Lend sheet | Edit book | Snap a quote |
+| :---: | :---: | :---: | :---: |
+| <img src="docs/screenshots/book-detail-series.png" width="200"> | <img src="docs/screenshots/lend-sheet.png" width="200"> | <img src="docs/screenshots/book-edit.png" width="200"> | <img src="docs/screenshots/quote-capture.png" width="200"> |
 
 - **Series**: a book in a series shows "Book 4 of Discworld", the series books you have
   (tap to open) and what is missing ("Missing: 2, 3"). Series come from Open Library
@@ -258,9 +258,9 @@ the **quote of the week**, an overdue-loans banner and "Up next" from your want-
 month (tap a bar to see that month's books), pages per week (last 12 weeks), top genres,
 top authors and library facts. A year switcher covers every year with finished books.
 
-| Stats | Further down | Goal sheet |
-| :---: | :---: | :---: |
-| <img src="docs/screenshots/stats.png" width="200"> | <img src="docs/screenshots/stats-more.png" width="200"> | <img src="docs/screenshots/goal-sheet.png" width="200"> |
+| Stats | Further down | Goal sheet | Year in review |
+| :---: | :---: | :---: | :---: |
+| <img src="docs/screenshots/stats.png" width="200"> | <img src="docs/screenshots/stats-more.png" width="200"> | <img src="docs/screenshots/goal-sheet.png" width="200"> | <img src="docs/screenshots/year-review.png" width="200"> |
 
 **Year in review**: the share button next to the year draws a story-sized card (1080 ×
 1920): books finished, pages read, longest streak, goal, books per month, favourite genre,
@@ -324,6 +324,11 @@ paragraphs. On the web you type the quote instead.
 | <img src="docs/screenshots/more.png" width="200"> | <img src="docs/screenshots/settings.png" width="200"> | <img src="docs/screenshots/settings-more.png" width="200"> | <img src="docs/screenshots/about.png" width="200"> |
 
 **Settings, in full:**
+
+When something has gone wrong, the next launch offers to email a report (see
+[Privacy](#privacy)):
+
+<img src="docs/screenshots/crash-prompt.png" width="220">
 
 | Section | Settings |
 | --- | --- |

@@ -42,6 +42,17 @@ void main() {
       expect(splitSeriesFromTitle('Middlemarch'), isNull);
     });
 
+    test('copyWith takes a whole series number', () {
+      final b = Book.create(
+        id: 'x',
+        title: 'X',
+        now: DateTime(2025),
+      ).copyWith(series: 'S', seriesNumber: 4);
+      expect(b.seriesNumber, 4.0);
+      expect(b.copyWith(seriesNumber: null).seriesNumber, isNull);
+      expect(b.copyWith(title: 'Y').seriesNumber, 4.0);
+    });
+
     test('gaps and numbers', () {
       expect(seriesGaps(<double?>[1, 4, null, 2.5]), <int>[2, 3]);
       expect(seriesGaps(<double?>[1, 2, 3]), isEmpty);

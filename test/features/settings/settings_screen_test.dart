@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kitabkhana/app/app_config.dart' show kAppVersion;
 import 'package:kitabkhana/app/backup_providers.dart';
 import 'package:kitabkhana/app/library_providers.dart';
 import 'package:kitabkhana/app/settings_providers.dart';
@@ -368,7 +369,7 @@ void main() {
     expect(file.name, 'kitabkhana-diagnostics.txt');
     final text = utf8.decode(file.bytes);
     expect(text, contains('diagnostics'));
-    expect(text, contains('App version: 1.0.0'));
+    expect(text, contains('App version: $kAppVersion'));
     expect(text, contains('Database schema:'));
     expect(text, contains('No library contents'));
     expect(text, isNot(contains('Secret')));
@@ -384,7 +385,7 @@ void main() {
     final uri = launcher.opened.single;
     expect(uri.scheme, 'mailto');
     expect(uri.queryParameters['subject'], 'Kitabkhana feedback');
-    expect(uri.queryParameters['body'], contains('1.0.0'));
+    expect(uri.queryParameters['body'], contains(kAppVersion));
     await end(t);
   });
 

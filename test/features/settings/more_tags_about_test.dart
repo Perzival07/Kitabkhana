@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kitabkhana/app/app_config.dart' show kAppVersion;
 import 'package:kitabkhana/app/library_providers.dart';
 import 'package:kitabkhana/core/failure.dart';
 import 'package:kitabkhana/core/result.dart';
@@ -259,7 +260,7 @@ void main() {
     ) async {
       h = AddFlowHarness();
       await open(t, '/about');
-      expect(find.text('Version 1.0.0'), findsOneWidget);
+      expect(find.text('Version $kAppVersion'), findsOneWidget);
       expect(find.text('Open-source licenses'), findsOneWidget);
       expect(find.text('Privacy policy'), findsNothing);
       expect(find.text('Made with care'), findsOneWidget);

@@ -24,7 +24,7 @@ by the Internet Archive) for the book's details, and downloads its cover from
 `covers.openlibrary.org`, which may pass you on to `archive.org`. Those
 requests contain **only the ISBN or the title you searched for**, plus what any
 web request contains: your network address and the app's name and version
-(`Kitabkhana/1.0.0`). They never contain your library, your name, a borrower's
+(`Kitabkhana/1.1.0`). They never contain your library, your name, a borrower's
 name or a phone number. Open Library's own privacy policy applies to what it
 does with those requests. If you never use lookup, nothing is sent.
 
