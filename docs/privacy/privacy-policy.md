@@ -82,8 +82,10 @@ only to fix the problem.
 ## Backups and the cloud
 
 Android's automatic cloud backup and device-to-device copy are **turned off**
-for Kitabkhana, so your library is not copied to Google's servers behind your
-back. To move or keep a copy of your library, use Settings: Share a backup
+for Kitabkhana, and on iPhone and iPad the app's folders are **excluded from
+iCloud and computer backups**, so your library is not copied to Google's or
+Apple's servers behind your back. This also means a new phone does not get
+your library by itself: keep a copy with "Save a copy to…". To move or keep a copy of your library, use Settings: Share a backup
 (a `.kitab` file) or Export as spreadsheet. Automatic weekly backups stay in
 the app's own private storage on your phone, and only the newest three are kept.
 

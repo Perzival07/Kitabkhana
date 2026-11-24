@@ -420,7 +420,7 @@ bar.
 | Problem reports are your choice | After an error, the app keeps a report on the device and asks next time whether to email it to the developer. Your mail app opens with the error, recent app messages and (optionally) a screenshot, and nothing is sent unless you press Send. |
 | Logs never hold library contents | A test checks that every log call at *info* and above uses constant text. The logger also masks phone-like digits and e-mail addresses. |
 | Quote photos are thrown away | The photo goes to a temp file for ML Kit and is deleted in a `finally`. Only the text is kept. |
-| No silent cloud copy (Android) | `allowBackup="false"` and data-extraction rules that exclude every domain. |
+| No silent cloud copy | Android: `allowBackup="false"` and data-extraction rules that exclude every domain. iOS: the app's folders are marked *excluded from backup*, so iCloud and computer backups skip them. |
 | HTTPS only | No cleartext on Android, no ATS exception on iOS, `upgrade-insecure-requests` on the web. |
 | Minimal permissions | Android: `INTERNET`, `CAMERA`, `POST_NOTIFICATIONS`, `RECEIVE_BOOT_COMPLETED`, with **no** exact-alarm permission. iOS: camera and photo library only. |
 | No third-party CDN on the web | Built with `--no-web-resources-cdn`, and the CSP locks scripts to `'self'`. |
@@ -779,8 +779,6 @@ localisations are regenerated on the next build.
 - **Hindi and Bengali** UI translations are empty (see above).
 - **OCR is Latin script only.** `OcrScript` is where Devanagari would go.
 - **Web**: no barcode scanning in Firefox, no OCR, no notifications, no automatic backup.
-- **iOS**: the database is in the documents folder, which iCloud device backup includes.
-  Excluding it needs native code that is not written yet.
 - **Automatic backups** stay in the app's own storage, because apps cannot keep writing to
   a folder outside it. The Library reminds you monthly to *Save a copy* elsewhere.
 - **Release pipeline**: the Play, App Store and Cloudflare jobs have not run end to end yet.

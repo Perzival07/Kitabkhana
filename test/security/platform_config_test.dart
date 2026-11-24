@@ -114,6 +114,14 @@ void main() {
   });
 
   group('iOS', () {
+    test('the library is kept out of iCloud and computer backups', () {
+      final delegate = File('ios/Runner/AppDelegate.swift').readAsStringSync();
+      expect(delegate, contains('isExcludedFromBackup = true'));
+      expect(delegate, contains('.documentDirectory'));
+      expect(delegate, contains('.applicationSupportDirectory'));
+      expect(delegate, contains('excludeLibraryFromDeviceBackup()'));
+    });
+
     test('plain HTTP is not allowed anywhere', () {
       expect(plist, isNot(contains('NSAppTransportSecurity')));
       expect(plist, isNot(contains('NSAllowsArbitraryLoads')));

@@ -15,7 +15,7 @@ every promise in the policy, and what keeps it true.
 | Problem reports leave only by the reader's hand | `CrashRecorder` keeps the first error of a run on the device (`FileCrashStore`); `CrashReportPrompt` asks next launch; `ProblemReporter` opens the reader's own mail app (`flutter_email_sender`), falling back to a `mailto:` link or the share sheet. The app has no way to send mail itself. Tested in `test/features/crash`. |
 | Logs never hold library contents | `test/security/log_privacy_test.dart` checks every log call at info and above uses constant text (or an exception's type); `AppLogger` also masks phone-like digits and e-mail addresses. |
 | The diagnostics export has no library contents | `buildDiagnostics` takes versions and log lines only; `test/features/settings` proves a book's title never appears in it. |
-| No cloud backup of the library | `android:allowBackup="false"`, `android:fullBackupContent="false"` and data-extraction rules excluding every domain (cloud and device transfer); tested in `platform_config_test.dart`. iOS: the database is in the app's documents folder, which iCloud backs up with the device (see "Known gaps"). |
+| No cloud backup of the library | `android:allowBackup="false"`, `android:fullBackupContent="false"` and data-extraction rules excluding every domain (cloud and device transfer); tested in `platform_config_test.dart`. iOS: `AppDelegate.excludeLibraryFromDeviceBackup` marks Documents and Application Support `isExcludedFromBackup` at every launch; tested (by source) in `platform_config_test.dart`. |
 | HTTPS only | Android `usesCleartextTraffic="false"` and a network security config; iOS has no ATS exception; the web policy has `upgrade-insecure-requests` and no `http:` source. |
 | Only the permissions the features need | Android: `INTERNET`, `CAMERA`, `POST_NOTIFICATIONS`, `RECEIVE_BOOT_COMPLETED`, nothing else of ours; **no** `SCHEDULE_EXACT_ALARM` (reminders are inexact on purpose). iOS: camera and photo picker strings only. |
 | The camera photo of a quote is discarded | `MobileOcrService` writes it to a temp file for ML Kit and deletes it in a `finally`; the capture screen drops the bytes once text is read; only text is saved. |
@@ -78,10 +78,5 @@ the matching release.
 
 ## Known gaps
 
-* **iOS backup.** The database lives in the app's documents folder, which iOS
-  includes in iCloud and device backups. The policy's "never sent to our
-  servers" is true (we have none), but Apple's backup would copy the library to
-  the user's own iCloud. To exclude it, set `isExcludedFromBackup` on the
-  database file from native code; not done yet (no Xcode here).
 * The Android merged manifest and the signed iOS build were not inspected here
   (no Android SDK or Xcode); the commands above do it.
