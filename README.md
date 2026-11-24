@@ -4,7 +4,7 @@
 ![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)
 ![Platforms](https://img.shields.io/badge/platforms-Android%20·%20iOS%20·%20Web%20(PWA)-B4532A)
 ![Privacy](https://img.shields.io/badge/accounts-none-1F5C5B)
-![Licence](https://img.shields.io/badge/licence-all%20rights%20reserved-6B6259)
+![Licence: GPL-3.0](https://img.shields.io/badge/licence-GPL--3.0-1F5C5B)
 
 **A private, offline-first home library and reading tracker for Android, iOS and the web.**
 
@@ -859,8 +859,12 @@ To add a language, copy `app_en.arb` to `app_<code>.arb`, translate the values (
 
 ## Licence
 
-Copyright © 2026 Perzival07. **All rights reserved.**
+Copyright © 2026 Perzival07.
 
-The code is shared for viewing only: you may not copy, modify, publish or use it, in
-whole or in part, without written permission. To ask, [open an issue](https://github.com/Perzival07/Kitabkhana/issues).
-Downloading and installing the released app for your own use is fine. See [LICENSE](LICENSE).
+Kitabkhana is **free and open-source software**, released under the
+[GNU General Public License v3.0](LICENSE). You may use, study, change and share it,
+including in your own projects, as long as anything you build from it is also released
+under GPL-3.0 with its source code, and this copyright notice is kept.
+
+Third-party packages keep their own licences: see [docs/LICENSES.md](docs/LICENSES.md) and,
+in the app, Settings › About › Open-source licenses.
