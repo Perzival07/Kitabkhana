@@ -1062,8 +1062,505 @@ i1.GeneratedColumn<i2.Uint8List> _column_57(String aliasedName) =>
       type: i1.DriftSqlType.blob,
       $customConstraints: 'NOT NULL',
     );
+
+final class Schema3 extends i0.VersionedSchema {
+  Schema3({required super.database}) : super(version: 3);
+  @override
+  late final List<i1.DatabaseSchemaEntity> entities = [
+    locations,
+    books,
+    idxBooksIsbn13,
+    idxBooksOlWorkKey,
+    idxBooksTitleKey,
+    idxBooksLocationId,
+    idxBooksOwnershipStatus,
+    readingLogs,
+    idxReadingLogsBookDate,
+    quotes,
+    idxQuotesBookId,
+    loans,
+    idxLoansBookId,
+    idxLoansDueOpen,
+    uqLoansOneActivePerBook,
+    goals,
+    uqGoalsYear,
+    tags,
+    uqTagsName,
+    bookTags,
+    uqBookTagsPair,
+    uqLocationsName,
+    booksFts,
+    lookupCache,
+    appMeta,
+    coverBlobs,
+    readingSessions,
+    readThroughs,
+  ];
+  late final Shape0 locations = Shape0(
+    source: i0.VersionedTable(
+      entityName: 'locations',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_3,
+        _column_4,
+        _column_5,
+        _column_6,
+        _column_7,
+        _column_8,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape12 books = Shape12(
+    source: i0.VersionedTable(
+      entityName: 'books',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [
+        'PRIMARY KEY(id)',
+        'CHECK(pages IS NULL OR pages > 0)',
+        'CHECK(current_page >= 0)',
+        'CHECK(rating IS NULL OR(rating BETWEEN 1 AND 5))',
+        'CHECK(ownership IN (\'owned\', \'wishlist\', \'borrowed\'))',
+        'CHECK(status IN (\'want\', \'reading\', \'finished\', \'dropped\'))',
+      ],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_3,
+        _column_4,
+        _column_9,
+        _column_10,
+        _column_11,
+        _column_12,
+        _column_13,
+        _column_14,
+        _column_15,
+        _column_16,
+        _column_17,
+        _column_18,
+        _column_19,
+        _column_20,
+        _column_21,
+        _column_22,
+        _column_23,
+        _column_24,
+        _column_25,
+        _column_26,
+        _column_27,
+        _column_28,
+        _column_58,
+        _column_59,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  final i1.Index idxBooksIsbn13 = i1.Index(
+    'idx_books_isbn13',
+    'CREATE INDEX idx_books_isbn13 ON books (isbn13)',
+  );
+  final i1.Index idxBooksOlWorkKey = i1.Index(
+    'idx_books_ol_work_key',
+    'CREATE INDEX idx_books_ol_work_key ON books (ol_work_key)',
+  );
+  final i1.Index idxBooksTitleKey = i1.Index(
+    'idx_books_title_key',
+    'CREATE INDEX idx_books_title_key ON books (title_key)',
+  );
+  final i1.Index idxBooksLocationId = i1.Index(
+    'idx_books_location_id',
+    'CREATE INDEX idx_books_location_id ON books (location_id)',
+  );
+  final i1.Index idxBooksOwnershipStatus = i1.Index(
+    'idx_books_ownership_status',
+    'CREATE INDEX idx_books_ownership_status ON books (ownership, status)',
+  );
+  late final Shape2 readingLogs = Shape2(
+    source: i0.VersionedTable(
+      entityName: 'reading_logs',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)', 'CHECK(pages_read > 0)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_3,
+        _column_4,
+        _column_29,
+        _column_30,
+        _column_31,
+        _column_32,
+        _column_33,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  final i1.Index idxReadingLogsBookDate = i1.Index(
+    'idx_reading_logs_book_date',
+    'CREATE INDEX idx_reading_logs_book_date ON reading_logs (book_id, date)',
+  );
+  late final Shape3 quotes = Shape3(
+    source: i0.VersionedTable(
+      entityName: 'quotes',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_3,
+        _column_4,
+        _column_29,
+        _column_34,
+        _column_35,
+        _column_36,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  final i1.Index idxQuotesBookId = i1.Index(
+    'idx_quotes_book_id',
+    'CREATE INDEX idx_quotes_book_id ON quotes (book_id)',
+  );
+  late final Shape4 loans = Shape4(
+    source: i0.VersionedTable(
+      entityName: 'loans',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [
+        'PRIMARY KEY(id)',
+        'CHECK(direction IN (\'lent\', \'borrowed\'))',
+      ],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_3,
+        _column_4,
+        _column_29,
+        _column_37,
+        _column_38,
+        _column_39,
+        _column_40,
+        _column_41,
+        _column_42,
+        _column_43,
+        _column_44,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  final i1.Index idxLoansBookId = i1.Index(
+    'idx_loans_book_id',
+    'CREATE INDEX idx_loans_book_id ON loans (book_id)',
+  );
+  final i1.Index idxLoansDueOpen = i1.Index(
+    'idx_loans_due_open',
+    'CREATE INDEX idx_loans_due_open ON loans (due_on) WHERE returned_on IS NULL',
+  );
+  final i1.Index uqLoansOneActivePerBook = i1.Index(
+    'uq_loans_one_active_per_book',
+    'CREATE UNIQUE INDEX uq_loans_one_active_per_book ON loans (book_id) WHERE returned_on IS NULL AND deleted_at IS NULL',
+  );
+  late final Shape5 goals = Shape5(
+    source: i0.VersionedTable(
+      entityName: 'goals',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)', 'CHECK(target_books > 0)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_3,
+        _column_4,
+        _column_45,
+        _column_46,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  final i1.Index uqGoalsYear = i1.Index(
+    'uq_goals_year',
+    'CREATE UNIQUE INDEX uq_goals_year ON goals (year) WHERE deleted_at IS NULL',
+  );
+  late final Shape6 tags = Shape6(
+    source: i0.VersionedTable(
+      entityName: 'tags',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_3,
+        _column_4,
+        _column_5,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  final i1.Index uqTagsName = i1.Index(
+    'uq_tags_name',
+    'CREATE UNIQUE INDEX uq_tags_name ON tags (lower(name)) WHERE deleted_at IS NULL',
+  );
+  late final Shape7 bookTags = Shape7(
+    source: i0.VersionedTable(
+      entityName: 'book_tags',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_3,
+        _column_4,
+        _column_29,
+        _column_47,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  final i1.Index uqBookTagsPair = i1.Index(
+    'uq_book_tags_pair',
+    'CREATE UNIQUE INDEX uq_book_tags_pair ON book_tags (book_id, tag_id) WHERE deleted_at IS NULL',
+  );
+  final i1.Index uqLocationsName = i1.Index(
+    'uq_locations_name',
+    'CREATE UNIQUE INDEX uq_locations_name ON locations (lower(name), coalesce(parent_id, \'\')) WHERE deleted_at IS NULL',
+  );
+  late final Shape8 booksFts = Shape8(
+    source: i0.VersionedVirtualTable(
+      entityName: 'books_fts',
+      moduleAndArgs: 'fts5(title, subtitle, authors, content = \'books\', content_rowid = \'rowid\', tokenize = \'unicode61 remove_diacritics 2\')',
+      columns: [_column_48, _column_49, _column_50],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape9 lookupCache = Shape9(
+    source: i0.VersionedTable(
+      entityName: 'lookup_cache',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY("key")'],
+      columns: [_column_51, _column_52, _column_53, _column_54],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape10 appMeta = Shape10(
+    source: i0.VersionedTable(
+      entityName: 'app_meta',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY("key")'],
+      columns: [_column_51, _column_55],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape11 coverBlobs = Shape11(
+    source: i0.VersionedTable(
+      entityName: 'cover_blobs',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(book_id)'],
+      columns: [_column_56, _column_57, _column_2],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape13 readingSessions = Shape13(
+    source: i0.VersionedTable(
+      entityName: 'reading_sessions',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [
+        'PRIMARY KEY(id)',
+        'CHECK(minutes > 0 AND minutes <= 1440)',
+      ],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_3,
+        _column_4,
+        _column_29,
+        _column_30,
+        _column_60,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape14 readThroughs = Shape14(
+    source: i0.VersionedTable(
+      entityName: 'read_throughs',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_3,
+        _column_4,
+        _column_29,
+        _column_27,
+        _column_28,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+}
+
+class Shape12 extends i0.VersionedTable {
+  Shape12({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<String> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get createdAt =>
+      columnsByName['created_at']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get updatedAt =>
+      columnsByName['updated_at']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get deletedAt =>
+      columnsByName['deleted_at']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<int> get rev =>
+      columnsByName['rev']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get isbn13 =>
+      columnsByName['isbn13']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get olWorkKey =>
+      columnsByName['ol_work_key']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get title =>
+      columnsByName['title']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get subtitle =>
+      columnsByName['subtitle']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get authors =>
+      columnsByName['authors']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get titleKey =>
+      columnsByName['title_key']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get coverUrl =>
+      columnsByName['cover_url']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get coverLocalPath =>
+      columnsByName['cover_local_path']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<int> get pages =>
+      columnsByName['pages']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get genre =>
+      columnsByName['genre']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get language =>
+      columnsByName['language']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get ownership =>
+      columnsByName['ownership']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get status =>
+      columnsByName['status']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<int> get currentPage =>
+      columnsByName['current_page']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get rating =>
+      columnsByName['rating']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get locationId =>
+      columnsByName['location_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get ownerName =>
+      columnsByName['owner_name']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get notes =>
+      columnsByName['notes']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get startedOn =>
+      columnsByName['started_on']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get finishedOn =>
+      columnsByName['finished_on']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get series =>
+      columnsByName['series']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get seriesNumber =>
+      columnsByName['series_number']! as i1.GeneratedColumn<double>;
+}
+
+i1.GeneratedColumn<String> _column_58(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'series',
+      aliasedName,
+      true,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NULL',
+    );
+i1.GeneratedColumn<double> _column_59(String aliasedName) =>
+    i1.GeneratedColumn<double>(
+      'series_number',
+      aliasedName,
+      true,
+      type: i1.DriftSqlType.double,
+      $customConstraints: 'NULL',
+    );
+
+class Shape13 extends i0.VersionedTable {
+  Shape13({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<String> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get createdAt =>
+      columnsByName['created_at']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get updatedAt =>
+      columnsByName['updated_at']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get deletedAt =>
+      columnsByName['deleted_at']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<int> get rev =>
+      columnsByName['rev']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get bookId =>
+      columnsByName['book_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get date =>
+      columnsByName['date']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<int> get minutes =>
+      columnsByName['minutes']! as i1.GeneratedColumn<int>;
+}
+
+i1.GeneratedColumn<int> _column_60(String aliasedName) =>
+    i1.GeneratedColumn<int>(
+      'minutes',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.int,
+      $customConstraints: 'NOT NULL',
+    );
+
+class Shape14 extends i0.VersionedTable {
+  Shape14({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<String> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get createdAt =>
+      columnsByName['created_at']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get updatedAt =>
+      columnsByName['updated_at']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get deletedAt =>
+      columnsByName['deleted_at']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<int> get rev =>
+      columnsByName['rev']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get bookId =>
+      columnsByName['book_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get startedOn =>
+      columnsByName['started_on']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get finishedOn =>
+      columnsByName['finished_on']! as i1.GeneratedColumn<String>;
+}
+
 i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema2 schema) from1To2,
+  required Future<void> Function(i1.Migrator m, Schema3 schema) from2To3,
 }) {
   return (currentVersion, database) async {
     switch (currentVersion) {
@@ -1072,6 +1569,11 @@ i0.MigrationStepWithVersion migrationSteps({
         final migrator = i1.Migrator(database, schema);
         await from1To2(migrator, schema);
         return 2;
+      case 2:
+        final schema = Schema3(database: database);
+        final migrator = i1.Migrator(database, schema);
+        await from2To3(migrator, schema);
+        return 3;
       default:
         throw ArgumentError.value('Unknown migration from $currentVersion');
     }
@@ -1080,6 +1582,7 @@ i0.MigrationStepWithVersion migrationSteps({
 
 i1.OnUpgrade stepByStep({
   required Future<void> Function(i1.Migrator m, Schema2 schema) from1To2,
+  required Future<void> Function(i1.Migrator m, Schema3 schema) from2To3,
 }) => i0.VersionedSchema.stepByStepHelper(
-  step: migrationSteps(from1To2: from1To2),
+  step: migrationSteps(from1To2: from1To2, from2To3: from2To3),
 );

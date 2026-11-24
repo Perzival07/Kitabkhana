@@ -5,7 +5,10 @@ import '../features/library/domain/book_enums.dart';
 import '../features/library/domain/book_filter.dart';
 import '../features/reading/application/update_progress.dart';
 import '../features/reading/domain/pace.dart';
+import '../data/db/database_provider.dart';
+import '../features/reading/data/drift_reading_sessions.dart';
 import '../features/reading/domain/reading_log.dart';
+import '../features/reading/domain/reading_timer.dart';
 import '../features/reading/domain/streak.dart';
 import 'providers.dart';
 import 'repositories.dart';
@@ -90,3 +93,70 @@ Stream<List<int>> pagesLast7Days(Ref ref) {
     return totals;
   });
 }
+
+@Riverpod(keepAlive: true)
+ReadingSessionRepository readingSessionRepository(Ref ref) =>
+    DriftReadingSessionRepository(
+      ref.watch(appDatabaseProvider),
+      ref.watch(clockProvider),
+    );
+
+@Riverpod(keepAlive: true)
+ReadingTimerStore readingTimerStore(Ref ref) =>
+    DbReadingTimerStore(ref.watch(appDatabaseProvider));
+
+/// The reading timer: at most one runs, for one book. Kept in the database,
+/// so closing the app does not lose it.
+@Riverpod(keepAlive: true)
+class ReadingTimer extends _$ReadingTimer {
+  @override
+  Future<RunningTimer?> build() => ref.watch(readingTimerStoreProvider).load();
+
+  /// Starts timing [bookId]; a timer running for another book is stopped and
+  /// logged first.
+  Future<void> start(String bookId) async {
+    final running = await future;
+    if (running != null && running.bookId != bookId) await stop();
+    if (running?.bookId == bookId) return;
+    final t = RunningTimer(bookId, ref.read(clockProvider).now());
+    await ref.read(readingTimerStoreProvider).save(t);
+    state = AsyncData<RunningTimer?>(t);
+  }
+
+  /// Stops the timer and logs the time on today's date. Returns the minutes
+  /// logged, or null when nothing ran or it was too short to count.
+  Future<int?> stop() async {
+    final running = await future;
+    if (running == null) return null;
+    await ref.read(readingTimerStoreProvider).clear();
+    state = const AsyncData<RunningTimer?>(null);
+    final clock = ref.read(clockProvider);
+    final minutes = sessionMinutes(running.elapsed(clock.now()));
+    if (minutes == null) return null;
+    await ref
+        .read(readingSessionRepositoryProvider)
+        .addMinutes(running.bookId, clock.today(), minutes);
+    return minutes;
+  }
+
+  /// Stops without logging anything.
+  Future<void> discard() async {
+    await ref.read(readingTimerStoreProvider).clear();
+    state = const AsyncData<RunningTimer?>(null);
+  }
+}
+
+/// Minutes read today (from the timer).
+@riverpod
+Stream<int> minutesToday(Ref ref) {
+  final today = ref.watch(todayProvider);
+  return ref
+      .watch(readingSessionRepositoryProvider)
+      .watchMinutesBetween(today, today);
+}
+
+/// Minutes read in [year] (from the timer).
+@riverpod
+Stream<int> minutesInYear(Ref ref, int year) => ref
+    .watch(readingSessionRepositoryProvider)
+    .watchMinutesBetween(DateTime(year), DateTime(year, 12, 31));

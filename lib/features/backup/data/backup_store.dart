@@ -98,6 +98,20 @@ class BackupStore {
       ReadingLogRow.fromJson,
       (r) => r.toJson(),
     );
+    _sessions = _Table(
+      _db,
+      'reading_sessions',
+      _db.readingSessions,
+      ReadingSessionRow.fromJson,
+      (r) => r.toJson(),
+    );
+    _reads = _Table(
+      _db,
+      'read_throughs',
+      _db.readThroughs,
+      ReadThroughRow.fromJson,
+      (r) => r.toJson(),
+    );
     _quotes = _Table(
       _db,
       'quotes',
@@ -122,6 +136,8 @@ class BackupStore {
   late final _Table<$BooksTable, BookRow> _books;
   late final _Table<$LoansTable, LoanRow> _loans;
   late final _Table<$ReadingLogsTable, ReadingLogRow> _logs;
+  late final _Table<$ReadingSessionsTable, ReadingSessionRow> _sessions;
+  late final _Table<$ReadThroughsTable, ReadThroughRow> _reads;
   late final _Table<$QuotesTable, QuoteRow> _quotes;
   late final _Table<$BookTagsTable, BookTagRow> _bookTags;
 
@@ -134,6 +150,8 @@ class BackupStore {
         ('books', _books),
         ('loans', _loans),
         ('reading_logs', _logs),
+        ('reading_sessions', _sessions),
+        ('read_throughs', _reads),
         ('quotes', _quotes),
         ('book_tags', _bookTags),
       ];
@@ -327,6 +345,12 @@ class BackupStore {
 
         for (final row in tables['reading_logs'] ?? const <Row>[]) {
           await apply(_logs, row, 'reading_logs');
+        }
+        for (final row in tables['reading_sessions'] ?? const <Row>[]) {
+          await apply(_sessions, row, 'reading_sessions');
+        }
+        for (final row in tables['read_throughs'] ?? const <Row>[]) {
+          await apply(_reads, row, 'read_throughs');
         }
         for (final row in tables['quotes'] ?? const <Row>[]) {
           await apply(_quotes, row, 'quotes');

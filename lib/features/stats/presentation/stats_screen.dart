@@ -19,6 +19,8 @@ import '../domain/goal_progress.dart';
 import '../domain/stats.dart';
 import 'goal_sheet.dart';
 import 'year_review_sheet.dart';
+import '../../../app/reading_providers.dart';
+import '../../reading/presentation/reading_timer_button.dart';
 import '../../../app/today_provider.dart';
 
 /// `/stats`: the reading year. Goal ring, books per month, pages per week,
@@ -71,6 +73,8 @@ class StatsScreen extends ConsumerWidget {
           _MonthlyCard(year: year),
           const SizedBox(height: KSpacing.lg),
           _WeeklyCard(year: year),
+          const SizedBox(height: KSpacing.lg),
+          _TimeCard(year: year),
           const SizedBox(height: KSpacing.lg),
           _TopCard(
             title: l10n.statsGenresTitle,
@@ -734,6 +738,42 @@ class _Fact extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodySmall,
             ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Time spent reading in the year, from the reading timer.
+class _TimeCard extends ConsumerWidget {
+  const _TimeCard({required this.year});
+
+  final int year;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final minutes = ref.watch(minutesInYearProvider(year)).value ?? 0;
+    return KCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Semantics(
+            header: true,
+            child: Text(l10n.statsTimeTitle, style: theme.textTheme.titleSmall),
+          ),
+          const SizedBox(height: KSpacing.sm),
+          if (minutes == 0)
+            Text(l10n.statsTimeNone, style: theme.textTheme.bodyMedium)
+          else ...<Widget>[
+            Text(
+              minutesText(l10n, minutes),
+              style: theme.textTheme.headlineSmall,
+            ),
+            const SizedBox(height: KSpacing.xs),
+            Text(l10n.statsTimeBody, style: theme.textTheme.bodySmall),
+          ],
         ],
       ),
     );

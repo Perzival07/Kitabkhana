@@ -2890,6 +2890,78 @@ abstract class AppLocalizations {
   /// **'हिन्दी, मराठी (Devanagari)'**
   String get quoteScriptDevanagari;
 
+  /// No description provided for @timerStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the reading timer'**
+  String get timerStart;
+
+  /// No description provided for @timerStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop the timer ({time})'**
+  String timerStop(String time);
+
+  /// No description provided for @timerRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading for {time}'**
+  String timerRunning(String time);
+
+  /// No description provided for @timerLogged.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged {time} of reading'**
+  String timerLogged(String time);
+
+  /// No description provided for @timerTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Under a minute, so nothing was logged'**
+  String get timerTooShort;
+
+  /// No description provided for @durationMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String durationMinutes(int minutes);
+
+  /// No description provided for @durationHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} h'**
+  String durationHours(int hours);
+
+  /// No description provided for @durationHoursMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} h {minutes} min'**
+  String durationHoursMinutes(int hours, int minutes);
+
+  /// No description provided for @readingTimeToday.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} with the timer'**
+  String readingTimeToday(String time);
+
+  /// No description provided for @statsTimeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time reading'**
+  String get statsTimeTitle;
+
+  /// No description provided for @statsTimeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Measured with the reading timer on the Reading tab.'**
+  String get statsTimeBody;
+
+  /// No description provided for @statsTimeNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the timer on a book you are reading to see your reading time here.'**
+  String get statsTimeNone;
+
   /// No description provided for @settingsReportProblem.
   ///
   /// In en, this message translates to:

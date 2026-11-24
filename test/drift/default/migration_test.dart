@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:drift/drift.dart' show Value;
 import 'package:drift_dev/api/migrations_native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kitabkhana/data/db/app_database.dart';
@@ -13,10 +14,68 @@ void main() {
   setUpAll(() => verifier = SchemaVerifier(GeneratedHelper()));
 
   test('a fresh database matches the exported current schema', () async {
-    final connection = await verifier.startAt(2);
+    final connection = await verifier.startAt(3);
     final db = AppDatabase(connection);
     addTearDown(db.close);
-    await verifier.migrateAndValidate(db, 2);
+    await verifier.migrateAndValidate(db, 3);
+  });
+
+  test('v1 and v2 migrate to v3 and match the v3 schema', () async {
+    for (final from in <int>[1, 2]) {
+      final db = AppDatabase(await verifier.startAt(from));
+      await verifier.migrateAndValidate(db, 3);
+      await db.close();
+    }
+  });
+
+  test('v2 -> v3 keeps books and adds series, sessions and re-reads', () async {
+    final schema = await verifier.schemaAt(2);
+    final old = schema.newConnection();
+    schema.rawDatabase.execute(
+      "INSERT INTO books (id, created_at, updated_at, title, title_key, "
+      "authors, genre, language, ownership, status, current_page, rev, "
+      "finished_on) VALUES ('b1', '2025-01-01T00:00:00Z', "
+      "'2025-01-01T00:00:00Z', 'Mort', 'mort|terry pratchett', "
+      "'Terry Pratchett', '', '', 'owned', 'finished', 0, 1, '2025-02-01')",
+    );
+    await old.close();
+
+    final db = AppDatabase(schema.newConnection());
+    addTearDown(db.close);
+    await verifier.migrateAndValidate(db, 3);
+
+    final book = (await db.select(db.books).get()).single;
+    expect(book.title, 'Mort');
+    expect(book.series, isNull);
+    expect(book.finishedOn, DateTime(2025, 2));
+    await (db.update(db.books)..where((t) => t.id.equals('b1'))).write(
+      const BooksCompanion(series: Value('Discworld'), seriesNumber: Value(4)),
+    );
+    await db
+        .into(db.readingSessions)
+        .insert(
+          ReadingSessionsCompanion.insert(
+            bookId: 'b1',
+            date: DateTime(2025, 2, 1),
+            minutes: 35,
+            createdAt: DateTime.utc(2025),
+            updatedAt: DateTime.utc(2025),
+          ),
+        );
+    await db
+        .into(db.readThroughs)
+        .insert(
+          ReadThroughsCompanion.insert(
+            bookId: 'b1',
+            startedOn: Value(DateTime(2024, 1, 1)),
+            finishedOn: Value(DateTime(2024, 1, 20)),
+            createdAt: DateTime.utc(2025),
+            updatedAt: DateTime.utc(2025),
+          ),
+        );
+    expect((await db.select(db.books).get()).single.seriesNumber, 4);
+    expect(await db.select(db.readingSessions).get(), hasLength(1));
+    expect(await db.select(db.readThroughs).get(), hasLength(1));
   });
 
   test('v1 migrates to v2 and the result matches the v2 schema', () async {
@@ -74,6 +133,8 @@ void main() {
       'locations',
       'loans',
       'reading_logs',
+      'reading_sessions',
+      'read_throughs',
       'quotes',
       'goals',
       'tags',

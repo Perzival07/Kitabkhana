@@ -155,6 +155,11 @@ BackupContents decodeBackupArchive(BackupDecodeInput input) {
   for (final name in backupTableNames) {
     final file = entries[dataFilePath(name)];
     if (file == null) {
+      final since = backupTablesAddedIn[name];
+      if (since != null && manifest.schemaVersion < since) {
+        tables[name] = const <Map<String, dynamic>>[];
+        continue;
+      }
       throw BackupFailure(BackupProblem.damaged, 'no ${dataFilePath(name)}');
     }
     try {

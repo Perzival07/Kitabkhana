@@ -6,7 +6,7 @@ import 'dart:typed_data' as i2;
 //
 import 'package:drift/drift.dart';
 
-class Locations extends Table with TableInfo {
+class Locations extends Table with TableInfo<Locations, LocationsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -105,8 +105,46 @@ class Locations extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  LocationsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocationsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      rev: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rev'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      parentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_id'],
+      ),
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      icon: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}icon'],
+      ),
+    );
   }
 
   @override
@@ -120,7 +158,322 @@ class Locations extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class Books extends Table with TableInfo {
+class LocationsData extends DataClass implements Insertable<LocationsData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int rev;
+  final String name;
+  final String? parentId;
+  final int sortOrder;
+  final String? icon;
+  const LocationsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.rev,
+    required this.name,
+    this.parentId,
+    required this.sortOrder,
+    this.icon,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['rev'] = Variable<int>(rev);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || parentId != null) {
+      map['parent_id'] = Variable<String>(parentId);
+    }
+    map['sort_order'] = Variable<int>(sortOrder);
+    if (!nullToAbsent || icon != null) {
+      map['icon'] = Variable<String>(icon);
+    }
+    return map;
+  }
+
+  LocationsCompanion toCompanion(bool nullToAbsent) {
+    return LocationsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      rev: Value(rev),
+      name: Value(name),
+      parentId: parentId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parentId),
+      sortOrder: Value(sortOrder),
+      icon: icon == null && nullToAbsent ? const Value.absent() : Value(icon),
+    );
+  }
+
+  factory LocationsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocationsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      rev: serializer.fromJson<int>(json['rev']),
+      name: serializer.fromJson<String>(json['name']),
+      parentId: serializer.fromJson<String?>(json['parentId']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      icon: serializer.fromJson<String?>(json['icon']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'rev': serializer.toJson<int>(rev),
+      'name': serializer.toJson<String>(name),
+      'parentId': serializer.toJson<String?>(parentId),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'icon': serializer.toJson<String?>(icon),
+    };
+  }
+
+  LocationsData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? rev,
+    String? name,
+    Value<String?> parentId = const Value.absent(),
+    int? sortOrder,
+    Value<String?> icon = const Value.absent(),
+  }) => LocationsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    rev: rev ?? this.rev,
+    name: name ?? this.name,
+    parentId: parentId.present ? parentId.value : this.parentId,
+    sortOrder: sortOrder ?? this.sortOrder,
+    icon: icon.present ? icon.value : this.icon,
+  );
+  LocationsData copyWithCompanion(LocationsCompanion data) {
+    return LocationsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      rev: data.rev.present ? data.rev.value : this.rev,
+      name: data.name.present ? data.name.value : this.name,
+      parentId: data.parentId.present ? data.parentId.value : this.parentId,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      icon: data.icon.present ? data.icon.value : this.icon,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocationsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('name: $name, ')
+          ..write('parentId: $parentId, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('icon: $icon')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    rev,
+    name,
+    parentId,
+    sortOrder,
+    icon,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocationsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.rev == this.rev &&
+          other.name == this.name &&
+          other.parentId == this.parentId &&
+          other.sortOrder == this.sortOrder &&
+          other.icon == this.icon);
+}
+
+class LocationsCompanion extends UpdateCompanion<LocationsData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> rev;
+  final Value<String> name;
+  final Value<String?> parentId;
+  final Value<int> sortOrder;
+  final Value<String?> icon;
+  final Value<int> rowid;
+  const LocationsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    this.name = const Value.absent(),
+    this.parentId = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.icon = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LocationsCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    required String name,
+    this.parentId = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.icon = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       name = Value(name);
+  static Insertable<LocationsData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? rev,
+    Expression<String>? name,
+    Expression<String>? parentId,
+    Expression<int>? sortOrder,
+    Expression<String>? icon,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (rev != null) 'rev': rev,
+      if (name != null) 'name': name,
+      if (parentId != null) 'parent_id': parentId,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (icon != null) 'icon': icon,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LocationsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? rev,
+    Value<String>? name,
+    Value<String?>? parentId,
+    Value<int>? sortOrder,
+    Value<String?>? icon,
+    Value<int>? rowid,
+  }) {
+    return LocationsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      rev: rev ?? this.rev,
+      name: name ?? this.name,
+      parentId: parentId ?? this.parentId,
+      sortOrder: sortOrder ?? this.sortOrder,
+      icon: icon ?? this.icon,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (rev.present) {
+      map['rev'] = Variable<int>(rev.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (parentId.present) {
+      map['parent_id'] = Variable<String>(parentId.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (icon.present) {
+      map['icon'] = Variable<String>(icon.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocationsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('name: $name, ')
+          ..write('parentId: $parentId, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('icon: $icon, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Books extends Table with TableInfo<Books, BooksData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -368,8 +721,110 @@ class Books extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  BooksData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BooksData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      rev: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rev'],
+      )!,
+      isbn13: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}isbn13'],
+      ),
+      olWorkKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ol_work_key'],
+      ),
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      subtitle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}subtitle'],
+      ),
+      authors: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}authors'],
+      )!,
+      titleKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title_key'],
+      )!,
+      coverUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}cover_url'],
+      ),
+      coverLocalPath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}cover_local_path'],
+      ),
+      pages: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}pages'],
+      ),
+      genre: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}genre'],
+      )!,
+      language: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language'],
+      )!,
+      ownership: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ownership'],
+      )!,
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      currentPage: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}current_page'],
+      )!,
+      rating: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rating'],
+      ),
+      locationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}location_id'],
+      ),
+      ownerName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}owner_name'],
+      ),
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      ),
+      startedOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}started_on'],
+      ),
+      finishedOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}finished_on'],
+      ),
+    );
   }
 
   @override
@@ -390,7 +845,743 @@ class Books extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class ReadingLogs extends Table with TableInfo {
+class BooksData extends DataClass implements Insertable<BooksData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int rev;
+  final String? isbn13;
+  final String? olWorkKey;
+  final String title;
+  final String? subtitle;
+  final String authors;
+  final String titleKey;
+  final String? coverUrl;
+  final String? coverLocalPath;
+  final int? pages;
+  final String genre;
+  final String language;
+  final String ownership;
+  final String status;
+  final int currentPage;
+  final int? rating;
+  final String? locationId;
+  final String? ownerName;
+  final String? notes;
+  final String? startedOn;
+  final String? finishedOn;
+  const BooksData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.rev,
+    this.isbn13,
+    this.olWorkKey,
+    required this.title,
+    this.subtitle,
+    required this.authors,
+    required this.titleKey,
+    this.coverUrl,
+    this.coverLocalPath,
+    this.pages,
+    required this.genre,
+    required this.language,
+    required this.ownership,
+    required this.status,
+    required this.currentPage,
+    this.rating,
+    this.locationId,
+    this.ownerName,
+    this.notes,
+    this.startedOn,
+    this.finishedOn,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['rev'] = Variable<int>(rev);
+    if (!nullToAbsent || isbn13 != null) {
+      map['isbn13'] = Variable<String>(isbn13);
+    }
+    if (!nullToAbsent || olWorkKey != null) {
+      map['ol_work_key'] = Variable<String>(olWorkKey);
+    }
+    map['title'] = Variable<String>(title);
+    if (!nullToAbsent || subtitle != null) {
+      map['subtitle'] = Variable<String>(subtitle);
+    }
+    map['authors'] = Variable<String>(authors);
+    map['title_key'] = Variable<String>(titleKey);
+    if (!nullToAbsent || coverUrl != null) {
+      map['cover_url'] = Variable<String>(coverUrl);
+    }
+    if (!nullToAbsent || coverLocalPath != null) {
+      map['cover_local_path'] = Variable<String>(coverLocalPath);
+    }
+    if (!nullToAbsent || pages != null) {
+      map['pages'] = Variable<int>(pages);
+    }
+    map['genre'] = Variable<String>(genre);
+    map['language'] = Variable<String>(language);
+    map['ownership'] = Variable<String>(ownership);
+    map['status'] = Variable<String>(status);
+    map['current_page'] = Variable<int>(currentPage);
+    if (!nullToAbsent || rating != null) {
+      map['rating'] = Variable<int>(rating);
+    }
+    if (!nullToAbsent || locationId != null) {
+      map['location_id'] = Variable<String>(locationId);
+    }
+    if (!nullToAbsent || ownerName != null) {
+      map['owner_name'] = Variable<String>(ownerName);
+    }
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    if (!nullToAbsent || startedOn != null) {
+      map['started_on'] = Variable<String>(startedOn);
+    }
+    if (!nullToAbsent || finishedOn != null) {
+      map['finished_on'] = Variable<String>(finishedOn);
+    }
+    return map;
+  }
+
+  BooksCompanion toCompanion(bool nullToAbsent) {
+    return BooksCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      rev: Value(rev),
+      isbn13: isbn13 == null && nullToAbsent
+          ? const Value.absent()
+          : Value(isbn13),
+      olWorkKey: olWorkKey == null && nullToAbsent
+          ? const Value.absent()
+          : Value(olWorkKey),
+      title: Value(title),
+      subtitle: subtitle == null && nullToAbsent
+          ? const Value.absent()
+          : Value(subtitle),
+      authors: Value(authors),
+      titleKey: Value(titleKey),
+      coverUrl: coverUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(coverUrl),
+      coverLocalPath: coverLocalPath == null && nullToAbsent
+          ? const Value.absent()
+          : Value(coverLocalPath),
+      pages: pages == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pages),
+      genre: Value(genre),
+      language: Value(language),
+      ownership: Value(ownership),
+      status: Value(status),
+      currentPage: Value(currentPage),
+      rating: rating == null && nullToAbsent
+          ? const Value.absent()
+          : Value(rating),
+      locationId: locationId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(locationId),
+      ownerName: ownerName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ownerName),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
+      startedOn: startedOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(startedOn),
+      finishedOn: finishedOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(finishedOn),
+    );
+  }
+
+  factory BooksData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BooksData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      rev: serializer.fromJson<int>(json['rev']),
+      isbn13: serializer.fromJson<String?>(json['isbn13']),
+      olWorkKey: serializer.fromJson<String?>(json['olWorkKey']),
+      title: serializer.fromJson<String>(json['title']),
+      subtitle: serializer.fromJson<String?>(json['subtitle']),
+      authors: serializer.fromJson<String>(json['authors']),
+      titleKey: serializer.fromJson<String>(json['titleKey']),
+      coverUrl: serializer.fromJson<String?>(json['coverUrl']),
+      coverLocalPath: serializer.fromJson<String?>(json['coverLocalPath']),
+      pages: serializer.fromJson<int?>(json['pages']),
+      genre: serializer.fromJson<String>(json['genre']),
+      language: serializer.fromJson<String>(json['language']),
+      ownership: serializer.fromJson<String>(json['ownership']),
+      status: serializer.fromJson<String>(json['status']),
+      currentPage: serializer.fromJson<int>(json['currentPage']),
+      rating: serializer.fromJson<int?>(json['rating']),
+      locationId: serializer.fromJson<String?>(json['locationId']),
+      ownerName: serializer.fromJson<String?>(json['ownerName']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      startedOn: serializer.fromJson<String?>(json['startedOn']),
+      finishedOn: serializer.fromJson<String?>(json['finishedOn']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'rev': serializer.toJson<int>(rev),
+      'isbn13': serializer.toJson<String?>(isbn13),
+      'olWorkKey': serializer.toJson<String?>(olWorkKey),
+      'title': serializer.toJson<String>(title),
+      'subtitle': serializer.toJson<String?>(subtitle),
+      'authors': serializer.toJson<String>(authors),
+      'titleKey': serializer.toJson<String>(titleKey),
+      'coverUrl': serializer.toJson<String?>(coverUrl),
+      'coverLocalPath': serializer.toJson<String?>(coverLocalPath),
+      'pages': serializer.toJson<int?>(pages),
+      'genre': serializer.toJson<String>(genre),
+      'language': serializer.toJson<String>(language),
+      'ownership': serializer.toJson<String>(ownership),
+      'status': serializer.toJson<String>(status),
+      'currentPage': serializer.toJson<int>(currentPage),
+      'rating': serializer.toJson<int?>(rating),
+      'locationId': serializer.toJson<String?>(locationId),
+      'ownerName': serializer.toJson<String?>(ownerName),
+      'notes': serializer.toJson<String?>(notes),
+      'startedOn': serializer.toJson<String?>(startedOn),
+      'finishedOn': serializer.toJson<String?>(finishedOn),
+    };
+  }
+
+  BooksData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? rev,
+    Value<String?> isbn13 = const Value.absent(),
+    Value<String?> olWorkKey = const Value.absent(),
+    String? title,
+    Value<String?> subtitle = const Value.absent(),
+    String? authors,
+    String? titleKey,
+    Value<String?> coverUrl = const Value.absent(),
+    Value<String?> coverLocalPath = const Value.absent(),
+    Value<int?> pages = const Value.absent(),
+    String? genre,
+    String? language,
+    String? ownership,
+    String? status,
+    int? currentPage,
+    Value<int?> rating = const Value.absent(),
+    Value<String?> locationId = const Value.absent(),
+    Value<String?> ownerName = const Value.absent(),
+    Value<String?> notes = const Value.absent(),
+    Value<String?> startedOn = const Value.absent(),
+    Value<String?> finishedOn = const Value.absent(),
+  }) => BooksData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    rev: rev ?? this.rev,
+    isbn13: isbn13.present ? isbn13.value : this.isbn13,
+    olWorkKey: olWorkKey.present ? olWorkKey.value : this.olWorkKey,
+    title: title ?? this.title,
+    subtitle: subtitle.present ? subtitle.value : this.subtitle,
+    authors: authors ?? this.authors,
+    titleKey: titleKey ?? this.titleKey,
+    coverUrl: coverUrl.present ? coverUrl.value : this.coverUrl,
+    coverLocalPath: coverLocalPath.present
+        ? coverLocalPath.value
+        : this.coverLocalPath,
+    pages: pages.present ? pages.value : this.pages,
+    genre: genre ?? this.genre,
+    language: language ?? this.language,
+    ownership: ownership ?? this.ownership,
+    status: status ?? this.status,
+    currentPage: currentPage ?? this.currentPage,
+    rating: rating.present ? rating.value : this.rating,
+    locationId: locationId.present ? locationId.value : this.locationId,
+    ownerName: ownerName.present ? ownerName.value : this.ownerName,
+    notes: notes.present ? notes.value : this.notes,
+    startedOn: startedOn.present ? startedOn.value : this.startedOn,
+    finishedOn: finishedOn.present ? finishedOn.value : this.finishedOn,
+  );
+  BooksData copyWithCompanion(BooksCompanion data) {
+    return BooksData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      rev: data.rev.present ? data.rev.value : this.rev,
+      isbn13: data.isbn13.present ? data.isbn13.value : this.isbn13,
+      olWorkKey: data.olWorkKey.present ? data.olWorkKey.value : this.olWorkKey,
+      title: data.title.present ? data.title.value : this.title,
+      subtitle: data.subtitle.present ? data.subtitle.value : this.subtitle,
+      authors: data.authors.present ? data.authors.value : this.authors,
+      titleKey: data.titleKey.present ? data.titleKey.value : this.titleKey,
+      coverUrl: data.coverUrl.present ? data.coverUrl.value : this.coverUrl,
+      coverLocalPath: data.coverLocalPath.present
+          ? data.coverLocalPath.value
+          : this.coverLocalPath,
+      pages: data.pages.present ? data.pages.value : this.pages,
+      genre: data.genre.present ? data.genre.value : this.genre,
+      language: data.language.present ? data.language.value : this.language,
+      ownership: data.ownership.present ? data.ownership.value : this.ownership,
+      status: data.status.present ? data.status.value : this.status,
+      currentPage: data.currentPage.present
+          ? data.currentPage.value
+          : this.currentPage,
+      rating: data.rating.present ? data.rating.value : this.rating,
+      locationId: data.locationId.present
+          ? data.locationId.value
+          : this.locationId,
+      ownerName: data.ownerName.present ? data.ownerName.value : this.ownerName,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      startedOn: data.startedOn.present ? data.startedOn.value : this.startedOn,
+      finishedOn: data.finishedOn.present
+          ? data.finishedOn.value
+          : this.finishedOn,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BooksData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('isbn13: $isbn13, ')
+          ..write('olWorkKey: $olWorkKey, ')
+          ..write('title: $title, ')
+          ..write('subtitle: $subtitle, ')
+          ..write('authors: $authors, ')
+          ..write('titleKey: $titleKey, ')
+          ..write('coverUrl: $coverUrl, ')
+          ..write('coverLocalPath: $coverLocalPath, ')
+          ..write('pages: $pages, ')
+          ..write('genre: $genre, ')
+          ..write('language: $language, ')
+          ..write('ownership: $ownership, ')
+          ..write('status: $status, ')
+          ..write('currentPage: $currentPage, ')
+          ..write('rating: $rating, ')
+          ..write('locationId: $locationId, ')
+          ..write('ownerName: $ownerName, ')
+          ..write('notes: $notes, ')
+          ..write('startedOn: $startedOn, ')
+          ..write('finishedOn: $finishedOn')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    rev,
+    isbn13,
+    olWorkKey,
+    title,
+    subtitle,
+    authors,
+    titleKey,
+    coverUrl,
+    coverLocalPath,
+    pages,
+    genre,
+    language,
+    ownership,
+    status,
+    currentPage,
+    rating,
+    locationId,
+    ownerName,
+    notes,
+    startedOn,
+    finishedOn,
+  ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BooksData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.rev == this.rev &&
+          other.isbn13 == this.isbn13 &&
+          other.olWorkKey == this.olWorkKey &&
+          other.title == this.title &&
+          other.subtitle == this.subtitle &&
+          other.authors == this.authors &&
+          other.titleKey == this.titleKey &&
+          other.coverUrl == this.coverUrl &&
+          other.coverLocalPath == this.coverLocalPath &&
+          other.pages == this.pages &&
+          other.genre == this.genre &&
+          other.language == this.language &&
+          other.ownership == this.ownership &&
+          other.status == this.status &&
+          other.currentPage == this.currentPage &&
+          other.rating == this.rating &&
+          other.locationId == this.locationId &&
+          other.ownerName == this.ownerName &&
+          other.notes == this.notes &&
+          other.startedOn == this.startedOn &&
+          other.finishedOn == this.finishedOn);
+}
+
+class BooksCompanion extends UpdateCompanion<BooksData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> rev;
+  final Value<String?> isbn13;
+  final Value<String?> olWorkKey;
+  final Value<String> title;
+  final Value<String?> subtitle;
+  final Value<String> authors;
+  final Value<String> titleKey;
+  final Value<String?> coverUrl;
+  final Value<String?> coverLocalPath;
+  final Value<int?> pages;
+  final Value<String> genre;
+  final Value<String> language;
+  final Value<String> ownership;
+  final Value<String> status;
+  final Value<int> currentPage;
+  final Value<int?> rating;
+  final Value<String?> locationId;
+  final Value<String?> ownerName;
+  final Value<String?> notes;
+  final Value<String?> startedOn;
+  final Value<String?> finishedOn;
+  final Value<int> rowid;
+  const BooksCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    this.isbn13 = const Value.absent(),
+    this.olWorkKey = const Value.absent(),
+    this.title = const Value.absent(),
+    this.subtitle = const Value.absent(),
+    this.authors = const Value.absent(),
+    this.titleKey = const Value.absent(),
+    this.coverUrl = const Value.absent(),
+    this.coverLocalPath = const Value.absent(),
+    this.pages = const Value.absent(),
+    this.genre = const Value.absent(),
+    this.language = const Value.absent(),
+    this.ownership = const Value.absent(),
+    this.status = const Value.absent(),
+    this.currentPage = const Value.absent(),
+    this.rating = const Value.absent(),
+    this.locationId = const Value.absent(),
+    this.ownerName = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.startedOn = const Value.absent(),
+    this.finishedOn = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BooksCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    this.isbn13 = const Value.absent(),
+    this.olWorkKey = const Value.absent(),
+    required String title,
+    this.subtitle = const Value.absent(),
+    this.authors = const Value.absent(),
+    required String titleKey,
+    this.coverUrl = const Value.absent(),
+    this.coverLocalPath = const Value.absent(),
+    this.pages = const Value.absent(),
+    this.genre = const Value.absent(),
+    this.language = const Value.absent(),
+    this.ownership = const Value.absent(),
+    this.status = const Value.absent(),
+    this.currentPage = const Value.absent(),
+    this.rating = const Value.absent(),
+    this.locationId = const Value.absent(),
+    this.ownerName = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.startedOn = const Value.absent(),
+    this.finishedOn = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       title = Value(title),
+       titleKey = Value(titleKey);
+  static Insertable<BooksData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? rev,
+    Expression<String>? isbn13,
+    Expression<String>? olWorkKey,
+    Expression<String>? title,
+    Expression<String>? subtitle,
+    Expression<String>? authors,
+    Expression<String>? titleKey,
+    Expression<String>? coverUrl,
+    Expression<String>? coverLocalPath,
+    Expression<int>? pages,
+    Expression<String>? genre,
+    Expression<String>? language,
+    Expression<String>? ownership,
+    Expression<String>? status,
+    Expression<int>? currentPage,
+    Expression<int>? rating,
+    Expression<String>? locationId,
+    Expression<String>? ownerName,
+    Expression<String>? notes,
+    Expression<String>? startedOn,
+    Expression<String>? finishedOn,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (rev != null) 'rev': rev,
+      if (isbn13 != null) 'isbn13': isbn13,
+      if (olWorkKey != null) 'ol_work_key': olWorkKey,
+      if (title != null) 'title': title,
+      if (subtitle != null) 'subtitle': subtitle,
+      if (authors != null) 'authors': authors,
+      if (titleKey != null) 'title_key': titleKey,
+      if (coverUrl != null) 'cover_url': coverUrl,
+      if (coverLocalPath != null) 'cover_local_path': coverLocalPath,
+      if (pages != null) 'pages': pages,
+      if (genre != null) 'genre': genre,
+      if (language != null) 'language': language,
+      if (ownership != null) 'ownership': ownership,
+      if (status != null) 'status': status,
+      if (currentPage != null) 'current_page': currentPage,
+      if (rating != null) 'rating': rating,
+      if (locationId != null) 'location_id': locationId,
+      if (ownerName != null) 'owner_name': ownerName,
+      if (notes != null) 'notes': notes,
+      if (startedOn != null) 'started_on': startedOn,
+      if (finishedOn != null) 'finished_on': finishedOn,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BooksCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? rev,
+    Value<String?>? isbn13,
+    Value<String?>? olWorkKey,
+    Value<String>? title,
+    Value<String?>? subtitle,
+    Value<String>? authors,
+    Value<String>? titleKey,
+    Value<String?>? coverUrl,
+    Value<String?>? coverLocalPath,
+    Value<int?>? pages,
+    Value<String>? genre,
+    Value<String>? language,
+    Value<String>? ownership,
+    Value<String>? status,
+    Value<int>? currentPage,
+    Value<int?>? rating,
+    Value<String?>? locationId,
+    Value<String?>? ownerName,
+    Value<String?>? notes,
+    Value<String?>? startedOn,
+    Value<String?>? finishedOn,
+    Value<int>? rowid,
+  }) {
+    return BooksCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      rev: rev ?? this.rev,
+      isbn13: isbn13 ?? this.isbn13,
+      olWorkKey: olWorkKey ?? this.olWorkKey,
+      title: title ?? this.title,
+      subtitle: subtitle ?? this.subtitle,
+      authors: authors ?? this.authors,
+      titleKey: titleKey ?? this.titleKey,
+      coverUrl: coverUrl ?? this.coverUrl,
+      coverLocalPath: coverLocalPath ?? this.coverLocalPath,
+      pages: pages ?? this.pages,
+      genre: genre ?? this.genre,
+      language: language ?? this.language,
+      ownership: ownership ?? this.ownership,
+      status: status ?? this.status,
+      currentPage: currentPage ?? this.currentPage,
+      rating: rating ?? this.rating,
+      locationId: locationId ?? this.locationId,
+      ownerName: ownerName ?? this.ownerName,
+      notes: notes ?? this.notes,
+      startedOn: startedOn ?? this.startedOn,
+      finishedOn: finishedOn ?? this.finishedOn,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (rev.present) {
+      map['rev'] = Variable<int>(rev.value);
+    }
+    if (isbn13.present) {
+      map['isbn13'] = Variable<String>(isbn13.value);
+    }
+    if (olWorkKey.present) {
+      map['ol_work_key'] = Variable<String>(olWorkKey.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (subtitle.present) {
+      map['subtitle'] = Variable<String>(subtitle.value);
+    }
+    if (authors.present) {
+      map['authors'] = Variable<String>(authors.value);
+    }
+    if (titleKey.present) {
+      map['title_key'] = Variable<String>(titleKey.value);
+    }
+    if (coverUrl.present) {
+      map['cover_url'] = Variable<String>(coverUrl.value);
+    }
+    if (coverLocalPath.present) {
+      map['cover_local_path'] = Variable<String>(coverLocalPath.value);
+    }
+    if (pages.present) {
+      map['pages'] = Variable<int>(pages.value);
+    }
+    if (genre.present) {
+      map['genre'] = Variable<String>(genre.value);
+    }
+    if (language.present) {
+      map['language'] = Variable<String>(language.value);
+    }
+    if (ownership.present) {
+      map['ownership'] = Variable<String>(ownership.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (currentPage.present) {
+      map['current_page'] = Variable<int>(currentPage.value);
+    }
+    if (rating.present) {
+      map['rating'] = Variable<int>(rating.value);
+    }
+    if (locationId.present) {
+      map['location_id'] = Variable<String>(locationId.value);
+    }
+    if (ownerName.present) {
+      map['owner_name'] = Variable<String>(ownerName.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (startedOn.present) {
+      map['started_on'] = Variable<String>(startedOn.value);
+    }
+    if (finishedOn.present) {
+      map['finished_on'] = Variable<String>(finishedOn.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BooksCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('isbn13: $isbn13, ')
+          ..write('olWorkKey: $olWorkKey, ')
+          ..write('title: $title, ')
+          ..write('subtitle: $subtitle, ')
+          ..write('authors: $authors, ')
+          ..write('titleKey: $titleKey, ')
+          ..write('coverUrl: $coverUrl, ')
+          ..write('coverLocalPath: $coverLocalPath, ')
+          ..write('pages: $pages, ')
+          ..write('genre: $genre, ')
+          ..write('language: $language, ')
+          ..write('ownership: $ownership, ')
+          ..write('status: $status, ')
+          ..write('currentPage: $currentPage, ')
+          ..write('rating: $rating, ')
+          ..write('locationId: $locationId, ')
+          ..write('ownerName: $ownerName, ')
+          ..write('notes: $notes, ')
+          ..write('startedOn: $startedOn, ')
+          ..write('finishedOn: $finishedOn, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class ReadingLogs extends Table with TableInfo<ReadingLogs, ReadingLogsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -497,8 +1688,50 @@ class ReadingLogs extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  ReadingLogsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReadingLogsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      rev: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rev'],
+      )!,
+      bookId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}book_id'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}date'],
+      )!,
+      pagesRead: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}pages_read'],
+      )!,
+      fromPage: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}from_page'],
+      )!,
+      toPage: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}to_page'],
+      )!,
+    );
   }
 
   @override
@@ -515,7 +1748,343 @@ class ReadingLogs extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class Quotes extends Table with TableInfo {
+class ReadingLogsData extends DataClass implements Insertable<ReadingLogsData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int rev;
+  final String bookId;
+  final String date;
+  final int pagesRead;
+  final int fromPage;
+  final int toPage;
+  const ReadingLogsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.rev,
+    required this.bookId,
+    required this.date,
+    required this.pagesRead,
+    required this.fromPage,
+    required this.toPage,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['rev'] = Variable<int>(rev);
+    map['book_id'] = Variable<String>(bookId);
+    map['date'] = Variable<String>(date);
+    map['pages_read'] = Variable<int>(pagesRead);
+    map['from_page'] = Variable<int>(fromPage);
+    map['to_page'] = Variable<int>(toPage);
+    return map;
+  }
+
+  ReadingLogsCompanion toCompanion(bool nullToAbsent) {
+    return ReadingLogsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      rev: Value(rev),
+      bookId: Value(bookId),
+      date: Value(date),
+      pagesRead: Value(pagesRead),
+      fromPage: Value(fromPage),
+      toPage: Value(toPage),
+    );
+  }
+
+  factory ReadingLogsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReadingLogsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      rev: serializer.fromJson<int>(json['rev']),
+      bookId: serializer.fromJson<String>(json['bookId']),
+      date: serializer.fromJson<String>(json['date']),
+      pagesRead: serializer.fromJson<int>(json['pagesRead']),
+      fromPage: serializer.fromJson<int>(json['fromPage']),
+      toPage: serializer.fromJson<int>(json['toPage']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'rev': serializer.toJson<int>(rev),
+      'bookId': serializer.toJson<String>(bookId),
+      'date': serializer.toJson<String>(date),
+      'pagesRead': serializer.toJson<int>(pagesRead),
+      'fromPage': serializer.toJson<int>(fromPage),
+      'toPage': serializer.toJson<int>(toPage),
+    };
+  }
+
+  ReadingLogsData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? rev,
+    String? bookId,
+    String? date,
+    int? pagesRead,
+    int? fromPage,
+    int? toPage,
+  }) => ReadingLogsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    rev: rev ?? this.rev,
+    bookId: bookId ?? this.bookId,
+    date: date ?? this.date,
+    pagesRead: pagesRead ?? this.pagesRead,
+    fromPage: fromPage ?? this.fromPage,
+    toPage: toPage ?? this.toPage,
+  );
+  ReadingLogsData copyWithCompanion(ReadingLogsCompanion data) {
+    return ReadingLogsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      rev: data.rev.present ? data.rev.value : this.rev,
+      bookId: data.bookId.present ? data.bookId.value : this.bookId,
+      date: data.date.present ? data.date.value : this.date,
+      pagesRead: data.pagesRead.present ? data.pagesRead.value : this.pagesRead,
+      fromPage: data.fromPage.present ? data.fromPage.value : this.fromPage,
+      toPage: data.toPage.present ? data.toPage.value : this.toPage,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReadingLogsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('bookId: $bookId, ')
+          ..write('date: $date, ')
+          ..write('pagesRead: $pagesRead, ')
+          ..write('fromPage: $fromPage, ')
+          ..write('toPage: $toPage')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    rev,
+    bookId,
+    date,
+    pagesRead,
+    fromPage,
+    toPage,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReadingLogsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.rev == this.rev &&
+          other.bookId == this.bookId &&
+          other.date == this.date &&
+          other.pagesRead == this.pagesRead &&
+          other.fromPage == this.fromPage &&
+          other.toPage == this.toPage);
+}
+
+class ReadingLogsCompanion extends UpdateCompanion<ReadingLogsData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> rev;
+  final Value<String> bookId;
+  final Value<String> date;
+  final Value<int> pagesRead;
+  final Value<int> fromPage;
+  final Value<int> toPage;
+  final Value<int> rowid;
+  const ReadingLogsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    this.bookId = const Value.absent(),
+    this.date = const Value.absent(),
+    this.pagesRead = const Value.absent(),
+    this.fromPage = const Value.absent(),
+    this.toPage = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ReadingLogsCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    required String bookId,
+    required String date,
+    required int pagesRead,
+    required int fromPage,
+    required int toPage,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       bookId = Value(bookId),
+       date = Value(date),
+       pagesRead = Value(pagesRead),
+       fromPage = Value(fromPage),
+       toPage = Value(toPage);
+  static Insertable<ReadingLogsData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? rev,
+    Expression<String>? bookId,
+    Expression<String>? date,
+    Expression<int>? pagesRead,
+    Expression<int>? fromPage,
+    Expression<int>? toPage,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (rev != null) 'rev': rev,
+      if (bookId != null) 'book_id': bookId,
+      if (date != null) 'date': date,
+      if (pagesRead != null) 'pages_read': pagesRead,
+      if (fromPage != null) 'from_page': fromPage,
+      if (toPage != null) 'to_page': toPage,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ReadingLogsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? rev,
+    Value<String>? bookId,
+    Value<String>? date,
+    Value<int>? pagesRead,
+    Value<int>? fromPage,
+    Value<int>? toPage,
+    Value<int>? rowid,
+  }) {
+    return ReadingLogsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      rev: rev ?? this.rev,
+      bookId: bookId ?? this.bookId,
+      date: date ?? this.date,
+      pagesRead: pagesRead ?? this.pagesRead,
+      fromPage: fromPage ?? this.fromPage,
+      toPage: toPage ?? this.toPage,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (rev.present) {
+      map['rev'] = Variable<int>(rev.value);
+    }
+    if (bookId.present) {
+      map['book_id'] = Variable<String>(bookId.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<String>(date.value);
+    }
+    if (pagesRead.present) {
+      map['pages_read'] = Variable<int>(pagesRead.value);
+    }
+    if (fromPage.present) {
+      map['from_page'] = Variable<int>(fromPage.value);
+    }
+    if (toPage.present) {
+      map['to_page'] = Variable<int>(toPage.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReadingLogsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('bookId: $bookId, ')
+          ..write('date: $date, ')
+          ..write('pagesRead: $pagesRead, ')
+          ..write('fromPage: $fromPage, ')
+          ..write('toPage: $toPage, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Quotes extends Table with TableInfo<Quotes, QuotesData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -614,8 +2183,46 @@ class Quotes extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  QuotesData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return QuotesData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      rev: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rev'],
+      )!,
+      bookId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}book_id'],
+      )!,
+      body: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}body'],
+      )!,
+      page: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}page'],
+      ),
+      isFavourite: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}is_favourite'],
+      )!,
+    );
   }
 
   @override
@@ -629,7 +2236,321 @@ class Quotes extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class Loans extends Table with TableInfo {
+class QuotesData extends DataClass implements Insertable<QuotesData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int rev;
+  final String bookId;
+  final String body;
+  final int? page;
+  final int isFavourite;
+  const QuotesData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.rev,
+    required this.bookId,
+    required this.body,
+    this.page,
+    required this.isFavourite,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['rev'] = Variable<int>(rev);
+    map['book_id'] = Variable<String>(bookId);
+    map['body'] = Variable<String>(body);
+    if (!nullToAbsent || page != null) {
+      map['page'] = Variable<int>(page);
+    }
+    map['is_favourite'] = Variable<int>(isFavourite);
+    return map;
+  }
+
+  QuotesCompanion toCompanion(bool nullToAbsent) {
+    return QuotesCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      rev: Value(rev),
+      bookId: Value(bookId),
+      body: Value(body),
+      page: page == null && nullToAbsent ? const Value.absent() : Value(page),
+      isFavourite: Value(isFavourite),
+    );
+  }
+
+  factory QuotesData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return QuotesData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      rev: serializer.fromJson<int>(json['rev']),
+      bookId: serializer.fromJson<String>(json['bookId']),
+      body: serializer.fromJson<String>(json['body']),
+      page: serializer.fromJson<int?>(json['page']),
+      isFavourite: serializer.fromJson<int>(json['isFavourite']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'rev': serializer.toJson<int>(rev),
+      'bookId': serializer.toJson<String>(bookId),
+      'body': serializer.toJson<String>(body),
+      'page': serializer.toJson<int?>(page),
+      'isFavourite': serializer.toJson<int>(isFavourite),
+    };
+  }
+
+  QuotesData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? rev,
+    String? bookId,
+    String? body,
+    Value<int?> page = const Value.absent(),
+    int? isFavourite,
+  }) => QuotesData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    rev: rev ?? this.rev,
+    bookId: bookId ?? this.bookId,
+    body: body ?? this.body,
+    page: page.present ? page.value : this.page,
+    isFavourite: isFavourite ?? this.isFavourite,
+  );
+  QuotesData copyWithCompanion(QuotesCompanion data) {
+    return QuotesData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      rev: data.rev.present ? data.rev.value : this.rev,
+      bookId: data.bookId.present ? data.bookId.value : this.bookId,
+      body: data.body.present ? data.body.value : this.body,
+      page: data.page.present ? data.page.value : this.page,
+      isFavourite: data.isFavourite.present
+          ? data.isFavourite.value
+          : this.isFavourite,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('QuotesData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('bookId: $bookId, ')
+          ..write('body: $body, ')
+          ..write('page: $page, ')
+          ..write('isFavourite: $isFavourite')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    rev,
+    bookId,
+    body,
+    page,
+    isFavourite,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is QuotesData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.rev == this.rev &&
+          other.bookId == this.bookId &&
+          other.body == this.body &&
+          other.page == this.page &&
+          other.isFavourite == this.isFavourite);
+}
+
+class QuotesCompanion extends UpdateCompanion<QuotesData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> rev;
+  final Value<String> bookId;
+  final Value<String> body;
+  final Value<int?> page;
+  final Value<int> isFavourite;
+  final Value<int> rowid;
+  const QuotesCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    this.bookId = const Value.absent(),
+    this.body = const Value.absent(),
+    this.page = const Value.absent(),
+    this.isFavourite = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  QuotesCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    required String bookId,
+    required String body,
+    this.page = const Value.absent(),
+    this.isFavourite = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       bookId = Value(bookId),
+       body = Value(body);
+  static Insertable<QuotesData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? rev,
+    Expression<String>? bookId,
+    Expression<String>? body,
+    Expression<int>? page,
+    Expression<int>? isFavourite,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (rev != null) 'rev': rev,
+      if (bookId != null) 'book_id': bookId,
+      if (body != null) 'body': body,
+      if (page != null) 'page': page,
+      if (isFavourite != null) 'is_favourite': isFavourite,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  QuotesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? rev,
+    Value<String>? bookId,
+    Value<String>? body,
+    Value<int?>? page,
+    Value<int>? isFavourite,
+    Value<int>? rowid,
+  }) {
+    return QuotesCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      rev: rev ?? this.rev,
+      bookId: bookId ?? this.bookId,
+      body: body ?? this.body,
+      page: page ?? this.page,
+      isFavourite: isFavourite ?? this.isFavourite,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (rev.present) {
+      map['rev'] = Variable<int>(rev.value);
+    }
+    if (bookId.present) {
+      map['book_id'] = Variable<String>(bookId.value);
+    }
+    if (body.present) {
+      map['body'] = Variable<String>(body.value);
+    }
+    if (page.present) {
+      map['page'] = Variable<int>(page.value);
+    }
+    if (isFavourite.present) {
+      map['is_favourite'] = Variable<int>(isFavourite.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('QuotesCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('bookId: $bookId, ')
+          ..write('body: $body, ')
+          ..write('page: $page, ')
+          ..write('isFavourite: $isFavourite, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Loans extends Table with TableInfo<Loans, LoansData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -773,8 +2694,66 @@ class Loans extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  LoansData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LoansData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      rev: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rev'],
+      )!,
+      bookId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}book_id'],
+      )!,
+      direction: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}direction'],
+      )!,
+      personName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}person_name'],
+      )!,
+      personPhone: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}person_phone'],
+      ),
+      startedOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}started_on'],
+      )!,
+      dueOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}due_on'],
+      ),
+      returnedOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}returned_on'],
+      ),
+      previousLocationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}previous_location_id'],
+      ),
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+    );
   }
 
   @override
@@ -791,7 +2770,465 @@ class Loans extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class Goals extends Table with TableInfo {
+class LoansData extends DataClass implements Insertable<LoansData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int rev;
+  final String bookId;
+  final String direction;
+  final String personName;
+  final String? personPhone;
+  final String startedOn;
+  final String? dueOn;
+  final String? returnedOn;
+  final String? previousLocationId;
+  final String? note;
+  const LoansData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.rev,
+    required this.bookId,
+    required this.direction,
+    required this.personName,
+    this.personPhone,
+    required this.startedOn,
+    this.dueOn,
+    this.returnedOn,
+    this.previousLocationId,
+    this.note,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['rev'] = Variable<int>(rev);
+    map['book_id'] = Variable<String>(bookId);
+    map['direction'] = Variable<String>(direction);
+    map['person_name'] = Variable<String>(personName);
+    if (!nullToAbsent || personPhone != null) {
+      map['person_phone'] = Variable<String>(personPhone);
+    }
+    map['started_on'] = Variable<String>(startedOn);
+    if (!nullToAbsent || dueOn != null) {
+      map['due_on'] = Variable<String>(dueOn);
+    }
+    if (!nullToAbsent || returnedOn != null) {
+      map['returned_on'] = Variable<String>(returnedOn);
+    }
+    if (!nullToAbsent || previousLocationId != null) {
+      map['previous_location_id'] = Variable<String>(previousLocationId);
+    }
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    return map;
+  }
+
+  LoansCompanion toCompanion(bool nullToAbsent) {
+    return LoansCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      rev: Value(rev),
+      bookId: Value(bookId),
+      direction: Value(direction),
+      personName: Value(personName),
+      personPhone: personPhone == null && nullToAbsent
+          ? const Value.absent()
+          : Value(personPhone),
+      startedOn: Value(startedOn),
+      dueOn: dueOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dueOn),
+      returnedOn: returnedOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(returnedOn),
+      previousLocationId: previousLocationId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(previousLocationId),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+    );
+  }
+
+  factory LoansData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LoansData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      rev: serializer.fromJson<int>(json['rev']),
+      bookId: serializer.fromJson<String>(json['bookId']),
+      direction: serializer.fromJson<String>(json['direction']),
+      personName: serializer.fromJson<String>(json['personName']),
+      personPhone: serializer.fromJson<String?>(json['personPhone']),
+      startedOn: serializer.fromJson<String>(json['startedOn']),
+      dueOn: serializer.fromJson<String?>(json['dueOn']),
+      returnedOn: serializer.fromJson<String?>(json['returnedOn']),
+      previousLocationId: serializer.fromJson<String?>(
+        json['previousLocationId'],
+      ),
+      note: serializer.fromJson<String?>(json['note']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'rev': serializer.toJson<int>(rev),
+      'bookId': serializer.toJson<String>(bookId),
+      'direction': serializer.toJson<String>(direction),
+      'personName': serializer.toJson<String>(personName),
+      'personPhone': serializer.toJson<String?>(personPhone),
+      'startedOn': serializer.toJson<String>(startedOn),
+      'dueOn': serializer.toJson<String?>(dueOn),
+      'returnedOn': serializer.toJson<String?>(returnedOn),
+      'previousLocationId': serializer.toJson<String?>(previousLocationId),
+      'note': serializer.toJson<String?>(note),
+    };
+  }
+
+  LoansData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? rev,
+    String? bookId,
+    String? direction,
+    String? personName,
+    Value<String?> personPhone = const Value.absent(),
+    String? startedOn,
+    Value<String?> dueOn = const Value.absent(),
+    Value<String?> returnedOn = const Value.absent(),
+    Value<String?> previousLocationId = const Value.absent(),
+    Value<String?> note = const Value.absent(),
+  }) => LoansData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    rev: rev ?? this.rev,
+    bookId: bookId ?? this.bookId,
+    direction: direction ?? this.direction,
+    personName: personName ?? this.personName,
+    personPhone: personPhone.present ? personPhone.value : this.personPhone,
+    startedOn: startedOn ?? this.startedOn,
+    dueOn: dueOn.present ? dueOn.value : this.dueOn,
+    returnedOn: returnedOn.present ? returnedOn.value : this.returnedOn,
+    previousLocationId: previousLocationId.present
+        ? previousLocationId.value
+        : this.previousLocationId,
+    note: note.present ? note.value : this.note,
+  );
+  LoansData copyWithCompanion(LoansCompanion data) {
+    return LoansData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      rev: data.rev.present ? data.rev.value : this.rev,
+      bookId: data.bookId.present ? data.bookId.value : this.bookId,
+      direction: data.direction.present ? data.direction.value : this.direction,
+      personName: data.personName.present
+          ? data.personName.value
+          : this.personName,
+      personPhone: data.personPhone.present
+          ? data.personPhone.value
+          : this.personPhone,
+      startedOn: data.startedOn.present ? data.startedOn.value : this.startedOn,
+      dueOn: data.dueOn.present ? data.dueOn.value : this.dueOn,
+      returnedOn: data.returnedOn.present
+          ? data.returnedOn.value
+          : this.returnedOn,
+      previousLocationId: data.previousLocationId.present
+          ? data.previousLocationId.value
+          : this.previousLocationId,
+      note: data.note.present ? data.note.value : this.note,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LoansData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('bookId: $bookId, ')
+          ..write('direction: $direction, ')
+          ..write('personName: $personName, ')
+          ..write('personPhone: $personPhone, ')
+          ..write('startedOn: $startedOn, ')
+          ..write('dueOn: $dueOn, ')
+          ..write('returnedOn: $returnedOn, ')
+          ..write('previousLocationId: $previousLocationId, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    rev,
+    bookId,
+    direction,
+    personName,
+    personPhone,
+    startedOn,
+    dueOn,
+    returnedOn,
+    previousLocationId,
+    note,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LoansData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.rev == this.rev &&
+          other.bookId == this.bookId &&
+          other.direction == this.direction &&
+          other.personName == this.personName &&
+          other.personPhone == this.personPhone &&
+          other.startedOn == this.startedOn &&
+          other.dueOn == this.dueOn &&
+          other.returnedOn == this.returnedOn &&
+          other.previousLocationId == this.previousLocationId &&
+          other.note == this.note);
+}
+
+class LoansCompanion extends UpdateCompanion<LoansData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> rev;
+  final Value<String> bookId;
+  final Value<String> direction;
+  final Value<String> personName;
+  final Value<String?> personPhone;
+  final Value<String> startedOn;
+  final Value<String?> dueOn;
+  final Value<String?> returnedOn;
+  final Value<String?> previousLocationId;
+  final Value<String?> note;
+  final Value<int> rowid;
+  const LoansCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    this.bookId = const Value.absent(),
+    this.direction = const Value.absent(),
+    this.personName = const Value.absent(),
+    this.personPhone = const Value.absent(),
+    this.startedOn = const Value.absent(),
+    this.dueOn = const Value.absent(),
+    this.returnedOn = const Value.absent(),
+    this.previousLocationId = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LoansCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    required String bookId,
+    required String direction,
+    required String personName,
+    this.personPhone = const Value.absent(),
+    required String startedOn,
+    this.dueOn = const Value.absent(),
+    this.returnedOn = const Value.absent(),
+    this.previousLocationId = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       bookId = Value(bookId),
+       direction = Value(direction),
+       personName = Value(personName),
+       startedOn = Value(startedOn);
+  static Insertable<LoansData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? rev,
+    Expression<String>? bookId,
+    Expression<String>? direction,
+    Expression<String>? personName,
+    Expression<String>? personPhone,
+    Expression<String>? startedOn,
+    Expression<String>? dueOn,
+    Expression<String>? returnedOn,
+    Expression<String>? previousLocationId,
+    Expression<String>? note,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (rev != null) 'rev': rev,
+      if (bookId != null) 'book_id': bookId,
+      if (direction != null) 'direction': direction,
+      if (personName != null) 'person_name': personName,
+      if (personPhone != null) 'person_phone': personPhone,
+      if (startedOn != null) 'started_on': startedOn,
+      if (dueOn != null) 'due_on': dueOn,
+      if (returnedOn != null) 'returned_on': returnedOn,
+      if (previousLocationId != null)
+        'previous_location_id': previousLocationId,
+      if (note != null) 'note': note,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LoansCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? rev,
+    Value<String>? bookId,
+    Value<String>? direction,
+    Value<String>? personName,
+    Value<String?>? personPhone,
+    Value<String>? startedOn,
+    Value<String?>? dueOn,
+    Value<String?>? returnedOn,
+    Value<String?>? previousLocationId,
+    Value<String?>? note,
+    Value<int>? rowid,
+  }) {
+    return LoansCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      rev: rev ?? this.rev,
+      bookId: bookId ?? this.bookId,
+      direction: direction ?? this.direction,
+      personName: personName ?? this.personName,
+      personPhone: personPhone ?? this.personPhone,
+      startedOn: startedOn ?? this.startedOn,
+      dueOn: dueOn ?? this.dueOn,
+      returnedOn: returnedOn ?? this.returnedOn,
+      previousLocationId: previousLocationId ?? this.previousLocationId,
+      note: note ?? this.note,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (rev.present) {
+      map['rev'] = Variable<int>(rev.value);
+    }
+    if (bookId.present) {
+      map['book_id'] = Variable<String>(bookId.value);
+    }
+    if (direction.present) {
+      map['direction'] = Variable<String>(direction.value);
+    }
+    if (personName.present) {
+      map['person_name'] = Variable<String>(personName.value);
+    }
+    if (personPhone.present) {
+      map['person_phone'] = Variable<String>(personPhone.value);
+    }
+    if (startedOn.present) {
+      map['started_on'] = Variable<String>(startedOn.value);
+    }
+    if (dueOn.present) {
+      map['due_on'] = Variable<String>(dueOn.value);
+    }
+    if (returnedOn.present) {
+      map['returned_on'] = Variable<String>(returnedOn.value);
+    }
+    if (previousLocationId.present) {
+      map['previous_location_id'] = Variable<String>(previousLocationId.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LoansCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('bookId: $bookId, ')
+          ..write('direction: $direction, ')
+          ..write('personName: $personName, ')
+          ..write('personPhone: $personPhone, ')
+          ..write('startedOn: $startedOn, ')
+          ..write('dueOn: $dueOn, ')
+          ..write('returnedOn: $returnedOn, ')
+          ..write('previousLocationId: $previousLocationId, ')
+          ..write('note: $note, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Goals extends Table with TableInfo<Goals, GoalsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -871,8 +3308,38 @@ class Goals extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  GoalsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GoalsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      rev: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rev'],
+      )!,
+      year: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}year'],
+      )!,
+      targetBooks: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_books'],
+      )!,
+    );
   }
 
   @override
@@ -889,7 +3356,266 @@ class Goals extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class Tags extends Table with TableInfo {
+class GoalsData extends DataClass implements Insertable<GoalsData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int rev;
+  final int year;
+  final int targetBooks;
+  const GoalsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.rev,
+    required this.year,
+    required this.targetBooks,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['rev'] = Variable<int>(rev);
+    map['year'] = Variable<int>(year);
+    map['target_books'] = Variable<int>(targetBooks);
+    return map;
+  }
+
+  GoalsCompanion toCompanion(bool nullToAbsent) {
+    return GoalsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      rev: Value(rev),
+      year: Value(year),
+      targetBooks: Value(targetBooks),
+    );
+  }
+
+  factory GoalsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GoalsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      rev: serializer.fromJson<int>(json['rev']),
+      year: serializer.fromJson<int>(json['year']),
+      targetBooks: serializer.fromJson<int>(json['targetBooks']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'rev': serializer.toJson<int>(rev),
+      'year': serializer.toJson<int>(year),
+      'targetBooks': serializer.toJson<int>(targetBooks),
+    };
+  }
+
+  GoalsData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? rev,
+    int? year,
+    int? targetBooks,
+  }) => GoalsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    rev: rev ?? this.rev,
+    year: year ?? this.year,
+    targetBooks: targetBooks ?? this.targetBooks,
+  );
+  GoalsData copyWithCompanion(GoalsCompanion data) {
+    return GoalsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      rev: data.rev.present ? data.rev.value : this.rev,
+      year: data.year.present ? data.year.value : this.year,
+      targetBooks: data.targetBooks.present
+          ? data.targetBooks.value
+          : this.targetBooks,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GoalsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('year: $year, ')
+          ..write('targetBooks: $targetBooks')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, createdAt, updatedAt, deletedAt, rev, year, targetBooks);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GoalsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.rev == this.rev &&
+          other.year == this.year &&
+          other.targetBooks == this.targetBooks);
+}
+
+class GoalsCompanion extends UpdateCompanion<GoalsData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> rev;
+  final Value<int> year;
+  final Value<int> targetBooks;
+  final Value<int> rowid;
+  const GoalsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    this.year = const Value.absent(),
+    this.targetBooks = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  GoalsCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    required int year,
+    required int targetBooks,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       year = Value(year),
+       targetBooks = Value(targetBooks);
+  static Insertable<GoalsData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? rev,
+    Expression<int>? year,
+    Expression<int>? targetBooks,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (rev != null) 'rev': rev,
+      if (year != null) 'year': year,
+      if (targetBooks != null) 'target_books': targetBooks,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  GoalsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? rev,
+    Value<int>? year,
+    Value<int>? targetBooks,
+    Value<int>? rowid,
+  }) {
+    return GoalsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      rev: rev ?? this.rev,
+      year: year ?? this.year,
+      targetBooks: targetBooks ?? this.targetBooks,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (rev.present) {
+      map['rev'] = Variable<int>(rev.value);
+    }
+    if (year.present) {
+      map['year'] = Variable<int>(year.value);
+    }
+    if (targetBooks.present) {
+      map['target_books'] = Variable<int>(targetBooks.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GoalsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('year: $year, ')
+          ..write('targetBooks: $targetBooks, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Tags extends Table with TableInfo<Tags, TagsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -960,8 +3686,34 @@ class Tags extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  TagsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TagsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      rev: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rev'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+    );
   }
 
   @override
@@ -975,7 +3727,241 @@ class Tags extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class BookTags extends Table with TableInfo {
+class TagsData extends DataClass implements Insertable<TagsData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int rev;
+  final String name;
+  const TagsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.rev,
+    required this.name,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['rev'] = Variable<int>(rev);
+    map['name'] = Variable<String>(name);
+    return map;
+  }
+
+  TagsCompanion toCompanion(bool nullToAbsent) {
+    return TagsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      rev: Value(rev),
+      name: Value(name),
+    );
+  }
+
+  factory TagsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TagsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      rev: serializer.fromJson<int>(json['rev']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'rev': serializer.toJson<int>(rev),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  TagsData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? rev,
+    String? name,
+  }) => TagsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    rev: rev ?? this.rev,
+    name: name ?? this.name,
+  );
+  TagsData copyWithCompanion(TagsCompanion data) {
+    return TagsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      rev: data.rev.present ? data.rev.value : this.rev,
+      name: data.name.present ? data.name.value : this.name,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TagsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, createdAt, updatedAt, deletedAt, rev, name);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TagsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.rev == this.rev &&
+          other.name == this.name);
+}
+
+class TagsCompanion extends UpdateCompanion<TagsData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> rev;
+  final Value<String> name;
+  final Value<int> rowid;
+  const TagsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    this.name = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TagsCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    required String name,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       name = Value(name);
+  static Insertable<TagsData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? rev,
+    Expression<String>? name,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (rev != null) 'rev': rev,
+      if (name != null) 'name': name,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TagsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? rev,
+    Value<String>? name,
+    Value<int>? rowid,
+  }) {
+    return TagsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      rev: rev ?? this.rev,
+      name: name ?? this.name,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (rev.present) {
+      map['rev'] = Variable<int>(rev.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TagsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('name: $name, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class BookTags extends Table with TableInfo<BookTags, BookTagsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1055,8 +4041,38 @@ class BookTags extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  BookTagsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BookTagsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      rev: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rev'],
+      )!,
+      bookId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}book_id'],
+      )!,
+      tagId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag_id'],
+      )!,
+    );
   }
 
   @override
@@ -1070,7 +4086,267 @@ class BookTags extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class BooksFts extends Table with TableInfo, VirtualTableInfo {
+class BookTagsData extends DataClass implements Insertable<BookTagsData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int rev;
+  final String bookId;
+  final String tagId;
+  const BookTagsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.rev,
+    required this.bookId,
+    required this.tagId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['rev'] = Variable<int>(rev);
+    map['book_id'] = Variable<String>(bookId);
+    map['tag_id'] = Variable<String>(tagId);
+    return map;
+  }
+
+  BookTagsCompanion toCompanion(bool nullToAbsent) {
+    return BookTagsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      rev: Value(rev),
+      bookId: Value(bookId),
+      tagId: Value(tagId),
+    );
+  }
+
+  factory BookTagsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BookTagsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      rev: serializer.fromJson<int>(json['rev']),
+      bookId: serializer.fromJson<String>(json['bookId']),
+      tagId: serializer.fromJson<String>(json['tagId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'rev': serializer.toJson<int>(rev),
+      'bookId': serializer.toJson<String>(bookId),
+      'tagId': serializer.toJson<String>(tagId),
+    };
+  }
+
+  BookTagsData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? rev,
+    String? bookId,
+    String? tagId,
+  }) => BookTagsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    rev: rev ?? this.rev,
+    bookId: bookId ?? this.bookId,
+    tagId: tagId ?? this.tagId,
+  );
+  BookTagsData copyWithCompanion(BookTagsCompanion data) {
+    return BookTagsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      rev: data.rev.present ? data.rev.value : this.rev,
+      bookId: data.bookId.present ? data.bookId.value : this.bookId,
+      tagId: data.tagId.present ? data.tagId.value : this.tagId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BookTagsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('bookId: $bookId, ')
+          ..write('tagId: $tagId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, createdAt, updatedAt, deletedAt, rev, bookId, tagId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BookTagsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.rev == this.rev &&
+          other.bookId == this.bookId &&
+          other.tagId == this.tagId);
+}
+
+class BookTagsCompanion extends UpdateCompanion<BookTagsData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> rev;
+  final Value<String> bookId;
+  final Value<String> tagId;
+  final Value<int> rowid;
+  const BookTagsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    this.bookId = const Value.absent(),
+    this.tagId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BookTagsCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.rev = const Value.absent(),
+    required String bookId,
+    required String tagId,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       bookId = Value(bookId),
+       tagId = Value(tagId);
+  static Insertable<BookTagsData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? rev,
+    Expression<String>? bookId,
+    Expression<String>? tagId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (rev != null) 'rev': rev,
+      if (bookId != null) 'book_id': bookId,
+      if (tagId != null) 'tag_id': tagId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BookTagsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? rev,
+    Value<String>? bookId,
+    Value<String>? tagId,
+    Value<int>? rowid,
+  }) {
+    return BookTagsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      rev: rev ?? this.rev,
+      bookId: bookId ?? this.bookId,
+      tagId: tagId ?? this.tagId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (rev.present) {
+      map['rev'] = Variable<int>(rev.value);
+    }
+    if (bookId.present) {
+      map['book_id'] = Variable<String>(bookId.value);
+    }
+    if (tagId.present) {
+      map['tag_id'] = Variable<String>(tagId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BookTagsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rev: $rev, ')
+          ..write('bookId: $bookId, ')
+          ..write('tagId: $tagId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class BooksFts extends Table
+    with
+        TableInfo<BooksFts, BooksFtsData>,
+        VirtualTableInfo<BooksFts, BooksFtsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1109,8 +4385,22 @@ class BooksFts extends Table with TableInfo, VirtualTableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  BooksFtsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BooksFtsData(
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      ),
+      subtitle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}subtitle'],
+      ),
+      authors: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}authors'],
+      ),
+    );
   }
 
   @override
@@ -1125,7 +4415,175 @@ class BooksFts extends Table with TableInfo, VirtualTableInfo {
       'fts5(title, subtitle, authors, content = \'books\', content_rowid = \'rowid\', tokenize = \'unicode61 remove_diacritics 2\')';
 }
 
-class LookupCache extends Table with TableInfo {
+class BooksFtsData extends DataClass implements Insertable<BooksFtsData> {
+  final String? title;
+  final String? subtitle;
+  final String? authors;
+  const BooksFtsData({this.title, this.subtitle, this.authors});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || title != null) {
+      map['title'] = Variable<String>(title);
+    }
+    if (!nullToAbsent || subtitle != null) {
+      map['subtitle'] = Variable<String>(subtitle);
+    }
+    if (!nullToAbsent || authors != null) {
+      map['authors'] = Variable<String>(authors);
+    }
+    return map;
+  }
+
+  BooksFtsCompanion toCompanion(bool nullToAbsent) {
+    return BooksFtsCompanion(
+      title: title == null && nullToAbsent
+          ? const Value.absent()
+          : Value(title),
+      subtitle: subtitle == null && nullToAbsent
+          ? const Value.absent()
+          : Value(subtitle),
+      authors: authors == null && nullToAbsent
+          ? const Value.absent()
+          : Value(authors),
+    );
+  }
+
+  factory BooksFtsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BooksFtsData(
+      title: serializer.fromJson<String?>(json['title']),
+      subtitle: serializer.fromJson<String?>(json['subtitle']),
+      authors: serializer.fromJson<String?>(json['authors']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'title': serializer.toJson<String?>(title),
+      'subtitle': serializer.toJson<String?>(subtitle),
+      'authors': serializer.toJson<String?>(authors),
+    };
+  }
+
+  BooksFtsData copyWith({
+    Value<String?> title = const Value.absent(),
+    Value<String?> subtitle = const Value.absent(),
+    Value<String?> authors = const Value.absent(),
+  }) => BooksFtsData(
+    title: title.present ? title.value : this.title,
+    subtitle: subtitle.present ? subtitle.value : this.subtitle,
+    authors: authors.present ? authors.value : this.authors,
+  );
+  BooksFtsData copyWithCompanion(BooksFtsCompanion data) {
+    return BooksFtsData(
+      title: data.title.present ? data.title.value : this.title,
+      subtitle: data.subtitle.present ? data.subtitle.value : this.subtitle,
+      authors: data.authors.present ? data.authors.value : this.authors,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BooksFtsData(')
+          ..write('title: $title, ')
+          ..write('subtitle: $subtitle, ')
+          ..write('authors: $authors')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(title, subtitle, authors);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BooksFtsData &&
+          other.title == this.title &&
+          other.subtitle == this.subtitle &&
+          other.authors == this.authors);
+}
+
+class BooksFtsCompanion extends UpdateCompanion<BooksFtsData> {
+  final Value<String?> title;
+  final Value<String?> subtitle;
+  final Value<String?> authors;
+  final Value<int> rowid;
+  const BooksFtsCompanion({
+    this.title = const Value.absent(),
+    this.subtitle = const Value.absent(),
+    this.authors = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BooksFtsCompanion.insert({
+    this.title = const Value.absent(),
+    this.subtitle = const Value.absent(),
+    this.authors = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  static Insertable<BooksFtsData> custom({
+    Expression<String>? title,
+    Expression<String>? subtitle,
+    Expression<String>? authors,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (title != null) 'title': title,
+      if (subtitle != null) 'subtitle': subtitle,
+      if (authors != null) 'authors': authors,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BooksFtsCompanion copyWith({
+    Value<String?>? title,
+    Value<String?>? subtitle,
+    Value<String?>? authors,
+    Value<int>? rowid,
+  }) {
+    return BooksFtsCompanion(
+      title: title ?? this.title,
+      subtitle: subtitle ?? this.subtitle,
+      authors: authors ?? this.authors,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (subtitle.present) {
+      map['subtitle'] = Variable<String>(subtitle.value);
+    }
+    if (authors.present) {
+      map['authors'] = Variable<String>(authors.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BooksFtsCompanion(')
+          ..write('title: $title, ')
+          ..write('subtitle: $subtitle, ')
+          ..write('authors: $authors, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class LookupCache extends Table with TableInfo<LookupCache, LookupCacheData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1178,8 +4636,26 @@ class LookupCache extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {key};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  LookupCacheData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LookupCacheData(
+      key: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key'],
+      )!,
+      payloadJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payload_json'],
+      )!,
+      fetchedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fetched_at'],
+      )!,
+      isNotFound: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}is_not_found'],
+      )!,
+    );
   }
 
   @override
@@ -1193,7 +4669,195 @@ class LookupCache extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class AppMeta extends Table with TableInfo {
+class LookupCacheData extends DataClass implements Insertable<LookupCacheData> {
+  final String key;
+  final String payloadJson;
+  final String fetchedAt;
+  final int isNotFound;
+  const LookupCacheData({
+    required this.key,
+    required this.payloadJson,
+    required this.fetchedAt,
+    required this.isNotFound,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['key'] = Variable<String>(key);
+    map['payload_json'] = Variable<String>(payloadJson);
+    map['fetched_at'] = Variable<String>(fetchedAt);
+    map['is_not_found'] = Variable<int>(isNotFound);
+    return map;
+  }
+
+  LookupCacheCompanion toCompanion(bool nullToAbsent) {
+    return LookupCacheCompanion(
+      key: Value(key),
+      payloadJson: Value(payloadJson),
+      fetchedAt: Value(fetchedAt),
+      isNotFound: Value(isNotFound),
+    );
+  }
+
+  factory LookupCacheData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LookupCacheData(
+      key: serializer.fromJson<String>(json['key']),
+      payloadJson: serializer.fromJson<String>(json['payloadJson']),
+      fetchedAt: serializer.fromJson<String>(json['fetchedAt']),
+      isNotFound: serializer.fromJson<int>(json['isNotFound']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'key': serializer.toJson<String>(key),
+      'payloadJson': serializer.toJson<String>(payloadJson),
+      'fetchedAt': serializer.toJson<String>(fetchedAt),
+      'isNotFound': serializer.toJson<int>(isNotFound),
+    };
+  }
+
+  LookupCacheData copyWith({
+    String? key,
+    String? payloadJson,
+    String? fetchedAt,
+    int? isNotFound,
+  }) => LookupCacheData(
+    key: key ?? this.key,
+    payloadJson: payloadJson ?? this.payloadJson,
+    fetchedAt: fetchedAt ?? this.fetchedAt,
+    isNotFound: isNotFound ?? this.isNotFound,
+  );
+  LookupCacheData copyWithCompanion(LookupCacheCompanion data) {
+    return LookupCacheData(
+      key: data.key.present ? data.key.value : this.key,
+      payloadJson: data.payloadJson.present
+          ? data.payloadJson.value
+          : this.payloadJson,
+      fetchedAt: data.fetchedAt.present ? data.fetchedAt.value : this.fetchedAt,
+      isNotFound: data.isNotFound.present
+          ? data.isNotFound.value
+          : this.isNotFound,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LookupCacheData(')
+          ..write('key: $key, ')
+          ..write('payloadJson: $payloadJson, ')
+          ..write('fetchedAt: $fetchedAt, ')
+          ..write('isNotFound: $isNotFound')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(key, payloadJson, fetchedAt, isNotFound);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LookupCacheData &&
+          other.key == this.key &&
+          other.payloadJson == this.payloadJson &&
+          other.fetchedAt == this.fetchedAt &&
+          other.isNotFound == this.isNotFound);
+}
+
+class LookupCacheCompanion extends UpdateCompanion<LookupCacheData> {
+  final Value<String> key;
+  final Value<String> payloadJson;
+  final Value<String> fetchedAt;
+  final Value<int> isNotFound;
+  final Value<int> rowid;
+  const LookupCacheCompanion({
+    this.key = const Value.absent(),
+    this.payloadJson = const Value.absent(),
+    this.fetchedAt = const Value.absent(),
+    this.isNotFound = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LookupCacheCompanion.insert({
+    required String key,
+    required String payloadJson,
+    required String fetchedAt,
+    this.isNotFound = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : key = Value(key),
+       payloadJson = Value(payloadJson),
+       fetchedAt = Value(fetchedAt);
+  static Insertable<LookupCacheData> custom({
+    Expression<String>? key,
+    Expression<String>? payloadJson,
+    Expression<String>? fetchedAt,
+    Expression<int>? isNotFound,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (key != null) 'key': key,
+      if (payloadJson != null) 'payload_json': payloadJson,
+      if (fetchedAt != null) 'fetched_at': fetchedAt,
+      if (isNotFound != null) 'is_not_found': isNotFound,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LookupCacheCompanion copyWith({
+    Value<String>? key,
+    Value<String>? payloadJson,
+    Value<String>? fetchedAt,
+    Value<int>? isNotFound,
+    Value<int>? rowid,
+  }) {
+    return LookupCacheCompanion(
+      key: key ?? this.key,
+      payloadJson: payloadJson ?? this.payloadJson,
+      fetchedAt: fetchedAt ?? this.fetchedAt,
+      isNotFound: isNotFound ?? this.isNotFound,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
+    if (payloadJson.present) {
+      map['payload_json'] = Variable<String>(payloadJson.value);
+    }
+    if (fetchedAt.present) {
+      map['fetched_at'] = Variable<String>(fetchedAt.value);
+    }
+    if (isNotFound.present) {
+      map['is_not_found'] = Variable<int>(isNotFound.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LookupCacheCompanion(')
+          ..write('key: $key, ')
+          ..write('payloadJson: $payloadJson, ')
+          ..write('fetchedAt: $fetchedAt, ')
+          ..write('isNotFound: $isNotFound, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class AppMeta extends Table with TableInfo<AppMeta, AppMetaData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1224,8 +4888,18 @@ class AppMeta extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {key};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  AppMetaData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AppMetaData(
+      key: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
+    );
   }
 
   @override
@@ -1239,7 +4913,135 @@ class AppMeta extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class CoverBlobs extends Table with TableInfo {
+class AppMetaData extends DataClass implements Insertable<AppMetaData> {
+  final String key;
+  final String value;
+  const AppMetaData({required this.key, required this.value});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['key'] = Variable<String>(key);
+    map['value'] = Variable<String>(value);
+    return map;
+  }
+
+  AppMetaCompanion toCompanion(bool nullToAbsent) {
+    return AppMetaCompanion(key: Value(key), value: Value(value));
+  }
+
+  factory AppMetaData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AppMetaData(
+      key: serializer.fromJson<String>(json['key']),
+      value: serializer.fromJson<String>(json['value']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'key': serializer.toJson<String>(key),
+      'value': serializer.toJson<String>(value),
+    };
+  }
+
+  AppMetaData copyWith({String? key, String? value}) =>
+      AppMetaData(key: key ?? this.key, value: value ?? this.value);
+  AppMetaData copyWithCompanion(AppMetaCompanion data) {
+    return AppMetaData(
+      key: data.key.present ? data.key.value : this.key,
+      value: data.value.present ? data.value.value : this.value,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppMetaData(')
+          ..write('key: $key, ')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(key, value);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppMetaData &&
+          other.key == this.key &&
+          other.value == this.value);
+}
+
+class AppMetaCompanion extends UpdateCompanion<AppMetaData> {
+  final Value<String> key;
+  final Value<String> value;
+  final Value<int> rowid;
+  const AppMetaCompanion({
+    this.key = const Value.absent(),
+    this.value = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AppMetaCompanion.insert({
+    required String key,
+    required String value,
+    this.rowid = const Value.absent(),
+  }) : key = Value(key),
+       value = Value(value);
+  static Insertable<AppMetaData> custom({
+    Expression<String>? key,
+    Expression<String>? value,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (key != null) 'key': key,
+      if (value != null) 'value': value,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AppMetaCompanion copyWith({
+    Value<String>? key,
+    Value<String>? value,
+    Value<int>? rowid,
+  }) {
+    return AppMetaCompanion(
+      key: key ?? this.key,
+      value: value ?? this.value,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppMetaCompanion(')
+          ..write('key: $key, ')
+          ..write('value: $value, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class CoverBlobs extends Table with TableInfo<CoverBlobs, CoverBlobsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1279,8 +5081,22 @@ class CoverBlobs extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {bookId};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  CoverBlobsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CoverBlobsData(
+      bookId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}book_id'],
+      )!,
+      bytes: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}bytes'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
   }
 
   @override
@@ -1292,6 +5108,169 @@ class CoverBlobs extends Table with TableInfo {
   List<String> get customConstraints => const ['PRIMARY KEY(book_id)'];
   @override
   bool get dontWriteConstraints => true;
+}
+
+class CoverBlobsData extends DataClass implements Insertable<CoverBlobsData> {
+  final String bookId;
+  final i2.Uint8List bytes;
+  final String updatedAt;
+  const CoverBlobsData({
+    required this.bookId,
+    required this.bytes,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['book_id'] = Variable<String>(bookId);
+    map['bytes'] = Variable<i2.Uint8List>(bytes);
+    map['updated_at'] = Variable<String>(updatedAt);
+    return map;
+  }
+
+  CoverBlobsCompanion toCompanion(bool nullToAbsent) {
+    return CoverBlobsCompanion(
+      bookId: Value(bookId),
+      bytes: Value(bytes),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory CoverBlobsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CoverBlobsData(
+      bookId: serializer.fromJson<String>(json['bookId']),
+      bytes: serializer.fromJson<i2.Uint8List>(json['bytes']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'bookId': serializer.toJson<String>(bookId),
+      'bytes': serializer.toJson<i2.Uint8List>(bytes),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+    };
+  }
+
+  CoverBlobsData copyWith({
+    String? bookId,
+    i2.Uint8List? bytes,
+    String? updatedAt,
+  }) => CoverBlobsData(
+    bookId: bookId ?? this.bookId,
+    bytes: bytes ?? this.bytes,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  CoverBlobsData copyWithCompanion(CoverBlobsCompanion data) {
+    return CoverBlobsData(
+      bookId: data.bookId.present ? data.bookId.value : this.bookId,
+      bytes: data.bytes.present ? data.bytes.value : this.bytes,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CoverBlobsData(')
+          ..write('bookId: $bookId, ')
+          ..write('bytes: $bytes, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(bookId, $driftBlobEquality.hash(bytes), updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CoverBlobsData &&
+          other.bookId == this.bookId &&
+          $driftBlobEquality.equals(other.bytes, this.bytes) &&
+          other.updatedAt == this.updatedAt);
+}
+
+class CoverBlobsCompanion extends UpdateCompanion<CoverBlobsData> {
+  final Value<String> bookId;
+  final Value<i2.Uint8List> bytes;
+  final Value<String> updatedAt;
+  final Value<int> rowid;
+  const CoverBlobsCompanion({
+    this.bookId = const Value.absent(),
+    this.bytes = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CoverBlobsCompanion.insert({
+    required String bookId,
+    required i2.Uint8List bytes,
+    required String updatedAt,
+    this.rowid = const Value.absent(),
+  }) : bookId = Value(bookId),
+       bytes = Value(bytes),
+       updatedAt = Value(updatedAt);
+  static Insertable<CoverBlobsData> custom({
+    Expression<String>? bookId,
+    Expression<i2.Uint8List>? bytes,
+    Expression<String>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (bookId != null) 'book_id': bookId,
+      if (bytes != null) 'bytes': bytes,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CoverBlobsCompanion copyWith({
+    Value<String>? bookId,
+    Value<i2.Uint8List>? bytes,
+    Value<String>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return CoverBlobsCompanion(
+      bookId: bookId ?? this.bookId,
+      bytes: bytes ?? this.bytes,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (bookId.present) {
+      map['book_id'] = Variable<String>(bookId.value);
+    }
+    if (bytes.present) {
+      map['bytes'] = Variable<i2.Uint8List>(bytes.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CoverBlobsCompanion(')
+          ..write('bookId: $bookId, ')
+          ..write('bytes: $bytes, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
 }
 
 class DatabaseAtV2 extends GeneratedDatabase {

@@ -1758,6 +1758,58 @@ class AppLocalizationsHi extends AppLocalizations {
   String get quoteScriptDevanagari => 'हिन्दी, मराठी (Devanagari)';
 
   @override
+  String get timerStart => 'Start the reading timer';
+
+  @override
+  String timerStop(String time) {
+    return 'Stop the timer ($time)';
+  }
+
+  @override
+  String timerRunning(String time) {
+    return 'Reading for $time';
+  }
+
+  @override
+  String timerLogged(String time) {
+    return 'Logged $time of reading';
+  }
+
+  @override
+  String get timerTooShort => 'Under a minute, so nothing was logged';
+
+  @override
+  String durationMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String durationHours(int hours) {
+    return '$hours h';
+  }
+
+  @override
+  String durationHoursMinutes(int hours, int minutes) {
+    return '$hours h $minutes min';
+  }
+
+  @override
+  String readingTimeToday(String time) {
+    return '$time with the timer';
+  }
+
+  @override
+  String get statsTimeTitle => 'Time reading';
+
+  @override
+  String get statsTimeBody =>
+      'Measured with the reading timer on the Reading tab.';
+
+  @override
+  String get statsTimeNone =>
+      'Start the timer on a book you are reading to see your reading time here.';
+
+  @override
   String get settingsReportProblem => 'Report a problem';
 
   @override

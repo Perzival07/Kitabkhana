@@ -5,7 +5,7 @@ import '../../core/uuid.dart';
 import '../../features/lending/domain/loan_direction.dart';
 import '../../features/library/domain/book_enums.dart';
 import 'converters.dart';
-import 'schema_versions.dart';
+import 'app_database.steps.dart';
 import 'tables.dart';
 
 part 'app_database.g.dart';
@@ -23,6 +23,8 @@ part 'app_database.g.dart';
     LookupCache,
     AppMeta,
     CoverBlobs,
+    ReadingSessions,
+    ReadThroughs,
   ],
   include: <String>{'search.drift'},
 )
@@ -37,7 +39,7 @@ class AppDatabase extends _$AppDatabase {
   /// Bump when tables change and add a migration step in `onUpgrade`.
   /// Must stay a literal: `drift_dev make-migrations` reads it statically.
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -46,6 +48,13 @@ class AppDatabase extends _$AppDatabase {
       // v2: cover images for platforms without a file system (web).
       from1To2: (m, schema) async {
         await m.createTable(schema.coverBlobs);
+      },
+      // v3: series on books, timed reading sessions, earlier read-throughs.
+      from2To3: (m, schema) async {
+        await m.addColumn(schema.books, schema.books.series);
+        await m.addColumn(schema.books, schema.books.seriesNumber);
+        await m.createTable(schema.readingSessions);
+        await m.createTable(schema.readThroughs);
       },
     ),
     beforeOpen: (details) async {
@@ -79,6 +88,14 @@ class AppDatabase extends _$AppDatabase {
 
   SimpleSelectStatement<$ReadingLogsTable, ReadingLogRow> liveReadingLogs() =>
       select(readingLogs)..where((t) => t.deletedAt.isNull());
+
+  SimpleSelectStatement<$ReadingSessionsTable, ReadingSessionRow>
+  liveReadingSessions() =>
+      select(readingSessions)..where((t) => t.deletedAt.isNull());
+
+  SimpleSelectStatement<$ReadThroughsTable, ReadThroughRow>
+  liveReadThroughs() =>
+      select(readThroughs)..where((t) => t.deletedAt.isNull());
 
   SimpleSelectStatement<$QuotesTable, QuoteRow> liveQuotes() =>
       select(quotes)..where((t) => t.deletedAt.isNull());

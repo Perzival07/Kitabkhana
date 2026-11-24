@@ -403,3 +403,268 @@ final class PagesLast7DaysProvider
 }
 
 String _$pagesLast7DaysHash() => r'd5472626342c5e177f6e314aeaf77e53fed33430';
+
+@ProviderFor(readingSessionRepository)
+final readingSessionRepositoryProvider = ReadingSessionRepositoryProvider._();
+
+final class ReadingSessionRepositoryProvider
+    extends
+        $FunctionalProvider<
+          ReadingSessionRepository,
+          ReadingSessionRepository,
+          ReadingSessionRepository
+        >
+    with $Provider<ReadingSessionRepository> {
+  ReadingSessionRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'readingSessionRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$readingSessionRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<ReadingSessionRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ReadingSessionRepository create(Ref ref) {
+    return readingSessionRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ReadingSessionRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ReadingSessionRepository>(value),
+    );
+  }
+}
+
+String _$readingSessionRepositoryHash() =>
+    r'dd22f251c5f76ce9b7c578fbd1d154d277a61007';
+
+@ProviderFor(readingTimerStore)
+final readingTimerStoreProvider = ReadingTimerStoreProvider._();
+
+final class ReadingTimerStoreProvider
+    extends
+        $FunctionalProvider<
+          ReadingTimerStore,
+          ReadingTimerStore,
+          ReadingTimerStore
+        >
+    with $Provider<ReadingTimerStore> {
+  ReadingTimerStoreProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'readingTimerStoreProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$readingTimerStoreHash();
+
+  @$internal
+  @override
+  $ProviderElement<ReadingTimerStore> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ReadingTimerStore create(Ref ref) {
+    return readingTimerStore(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ReadingTimerStore value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ReadingTimerStore>(value),
+    );
+  }
+}
+
+String _$readingTimerStoreHash() => r'7f2a9cc58ee3d27406b85978da485c3893a89b67';
+
+/// The reading timer: at most one runs, for one book. Kept in the database,
+/// so closing the app does not lose it.
+
+@ProviderFor(ReadingTimer)
+final readingTimerProvider = ReadingTimerProvider._();
+
+/// The reading timer: at most one runs, for one book. Kept in the database,
+/// so closing the app does not lose it.
+final class ReadingTimerProvider
+    extends $AsyncNotifierProvider<ReadingTimer, RunningTimer?> {
+  /// The reading timer: at most one runs, for one book. Kept in the database,
+  /// so closing the app does not lose it.
+  ReadingTimerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'readingTimerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$readingTimerHash();
+
+  @$internal
+  @override
+  ReadingTimer create() => ReadingTimer();
+}
+
+String _$readingTimerHash() => r'af4d5e859c7086bddd947cf0880fb20ebceeb53c';
+
+/// The reading timer: at most one runs, for one book. Kept in the database,
+/// so closing the app does not lose it.
+
+abstract class _$ReadingTimer extends $AsyncNotifier<RunningTimer?> {
+  FutureOr<RunningTimer?> build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<RunningTimer?>, RunningTimer?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<RunningTimer?>, RunningTimer?>,
+              AsyncValue<RunningTimer?>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}
+
+/// Minutes read today (from the timer).
+
+@ProviderFor(minutesToday)
+final minutesTodayProvider = MinutesTodayProvider._();
+
+/// Minutes read today (from the timer).
+
+final class MinutesTodayProvider
+    extends $FunctionalProvider<AsyncValue<int>, int, Stream<int>>
+    with $FutureModifier<int>, $StreamProvider<int> {
+  /// Minutes read today (from the timer).
+  MinutesTodayProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'minutesTodayProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$minutesTodayHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<int> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<int> create(Ref ref) {
+    return minutesToday(ref);
+  }
+}
+
+String _$minutesTodayHash() => r'f11bc51d3e2c13bd5d189ae0f00f213089bdb6c3';
+
+/// Minutes read in [year] (from the timer).
+
+@ProviderFor(minutesInYear)
+final minutesInYearProvider = MinutesInYearFamily._();
+
+/// Minutes read in [year] (from the timer).
+
+final class MinutesInYearProvider
+    extends $FunctionalProvider<AsyncValue<int>, int, Stream<int>>
+    with $FutureModifier<int>, $StreamProvider<int> {
+  /// Minutes read in [year] (from the timer).
+  MinutesInYearProvider._({
+    required MinutesInYearFamily super.from,
+    required int super.argument,
+  }) : super(
+         retry: null,
+         name: r'minutesInYearProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$minutesInYearHash();
+
+  @override
+  String toString() {
+    return r'minutesInYearProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $StreamProviderElement<int> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<int> create(Ref ref) {
+    final argument = this.argument as int;
+    return minutesInYear(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is MinutesInYearProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$minutesInYearHash() => r'c623dca2e8b89927101319ce2ecb8c0f36ea3e72';
+
+/// Minutes read in [year] (from the timer).
+
+final class MinutesInYearFamily extends $Family
+    with $FunctionalFamilyOverride<Stream<int>, int> {
+  MinutesInYearFamily._()
+    : super(
+        retry: null,
+        name: r'minutesInYearProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// Minutes read in [year] (from the timer).
+
+  MinutesInYearProvider call(int year) =>
+      MinutesInYearProvider._(argument: year, from: this);
+
+  @override
+  String toString() => r'minutesInYearProvider';
+}

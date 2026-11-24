@@ -9,6 +9,8 @@ data/books.json
 data/locations.json
 data/loans.json
 data/reading_logs.json
+data/reading_sessions.json   (schema 3 and later)
+data/read_throughs.json      (schema 3 and later)
 data/quotes.json
 data/goals.json
 data/tags.json
@@ -22,7 +24,7 @@ covers/<bookId>.jpg        (one per book that has a cover)
 {
   "formatVersion": 1,
   "appVersion": "1.0.0",
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "deviceId": "0192f0c4-…",
   "exportedAt": "2025-03-10T09:30:00.000Z",
   "counts": { "books": 312, "loans": 14, "quotes": 58, "...": 0 },
@@ -57,6 +59,11 @@ the Dart data classes (camelCase). Rules:
 * Ids are UUIDv7 strings.
 * Device-local tables are **not** backed up: Open Library lookup cache,
   `app_meta` (settings), and web cover blobs.
+
+Tables added in a later schema (`backupTablesAddedIn` in
+`lib/features/backup/domain/backup_format.dart`) may be missing from a backup
+made before that schema; they import as empty. A backup that claims the newer
+schema but lacks them is damaged.
 
 ## covers/
 

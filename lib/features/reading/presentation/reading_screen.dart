@@ -13,6 +13,7 @@ import '../../../app/router/routes.dart';
 import '../../../app/theme/tokens.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../ui/ui.dart';
+import 'reading_timer_button.dart';
 import '../../book/application/book_progress.dart';
 import '../../library/domain/book.dart';
 import '../../library/domain/book_enums.dart';
@@ -321,8 +322,30 @@ class _ReadingCard extends ConsumerWidget {
                       const SizedBox(height: KSpacing.sm),
                       Text(paceText, style: theme.textTheme.bodySmall),
                     ],
+                    ReadingTimerElapsed(bookId: book.id),
                   ],
                 ),
+              ),
+              ReadingTimerButton(
+                book: book,
+                onStopped: (minutes) async {
+                  final messenger = ScaffoldMessenger.of(context);
+                  KToast.showWith(
+                    messenger,
+                    minutes == null
+                        ? l10n.timerTooShort
+                        : l10n.timerLogged(minutesText(l10n, minutes)),
+                    icon: Icons.timer_outlined,
+                  );
+                  if (minutes != null && context.mounted) {
+                    await updateBookPage(
+                      context,
+                      ref,
+                      book,
+                      onMarkFinished: (b) => _finish(ref, b),
+                    );
+                  }
+                },
               ),
             ],
           ),
@@ -369,6 +392,13 @@ class _TodayCard extends ConsumerWidget {
             l10n.readingPagesToday(todayPages),
             style: theme.textTheme.headlineSmall,
           ),
+          if ((ref.watch(minutesTodayProvider).value ?? 0) > 0)
+            Text(
+              l10n.readingTimeToday(
+                minutesText(l10n, ref.watch(minutesTodayProvider).value!),
+              ),
+              style: theme.textTheme.bodySmall,
+            ),
           const SizedBox(height: KSpacing.lg),
           Semantics(
             label: l10n.readingLast7Days(sum),

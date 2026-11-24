@@ -43,6 +43,8 @@ class EraseAllData {
         await db.delete(db.bookTags).go();
         await db.delete(db.quotes).go();
         await db.delete(db.readingLogs).go();
+        await db.delete(db.readingSessions).go();
+        await db.delete(db.readThroughs).go();
         await db.delete(db.loans).go();
         await db.delete(db.coverBlobs).go();
         await db.delete(db.books).go();

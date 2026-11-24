@@ -11,9 +11,18 @@ const List<String> backupTableNames = <String>[
   'books',
   'loans',
   'reading_logs',
+  'reading_sessions',
+  'read_throughs',
   'quotes',
   'book_tags',
 ];
+
+/// Tables that older backups do not have, with the schema version that
+/// added them. A backup from before that version simply has none.
+const Map<String, int> backupTablesAddedIn = <String, int>{
+  'reading_sessions': 3,
+  'read_throughs': 3,
+};
 
 String dataFilePath(String table) => 'data/$table.json';
 String coverFilePath(String bookId) => 'covers/$bookId.jpg';

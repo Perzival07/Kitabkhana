@@ -51,7 +51,7 @@ void main() {
 
   group('open', () {
     test('creates the current schema with foreign keys on', () async {
-      expect(db.schemaVersion, 2);
+      expect(db.schemaVersion, 3);
       final fk = await db.customSelect('PRAGMA foreign_keys').getSingle();
       expect(fk.data.values.first, 1);
     });

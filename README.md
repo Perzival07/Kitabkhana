@@ -231,6 +231,10 @@ the **quote of the week**, an overdue-loans banner and "Up next" from your want-
 
 - **Streak**: consecutive reading days ending today, or yesterday while today is still to
   come. Days are counted on local calendar dates, so time zones and DST cannot break them.
+- **Reading timer**: the timer button on each card times a session. It keeps running if
+  you close the app; stopping logs the minutes (half a minute or more) and asks for the
+  page you reached. Today's card shows "35 min with the timer", and Stats shows the year's
+  time reading.
 - **Pace**: pages read over the last 14 days, never longer than the time since you started
   the book. It needs at least 2 reading days before it predicts anything.
 - **Quote of the week**: changes every Monday, picked from favourites first and topped up
@@ -620,16 +624,18 @@ More: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Data model
 
-Drift (SQLite), schema **v2**. Every synced table carries a UUIDv7 text `id`
+Drift (SQLite), schema **v3**. Every synced table carries a UUIDv7 text `id`
 ([ADR 0001](docs/adr/0001-uuid-v7-ids.md)), `createdAt`, `updatedAt`, `deletedAt` (soft
 delete) and `rev`. These columns exist so backup merges are safe. There is no sync.
 
 | Table | Holds |
 | --- | --- |
-| `books` | Title, subtitle, authors, ISBN-13, work key, title key, cover (URL and local ref), pages, genre, language, ownership, status, current page, rating, location, owner name, notes, start/finish dates |
+| `books` | Title, subtitle, authors, series and number, ISBN-13, work key, title key, cover (URL and local ref), pages, genre, language, ownership, status, current page, rating, location, owner name, notes, start/finish dates |
 | `locations` | Name, parent (nesting), sort order, icon |
 | `loans` | Book, direction (lent/borrowed), person, phone, started, due, returned, previous location, note. One active loan per book (partial unique index). |
 | `reading_logs` | Book, date, pages read, from page, to page |
+| `reading_sessions` | Book, date, minutes read (from the timer) |
+| `read_throughs` | Earlier reads of a book being read again: started, finished |
 | `quotes` | Book, body, page, favourite |
 | `goals` | Year, target books |
 | `tags`, `book_tags` | Tags and the book ↔ tag links |

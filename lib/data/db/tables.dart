@@ -50,6 +50,11 @@ class Books extends Table with SyncColumns {
   TextColumn get finishedOn =>
       text().map(const DateOnlyConverter()).nullable()();
 
+  /// v3: the series the book belongs to ("Discworld") and its place in it
+  /// (2, or 2.5 for a novella between books).
+  TextColumn get series => text().nullable()();
+  RealColumn get seriesNumber => real().nullable()();
+
   @override
   List<String> get customConstraints => <String>[
     'CHECK (pages IS NULL OR pages > 0)',
@@ -105,6 +110,30 @@ class ReadingLogs extends Table with SyncColumns {
 
   @override
   List<String> get customConstraints => <String>['CHECK (pages_read > 0)'];
+}
+
+/// v3: time spent reading one book on one day, from the reading timer.
+@DataClassName('ReadingSessionRow')
+class ReadingSessions extends Table with SyncColumns {
+  TextColumn get bookId => text().references(Books, #id)();
+  TextColumn get date => text().map(const DateOnlyConverter())();
+  IntColumn get minutes => integer()();
+
+  @override
+  List<String> get customConstraints => <String>[
+    'CHECK (minutes > 0 AND minutes <= 1440)',
+  ];
+}
+
+/// v3: an earlier read of a book that is being read again. The current read
+/// stays on the book (`startedOn` / `finishedOn`).
+@DataClassName('ReadThroughRow')
+class ReadThroughs extends Table with SyncColumns {
+  TextColumn get bookId => text().references(Books, #id)();
+  TextColumn get startedOn =>
+      text().map(const DateOnlyConverter()).nullable()();
+  TextColumn get finishedOn =>
+      text().map(const DateOnlyConverter()).nullable()();
 }
 
 @DataClassName('QuoteRow')

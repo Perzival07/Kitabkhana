@@ -2,7 +2,7 @@
 
 Drift (SQLite). Native: SQLite via FFI in WAL mode. Web: `sqlite3.wasm` plus `drift_worker.js`.
 
-## Schema (v2)
+## Schema (v3)
 
 Synced tables carry `SyncColumns`: `id` (UUIDv7 text), `createdAt`, `updatedAt`, `deletedAt`
 (soft delete), `rev`. Repositories set timestamps from the app `Clock` and bump `rev` on each write.
@@ -59,13 +59,17 @@ needs cross-origin isolation headers; revisit in P11.4. Re-download both files w
 1. Edit the tables, bump `schemaVersion`.
 2. `dart run build_runner build`
 3. `dart run drift_dev make-migrations` (writes `drift_schemas/default/drift_schema_vN.json`,
-   updates `lib/data/db/schema_versions.dart` and generated test helpers).
+   updates `lib/data/db/app_database.steps.dart` and generated test helpers).
 4. Fill in the new `fromXToY` step in `migrationSteps()` (called by `stepByStep()`).
 5. Add a migration test using `SchemaVerifier` (see `test/drift/default/migration_test.dart`).
 
 ## Version history
 
 - **v1**: initial schema.
+- **v3**: `books.series` and `books.series_number`; `reading_sessions` (minutes read per book
+  per day, from the reading timer); `read_throughs` (earlier reads of a book being read
+  again). Migrated in `from2To3` with `addColumn`/`createTable`, covered by
+  `test/drift/default/migration_test.dart` (v1 and v2 both reach v3; data survives).
 - **v2**: `cover_blobs` table (web cover storage). Migrated with `m.createTable` in `from1To2`,
   covered by `test/drift/default/migration_test.dart` (data survives, new table works, cascade
   works) and verified on a real persisted browser database.
