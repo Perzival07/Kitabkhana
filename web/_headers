@@ -8,7 +8,7 @@
   Permissions-Policy: camera=(self), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
   Cross-Origin-Opener-Policy: same-origin
   X-Frame-Options: DENY
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://covers.openlibrary.org https://*.archive.org; font-src 'self' data:; connect-src 'self' blob: data: https://openlibrary.org https://covers.openlibrary.org https://*.archive.org; worker-src 'self' blob:; child-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://covers.openlibrary.org https://*.archive.org https://books.google.com https://books.googleusercontent.com; font-src 'self' data:; connect-src 'self' blob: data: https://openlibrary.org https://covers.openlibrary.org https://*.archive.org https://www.googleapis.com https://books.google.com https://books.googleusercontent.com; worker-src 'self' blob:; child-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests; frame-ancestors 'none'
 
 # Caching. Flutter's output file names are not content-hashed (main.dart.js,
 # canvaskit/, sqlite3.wasm keep one name across releases), so a long

@@ -50,12 +50,17 @@ final class HttpClientProvider
 
 String _$httpClientHash() => r'7ec49beae0f15115de79f9aa98dbd250130e26d8';
 
+/// Open Library first; Google Books only when it has no answer.
+
 @ProviderFor(bookInfoSource)
 final bookInfoSourceProvider = BookInfoSourceProvider._();
+
+/// Open Library first; Google Books only when it has no answer.
 
 final class BookInfoSourceProvider
     extends $FunctionalProvider<BookInfoSource, BookInfoSource, BookInfoSource>
     with $Provider<BookInfoSource> {
+  /// Open Library first; Google Books only when it has no answer.
   BookInfoSourceProvider._()
     : super(
         from: null,
@@ -89,7 +94,7 @@ final class BookInfoSourceProvider
   }
 }
 
-String _$bookInfoSourceHash() => r'd85e8fce782567e1913b19ac3ac1043c122ff569';
+String _$bookInfoSourceHash() => r'b113edcde914445d5f33885aa4f59fec13b4c8fe';
 
 @ProviderFor(lookupCacheStore)
 final lookupCacheStoreProvider = LookupCacheStoreProvider._();

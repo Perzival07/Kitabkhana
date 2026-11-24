@@ -81,7 +81,7 @@ once its secrets are added (see [docs/RELEASING.md](docs/RELEASING.md)).
 - [Project structure](#project-structure)
 - [Architecture](#architecture)
 - [Data model](#data-model)
-- [Book lookups (Open Library)](#book-lookups-open-library)
+- [Book lookups (Open Library)](#book-lookups-open-library-then-google-books)
 - [Backup format](#backup-format)
 - [Design system](#design-system)
 - [Testing and quality](#testing-and-quality)
@@ -411,7 +411,7 @@ bar.
 | Promise | How it is kept |
 | --- | --- |
 | The library is only stored on the device | SQLite (Drift) in the app's own storage. No sync code exists. |
-| Only an ISBN or title is ever sent anywhere | The only requests go to Open Library (`openlibrary.org`, `covers.openlibrary.org`). A test checks every `https://` host in `lib/` against the web CSP. |
+| Only an ISBN or title is ever sent anywhere | The only requests go to Open Library (`openlibrary.org`, `covers.openlibrary.org`), and to Google Books only when Open Library has no answer. A test checks every `https://` host in `lib/` against the web CSP. |
 | No tracking | No analytics, ads or crash SDKs in `pubspec.yaml`. A test forbids the advertising ID, tracking and SKAdNetwork keys ([ADR 0005](docs/adr/0005-no-analytics.md)). |
 | Problem reports are your choice | After an error, the app keeps a report on the device and asks next time whether to email it to the developer. Your mail app opens with the error, recent app messages and (optionally) a screenshot, and nothing is sent unless you press Send. |
 | Logs never hold library contents | A test checks that every log call at *info* and above uses constant text. The logger also masks phone-like digits and e-mail addresses. |
@@ -494,6 +494,7 @@ Both install side by side.
 | `CONTACT_EMAIL` | Contact in the Open Library `User-Agent` (mobile only) | Omitted, so no personal address is compiled in |
 | `FEEDBACK_EMAIL` | *Send feedback* recipient | Mail app opens with no recipient |
 | `PRIVACY_URL` | Privacy policy link in Settings | Link hidden |
+| `GOOGLE_BOOKS_KEY` | Google Books API key for the fallback lookup (CI reads the `GOOGLE_BOOKS_KEY` repository secret) | Google Books is still tried, but the shared keyless quota is usually used up, so the fallback rarely answers. **Set the key.** |
 
 ### Demo data (dev flavor)
 
@@ -623,9 +624,10 @@ snapshots in `drift_schemas/`. More: [docs/DATABASE.md](docs/DATABASE.md).
 
 ---
 
-## Book lookups (Open Library)
+## Book lookups (Open Library, then Google Books)
 
 The app's **only** network traffic. Only an ISBN or a title/author query is ever sent.
+Open Library is always asked first.
 
 - **ISBN**: `/isbn/{isbn13}.json` → `/works/{key}.json` (only if the edition has no
   authors) → `/authors/{key}.json` (up to 3, fetched in parallel). The work key is what lets
@@ -634,6 +636,9 @@ The app's **only** network traffic. Only an ISBN or a title/author query is ever
 - **Resilience**: a token bucket (1 request/s, burst 3), timeouts, 2 retries with backoff
   and jitter for timeouts and 5xx only, `Retry-After` honoured on 429, and a circuit
   breaker after repeated failures. A slow network is not treated as offline.
+- **Google Books fallback**: when Open Library has no record (or is unreachable), the
+  same ISBN or title is asked of Google Books, which knows many more Indian titles.
+  Google is never asked when Open Library answers.
 - **Cache first**: successes are kept 30 days and not-found answers 7 days. When offline,
   an expired success is still served, so a book you looked up once keeps working.
   Network failures are never cached.

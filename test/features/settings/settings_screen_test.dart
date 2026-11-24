@@ -324,25 +324,29 @@ void main() {
     await end(t);
   });
 
-  testWidgets('the problem-report offer is on by default and can be turned off', (
-    t,
-  ) async {
-    h = AddFlowHarness();
-    await open(t);
-    await reveal(t, 'Offer to send problem reports');
-    Switch sw() => t.widget<Switch>(
-      find.descendant(
-        of: find.widgetWithText(SwitchListTile, 'Offer to send problem reports'),
-        matching: find.byType(Switch),
-      ),
-    );
-    expect(sw().value, isTrue);
-    await t.tap(find.text('Offer to send problem reports'));
-    await t.pumpAndSettle();
-    expect(sw().value, isFalse);
-    expect((await stored(t)).crashReports, isFalse);
-    await end(t);
-  });
+  testWidgets(
+    'the problem-report offer is on by default and can be turned off',
+    (t) async {
+      h = AddFlowHarness();
+      await open(t);
+      await reveal(t, 'Offer to send problem reports');
+      Switch sw() => t.widget<Switch>(
+        find.descendant(
+          of: find.widgetWithText(
+            SwitchListTile,
+            'Offer to send problem reports',
+          ),
+          matching: find.byType(Switch),
+        ),
+      );
+      expect(sw().value, isTrue);
+      await t.tap(find.text('Offer to send problem reports'));
+      await t.pumpAndSettle();
+      expect(sw().value, isFalse);
+      expect((await stored(t)).crashReports, isFalse);
+      await end(t);
+    },
+  );
 
   testWidgets('diagnostics hold versions and no library contents', (t) async {
     h = AddFlowHarness();

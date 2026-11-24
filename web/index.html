@@ -31,7 +31,7 @@
     (frame-ancestors, HSTS) which a page cannot set and web/_headers does.
     test/security/web_csp_test.dart guards this policy.
   -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://covers.openlibrary.org https://*.archive.org; font-src 'self' data:; connect-src 'self' blob: data: https://openlibrary.org https://covers.openlibrary.org https://*.archive.org; worker-src 'self' blob:; child-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://covers.openlibrary.org https://*.archive.org https://books.google.com https://books.googleusercontent.com; font-src 'self' data:; connect-src 'self' blob: data: https://openlibrary.org https://covers.openlibrary.org https://*.archive.org https://www.googleapis.com https://books.google.com https://books.googleusercontent.com; worker-src 'self' blob:; child-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer">
   <meta name="description" content="A private home for the books you own, lend and love. Your library stays on your device.">
 

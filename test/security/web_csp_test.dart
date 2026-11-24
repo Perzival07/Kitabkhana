@@ -49,7 +49,8 @@ void main() {
     expect(d['base-uri'], <String>["'self'"]);
   });
 
-  test('the only third parties are Open Library and its cover hosts', () {
+  test('the only third parties are Open Library, Google Books and their '
+      'cover hosts', () {
     final hosts = RegExp(r'https://[^\s;]+')
         .allMatches(meta!.group(1)!)
         .map((m) => m.group(0)!)
@@ -58,6 +59,10 @@ void main() {
       'https://openlibrary.org',
       'https://covers.openlibrary.org',
       'https://*.archive.org',
+      // The fallback catalogue, asked only when Open Library has no answer.
+      'https://www.googleapis.com',
+      'https://books.google.com',
+      'https://books.googleusercontent.com',
     });
     expect(directives()['connect-src'], containsAll(hosts));
     expect(directives()['img-src'], contains('https://covers.openlibrary.org'));

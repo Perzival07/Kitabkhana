@@ -9,8 +9,8 @@ every promise in the policy, and what keeps it true.
 | Promise | Where it is enforced |
 | --- | --- |
 | The library is only stored on the device | Drift/SQLite in the app's own storage; no sync code exists. The `sync` columns (`rev`, `updatedAt`, `deletedAt`) only serve backup merges. |
-| Only ISBN or title text is sent to Open Library | `lib/data/open_library/` builds the only requests; `test/data/open_library` checks the URLs. The User-Agent is `Kitabkhana/<version>` and carries no contact address unless `--dart-define=CONTACT_EMAIL` is given. |
-| Those are the only hosts the app contacts | `test/security/web_csp_test.dart` finds every `https://` host in `lib/` and checks the web policy allows exactly Open Library and its cover hosts. |
+| Only ISBN or title text is sent to Open Library (and Google Books as a fallback) | `lib/data/open_library/` and `lib/data/google_books/` build the only requests; `test/data/` checks the URLs. The User-Agent is `Kitabkhana/<version>` and carries no contact address unless `--dart-define=CONTACT_EMAIL` is given. |
+| Those are the only hosts the app contacts | `test/security/web_csp_test.dart` finds every `https://` host in `lib/` and checks the web policy allows exactly Open Library, Google Books and their cover hosts. |
 | No analytics, ads or tracking | None in `pubspec.yaml` (see `docs/LICENSES.md`); `test/security/platform_config_test.dart` forbids the advertising ID, tracking and SKAdNetwork keys. |
 | Problem reports leave only by the reader's hand | `CrashRecorder` keeps the first error of a run on the device (`FileCrashStore`); `CrashReportPrompt` asks next launch; `ProblemReporter` opens the reader's own mail app (`flutter_email_sender`), falling back to a `mailto:` link or the share sheet. The app has no way to send mail itself. Tested in `test/features/crash`. |
 | Logs never hold library contents | `test/security/log_privacy_test.dart` checks every log call at info and above uses constant text (or an exception's type); `AppLogger` also masks phone-like digits and e-mail addresses. |
@@ -27,6 +27,8 @@ every promise in the policy, and what keeps it true.
 | --- | --- | --- |
 | `openlibrary.org` | book details by ISBN, search by title | the ISBN or title text |
 | `covers.openlibrary.org` (redirects to `*.archive.org`) | cover pictures | an ISBN or cover id in the URL |
+| `www.googleapis.com` | book details, **only** when Open Library has no answer (`FallbackBookInfoSource`) | the ISBN or title text, the app's API key (`GOOGLE_BOOKS_KEY`), the package or bundle id |
+| `books.google.com`, `books.googleusercontent.com` | cover pictures for books found on Google Books | the volume id in the URL |
 
 Nothing else. The web build must be made with `--no-web-resources-cdn`, or the
 CanvasKit engine would be fetched from `gstatic.com` (a third party the policy

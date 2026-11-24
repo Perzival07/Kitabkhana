@@ -33,7 +33,7 @@ platform :ios do
       (latest_testflight_build_number(api_key: api_key, app_identifier: "com.kitabkhana.kitabkhana") + 1).to_s
 
     Dir.chdir("..") do
-      sh("cd .. && flutter build ios --release --flavor prod -t lib/main_prod.dart --no-codesign --build-number=#{build_number}")
+      sh("cd .. && flutter build ios --release --flavor prod -t lib/main_prod.dart --no-codesign --build-number=#{build_number} --dart-define=GOOGLE_BOOKS_KEY=#{ENV.fetch('GOOGLE_BOOKS_KEY', '')}")
     end
 
     build_app(

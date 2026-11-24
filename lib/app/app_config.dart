@@ -17,6 +17,16 @@ const String kFeedbackEmail = String.fromEnvironment(
   defaultValue: 'daskoustav04@gmail.com',
 );
 
+/// Google Books API key, used only when Open Library has no answer. Supply
+/// with `--dart-define=GOOGLE_BOOKS_KEY=...` (CI reads it from a repository
+/// secret). Empty still tries Google, but its shared keyless quota is usually
+/// used up, so the fallback then rarely answers.
+const String kGoogleBooksKey = String.fromEnvironment('GOOGLE_BOOKS_KEY');
+
+/// SHA-1 of the release signing certificate, sent with Google Books requests
+/// on Android so a key restricted to this app is accepted. Public information.
+const String kReleaseCertSha1 = '9B79747109110E63F1855CB701F6CE6DA42EAB2F';
+
 /// Link to the privacy policy. Supply with `--dart-define=PRIVACY_URL=...`;
 /// the About screen shows the link only when it is set.
 const String kPrivacyPolicyUrl = String.fromEnvironment('PRIVACY_URL');

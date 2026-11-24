@@ -44,6 +44,12 @@ web request contains: your network address and the app's name and version
 (<code>Kitabkhana/1.0.0</code>). They never contain your library, your name, a borrower's
 name or a phone number. Open Library's own privacy policy applies to what it
 does with those requests. If you never use lookup, nothing is sent.</p>
+<p>When Open Library has no record of a book (or cannot be reached), the same
+ISBN or title is asked of <strong>Google Books</strong> (<code>www.googleapis.com</code>), and a cover
+may come from <code>books.google.com</code>. Those requests contain the same things: the
+ISBN or title, the app's own API key, and the app's package name. Google's
+privacy policy applies to what it does with them. Open Library is always
+asked first, so Google only sees the lookups Open Library could not answer.</p>
 <p><strong>2. Things you choose to share.</strong> When you share a backup file, a spreadsheet
 export, a quote picture, a diagnostics file, or send a reminder to a borrower
 through WhatsApp or SMS, the file or message goes where you send it. Backups
@@ -89,7 +95,8 @@ the app's own private storage on your phone, and only the newest three are kept.
 <h2 id="the-web-version">The web version</h2>
 <p>On the web, your library lives in your browser's own storage on your computer
 or phone. Clearing the site's data removes it. The same two rules apply: only
-Open Library lookups go out, and only the ISBN or title you searched for. The
+book lookups go out (Open Library, then Google Books when Open Library has no
+answer), and only the ISBN or title you searched for. The
 site loads no third-party scripts, fonts or analytics.</p>
 <h2 id="your-control">Your control</h2>
 <ul>

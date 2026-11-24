@@ -28,6 +28,13 @@ web request contains: your network address and the app's name and version
 name or a phone number. Open Library's own privacy policy applies to what it
 does with those requests. If you never use lookup, nothing is sent.
 
+When Open Library has no record of a book (or cannot be reached), the same
+ISBN or title is asked of **Google Books** (`www.googleapis.com`), and a cover
+may come from `books.google.com`. Those requests contain the same things: the
+ISBN or title, the app's own API key, and the app's package name. Google's
+privacy policy applies to what it does with them. Open Library is always
+asked first, so Google only sees the lookups Open Library could not answer.
+
 **2. Things you choose to share.** When you share a backup file, a spreadsheet
 export, a quote picture, a diagnostics file, or send a reminder to a borrower
 through WhatsApp or SMS, the file or message goes where you send it. Backups
@@ -84,7 +91,8 @@ the app's own private storage on your phone, and only the newest three are kept.
 
 On the web, your library lives in your browser's own storage on your computer
 or phone. Clearing the site's data removes it. The same two rules apply: only
-Open Library lookups go out, and only the ISBN or title you searched for. The
+book lookups go out (Open Library, then Google Books when Open Library has no
+answer), and only the ISBN or title you searched for. The
 site loads no third-party scripts, fonts or analytics.
 
 ## Your control
