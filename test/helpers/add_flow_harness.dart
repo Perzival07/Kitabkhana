@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kitabkhana/app/add_book_providers.dart';
 import 'package:kitabkhana/app/cover_providers.dart';
+import 'package:kitabkhana/app/lending_providers.dart';
 import 'package:kitabkhana/app/lookup_providers.dart';
 import 'package:kitabkhana/app/providers.dart';
 import 'package:kitabkhana/app/quote_providers.dart';
@@ -18,6 +19,7 @@ import 'package:kitabkhana/platform/photo_picker/photo_picker.dart';
 
 import 'fake_book_info_source.dart';
 import 'fake_camera_permission.dart';
+import 'fake_contact_picker.dart';
 import 'fake_notification_scheduler.dart';
 import 'fake_ocr_service.dart';
 import 'fake_share_service.dart';
@@ -58,6 +60,7 @@ class AddFlowHarness {
   final FakeShareService share = FakeShareService();
   final FakeCameraPermission camera = FakeCameraPermission();
   final FakeNotificationScheduler scheduler = FakeNotificationScheduler();
+  final FakeContactPicker contacts = FakeContactPicker();
   final List<String> scanCodes;
   final bool cameraOk;
 
@@ -79,6 +82,7 @@ class AddFlowHarness {
     pageEditorProvider.overrideWithValue((edit) async => edit.bytes),
     cameraPermissionProvider.overrideWithValue(camera),
     notificationSchedulerProvider.overrideWithValue(scheduler),
+    contactPickerProvider.overrideWithValue(contacts),
     barcodeViewBuilderProvider.overrideWithValue((
       context,
       onCode,

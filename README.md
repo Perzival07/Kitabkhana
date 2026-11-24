@@ -199,7 +199,9 @@ a 1–5 star rating and details. Delete has undo. Finishing a book plays a small
   date. *Finished* stamps the finish date and sets the page to the last page.
 - **Update page**: a sheet with the page number, +/- steppers and "Add N pages" shortcuts.
   Each update writes a reading log for the day, which drives streaks, pace and charts.
-- **Lend sheet**: Lend or Borrow toggle, the person (with suggestions from earlier loans),
+- **Lend sheet**: Lend or Borrow toggle, the person (typed, picked from earlier loans, or
+  **chosen from your contacts** with the phone's own picker, which needs no contacts
+  permission),
   phone (optional, normalised with your default country code), start date, due date
   (*No due date, 1 week, 2 weeks, 1 month* or *Pick a date*) and a note.
 

@@ -3058,6 +3058,12 @@ abstract class AppLocalizations {
   /// **'You have every book up to here.'**
   String get seriesComplete;
 
+  /// No description provided for @lendFromContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from contacts'**
+  String get lendFromContacts;
+
   /// No description provided for @settingsReportProblem.
   ///
   /// In en, this message translates to:

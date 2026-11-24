@@ -101,6 +101,17 @@ class _LendBodyState extends ConsumerState<_LendBody> {
     });
   }
 
+  Future<void> _fromContacts() async {
+    final c = await ref.read(contactPickerProvider).pick();
+    if (c == null || !mounted) return;
+    setState(() {
+      if (c.name.isNotEmpty) _name.text = c.name;
+      if (c.phone != null) _phone.text = c.phone!;
+      _nameError = null;
+      _phoneError = null;
+    });
+  }
+
   Future<void> _save() async {
     final l10n = AppLocalizations.of(context);
     final name = _name.text.trim();
@@ -158,6 +169,7 @@ class _LendBodyState extends ConsumerState<_LendBody> {
     final theme = Theme.of(context);
     final fmt = DateFormat.yMMMd(Localizations.localeOf(context).toString());
     final cc = ref.watch(defaultCountryCodeProvider);
+    final picker = ref.watch(contactPickerProvider);
     final people = ref.watch(recentPeopleProvider).value ?? const <String>[];
     final typed = _name.text.trim().toLowerCase();
     final suggestions = <String>[
@@ -200,6 +212,13 @@ class _LendBodyState extends ConsumerState<_LendBody> {
           decoration: InputDecoration(
             labelText: lending ? l10n.lendPersonLent : l10n.lendPersonBorrowed,
             errorText: _nameError,
+            suffixIcon: picker.supported
+                ? IconButton(
+                    tooltip: l10n.lendFromContacts,
+                    icon: const Icon(Icons.contacts_outlined),
+                    onPressed: _fromContacts,
+                  )
+                : null,
           ),
         ),
         if (suggestions.isNotEmpty) ...<Widget>[
@@ -228,7 +247,8 @@ class _LendBodyState extends ConsumerState<_LendBody> {
           decoration: InputDecoration(
             labelText: l10n.lendPhone,
             hintText: l10n.lendPhoneHint,
-            prefixText: '+$cc ',
+            // A number picked with its own country code needs no prefix.
+            prefixText: _phone.text.trimLeft().startsWith('+') ? null : '+$cc ',
             errorText: _phoneError,
           ),
         ),

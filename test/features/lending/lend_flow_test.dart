@@ -100,6 +100,35 @@ void main() {
     expect(find.text('Lend'), findsNothing, reason: 'already lent');
   });
 
+  flowTest('the borrower can be picked from contacts', (t) async {
+    await seed();
+    h.contacts.next = (name: 'Rahul Verma', phone: '+44 7700 900123');
+    await pumpDetail(t);
+    await t.tap(find.text('Lend'));
+    await advance(t);
+    await t.tap(find.byTooltip('Choose from contacts'));
+    await advance(t);
+    expect(find.text('Rahul Verma'), findsOneWidget);
+    expect(find.text('+44 7700 900123'), findsOneWidget);
+    await t.tap(find.text('Save'));
+    await advance(t);
+    final loan = await activeLoan(t);
+    expect(loan.personName, 'Rahul Verma');
+    expect(loan.personPhone, '447700900123');
+  });
+
+  flowTest('a cancelled contact pick changes nothing', (t) async {
+    await seed();
+    await pumpDetail(t);
+    await t.tap(find.text('Lend'));
+    await advance(t);
+    await t.enterText(find.widgetWithText(TextField, 'Lent to'), 'Priya');
+    await t.tap(find.byTooltip('Choose from contacts'));
+    await advance(t);
+    expect(h.contacts.asked, 1);
+    expect(find.text('Priya'), findsOneWidget);
+  });
+
   flowTest('a name is required and a bad phone is refused', (t) async {
     await seed();
     await pumpDetail(t);

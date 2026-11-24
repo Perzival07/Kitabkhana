@@ -332,3 +332,49 @@ abstract class _$DefaultCountryCode extends $Notifier<String> {
     return element.handleCreate(ref, build);
   }
 }
+
+/// The system contact picker (none on the web). Tests swap in a fake.
+
+@ProviderFor(contactPicker)
+final contactPickerProvider = ContactPickerProvider._();
+
+/// The system contact picker (none on the web). Tests swap in a fake.
+
+final class ContactPickerProvider
+    extends $FunctionalProvider<ContactPicker, ContactPicker, ContactPicker>
+    with $Provider<ContactPicker> {
+  /// The system contact picker (none on the web). Tests swap in a fake.
+  ContactPickerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'contactPickerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$contactPickerHash();
+
+  @$internal
+  @override
+  $ProviderElement<ContactPicker> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ContactPicker create(Ref ref) {
+    return contactPicker(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ContactPicker value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ContactPicker>(value),
+    );
+  }
+}
+
+String _$contactPickerHash() => r'3abbce4960979a8431317fbbc2f0dca580fba425';

@@ -8,6 +8,8 @@ import 'providers.dart';
 import 'repositories.dart';
 import 'settings_providers.dart';
 
+import '../platform/contacts/contact_picker.dart';
+
 part 'lending_providers.g.dart';
 
 /// Schedules loan reminders (local notifications; none on the web).
@@ -80,3 +82,7 @@ class DefaultCountryCode extends _$DefaultCountryCode {
     await ref.read(settingsRepositoryProvider).setDefaultCountryCode(digits);
   }
 }
+
+/// The system contact picker (none on the web). Tests swap in a fake.
+@Riverpod(keepAlive: true)
+ContactPicker contactPicker(Ref ref) => const SystemContactPicker();

@@ -59,6 +59,7 @@ dependencies:
   image: ^4.13.1
   permission_handler: ^13.0.2
   flutter_email_sender: ^11.2.0
+  flutter_native_contact_picker: ^0.0.13
 
 dev_dependencies:
   flutter_test:

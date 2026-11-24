@@ -1877,6 +1877,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get seriesComplete => 'You have every book up to here.';
 
   @override
+  String get lendFromContacts => 'Choose from contacts';
+
+  @override
   String get settingsReportProblem => 'Report a problem';
 
   @override

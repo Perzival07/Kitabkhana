@@ -1103,6 +1103,7 @@
     }
   },
   "seriesComplete": "You have every book up to here.",
+  "lendFromContacts": "Choose from contacts",
   "settingsReportProblem": "Report a problem",
   "settingsReportProblemBody": "Email the developer, with recent app messages attached.",
   "crashPromptTitle": "Something went wrong",
