@@ -51,6 +51,38 @@ abstract interface class BackupPrefs {
   Future<void> setLastBackupAt(DateTime at);
   Future<bool> autoEnabled();
   Future<void> setAutoEnabled({required bool enabled});
+
+  /// When a copy last left the phone (saved to a chosen place, or shared).
+  Future<DateTime?> lastOffDeviceAt();
+  Future<void> setLastOffDeviceAt(DateTime at);
+
+  /// The "save a copy elsewhere" reminder stays quiet until then.
+  Future<DateTime?> offDeviceSnoozedUntil();
+  Future<void> setOffDeviceSnoozedUntil(DateTime until);
+}
+
+/// How old the last copy off the phone may get before the reminder shows.
+const Duration offDeviceRemindAfter = Duration(days: 30);
+
+/// How long "Later" quiets the reminder.
+const Duration offDeviceSnooze = Duration(days: 14);
+
+/// A library this small is not worth nagging about yet.
+const int offDeviceMinBooks = 5;
+
+/// Whether to remind the reader to keep a copy of the library somewhere other
+/// than this phone (automatic backups live on the phone, so they are lost
+/// with it).
+bool offDeviceCopyDue({
+  required int bookCount,
+  required DateTime? lastOffDevice,
+  required DateTime? snoozedUntil,
+  required DateTime now,
+}) {
+  if (bookCount < offDeviceMinBooks) return false;
+  if (snoozedUntil != null && now.isBefore(snoozedUntil)) return false;
+  return lastOffDevice == null ||
+      now.difference(lastOffDevice) >= offDeviceRemindAfter;
 }
 
 /// How long to wait between automatic backups.

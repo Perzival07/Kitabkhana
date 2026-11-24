@@ -308,7 +308,7 @@ paragraphs. On the web you type the quote instead.
 | Appearance | Theme (*System / Light / Dark*), default library view (*Grid / List*), grid density (*Comfortable / Compact*) |
 | Reading | Yearly goal, daily reading reminder (on/off and time) |
 | Lending | Default loan length, default country code (for phone numbers and WhatsApp), loan reminder time |
-| Your data | Back up now, automatic weekly backup (keeps the last 3), share a backup, restore from backup (*Replace* or *Merge*), export as spreadsheet (CSV), erase all data (type a word to confirm) |
+| Your data | Back up now, automatic weekly backup (keeps the last 3), **save a copy to…** (the system Save dialog: Google Drive, iCloud Drive, Downloads, a USB stick), share a backup, restore from backup (*Replace* or *Merge*), export as spreadsheet (CSV), erase all data (type a word to confirm) |
 | Privacy | A plain-language summary, and *Offer to send problem reports* (on by default; a report only ever leaves when you press Send in your own mail app) |
 | Help | Export diagnostics (versions and recent app messages, with none of your library), *Report a problem* (emails the developer with the diagnostics attached), send feedback, About |
 
@@ -395,6 +395,10 @@ bar.
 - Restore by **Replace** or **Merge** (newer `updatedAt` wins, tombstones respected). A
   safety backup is made first, and the import runs in one transaction.
 - Automatic weekly backup to the app's own storage, keeping the last 3 (mobile).
+- **Save a copy to…** any place the phone's Save dialog offers (Google Drive, iCloud
+  Drive, Downloads, a USB stick). When no copy has left the phone for 30 days (and the
+  library has at least 5 books), the Library shows a reminder with *Save a copy* and
+  *Later* (quiet for 14 days).
 - CSV export: `books.csv` (title, authors, ISBN-13, status, ownership, location, rating,
   pages, started, finished, tags) and `loans.csv` (title, authors, direction, person,
   phone, started, due, returned, note).
@@ -777,8 +781,8 @@ localisations are regenerated on the next build.
 - **Web**: no barcode scanning in Firefox, no OCR, no notifications, no automatic backup.
 - **iOS**: the database is in the documents folder, which iCloud device backup includes.
   Excluding it needs native code that is not written yet.
-- **Automatic backups** stay in the app's own storage. Use *Share a backup* to keep a copy
-  somewhere else.
+- **Automatic backups** stay in the app's own storage, because apps cannot keep writing to
+  a folder outside it. The Library reminds you monthly to *Save a copy* elsewhere.
 - **Release pipeline**: the Play, App Store and Cloudflare jobs have not run end to end yet.
 - **ISBN screen**: an ISBN-10 ending in `X` can be pasted but not typed (numeric keyboard).
 

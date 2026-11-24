@@ -398,6 +398,47 @@ final class AutoBackupProvider
 
 String _$autoBackupHash() => r'6b416048e0b0da69a20920265df2d32b7807036e';
 
+/// Whether to remind the reader to keep a copy off this phone. Re-read after
+/// a copy is saved or the reminder is put off.
+
+@ProviderFor(offDeviceReminder)
+final offDeviceReminderProvider = OffDeviceReminderProvider._();
+
+/// Whether to remind the reader to keep a copy off this phone. Re-read after
+/// a copy is saved or the reminder is put off.
+
+final class OffDeviceReminderProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
+    with $FutureModifier<bool>, $FutureProvider<bool> {
+  /// Whether to remind the reader to keep a copy off this phone. Re-read after
+  /// a copy is saved or the reminder is put off.
+  OffDeviceReminderProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'offDeviceReminderProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$offDeviceReminderHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<bool> create(Ref ref) {
+    return offDeviceReminder(ref);
+  }
+}
+
+String _$offDeviceReminderHash() => r'e2a9ec417cd8dcfb6efd930ae49c486402b181f9';
+
 @ProviderFor(eraseAllData)
 final eraseAllDataProvider = EraseAllDataProvider._();
 

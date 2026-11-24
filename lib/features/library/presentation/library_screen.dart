@@ -16,6 +16,7 @@ import '../application/library_query.dart';
 import '../../locations/domain/location.dart';
 import '../domain/book.dart';
 import '../domain/book_filter.dart';
+import '../../backup/presentation/off_device_banner.dart';
 import '../../reminders/presentation/overdue_banner.dart';
 import 'widgets/book_tiles.dart';
 import 'widgets/library_filter_bar.dart';
@@ -132,6 +133,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
           ),
           const SliverToBoxAdapter(child: _CountLine()),
           const SliverToBoxAdapter(child: OverdueBanner()),
+          const SliverToBoxAdapter(child: OffDeviceBackupBanner()),
           SliverAppBar(
             primary: false,
             pinned: true,

@@ -1539,6 +1539,34 @@ class AppLocalizationsEn extends AppLocalizations {
       'After something goes wrong, Kitabkhana offers to email a report to the developer. Nothing is sent unless you press Send in your mail app.';
 
   @override
+  String get settingsSaveCopy => 'Save a copy to…';
+
+  @override
+  String get settingsSaveCopyBody =>
+      'Google Drive, iCloud Drive, Downloads or a USB stick, so your library survives losing this phone.';
+
+  @override
+  String settingsSaveCopyLast(String when) {
+    return 'Last copy saved off this phone: $when';
+  }
+
+  @override
+  String get backupCopySaved => 'Copy saved';
+
+  @override
+  String get offDeviceTitle => 'Your library is only on this phone';
+
+  @override
+  String get offDeviceBody =>
+      'Automatic backups stay on the phone, so they are lost with it. Save a copy to Google Drive, iCloud Drive or a computer.';
+
+  @override
+  String get offDeviceSave => 'Save a copy';
+
+  @override
+  String get offDeviceLater => 'Later';
+
+  @override
   String get settingsReportProblem => 'Report a problem';
 
   @override

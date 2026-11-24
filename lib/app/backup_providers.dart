@@ -83,6 +83,19 @@ AutoBackup autoBackup(Ref ref) => AutoBackup(
   clock: ref.watch(clockProvider),
 );
 
+/// Whether to remind the reader to keep a copy off this phone. Re-read after
+/// a copy is saved or the reminder is put off.
+@riverpod
+Future<bool> offDeviceReminder(Ref ref) async {
+  final prefs = ref.watch(backupPrefsProvider);
+  return offDeviceCopyDue(
+    bookCount: (await ref.watch(backupStoreProvider).allBookIds()).length,
+    lastOffDevice: await prefs.lastOffDeviceAt(),
+    snoozedUntil: await prefs.offDeviceSnoozedUntil(),
+    now: ref.watch(clockProvider).now(),
+  );
+}
+
 @Riverpod(keepAlive: true)
 EraseAllData eraseAllData(Ref ref) => EraseAllData(
   db: ref.watch(appDatabaseProvider),

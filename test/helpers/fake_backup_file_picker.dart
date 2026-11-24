@@ -12,4 +12,16 @@ class FakeBackupFilePicker implements BackupFilePicker {
     asked++;
     return next;
   }
+
+  /// What was saved, and whether the next save "succeeds".
+  final List<({Uint8List bytes, String name})> saved =
+      <({Uint8List bytes, String name})>[];
+  bool saveOk = true;
+
+  @override
+  Future<bool> save(Uint8List bytes, {required String name}) async {
+    if (!saveOk) return false;
+    saved.add((bytes: bytes, name: name));
+    return true;
+  }
 }

@@ -2602,6 +2602,54 @@ abstract class AppLocalizations {
   /// **'After something goes wrong, Kitabkhana offers to email a report to the developer. Nothing is sent unless you press Send in your mail app.'**
   String get settingsCrashReportsBody;
 
+  /// No description provided for @settingsSaveCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Save a copy to…'**
+  String get settingsSaveCopy;
+
+  /// No description provided for @settingsSaveCopyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Drive, iCloud Drive, Downloads or a USB stick, so your library survives losing this phone.'**
+  String get settingsSaveCopyBody;
+
+  /// No description provided for @settingsSaveCopyLast.
+  ///
+  /// In en, this message translates to:
+  /// **'Last copy saved off this phone: {when}'**
+  String settingsSaveCopyLast(String when);
+
+  /// No description provided for @backupCopySaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy saved'**
+  String get backupCopySaved;
+
+  /// No description provided for @offDeviceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your library is only on this phone'**
+  String get offDeviceTitle;
+
+  /// No description provided for @offDeviceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic backups stay on the phone, so they are lost with it. Save a copy to Google Drive, iCloud Drive or a computer.'**
+  String get offDeviceBody;
+
+  /// No description provided for @offDeviceSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save a copy'**
+  String get offDeviceSave;
+
+  /// No description provided for @offDeviceLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get offDeviceLater;
+
   /// No description provided for @settingsReportProblem.
   ///
   /// In en, this message translates to:

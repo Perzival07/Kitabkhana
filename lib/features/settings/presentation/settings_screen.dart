@@ -39,6 +39,11 @@ final FutureProvider<DateTime?> _lastBackupProvider =
       (ref) => ref.watch(backupPrefsProvider).lastBackupAt(),
     );
 
+final FutureProvider<DateTime?> _lastOffDeviceProvider =
+    FutureProvider.autoDispose<DateTime?>(
+      (ref) => ref.watch(backupPrefsProvider).lastOffDeviceAt(),
+    );
+
 final FutureProvider<bool> _autoBackupOnProvider =
     FutureProvider.autoDispose<bool>(
       (ref) => ref.watch(backupPrefsProvider).autoEnabled(),
@@ -402,7 +407,16 @@ class _DataSection extends ConsumerWidget {
     final last = ref.watch(_lastBackupProvider).value;
     final autoOn = ref.watch(_autoBackupOnProvider).value ?? true;
     final canAuto = ref.watch(backupFolderProvider).supported;
-    final since = daysSince(last, ref.watch(todayProvider));
+    final today = ref.watch(todayProvider);
+    final since = daysSince(last, today);
+    final offSince = daysSince(ref.watch(_lastOffDeviceProvider).value, today);
+    final offWhen = offSince == null
+        ? null
+        : switch (offSince.days) {
+            0 => l10n.settingsBackupToday,
+            1 => l10n.settingsBackupYesterday,
+            final n => l10n.settingsBackupDaysAgo(n),
+          };
     final when = since == null
         ? null
         : switch (since.days) {
@@ -435,11 +449,28 @@ class _DataSection extends ConsumerWidget {
             },
           ),
         ListTile(
+          leading: const Icon(Icons.drive_folder_upload_outlined),
+          title: Text(l10n.settingsSaveCopy),
+          subtitle: Text(
+            offWhen == null
+                ? l10n.settingsSaveCopyBody
+                : l10n.settingsSaveCopyLast(offWhen),
+          ),
+          onTap: () async {
+            await saveBackupCopyFlow(context, ref);
+            ref
+              ..invalidate(_lastBackupProvider)
+              ..invalidate(_lastOffDeviceProvider);
+          },
+        ),
+        ListTile(
           leading: const Icon(Icons.ios_share_rounded),
           title: Text(l10n.settingsShareBackup),
           onTap: () async {
             await exportBackupFlow(context, ref);
-            ref.invalidate(_lastBackupProvider);
+            ref
+              ..invalidate(_lastBackupProvider)
+              ..invalidate(_lastOffDeviceProvider);
           },
         ),
         ListTile(

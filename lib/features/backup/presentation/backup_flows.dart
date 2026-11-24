@@ -99,13 +99,52 @@ Future<void> exportBackupFlow(BuildContext context, WidgetRef ref) async {
               name: value.name,
               mimeType: 'application/zip',
             );
-        await ref
-            .read(backupPrefsProvider)
-            .setLastBackupAt(ref.read(clockProvider).now());
+        final now = ref.read(clockProvider).now();
+        final prefs = ref.read(backupPrefsProvider);
+        await prefs.setLastBackupAt(now);
+        // A shared backup has left the phone.
+        await prefs.setLastOffDeviceAt(now);
+        ref.invalidate(offDeviceReminderProvider);
       } on Object {
         if (context.mounted) _error(context, const UnexpectedFailure('share'));
       }
   }
+}
+
+/// Builds a backup and opens the system "Save" dialog, so a copy can live
+/// somewhere other than this phone (Google Drive, iCloud Drive, Downloads, a
+/// USB stick). Returns true when it was saved.
+Future<bool> saveBackupCopyFlow(BuildContext context, WidgetRef ref) async {
+  final l10n = AppLocalizations.of(context);
+  final messenger = ScaffoldMessenger.of(context);
+  final made = await _withProgress(
+    context,
+    l10n.backupPreparing,
+    () => ref.read(exportBackupProvider).call(),
+  );
+  if (!context.mounted) return false;
+  if (made case Err<BackupFile>(:final failure)) {
+    _error(context, failure);
+    return false;
+  }
+  final file = (made as Ok<BackupFile>).value;
+  bool saved;
+  try {
+    saved = await ref
+        .read(backupFilePickerProvider)
+        .save(file.bytes, name: file.name);
+  } on Object {
+    if (context.mounted) _error(context, const UnexpectedFailure('save'));
+    return false;
+  }
+  if (!saved) return false;
+  final now = ref.read(clockProvider).now();
+  final prefs = ref.read(backupPrefsProvider);
+  await prefs.setLastBackupAt(now);
+  await prefs.setLastOffDeviceAt(now);
+  ref.invalidate(offDeviceReminderProvider);
+  KToast.showWith(messenger, l10n.backupCopySaved, icon: Icons.check_rounded);
+  return true;
 }
 
 /// Picks a backup, checks it, asks merge or replace, imports it and shows

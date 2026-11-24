@@ -10,6 +10,13 @@ class DbBackupPrefs implements BackupPrefs {
 
   static const String lastKey = 'backup.last_at';
   static const String autoKey = 'backup.auto';
+  static const String offDeviceKey = 'backup.off_device_at';
+  static const String snoozeKey = 'backup.off_device_snooze';
+
+  Future<DateTime?> _time(String key) async {
+    final v = int.tryParse(await _get(key) ?? '');
+    return v == null ? null : DateTime.fromMillisecondsSinceEpoch(v);
+  }
 
   Future<String?> _get(String key) async => (await (_db.select(
     _db.appMeta,
@@ -28,6 +35,20 @@ class DbBackupPrefs implements BackupPrefs {
   @override
   Future<void> setLastBackupAt(DateTime at) =>
       _set(lastKey, '${at.millisecondsSinceEpoch}');
+
+  @override
+  Future<DateTime?> lastOffDeviceAt() => _time(offDeviceKey);
+
+  @override
+  Future<void> setLastOffDeviceAt(DateTime at) =>
+      _set(offDeviceKey, '${at.millisecondsSinceEpoch}');
+
+  @override
+  Future<DateTime?> offDeviceSnoozedUntil() => _time(snoozeKey);
+
+  @override
+  Future<void> setOffDeviceSnoozedUntil(DateTime until) =>
+      _set(snoozeKey, '${until.millisecondsSinceEpoch}');
 
   @override
   Future<bool> autoEnabled() async => (await _get(autoKey)) != 'off';
