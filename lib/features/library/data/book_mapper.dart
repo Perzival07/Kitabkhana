@@ -35,6 +35,8 @@ extension BookRowMapper on BookRow {
       notes: notes,
       startedOn: startedOn,
       finishedOn: finishedOn,
+      series: series,
+      seriesNumber: seriesNumber,
     );
   }
 }
@@ -72,5 +74,7 @@ BooksCompanion bookToCompanion(
     notes: Value(book.notes),
     startedOn: Value(book.startedOn),
     finishedOn: Value(book.finishedOn),
+    series: Value(book.series),
+    seriesNumber: Value(book.seriesNumber),
   );
 }

@@ -4,6 +4,7 @@ import '../../../core/clock.dart';
 import '../../../core/failure.dart';
 import '../../../core/result.dart';
 import '../../../core/text/isbn.dart';
+import '../../../core/text/series.dart';
 import '../../../core/text/title_key.dart';
 import '../../../core/uuid.dart';
 import '../../library/domain/book.dart';
@@ -27,6 +28,8 @@ final class ImportedBook {
     this.owned = false,
     this.tags = const <String>[],
     this.notes,
+    this.series,
+    this.seriesNumber,
   });
 
   final String title;
@@ -43,6 +46,8 @@ final class ImportedBook {
   final bool owned;
   final List<String> tags;
   final String? notes;
+  final String? series;
+  final double? seriesNumber;
 }
 
 /// A parsed export.
@@ -96,10 +101,33 @@ Result<ReadingAppExport> parseReadingAppCsv(String text) {
     final title = cell('title');
     if (title.isEmpty) continue;
     books.add(
-      app == ReadingApp.goodreads ? _goodreads(cell) : _storygraph(cell),
+      _withSeries(
+        app == ReadingApp.goodreads ? _goodreads(cell) : _storygraph(cell),
+      ),
     );
   }
   return Ok(ReadingAppExport(app, books));
+}
+
+/// "The Colour of Magic (Discworld, #1)" becomes the title "The Colour of
+/// Magic" in the series "Discworld", number 1.
+ImportedBook _withSeries(ImportedBook b) {
+  final split = splitSeriesFromTitle(b.title);
+  if (split == null) return b;
+  return ImportedBook(
+    title: split.title,
+    authors: b.authors,
+    isbn: b.isbn,
+    pages: b.pages,
+    status: b.status,
+    rating: b.rating,
+    finishedOn: b.finishedOn,
+    owned: b.owned,
+    tags: b.tags,
+    notes: b.notes,
+    series: split.series,
+    seriesNumber: split.number,
+  );
 }
 
 const ValidationFailure _notAnExport = ValidationFailure(
@@ -245,6 +273,8 @@ class ImportReadingApp {
           now: now,
           status: b.status,
           notes: b.notes,
+          series: b.series,
+          seriesNumber: b.seriesNumber,
           ownership: b.owned || b.status != ReadStatus.want
               ? Ownership.owned
               : wantToReadAs,

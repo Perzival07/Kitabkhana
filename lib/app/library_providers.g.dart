@@ -681,3 +681,86 @@ final class DemoSeederProvider
 }
 
 String _$demoSeederHash() => r'1f6e2fa7a9a5f161358aaa466381e9b4f8ab92d3';
+
+/// The library's books in one series, in order.
+
+@ProviderFor(seriesBooks)
+final seriesBooksProvider = SeriesBooksFamily._();
+
+/// The library's books in one series, in order.
+
+final class SeriesBooksProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Book>>,
+          List<Book>,
+          Stream<List<Book>>
+        >
+    with $FutureModifier<List<Book>>, $StreamProvider<List<Book>> {
+  /// The library's books in one series, in order.
+  SeriesBooksProvider._({
+    required SeriesBooksFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'seriesBooksProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$seriesBooksHash();
+
+  @override
+  String toString() {
+    return r'seriesBooksProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $StreamProviderElement<List<Book>> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<Book>> create(Ref ref) {
+    final argument = this.argument as String;
+    return seriesBooks(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SeriesBooksProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$seriesBooksHash() => r'1e42f16514703b826efd2d8f5aa32a6d67475f03';
+
+/// The library's books in one series, in order.
+
+final class SeriesBooksFamily extends $Family
+    with $FunctionalFamilyOverride<Stream<List<Book>>, String> {
+  SeriesBooksFamily._()
+    : super(
+        retry: null,
+        name: r'seriesBooksProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The library's books in one series, in order.
+
+  SeriesBooksProvider call(String series) =>
+      SeriesBooksProvider._(argument: series, from: this);
+
+  @override
+  String toString() => r'seriesBooksProvider';
+}

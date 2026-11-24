@@ -13,6 +13,8 @@ final class BookInfo {
     this.coverUrl,
     this.year,
     this.isComplete = true,
+    this.series,
+    this.seriesNumber,
   });
 
   factory BookInfo.fromJson(Map<String, Object?> json) {
@@ -29,6 +31,8 @@ final class BookInfo {
       olWorkKey: json['olWorkKey'] as String?,
       coverUrl: json['coverUrl'] as String?,
       year: json['year'] as int?,
+      series: json['series'] as String?,
+      seriesNumber: (json['seriesNumber'] as num?)?.toDouble(),
     );
   }
 
@@ -49,6 +53,10 @@ final class BookInfo {
   /// missing authors. Incomplete results are not cached.
   final bool isComplete;
 
+  /// The series it belongs to, and its place in it, when the catalogue says.
+  final String? series;
+  final double? seriesNumber;
+
   /// Authors joined for display and for `Book.authors`.
   String get authorsText => authors.join(', ');
 
@@ -63,6 +71,8 @@ final class BookInfo {
       coverUrl: coverUrl,
       year: year,
       isComplete: isComplete ?? this.isComplete,
+      series: series,
+      seriesNumber: seriesNumber,
     );
   }
 
@@ -75,6 +85,8 @@ final class BookInfo {
     'olWorkKey': olWorkKey,
     'coverUrl': coverUrl,
     'year': year,
+    'series': series,
+    'seriesNumber': seriesNumber,
   };
 
   @override
@@ -88,7 +100,9 @@ final class BookInfo {
       other.olWorkKey == olWorkKey &&
       other.coverUrl == coverUrl &&
       other.year == year &&
-      other.isComplete == isComplete;
+      other.isComplete == isComplete &&
+      other.series == series &&
+      other.seriesNumber == seriesNumber;
 
   @override
   int get hashCode => Object.hash(
@@ -101,6 +115,8 @@ final class BookInfo {
     coverUrl,
     year,
     isComplete,
+    series,
+    seriesNumber,
   );
 
   @override

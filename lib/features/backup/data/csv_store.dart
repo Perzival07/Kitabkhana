@@ -24,6 +24,7 @@ class CsvStore {
         .customSelect(
           'SELECT b.title, b.authors, b.isbn13, b.status, b.ownership, '
           'b.location_id, b.rating, b.pages, b.started_on, b.finished_on, '
+          'b.series, b.series_number, '
           "(SELECT group_concat(name, '; ') FROM ("
           'SELECT t.name AS name FROM book_tags bt '
           'JOIN tags t ON t.id = bt.tag_id '

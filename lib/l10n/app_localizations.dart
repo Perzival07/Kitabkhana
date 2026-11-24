@@ -3010,6 +3010,54 @@ abstract class AppLocalizations {
   /// **'Read before (no dates)'**
   String get rereadUndated;
 
+  /// No description provided for @fieldSeries.
+  ///
+  /// In en, this message translates to:
+  /// **'Series'**
+  String get fieldSeries;
+
+  /// No description provided for @fieldSeriesNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'No.'**
+  String get fieldSeriesNumber;
+
+  /// No description provided for @fieldSeriesNumberInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'A number'**
+  String get fieldSeriesNumberInvalid;
+
+  /// No description provided for @seriesPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Book {number} of {series}'**
+  String seriesPlace(String number, String series);
+
+  /// No description provided for @seriesOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Part of {series}'**
+  String seriesOnly(String series);
+
+  /// No description provided for @seriesYouHave.
+  ///
+  /// In en, this message translates to:
+  /// **'In your library'**
+  String get seriesYouHave;
+
+  /// No description provided for @seriesMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing: {numbers}'**
+  String seriesMissing(String numbers);
+
+  /// No description provided for @seriesComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'You have every book up to here.'**
+  String get seriesComplete;
+
   /// No description provided for @settingsReportProblem.
   ///
   /// In en, this message translates to:

@@ -74,6 +74,18 @@ class DriftBookRepository implements BookRepository {
   }
 
   @override
+  Stream<List<Book>> watchSeries(String series) {
+    final name = series.trim().toLowerCase();
+    final query = _db.select(_db.books)
+      ..where((t) => t.deletedAt.isNull() & t.series.lower().equals(name))
+      ..orderBy(<OrderClauseGenerator<$BooksTable>>[
+        (t) => OrderingTerm(expression: t.seriesNumber, nulls: NullsOrder.last),
+        (t) => OrderingTerm(expression: t.title),
+      ]);
+    return query.watch().map((rows) => rows.map((r) => r.toDomain()).toList());
+  }
+
+  @override
   Future<Result<Book?>> getById(String id) => dbGuard(() async {
     final row = await (_db.select(
       _db.books,

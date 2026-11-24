@@ -32,6 +32,8 @@ final class Book extends Entity {
     this.notes,
     this.startedOn,
     this.finishedOn,
+    this.series,
+    this.seriesNumber,
   });
 
   /// A new, not-yet-saved book. [titleKey] is computed from title and authors.
@@ -52,6 +54,8 @@ final class Book extends Entity {
     String? locationId,
     String? ownerName,
     String? notes,
+    String? series,
+    double? seriesNumber,
   }) {
     return Book(
       id: id,
@@ -74,6 +78,8 @@ final class Book extends Entity {
       locationId: locationId,
       ownerName: ownerName,
       notes: notes,
+      series: series,
+      seriesNumber: seriesNumber,
     );
   }
 
@@ -97,6 +103,10 @@ final class Book extends Entity {
   final String? notes;
   final DateTime? startedOn;
   final DateTime? finishedOn;
+
+  /// The series ("Discworld") and the book's place in it (2, or 2.5).
+  final String? series;
+  final double? seriesNumber;
 
   /// Reading progress 0..1, or null when the page count is unknown.
   double? get progress {
@@ -126,6 +136,8 @@ final class Book extends Entity {
     Object? notes = keep,
     Object? startedOn = keep,
     Object? finishedOn = keep,
+    Object? series = keep,
+    Object? seriesNumber = keep,
     DateTime? updatedAt,
     Object? deletedAt = keep,
     int? rev,
@@ -164,6 +176,8 @@ final class Book extends Entity {
       notes: pick<String>(notes, this.notes),
       startedOn: pick<DateTime>(startedOn, this.startedOn),
       finishedOn: pick<DateTime>(finishedOn, this.finishedOn),
+      series: pick<String>(series, this.series),
+      seriesNumber: pick<double>(seriesNumber, this.seriesNumber),
     );
   }
 
@@ -193,6 +207,8 @@ final class Book extends Entity {
     notes,
     startedOn,
     finishedOn,
+    series,
+    seriesNumber,
   ];
 
   @override

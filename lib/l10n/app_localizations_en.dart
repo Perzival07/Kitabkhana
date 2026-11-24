@@ -1847,6 +1847,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rereadUndated => 'Read before (no dates)';
 
   @override
+  String get fieldSeries => 'Series';
+
+  @override
+  String get fieldSeriesNumber => 'No.';
+
+  @override
+  String get fieldSeriesNumberInvalid => 'A number';
+
+  @override
+  String seriesPlace(String number, String series) {
+    return 'Book $number of $series';
+  }
+
+  @override
+  String seriesOnly(String series) {
+    return 'Part of $series';
+  }
+
+  @override
+  String get seriesYouHave => 'In your library';
+
+  @override
+  String seriesMissing(String numbers) {
+    return 'Missing: $numbers';
+  }
+
+  @override
+  String get seriesComplete => 'You have every book up to here.';
+
+  @override
   String get settingsReportProblem => 'Report a problem';
 
   @override

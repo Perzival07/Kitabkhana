@@ -198,3 +198,8 @@ DemoSeeder demoSeeder(Ref ref) => DemoSeeder(
   locations: ref.watch(locationRepositoryProvider),
   clock: ref.watch(clockProvider),
 );
+
+/// The library's books in one series, in order.
+@riverpod
+Stream<List<Book>> seriesBooks(Ref ref, String series) =>
+    ref.watch(bookRepositoryProvider).watchSeries(series);

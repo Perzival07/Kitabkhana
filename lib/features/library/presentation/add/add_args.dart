@@ -32,6 +32,8 @@ final class BookFormArgs {
       ownerName: book.ownerName,
       notes: book.notes,
       coverUrl: book.coverUrl,
+      series: book.series,
+      seriesNumber: book.seriesNumber,
     ),
   );
 

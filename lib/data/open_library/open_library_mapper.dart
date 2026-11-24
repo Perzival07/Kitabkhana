@@ -1,4 +1,5 @@
 import '../../core/text/isbn.dart';
+import '../../core/text/series.dart';
 import '../../features/library/domain/book_info.dart';
 
 /// Anti-corruption layer: turns Open Library's loosely-typed JSON into
@@ -112,9 +113,15 @@ abstract final class OpenLibraryMapper {
         }
       }
     }
+    final seriesList = edition['series'];
+    final place = seriesList is List && seriesList.isNotEmpty
+        ? parseSeries('${seriesList.first}')
+        : null;
     return BookInfo(
       title: title,
       subtitle: _string(edition['subtitle']),
+      series: place?.name,
+      seriesNumber: place?.number,
       authors: authors,
       pages: _pages(edition),
       isbn13: isbn,

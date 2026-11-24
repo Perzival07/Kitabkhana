@@ -15,6 +15,7 @@ import '../../../../app/router/routes.dart';
 import '../../../../app/theme/tokens.dart';
 import '../../../../core/result.dart';
 import '../../../../core/text/isbn.dart';
+import '../../../../core/text/series.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../platform/photo_picker/photo_picker.dart';
 import '../../../../ui/ui.dart';
@@ -49,6 +50,8 @@ class _BookFormScreenState extends ConsumerState<BookFormScreen> {
   late final TextEditingController _genre;
   late final TextEditingController _language;
   late final TextEditingController _notes;
+  late final TextEditingController _series;
+  late final TextEditingController _seriesNumber;
   late Ownership _ownership;
   late ReadStatus _status;
   String? _locationId;
@@ -68,6 +71,10 @@ class _BookFormScreenState extends ConsumerState<BookFormScreen> {
     _genre = TextEditingController(text: d.genre);
     _language = TextEditingController(text: d.language);
     _notes = TextEditingController(text: d.notes ?? '');
+    _series = TextEditingController(text: d.series ?? '');
+    _seriesNumber = TextEditingController(
+      text: d.seriesNumber == null ? '' : seriesNumberText(d.seriesNumber!),
+    );
     _ownership = d.ownership;
     _status = d.status;
     _locationId = d.locationId;
@@ -90,6 +97,8 @@ class _BookFormScreenState extends ConsumerState<BookFormScreen> {
       _genre,
       _language,
       _notes,
+      _series,
+      _seriesNumber,
     ]) {
       c.dispose();
     }
@@ -121,6 +130,10 @@ class _BookFormScreenState extends ConsumerState<BookFormScreen> {
       notes: _notes.text,
       coverUrl: _useCatalogueCover ? d.coverUrl : null,
       coverPhoto: _photo,
+      series: _series.text.trim().isEmpty ? null : _series.text.trim(),
+      seriesNumber: _series.text.trim().isEmpty
+          ? null
+          : double.tryParse(_seriesNumber.text.trim().replaceAll(',', '.')),
     );
   }
 
@@ -151,6 +164,8 @@ class _BookFormScreenState extends ConsumerState<BookFormScreen> {
               ownership: d.ownership,
               locationId: d.locationId,
               notes: d.notes?.trim().isEmpty ?? true ? null : d.notes!.trim(),
+              series: d.series,
+              seriesNumber: d.seriesNumber,
               coverUrl: _useCatalogueCover ? b.coverUrl : null,
             ),
             d.status,
@@ -391,6 +406,44 @@ class _BookFormScreenState extends ConsumerState<BookFormScreen> {
                       if (t.isEmpty) return null;
                       return parseIsbn(t) == null ? l10n.isbnInvalid : null;
                     },
+                  ),
+                  const SizedBox(height: KSpacing.md),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 3,
+                        child: TextFormField(
+                          controller: _series,
+                          textCapitalization: TextCapitalization.words,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            labelText: l10n.fieldSeries,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: KSpacing.md),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _seriesNumber,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            labelText: l10n.fieldSeriesNumber,
+                          ),
+                          validator: (v) {
+                            final t = v?.trim().replaceAll(',', '.') ?? '';
+                            if (t.isEmpty) return null;
+                            final n = double.tryParse(t);
+                            return n == null || n < 0
+                                ? l10n.fieldSeriesNumberInvalid
+                                : null;
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: KSpacing.md),
                   TextFormField(

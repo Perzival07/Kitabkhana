@@ -21,6 +21,10 @@ abstract interface class BookRepository {
 
   Future<Result<Book?>> getById(String id);
 
+  /// Live books in the series named [series] (ignoring case), in series
+  /// order (unnumbered last, then by title).
+  Stream<List<Book>> watchSeries(String series);
+
   /// Full-text search over title, subtitle and authors (prefix matching).
   Future<Result<List<Book>>> search(String query, {int limit = 20});
 

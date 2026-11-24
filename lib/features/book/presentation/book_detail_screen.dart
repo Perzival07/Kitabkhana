@@ -11,6 +11,7 @@ import '../../../app/add_book_providers.dart';
 import '../../../app/book_detail_providers.dart';
 import '../../../app/l10n/failure_message.dart';
 import '../../../app/lending_providers.dart';
+import '../../../app/library_providers.dart';
 import '../../../app/providers.dart';
 import '../../../app/reminder_providers.dart';
 import '../../../app/quote_providers.dart';
@@ -21,6 +22,7 @@ import '../../../app/theme/k_tokens.dart';
 import '../../../app/theme/tokens.dart';
 import '../../../core/failure.dart';
 import '../../../core/result.dart';
+import '../../../core/text/series.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../ui/ui.dart';
 import '../../lending/domain/loan.dart';
@@ -276,6 +278,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                           ),
                         ),
                         _ReadsSection(book: book),
+                        if (book.series != null) _SeriesSection(book: book),
                         if (book.status == ReadStatus.reading) ...<Widget>[
                           const SizedBox(height: KSpacing.lg),
                           _ProgressCard(
@@ -1112,6 +1115,81 @@ class _ReadsSection extends ConsumerWidget {
               ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// "Book 4 of Discworld", the series books in the library, and the gaps.
+class _SeriesSection extends ConsumerWidget {
+  const _SeriesSection({required this.book});
+
+  final Book book;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final series = book.series!;
+    final books = ref.watch(seriesBooksProvider(series)).value ?? <Book>[book];
+    final gaps = seriesGaps(books.map((b) => b.seriesNumber));
+    final n = book.seriesNumber;
+    return Padding(
+      padding: const EdgeInsets.only(top: KSpacing.lg),
+      child: KCard(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              n == null
+                  ? l10n.seriesOnly(series)
+                  : l10n.seriesPlace(seriesNumberText(n), series),
+              style: theme.textTheme.titleSmall,
+            ),
+            if (books.length > 1) ...<Widget>[
+              const SizedBox(height: KSpacing.sm),
+              Text(l10n.seriesYouHave, style: theme.textTheme.labelMedium),
+              for (final b in books)
+                ListTile(
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                  leading: SizedBox(
+                    width: 32,
+                    child: Text(
+                      b.seriesNumber == null
+                          ? '–'
+                          : seriesNumberText(b.seriesNumber!),
+                      style: theme.textTheme.titleMedium,
+                    ),
+                  ),
+                  title: Text(
+                    b.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: b.id == book.id
+                        ? theme.textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          )
+                        : null,
+                  ),
+                  onTap: b.id == book.id
+                      ? null
+                      : () => context.push(Routes.book(b.id)),
+                ),
+            ],
+            if (n != null) ...<Widget>[
+              const SizedBox(height: KSpacing.xs),
+              Text(
+                gaps.isEmpty
+                    ? l10n.seriesComplete
+                    : l10n.seriesMissing(gaps.join(', ')),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: gaps.isEmpty ? null : theme.colorScheme.error,
+                ),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

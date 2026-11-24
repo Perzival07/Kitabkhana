@@ -27,6 +27,8 @@ const List<String> booksCsvHeader = <String>[
   'startedOn',
   'finishedOn',
   'tags',
+  'series',
+  'seriesNumber',
 ];
 
 const List<String> loansCsvHeader = <String>[
@@ -117,6 +119,8 @@ class ExportCsv {
         b['started_on'] ?? '',
         b['finished_on'] ?? '',
         _s(b['tag_names']),
+        _s(b['series']),
+        b['series_number'] ?? '',
       ]);
     }
     return encodeCsv(rows);

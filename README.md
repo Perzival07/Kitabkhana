@@ -165,7 +165,8 @@ Enter manually ─────────────────────�
   of them, then *Add N books*.
 - **Type ISBN**: numeric keyboard, live ISBN-10/13 validation (checksums), paste button.
 - **Search by title**: 350 ms debounce, loading skeletons, stale answers ignored.
-- **Form**: cover (take or choose a photo), title, subtitle, authors, pages, ISBN, genre,
+- **Form**: cover (take or choose a photo), title, subtitle, authors, pages, ISBN, series
+  and number, genre,
   language, ownership (*Owned / Wishlist / Borrowed*), status, location and tags.
 - **Duplicates**: before saving, the library is checked by ISBN, Open Library work key and a
   normalised title key. You choose *Open existing*, *Add another copy* or *Cancel*.
@@ -187,6 +188,10 @@ a 1–5 star rating and details. Delete has undo. Finishing a book plays a small
 | :---: | :---: | :---: |
 | <img src="docs/screenshots/lend-sheet.png" width="200"> | <img src="docs/screenshots/book-edit.png" width="200"> | <img src="docs/screenshots/quote-capture.png" width="200"> |
 
+- **Series**: a book in a series shows "Book 4 of Discworld", the series books you have
+  (tap to open) and what is missing ("Missing: 2, 3"). Series come from Open Library
+  when it knows them, from Goodreads/StoryGraph titles like "Mort (Discworld, #4)", or
+  typed on the form.
 - **Re-reads**: a finished book offers *Read again*. The finished read is kept under
   *Earlier reads* ("May 1, 2024 – May 20, 2024") and a new read starts today; the page
   says "Read 3 times". Stats count every finished read in its own year.
@@ -422,7 +427,7 @@ bar.
   date, shelves/tags (as tags) and private notes. Books already in the library (same ISBN,
   or same title and author) are skipped. Covers are shown from Open Library by ISBN.
 - CSV export: `books.csv` (title, authors, ISBN-13, status, ownership, location, rating,
-  pages, started, finished, tags) and `loans.csv` (title, authors, direction, person,
+  pages, started, finished, tags, series, series number) and `loans.csv` (title, authors, direction, person,
   phone, started, due, returned, note).
 - Erase everything: every table, cover files, the backups folder and pending notifications.
 

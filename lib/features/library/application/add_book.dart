@@ -31,6 +31,8 @@ final class BookDraft {
     this.notes,
     this.coverUrl,
     this.coverPhoto,
+    this.series,
+    this.seriesNumber,
   });
 
   /// A draft pre-filled from catalogue data.
@@ -42,6 +44,8 @@ final class BookDraft {
     olWorkKey: info.olWorkKey,
     pages: info.pages,
     coverUrl: info.coverUrl,
+    series: info.series,
+    seriesNumber: info.seriesNumber,
   );
 
   final String title;
@@ -61,6 +65,10 @@ final class BookDraft {
 
   /// A photo the user took or chose (processed and stored after saving).
   final Uint8List? coverPhoto;
+
+  /// The series and the book's place in it.
+  final String? series;
+  final double? seriesNumber;
 }
 
 sealed class AddBookResult {
@@ -182,6 +190,8 @@ class AddBook {
       locationId: draft.locationId,
       ownerName: _blankToNull(draft.ownerName),
       notes: _blankToNull(draft.notes),
+      series: _blankToNull(draft.series),
+      seriesNumber: draft.seriesNumber,
     );
     // Reading status implies dates and progress, like the detail page does.
     if (draft.status == ReadStatus.reading) {
