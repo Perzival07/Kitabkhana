@@ -2788,6 +2788,90 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{No books added} =1{Added 1 book} other{Added {count} books}}'**
   String batchAdded(int count);
 
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @statsShareYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your year'**
+  String get statsShareYear;
+
+  /// No description provided for @yearReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My {year} in books'**
+  String yearReviewTitle(String year);
+
+  /// No description provided for @yearReviewBooks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{book finished} other{books finished}}'**
+  String yearReviewBooks(int count);
+
+  /// No description provided for @yearReviewPages.
+  ///
+  /// In en, this message translates to:
+  /// **'pages read'**
+  String get yearReviewPages;
+
+  /// No description provided for @yearReviewStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'longest streak (days)'**
+  String get yearReviewStreak;
+
+  /// No description provided for @yearReviewGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'reading goal'**
+  String get yearReviewGoal;
+
+  /// No description provided for @yearReviewTopGenre.
+  ///
+  /// In en, this message translates to:
+  /// **'Favourite genre'**
+  String get yearReviewTopGenre;
+
+  /// No description provided for @yearReviewTopAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'Most-read author'**
+  String get yearReviewTopAuthor;
+
+  /// No description provided for @yearReviewLongest.
+  ///
+  /// In en, this message translates to:
+  /// **'Longest book'**
+  String get yearReviewLongest;
+
+  /// No description provided for @yearReviewLongestValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} · {pages} pages'**
+  String yearReviewLongestValue(String title, int pages);
+
+  /// No description provided for @yearReviewFooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Made with Kitabkhana'**
+  String get yearReviewFooter;
+
+  /// No description provided for @yearReviewShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get yearReviewShare;
+
+  /// No description provided for @yearReviewEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish a book or log some pages this year, and your year in review will appear here.'**
+  String get yearReviewEmpty;
+
   /// No description provided for @settingsReportProblem.
   ///
   /// In en, this message translates to:

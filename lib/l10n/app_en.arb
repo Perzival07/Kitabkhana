@@ -927,6 +927,44 @@
       }
     }
   },
+  "close": "Close",
+  "statsShareYear": "Share your year",
+  "yearReviewTitle": "My {year} in books",
+  "@yearReviewTitle": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "yearReviewBooks": "{count, plural, =1{book finished} other{books finished}}",
+  "@yearReviewBooks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "yearReviewPages": "pages read",
+  "yearReviewStreak": "longest streak (days)",
+  "yearReviewGoal": "reading goal",
+  "yearReviewTopGenre": "Favourite genre",
+  "yearReviewTopAuthor": "Most-read author",
+  "yearReviewLongest": "Longest book",
+  "yearReviewLongestValue": "{title} · {pages} pages",
+  "@yearReviewLongestValue": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "pages": {
+        "type": "int"
+      }
+    }
+  },
+  "yearReviewFooter": "Made with Kitabkhana",
+  "yearReviewShare": "Share",
+  "yearReviewEmpty": "Finish a book or log some pages this year, and your year in review will appear here.",
   "settingsReportProblem": "Report a problem",
   "settingsReportProblemBody": "Email the developer, with recent app messages attached.",
   "crashPromptTitle": "Something went wrong",

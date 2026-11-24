@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../features/library/domain/book.dart';
 import '../features/stats/domain/goal.dart';
 import '../features/stats/domain/stats.dart';
+import '../features/stats/domain/year_review.dart';
 import 'repositories.dart';
 import 'today_provider.dart';
 
@@ -68,4 +69,27 @@ Future<List<Book>> booksFinishedInMonth(Ref ref, int year, int month) async {
       .watch(statsRepositoryProvider)
       .finishedInMonth(year, month);
   return r.getOrNull() ?? const <Book>[];
+}
+
+/// Everything the "Year in review" card shows, read once.
+@riverpod
+Future<YearReview> yearReview(Ref ref, int year) async {
+  final stats = ref.watch(statsRepositoryProvider);
+  final reading = ref.watch(readingRepositoryProvider);
+  final today = ref.watch(todayProvider);
+  final facts = await stats.watchFacts(year).first;
+  return buildYearReview(
+    year: year,
+    booksFinished: await stats.watchFinishedCount(year).first,
+    perMonth: await stats.watchFinishedPerMonth(year).first,
+    logs: await reading
+        .watchBetween(DateTime(year), DateTime(year, 12, 31))
+        .first,
+    readingDays: await reading.watchReadingDays().first,
+    today: today,
+    goal: await ref.watch(goalRepositoryProvider).watchForYear(year).first,
+    genres: await stats.watchTopGenres(year, limit: 1).first,
+    authors: await stats.watchTopAuthors(year, limit: 1).first,
+    longest: facts.longest,
+  );
 }

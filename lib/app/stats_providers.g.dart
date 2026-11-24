@@ -713,3 +713,86 @@ final class BooksFinishedInMonthFamily extends $Family
   @override
   String toString() => r'booksFinishedInMonthProvider';
 }
+
+/// Everything the "Year in review" card shows, read once.
+
+@ProviderFor(yearReview)
+final yearReviewProvider = YearReviewFamily._();
+
+/// Everything the "Year in review" card shows, read once.
+
+final class YearReviewProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<YearReview>,
+          YearReview,
+          FutureOr<YearReview>
+        >
+    with $FutureModifier<YearReview>, $FutureProvider<YearReview> {
+  /// Everything the "Year in review" card shows, read once.
+  YearReviewProvider._({
+    required YearReviewFamily super.from,
+    required int super.argument,
+  }) : super(
+         retry: null,
+         name: r'yearReviewProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$yearReviewHash();
+
+  @override
+  String toString() {
+    return r'yearReviewProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<YearReview> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<YearReview> create(Ref ref) {
+    final argument = this.argument as int;
+    return yearReview(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is YearReviewProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$yearReviewHash() => r'de7f8a2e5c0d273960077fb5fedb8a2143cb1bc2';
+
+/// Everything the "Year in review" card shows, read once.
+
+final class YearReviewFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<YearReview>, int> {
+  YearReviewFamily._()
+    : super(
+        retry: null,
+        name: r'yearReviewProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// Everything the "Year in review" card shows, read once.
+
+  YearReviewProvider call(int year) =>
+      YearReviewProvider._(argument: year, from: this);
+
+  @override
+  String toString() => r'yearReviewProvider';
+}

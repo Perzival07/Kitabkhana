@@ -1694,6 +1694,61 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get close => 'Close';
+
+  @override
+  String get statsShareYear => 'Share your year';
+
+  @override
+  String yearReviewTitle(String year) {
+    return 'My $year in books';
+  }
+
+  @override
+  String yearReviewBooks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'books finished',
+      one: 'book finished',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get yearReviewPages => 'pages read';
+
+  @override
+  String get yearReviewStreak => 'longest streak (days)';
+
+  @override
+  String get yearReviewGoal => 'reading goal';
+
+  @override
+  String get yearReviewTopGenre => 'Favourite genre';
+
+  @override
+  String get yearReviewTopAuthor => 'Most-read author';
+
+  @override
+  String get yearReviewLongest => 'Longest book';
+
+  @override
+  String yearReviewLongestValue(String title, int pages) {
+    return '$title · $pages pages';
+  }
+
+  @override
+  String get yearReviewFooter => 'Made with Kitabkhana';
+
+  @override
+  String get yearReviewShare => 'Share';
+
+  @override
+  String get yearReviewEmpty =>
+      'Finish a book or log some pages this year, and your year in review will appear here.';
+
+  @override
   String get settingsReportProblem => 'Report a problem';
 
   @override

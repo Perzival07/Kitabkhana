@@ -18,6 +18,7 @@ import '../domain/goal.dart';
 import '../domain/goal_progress.dart';
 import '../domain/stats.dart';
 import 'goal_sheet.dart';
+import 'year_review_sheet.dart';
 import '../../../app/today_provider.dart';
 
 /// `/stats`: the reading year. Goal ring, books per month, pages per week,
@@ -141,6 +142,11 @@ class _TitleRow extends ConsumerWidget {
             header: true,
             child: Text(l10n.statsTitle, style: theme.textTheme.headlineMedium),
           ),
+        ),
+        IconButton(
+          tooltip: l10n.statsShareYear,
+          icon: const Icon(Icons.ios_share_rounded),
+          onPressed: () => showYearReview(context, year),
         ),
         IconButton(
           tooltip: l10n.statsYearPrevious,

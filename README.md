@@ -248,6 +248,10 @@ top authors and library facts. A year switcher covers every year with finished b
 | :---: | :---: | :---: |
 | <img src="docs/screenshots/stats.png" width="200"> | <img src="docs/screenshots/stats-more.png" width="200"> | <img src="docs/screenshots/goal-sheet.png" width="200"> |
 
+**Year in review**: the share button next to the year draws a story-sized card (1080 ×
+1920): books finished, pages read, longest streak, goal, books per month, favourite genre,
+most-read author and longest book, ready for WhatsApp or Instagram.
+
 Past years read "N books short" or "Goal reached". Future years read "A fresh year ahead".
 Goals go from 1 to 999 books.
 
@@ -385,6 +389,7 @@ bar.
 - Yearly goal with ahead/behind/on-pace wording.
 - Stats: books per month, pages per week (12 weeks), top genres, top authors, library facts.
 - Optional daily reading reminder.
+- Year in review: a shareable 9:16 card of the year's reading.
 
 **Quotes**
 - On-device OCR (Google ML Kit, Latin script) with a built-in cropper that runs off the UI
