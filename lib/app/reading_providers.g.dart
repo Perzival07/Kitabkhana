@@ -668,3 +668,178 @@ final class MinutesInYearFamily extends $Family
   @override
   String toString() => r'minutesInYearProvider';
 }
+
+@ProviderFor(readThroughRepository)
+final readThroughRepositoryProvider = ReadThroughRepositoryProvider._();
+
+final class ReadThroughRepositoryProvider
+    extends
+        $FunctionalProvider<
+          ReadThroughRepository,
+          ReadThroughRepository,
+          ReadThroughRepository
+        >
+    with $Provider<ReadThroughRepository> {
+  ReadThroughRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'readThroughRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$readThroughRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<ReadThroughRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ReadThroughRepository create(Ref ref) {
+    return readThroughRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ReadThroughRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ReadThroughRepository>(value),
+    );
+  }
+}
+
+String _$readThroughRepositoryHash() =>
+    r'67a65590a6261bed0922fa10e2c006031c9d1fce';
+
+@ProviderFor(readAgain)
+final readAgainProvider = ReadAgainProvider._();
+
+final class ReadAgainProvider
+    extends $FunctionalProvider<ReadAgain, ReadAgain, ReadAgain>
+    with $Provider<ReadAgain> {
+  ReadAgainProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'readAgainProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$readAgainHash();
+
+  @$internal
+  @override
+  $ProviderElement<ReadAgain> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ReadAgain create(Ref ref) {
+    return readAgain(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ReadAgain value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ReadAgain>(value),
+    );
+  }
+}
+
+String _$readAgainHash() => r'c470cdeb29ee95a0bbe631085a3241ba44f1590d';
+
+/// Earlier reads of a book, most recent first.
+
+@ProviderFor(bookReadThroughs)
+final bookReadThroughsProvider = BookReadThroughsFamily._();
+
+/// Earlier reads of a book, most recent first.
+
+final class BookReadThroughsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<ReadThrough>>,
+          List<ReadThrough>,
+          Stream<List<ReadThrough>>
+        >
+    with
+        $FutureModifier<List<ReadThrough>>,
+        $StreamProvider<List<ReadThrough>> {
+  /// Earlier reads of a book, most recent first.
+  BookReadThroughsProvider._({
+    required BookReadThroughsFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'bookReadThroughsProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$bookReadThroughsHash();
+
+  @override
+  String toString() {
+    return r'bookReadThroughsProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $StreamProviderElement<List<ReadThrough>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<ReadThrough>> create(Ref ref) {
+    final argument = this.argument as String;
+    return bookReadThroughs(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is BookReadThroughsProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$bookReadThroughsHash() => r'19f900aa9044cc8d8a7c00e5e6677972b7f68c76';
+
+/// Earlier reads of a book, most recent first.
+
+final class BookReadThroughsFamily extends $Family
+    with $FunctionalFamilyOverride<Stream<List<ReadThrough>>, String> {
+  BookReadThroughsFamily._()
+    : super(
+        retry: null,
+        name: r'bookReadThroughsProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// Earlier reads of a book, most recent first.
+
+  BookReadThroughsProvider call(String bookId) =>
+      BookReadThroughsProvider._(argument: bookId, from: this);
+
+  @override
+  String toString() => r'bookReadThroughsProvider';
+}

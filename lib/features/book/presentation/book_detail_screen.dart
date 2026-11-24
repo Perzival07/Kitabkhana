@@ -275,6 +275,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                             (b) => b.copyWith(rating: b.rating == n ? null : n),
                           ),
                         ),
+                        _ReadsSection(book: book),
                         if (book.status == ReadStatus.reading) ...<Widget>[
                           const SizedBox(height: KSpacing.lg),
                           _ProgressCard(
@@ -1031,6 +1032,87 @@ class _DetailsSection extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+/// "Read again" for a finished book, and the list of earlier reads.
+class _ReadsSection extends ConsumerWidget {
+  const _ReadsSection({required this.book});
+
+  final Book book;
+
+  Future<void> _again(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final r = await ref.read(readAgainProvider).call(book.id);
+    switch (r) {
+      case Ok<Book>():
+        Haptics.success();
+        KToast.showWith(
+          messenger,
+          l10n.rereadStarted,
+          icon: Icons.replay_rounded,
+        );
+      case Err<Book>(:final failure):
+        KToast.showWith(
+          messenger,
+          failureMessage(l10n, failure),
+          icon: Icons.error_outline_rounded,
+        );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final earlier =
+        ref.watch(bookReadThroughsProvider(book.id)).value ?? const [];
+    final finishedNow = book.status == ReadStatus.finished;
+    if (earlier.isEmpty && !finishedNow) return const SizedBox.shrink();
+    final date = DateFormat.yMMMd(l10n.localeName);
+    final reads = earlier.length + (finishedNow ? 1 : 0);
+    return Padding(
+      padding: const EdgeInsets.only(top: KSpacing.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  reads > 1 ? l10n.rereadCount(reads) : '',
+                  style: theme.textTheme.bodyMedium,
+                ),
+              ),
+              if (finishedNow)
+                TextButton.icon(
+                  onPressed: () => _again(context, ref),
+                  icon: const Icon(Icons.replay_rounded),
+                  label: Text(l10n.rereadAction),
+                ),
+            ],
+          ),
+          if (earlier.isNotEmpty) ...<Widget>[
+            Text(l10n.rereadEarlier, style: theme.textTheme.titleSmall),
+            const SizedBox(height: KSpacing.xs),
+            for (final r in earlier)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Text(switch ((r.startedOn, r.finishedOn)) {
+                  (final s?, final f?) => l10n.rereadRange(
+                    date.format(s),
+                    date.format(f),
+                  ),
+                  (_, final f?) => l10n.rereadFinishedOn(date.format(f)),
+                  (final s?, null) => l10n.rereadStartedOn(date.format(s)),
+                  (null, null) => l10n.rereadUndated,
+                }, style: theme.textTheme.bodySmall),
+              ),
+          ],
+        ],
+      ),
     );
   }
 }

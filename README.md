@@ -187,6 +187,9 @@ a 1–5 star rating and details. Delete has undo. Finishing a book plays a small
 | :---: | :---: | :---: |
 | <img src="docs/screenshots/lend-sheet.png" width="200"> | <img src="docs/screenshots/book-edit.png" width="200"> | <img src="docs/screenshots/quote-capture.png" width="200"> |
 
+- **Re-reads**: a finished book offers *Read again*. The finished read is kept under
+  *Earlier reads* ("May 1, 2024 – May 20, 2024") and a new read starts today; the page
+  says "Read 3 times". Stats count every finished read in its own year.
 - **Status**: Want to read, Reading, Finished or Dropped. *Reading* stamps the start
   date. *Finished* stamps the finish date and sets the page to the last page.
 - **Update page**: a sheet with the page number, +/- steppers and "Add N pages" shortcuts.

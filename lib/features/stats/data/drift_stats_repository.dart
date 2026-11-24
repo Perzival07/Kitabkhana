@@ -21,6 +21,7 @@ class DriftStatsRepository implements StatsRepository {
     _db.books,
     _db.loans,
     _db.readingLogs,
+    _db.readThroughs,
   };
 
   /// `books` rows finished in the year bound to the first `?`.
@@ -28,20 +29,42 @@ class DriftStatsRepository implements StatsRepository {
       "deleted_at IS NULL AND status = 'finished' AND finished_on IS NOT NULL "
       'AND substr(finished_on, 1, 4) = ?';
 
+  /// Every finished read as a `fin` table: each book's current read when it
+  /// is finished, plus its earlier reads (re-reads count every time). The
+  /// book's columns, with `finished_on` taken from the read.
+  static const _finBody =
+      'SELECT * FROM books '
+      "WHERE deleted_at IS NULL AND status = 'finished' "
+      'AND finished_on IS NOT NULL '
+      'UNION ALL '
+      'SELECT b.id, b.created_at, b.updated_at, b.deleted_at, b.rev, '
+      'b.isbn13, b.ol_work_key, b.title, b.subtitle, b.authors, b.title_key, '
+      'b.cover_url, b.cover_local_path, b.pages, b.genre, b.language, '
+      'b.ownership, b.status, b.current_page, b.rating, b.location_id, '
+      'b.owner_name, b.notes, b.started_on, r.finished_on, b.series, '
+      'b.series_number '
+      'FROM read_throughs r JOIN books b ON b.id = r.book_id '
+      'WHERE r.deleted_at IS NULL AND b.deleted_at IS NULL '
+      'AND r.finished_on IS NOT NULL';
+
+  static const _fin = 'WITH fin AS ($_finBody) ';
+
+  static const _finYear = 'substr(finished_on, 1, 4) = ?';
+
   Selectable<QueryRow> _q(String sql, [List<Variable<Object>> v = const []]) =>
       _db.customSelect(sql, variables: v, readsFrom: _reads);
 
   @override
   Stream<int> watchFinishedCount(int year) => _q(
-    'SELECT COUNT(*) AS c FROM books WHERE $_finishedInYear',
+    '${_fin}SELECT COUNT(*) AS c FROM fin WHERE $_finYear',
     [Variable<String>(_year(year))],
   ).watchSingle().map((r) => r.read<int>('c'));
 
   @override
   Stream<List<int>> watchFinishedPerMonth(int year) =>
       _q(
-        'SELECT CAST(substr(finished_on, 6, 2) AS INTEGER) AS m, '
-        'COUNT(*) AS c FROM books WHERE $_finishedInYear GROUP BY m',
+        '${_fin}SELECT CAST(substr(finished_on, 6, 2) AS INTEGER) AS m, '
+        'COUNT(*) AS c FROM fin WHERE $_finYear GROUP BY m',
         [Variable<String>(_year(year))],
       ).watch().map((rows) {
         final out = List<int>.filled(12, 0);
@@ -57,7 +80,7 @@ class DriftStatsRepository implements StatsRepository {
       dbGuard(() async {
         final mm = month.toString().padLeft(2, '0');
         final rows = await _q(
-          'SELECT * FROM books WHERE $_finishedInYear '
+          '${_fin}SELECT * FROM fin WHERE $_finYear '
           'AND substr(finished_on, 6, 2) = ? '
           'ORDER BY finished_on DESC, title',
           [Variable<String>(_year(year)), Variable<String>(mm)],
@@ -92,16 +115,17 @@ class DriftStatsRepository implements StatsRepository {
 
   @override
   Stream<List<LabelCount>> watchTopGenres(int year, {int limit = 5}) => _q(
-    'SELECT trim(genre) AS label, COUNT(*) AS c FROM books '
-    "WHERE $_finishedInYear AND trim(genre) <> '' "
+    '${_fin}SELECT trim(genre) AS label, COUNT(*) AS c FROM fin '
+    "WHERE $_finYear AND trim(genre) <> '' "
     'GROUP BY lower(trim(genre)) ORDER BY c DESC, label LIMIT ?',
     [Variable<String>(_year(year)), Variable<int>(limit)],
   ).watch().map(_labels);
 
   @override
   Stream<List<LabelCount>> watchTopAuthors(int year, {int limit = 5}) => _q(
-    'WITH RECURSIVE split(author, rest) AS ('
-    "SELECT '', trim(authors) || ',' FROM books WHERE $_finishedInYear "
+    'WITH RECURSIVE fin AS ($_finBody), '
+    'split(author, rest) AS ('
+    "SELECT '', trim(authors) || ',' FROM fin WHERE $_finYear "
     'UNION ALL '
     "SELECT trim(substr(rest, 1, instr(rest, ',') - 1)), "
     "substr(rest, instr(rest, ',') + 1) FROM split WHERE rest <> ''"
@@ -147,9 +171,8 @@ class DriftStatsRepository implements StatsRepository {
 
   @override
   Stream<List<int>> watchFinishedYears() => _q(
-    'SELECT DISTINCT CAST(substr(finished_on, 1, 4) AS INTEGER) AS y '
-    "FROM books WHERE deleted_at IS NULL AND status = 'finished' "
-    'AND finished_on IS NOT NULL ORDER BY y DESC',
+    '${_fin}SELECT DISTINCT CAST(substr(finished_on, 1, 4) AS INTEGER) AS y '
+    'FROM fin ORDER BY y DESC',
   ).watch().map((rows) => [for (final r in rows) r.read<int>('y')]);
 
   static String _year(int y) => y.toString().padLeft(4, '0');

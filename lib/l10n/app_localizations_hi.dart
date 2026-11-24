@@ -1810,6 +1810,43 @@ class AppLocalizationsHi extends AppLocalizations {
       'Start the timer on a book you are reading to see your reading time here.';
 
   @override
+  String get rereadAction => 'Read again';
+
+  @override
+  String get rereadStarted => 'A new read starts today. The last one is kept.';
+
+  @override
+  String rereadCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Read $count times',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get rereadEarlier => 'Earlier reads';
+
+  @override
+  String rereadRange(String start, String end) {
+    return '$start – $end';
+  }
+
+  @override
+  String rereadFinishedOn(String date) {
+    return 'Finished $date';
+  }
+
+  @override
+  String rereadStartedOn(String date) {
+    return 'Started $date';
+  }
+
+  @override
+  String get rereadUndated => 'Read before (no dates)';
+
+  @override
   String get settingsReportProblem => 'Report a problem';
 
   @override

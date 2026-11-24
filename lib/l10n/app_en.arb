@@ -1032,6 +1032,45 @@
   "statsTimeTitle": "Time reading",
   "statsTimeBody": "Measured with the reading timer on the Reading tab.",
   "statsTimeNone": "Start the timer on a book you are reading to see your reading time here.",
+  "rereadAction": "Read again",
+  "rereadStarted": "A new read starts today. The last one is kept.",
+  "rereadCount": "{count, plural, other{Read {count} times}}",
+  "@rereadCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rereadEarlier": "Earlier reads",
+  "rereadRange": "{start} – {end}",
+  "@rereadRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "rereadFinishedOn": "Finished {date}",
+  "@rereadFinishedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rereadStartedOn": "Started {date}",
+  "@rereadStartedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rereadUndated": "Read before (no dates)",
   "settingsReportProblem": "Report a problem",
   "settingsReportProblemBody": "Email the developer, with recent app messages attached.",
   "crashPromptTitle": "Something went wrong",

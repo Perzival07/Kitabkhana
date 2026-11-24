@@ -6,7 +6,10 @@ import '../features/library/domain/book_filter.dart';
 import '../features/reading/application/update_progress.dart';
 import '../features/reading/domain/pace.dart';
 import '../data/db/database_provider.dart';
+import '../features/reading/application/read_again.dart';
+import '../features/reading/data/drift_read_throughs.dart';
 import '../features/reading/data/drift_reading_sessions.dart';
+import '../features/reading/domain/read_through.dart';
 import '../features/reading/domain/reading_log.dart';
 import '../features/reading/domain/reading_timer.dart';
 import '../features/reading/domain/streak.dart';
@@ -160,3 +163,22 @@ Stream<int> minutesToday(Ref ref) {
 Stream<int> minutesInYear(Ref ref, int year) => ref
     .watch(readingSessionRepositoryProvider)
     .watchMinutesBetween(DateTime(year), DateTime(year, 12, 31));
+
+@Riverpod(keepAlive: true)
+ReadThroughRepository readThroughRepository(Ref ref) =>
+    DriftReadThroughRepository(
+      ref.watch(appDatabaseProvider),
+      ref.watch(clockProvider),
+    );
+
+@Riverpod(keepAlive: true)
+ReadAgain readAgain(Ref ref) => ReadAgain(
+  books: ref.watch(bookRepositoryProvider),
+  reads: ref.watch(readThroughRepositoryProvider),
+  clock: ref.watch(clockProvider),
+);
+
+/// Earlier reads of a book, most recent first.
+@riverpod
+Stream<List<ReadThrough>> bookReadThroughs(Ref ref, String bookId) =>
+    ref.watch(readThroughRepositoryProvider).watchForBook(bookId);

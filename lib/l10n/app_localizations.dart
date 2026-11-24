@@ -2962,6 +2962,54 @@ abstract class AppLocalizations {
   /// **'Start the timer on a book you are reading to see your reading time here.'**
   String get statsTimeNone;
 
+  /// No description provided for @rereadAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Read again'**
+  String get rereadAction;
+
+  /// No description provided for @rereadStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'A new read starts today. The last one is kept.'**
+  String get rereadStarted;
+
+  /// No description provided for @rereadCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{Read {count} times}}'**
+  String rereadCount(int count);
+
+  /// No description provided for @rereadEarlier.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier reads'**
+  String get rereadEarlier;
+
+  /// No description provided for @rereadRange.
+  ///
+  /// In en, this message translates to:
+  /// **'{start} – {end}'**
+  String rereadRange(String start, String end);
+
+  /// No description provided for @rereadFinishedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Finished {date}'**
+  String rereadFinishedOn(String date);
+
+  /// No description provided for @rereadStartedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Started {date}'**
+  String rereadStartedOn(String date);
+
+  /// No description provided for @rereadUndated.
+  ///
+  /// In en, this message translates to:
+  /// **'Read before (no dates)'**
+  String get rereadUndated;
+
   /// No description provided for @settingsReportProblem.
   ///
   /// In en, this message translates to:
