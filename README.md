@@ -308,7 +308,7 @@ paragraphs. On the web you type the quote instead.
 | Appearance | Theme (*System / Light / Dark*), default library view (*Grid / List*), grid density (*Comfortable / Compact*) |
 | Reading | Yearly goal, daily reading reminder (on/off and time) |
 | Lending | Default loan length, default country code (for phone numbers and WhatsApp), loan reminder time |
-| Your data | Back up now, automatic weekly backup (keeps the last 3), **save a copy to…** (the system Save dialog: Google Drive, iCloud Drive, Downloads, a USB stick), share a backup, restore from backup (*Replace* or *Merge*), export as spreadsheet (CSV), erase all data (type a word to confirm) |
+| Your data | Back up now, automatic weekly backup (keeps the last 3), **save a copy to…** (the system Save dialog: Google Drive, iCloud Drive, Downloads, a USB stick), share a backup, restore from backup (*Replace* or *Merge*), **import from Goodreads or StoryGraph**, export as spreadsheet (CSV), erase all data (type a word to confirm) |
 | Privacy | A plain-language summary, and *Offer to send problem reports* (on by default; a report only ever leaves when you press Send in your own mail app) |
 | Help | Export diagnostics (versions and recent app messages, with none of your library), *Report a problem* (emails the developer with the diagnostics attached), send feedback, About |
 
@@ -399,6 +399,11 @@ bar.
   Drive, Downloads, a USB stick). When no copy has left the phone for 30 days (and the
   library has at least 5 books), the Library shows a reminder with *Save a copy* and
   *Later* (quiet for 14 days).
+- **Import from Goodreads or StoryGraph**: pick the CSV from either app's "Export
+  library". It shows how many books are new, asks whether want-to-read books are on your
+  wishlist or your shelves, and adds title, authors, ISBN, pages, status, rating, finish
+  date, shelves/tags (as tags) and private notes. Books already in the library (same ISBN,
+  or same title and author) are skipped. Covers are shown from Open Library by ISBN.
 - CSV export: `books.csv` (title, authors, ISBN-13, status, ownership, location, rating,
   pages, started, finished, tags) and `loans.csv` (title, authors, direction, person,
   phone, started, due, returned, note).

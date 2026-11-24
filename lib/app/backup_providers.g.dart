@@ -398,6 +398,52 @@ final class AutoBackupProvider
 
 String _$autoBackupHash() => r'6b416048e0b0da69a20920265df2d32b7807036e';
 
+@ProviderFor(importReadingApp)
+final importReadingAppProvider = ImportReadingAppProvider._();
+
+final class ImportReadingAppProvider
+    extends
+        $FunctionalProvider<
+          ImportReadingApp,
+          ImportReadingApp,
+          ImportReadingApp
+        >
+    with $Provider<ImportReadingApp> {
+  ImportReadingAppProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'importReadingAppProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$importReadingAppHash();
+
+  @$internal
+  @override
+  $ProviderElement<ImportReadingApp> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ImportReadingApp create(Ref ref) {
+    return importReadingApp(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ImportReadingApp value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ImportReadingApp>(value),
+    );
+  }
+}
+
+String _$importReadingAppHash() => r'ff5c685c45c890dae779155dac7cdc2fc547a202';
+
 /// Whether to remind the reader to keep a copy off this phone. Re-read after
 /// a copy is saved or the reminder is put off.
 

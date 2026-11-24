@@ -2650,6 +2650,78 @@ abstract class AppLocalizations {
   /// **'Later'**
   String get offDeviceLater;
 
+  /// No description provided for @settingsImportApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Import from Goodreads or StoryGraph'**
+  String get settingsImportApp;
+
+  /// No description provided for @settingsImportAppBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the CSV file from \"Export library\" in either app.'**
+  String get settingsImportAppBody;
+
+  /// No description provided for @importNotAnExport.
+  ///
+  /// In en, this message translates to:
+  /// **'This doesn\'t look like a Goodreads or StoryGraph export.'**
+  String get importNotAnExport;
+
+  /// No description provided for @importTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import from {app}'**
+  String importTitle(String app);
+
+  /// No description provided for @importFound.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 book in the file} other{{count} books in the file}}, {existing} already in your library.'**
+  String importFound(int count, int existing);
+
+  /// No description provided for @importAction.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Add 1 book} other{Add {count} books}}'**
+  String importAction(int count);
+
+  /// No description provided for @importWantQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 book is on your want-to-read list. Where should it go?} other{{count} books are on your want-to-read list. Where should they go?}}'**
+  String importWantQuestion(int count);
+
+  /// No description provided for @importWantWishlist.
+  ///
+  /// In en, this message translates to:
+  /// **'On my wishlist (I don\'t own them)'**
+  String get importWantWishlist;
+
+  /// No description provided for @importWantOwned.
+  ///
+  /// In en, this message translates to:
+  /// **'On my shelves (I own them)'**
+  String get importWantOwned;
+
+  /// No description provided for @importNothingNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing new to add'**
+  String get importNothingNew;
+
+  /// No description provided for @importWorking.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding books…'**
+  String get importWorking;
+
+  /// No description provided for @importDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No new books added} =1{Added 1 book} other{Added {count} books}}'**
+  String importDone(int count);
+
   /// No description provided for @settingsReportProblem.
   ///
   /// In en, this message translates to:

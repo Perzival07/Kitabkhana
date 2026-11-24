@@ -479,6 +479,12 @@ class _DataSection extends ConsumerWidget {
           onTap: () => restoreBackupFlow(context, ref),
         ),
         ListTile(
+          leading: const Icon(Icons.library_add_outlined),
+          title: Text(l10n.settingsImportApp),
+          subtitle: Text(l10n.settingsImportAppBody),
+          onTap: () => importReadingAppFlow(context, ref),
+        ),
+        ListTile(
           leading: const Icon(Icons.table_chart_outlined),
           title: Text(l10n.settingsExportCsv),
           onTap: () => exportCsvFlow(context, ref),

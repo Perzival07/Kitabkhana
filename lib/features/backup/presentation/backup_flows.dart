@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:async';
 import 'dart:typed_data';
 
@@ -22,6 +23,8 @@ import '../application/backup_codec.dart';
 import '../application/csv_export.dart';
 import '../application/erase_all_data.dart';
 import '../application/export_backup.dart';
+import '../application/reading_app_import.dart';
+import '../../library/domain/book_enums.dart';
 import '../domain/backup_format.dart';
 
 /// Runs [work] behind a small "please wait" dialog the reader cannot dismiss.
@@ -396,4 +399,110 @@ class _TypeToConfirmState extends State<_TypeToConfirm> {
       ],
     );
   }
+}
+
+/// Picks a Goodreads or StoryGraph export, shows what is in it, and adds the
+/// books the library does not have yet.
+Future<void> importReadingAppFlow(BuildContext context, WidgetRef ref) async {
+  final l10n = AppLocalizations.of(context);
+  final messenger = ScaffoldMessenger.of(context);
+  final bytes = await ref.read(backupFilePickerProvider).pick();
+  if (bytes == null || !context.mounted) return;
+  final parsed = parseReadingAppCsv(utf8.decode(bytes, allowMalformed: true));
+  if (parsed case Err<ReadingAppExport>()) {
+    KToast.showWith(
+      messenger,
+      l10n.importNotAnExport,
+      icon: Icons.error_outline_rounded,
+    );
+    return;
+  }
+  final export = (parsed as Ok<ReadingAppExport>).value;
+  final use = ref.read(importReadingAppProvider);
+  final existing = await use.countExisting(export);
+  if (!context.mounted) return;
+  final wantAs = await _askReadingAppImport(context, export, existing);
+  if (wantAs == null || !context.mounted) return;
+  final done = await _withProgress(
+    context,
+    l10n.importWorking,
+    () => use(export, wantToReadAs: wantAs),
+  );
+  if (!context.mounted) return;
+  switch (done) {
+    case Err<ReadingAppImportSummary>(:final failure):
+      _error(context, failure);
+    case Ok<ReadingAppImportSummary>(:final value):
+      ref.invalidate(offDeviceReminderProvider);
+      KToast.showWith(
+        messenger,
+        l10n.importDone(value.added),
+        icon: Icons.check_rounded,
+      );
+  }
+}
+
+Future<Ownership?> _askReadingAppImport(
+  BuildContext context,
+  ReadingAppExport export,
+  int existing,
+) {
+  final l10n = AppLocalizations.of(context);
+  final name = switch (export.app) {
+    ReadingApp.goodreads => 'Goodreads',
+    ReadingApp.storygraph => 'StoryGraph',
+  };
+  final fresh = export.books.length - existing;
+  final wants = export.books
+      .where((b) => b.status == ReadStatus.want && !b.owned)
+      .length;
+  return showKBottomSheet<Ownership>(
+    context: context,
+    builder: (sheet) {
+      final text = Theme.of(sheet).textTheme;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(l10n.importTitle(name), style: text.titleLarge),
+          const SizedBox(height: KSpacing.sm),
+          Text(
+            l10n.importFound(export.books.length, existing),
+            style: text.bodyMedium,
+          ),
+          const SizedBox(height: KSpacing.lg),
+          if (fresh == 0)
+            KButton(
+              label: l10n.importNothingNew,
+              expand: true,
+              onPressed: () => Navigator.of(sheet).pop(),
+            )
+          else if (wants == 0)
+            KButton(
+              label: l10n.importAction(fresh),
+              icon: Icons.download_rounded,
+              expand: true,
+              onPressed: () => Navigator.of(sheet).pop(Ownership.owned),
+            )
+          else ...<Widget>[
+            Text(l10n.importWantQuestion(wants), style: text.titleSmall),
+            const SizedBox(height: KSpacing.md),
+            KButton(
+              label: l10n.importWantWishlist,
+              icon: Icons.bookmark_add_outlined,
+              expand: true,
+              onPressed: () => Navigator.of(sheet).pop(Ownership.wishlist),
+            ),
+            const SizedBox(height: KSpacing.sm),
+            KButton(
+              label: l10n.importWantOwned,
+              icon: Icons.shelves,
+              expand: true,
+              variant: KButtonVariant.secondary,
+              onPressed: () => Navigator.of(sheet).pop(Ownership.owned),
+            ),
+          ],
+        ],
+      );
+    },
+  );
 }

@@ -1567,6 +1567,80 @@ class AppLocalizationsHi extends AppLocalizations {
   String get offDeviceLater => 'Later';
 
   @override
+  String get settingsImportApp => 'Import from Goodreads or StoryGraph';
+
+  @override
+  String get settingsImportAppBody =>
+      'Use the CSV file from \"Export library\" in either app.';
+
+  @override
+  String get importNotAnExport =>
+      'This doesn\'t look like a Goodreads or StoryGraph export.';
+
+  @override
+  String importTitle(String app) {
+    return 'Import from $app';
+  }
+
+  @override
+  String importFound(int count, int existing) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count books in the file',
+      one: '1 book in the file',
+    );
+    return '$_temp0, $existing already in your library.';
+  }
+
+  @override
+  String importAction(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Add $count books',
+      one: 'Add 1 book',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String importWantQuestion(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count books are on your want-to-read list. Where should they go?',
+      one: '1 book is on your want-to-read list. Where should it go?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get importWantWishlist => 'On my wishlist (I don\'t own them)';
+
+  @override
+  String get importWantOwned => 'On my shelves (I own them)';
+
+  @override
+  String get importNothingNew => 'Nothing new to add';
+
+  @override
+  String get importWorking => 'Adding books…';
+
+  @override
+  String importDone(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Added $count books',
+      one: 'Added 1 book',
+      zero: 'No new books added',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get settingsReportProblem => 'Report a problem';
 
   @override

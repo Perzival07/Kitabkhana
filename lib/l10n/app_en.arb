@@ -852,6 +852,56 @@
   "offDeviceBody": "Automatic backups stay on the phone, so they are lost with it. Save a copy to Google Drive, iCloud Drive or a computer.",
   "offDeviceSave": "Save a copy",
   "offDeviceLater": "Later",
+  "settingsImportApp": "Import from Goodreads or StoryGraph",
+  "settingsImportAppBody": "Use the CSV file from \"Export library\" in either app.",
+  "importNotAnExport": "This doesn't look like a Goodreads or StoryGraph export.",
+  "importTitle": "Import from {app}",
+  "@importTitle": {
+    "placeholders": {
+      "app": {
+        "type": "String"
+      }
+    }
+  },
+  "importFound": "{count, plural, =1{1 book in the file} other{{count} books in the file}}, {existing} already in your library.",
+  "@importFound": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "existing": {
+        "type": "int"
+      }
+    }
+  },
+  "importAction": "{count, plural, =1{Add 1 book} other{Add {count} books}}",
+  "@importAction": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importWantQuestion": "{count, plural, =1{1 book is on your want-to-read list. Where should it go?} other{{count} books are on your want-to-read list. Where should they go?}}",
+  "@importWantQuestion": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importWantWishlist": "On my wishlist (I don't own them)",
+  "importWantOwned": "On my shelves (I own them)",
+  "importNothingNew": "Nothing new to add",
+  "importWorking": "Adding books…",
+  "importDone": "{count, plural, =0{No new books added} =1{Added 1 book} other{Added {count} books}}",
+  "@importDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "settingsReportProblem": "Report a problem",
   "settingsReportProblemBody": "Email the developer, with recent app messages attached.",
   "crashPromptTitle": "Something went wrong",

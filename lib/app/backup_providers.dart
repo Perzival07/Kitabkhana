@@ -11,6 +11,7 @@ import '../features/backup/application/csv_export.dart';
 import '../features/backup/application/erase_all_data.dart';
 import '../features/backup/application/export_backup.dart';
 import '../features/backup/application/import_backup.dart';
+import '../features/backup/application/reading_app_import.dart';
 import '../features/backup/data/backup_prefs_store.dart';
 import '../features/backup/data/backup_store.dart';
 import '../features/backup/data/csv_store.dart';
@@ -21,6 +22,7 @@ import 'app_config.dart' show kAppVersion;
 import 'cover_providers.dart';
 import 'providers.dart';
 import 'reminder_providers.dart';
+import 'repositories.dart';
 
 part 'backup_providers.g.dart';
 
@@ -80,6 +82,13 @@ AutoBackup autoBackup(Ref ref) => AutoBackup(
   store: ref.watch(backupStoreProvider),
   folder: ref.watch(backupFolderProvider),
   prefs: ref.watch(backupPrefsProvider),
+  clock: ref.watch(clockProvider),
+);
+
+@Riverpod(keepAlive: true)
+ImportReadingApp importReadingApp(Ref ref) => ImportReadingApp(
+  books: ref.watch(bookRepositoryProvider),
+  tags: ref.watch(tagRepositoryProvider),
   clock: ref.watch(clockProvider),
 );
 
