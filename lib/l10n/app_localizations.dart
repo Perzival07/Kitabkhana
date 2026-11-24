@@ -2872,6 +2872,24 @@ abstract class AppLocalizations {
   /// **'Finish a book or log some pages this year, and your year in review will appear here.'**
   String get yearReviewEmpty;
 
+  /// No description provided for @quoteScriptLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'The page is in'**
+  String get quoteScriptLabel;
+
+  /// No description provided for @quoteScriptLatin.
+  ///
+  /// In en, this message translates to:
+  /// **'English and other Latin scripts'**
+  String get quoteScriptLatin;
+
+  /// No description provided for @quoteScriptDevanagari.
+  ///
+  /// In en, this message translates to:
+  /// **'हिन्दी, मराठी (Devanagari)'**
+  String get quoteScriptDevanagari;
+
   /// No description provided for @settingsReportProblem.
   ///
   /// In en, this message translates to:

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kitabkhana/features/library/domain/book.dart';
+import 'package:kitabkhana/core/text/quote_cleanup.dart';
 import 'package:kitabkhana/features/library/domain/book_enums.dart';
+import 'package:kitabkhana/features/quotes/presentation/quote_capture_screen.dart';
+import 'package:kitabkhana/platform/ocr/ocr_service.dart';
 
 import '../../helpers/add_flow_harness.dart';
 import '../../helpers/fake_ocr_service.dart';
@@ -215,5 +218,85 @@ void main() {
     expect(find.text('Quote'), findsOneWidget);
     expect(find.text('Pick lines again'), findsNothing);
     await end(t);
+  });
+
+  group('Hindi pages', () {
+    test('the script is guessed from the language or the title', () {
+      expect(guessOcrScript('hi', 'Godaan'), OcrScript.devanagari);
+      expect(guessOcrScript('Hindi', ''), OcrScript.devanagari);
+      expect(guessOcrScript('मराठी', ''), OcrScript.devanagari);
+      expect(guessOcrScript('', 'गोदान'), OcrScript.devanagari);
+      expect(guessOcrScript('en', 'Middlemarch'), OcrScript.latin);
+      expect(guessOcrScript('bn', 'গোরা'), OcrScript.latin);
+    });
+
+    test('no space is left before a danda', () {
+      expect(
+        cleanQuoteText(<String>['जो बीत गई सो बात गई ।']),
+        'जो बीत गई सो बात गई।',
+      );
+    });
+
+    Future<void> readPage(WidgetTester t) async {
+      await t.tap(find.text('Choose a photo'));
+      await t.pump(const Duration(milliseconds: 100));
+      await t.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 300)),
+      );
+      await t.pumpAndSettle();
+      await t.tap(find.text('Read the text'));
+      await t.pumpAndSettle();
+    }
+
+    testWidgets('a Hindi book is read as Devanagari, and can be switched', (
+      t,
+    ) async {
+      h = AddFlowHarness();
+      h.ocr = FakeOcrService(
+        lines: <String>['मन के हारे हार है'],
+        scripts: <OcrScript>[OcrScript.latin, OcrScript.devanagari],
+      );
+      h.picker.next = jpegBytes(60, 80);
+      await t.runAsync(
+        () => h.repos.books.upsert(
+          Book.create(
+            id: 'bk',
+            title: 'Godaan',
+            language: 'hi',
+            now: DateTime(2025, 3, 10),
+          ),
+        ),
+      );
+      await open(t);
+      expect(find.text('The page is in'), findsOneWidget);
+      await readPage(t);
+      expect(h.ocr.asked.single, OcrScript.devanagari);
+      expect(find.text('मन के हारे हार है'), findsOneWidget);
+      await end(t);
+    });
+
+    testWidgets('the reader can pick the script', (t) async {
+      h = AddFlowHarness();
+      h.ocr = FakeOcrService(
+        lines: <String>['A line'],
+        scripts: <OcrScript>[OcrScript.latin, OcrScript.devanagari],
+      );
+      h.picker.next = jpegBytes(60, 80);
+      await t.runAsync(addBook);
+      await open(t);
+      await t.tap(find.text('हिन्दी, मराठी (Devanagari)'));
+      await t.pump();
+      await readPage(t);
+      expect(h.ocr.asked.single, OcrScript.devanagari);
+      await end(t);
+    });
+
+    testWidgets('with one script there is nothing to choose', (t) async {
+      h = AddFlowHarness();
+      await t.runAsync(addBook);
+      await open(t);
+      expect(find.text('The page is in'), findsNothing);
+      await end(t);
+    });
   });
 }

@@ -12,6 +12,9 @@ class WebOcrService implements OcrService {
   bool get isSupported => false;
 
   @override
+  List<OcrScript> get scripts => const <OcrScript>[];
+
+  @override
   Future<Result<List<OcrLine>>> recognise(
     Uint8List image, {
     OcrScript script = OcrScript.latin,

@@ -1,12 +1,11 @@
 # R8 / ProGuard rules for release builds. Flutter's own rules are added by the
 # Flutter Gradle plugin; these cover what the plugins need.
 
-# ML Kit text recognition. The Latin recognizer is the only one bundled, but
-# the plugin's Java code references the optional Chinese, Japanese, Korean and
-# Devanagari option classes. They are absent on purpose, so R8 must not fail on
+# ML Kit text recognition. The Latin and Devanagari recognizers are bundled,
+# but the plugin's code also references the optional Chinese, Japanese and
+# Korean option classes. They are absent on purpose, so R8 must not fail on
 # the missing references.
 -dontwarn com.google.mlkit.vision.text.chinese.**
--dontwarn com.google.mlkit.vision.text.devanagari.**
 -dontwarn com.google.mlkit.vision.text.japanese.**
 -dontwarn com.google.mlkit.vision.text.korean.**
 

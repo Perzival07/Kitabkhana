@@ -392,8 +392,9 @@ bar.
 - Year in review: a shareable 9:16 card of the year's reading.
 
 **Quotes**
-- On-device OCR (Google ML Kit, Latin script) with a built-in cropper that runs off the UI
-  thread.
+- On-device OCR (Google ML Kit) with a built-in cropper that runs off the UI thread. On
+  Android it also reads **Hindi, Marathi and other Devanagari** pages: the capture screen asks
+  "The page is in…" and guesses from the book's language or title.
 - Line picking, text clean-up, page number, favourites, search, filter by book.
 - Share as text or as a PNG card.
 - Quote of the week on the Reading tab.
@@ -469,7 +470,7 @@ Details and the TalkBack/VoiceOver walkthrough: [docs/A11Y.md](docs/A11Y.md).
 | Minimum | Flutter's default `minSdk` (compileSdk 37) | iOS 15.0 | Browsers with WasmGC run the faster wasm build (Chrome 119+, Firefox 120+, Safari 18.2+); older ones fall back to JS |
 | Database | SQLite (FFI, WAL) | SQLite (FFI, WAL) | `sqlite3.wasm` in a worker (OPFS, then IndexedDB) |
 | Barcode scan | ✅ | ✅ | ✅ where `BarcodeDetector` exists (not Firefox; the CSP blocks the CDN fallback on purpose) |
-| Quote OCR | ✅ ML Kit | ✅ ML Kit | ✍️ type it instead |
+| Quote OCR | ✅ ML Kit, Latin + Devanagari | ✅ ML Kit, Latin | ✍️ type it instead |
 | Reminders | ✅ local notifications | ✅ local notifications | Overdue banner |
 | Auto-backup | ✅ | ✅ | ❌ (no folder; use *Back up now*) |
 | Covers stored in | `<documents>/covers/` | `<documents>/covers/` | `cover_blobs` table |
@@ -791,7 +792,8 @@ localisations are regenerated on the next build.
 ## Known limits
 
 - **Hindi and Bengali** UI translations are empty (see above).
-- **OCR is Latin script only.** `OcrScript` is where Devanagari would go.
+- **Hindi OCR is Android-only.** The ML Kit plugin's iOS Swift package carries only the Latin
+  model, so iPhones read Latin text.
 - **Web**: no barcode scanning in Firefox, no OCR, no notifications, no automatic backup.
 - **Automatic backups** stay in the app's own storage, because apps cannot keep writing to
   a folder outside it. The Library reminds you monthly to *Save a copy* elsewhere.

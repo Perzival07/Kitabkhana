@@ -6,7 +6,17 @@ import 'package:kitabkhana/platform/ocr/ocr_service.dart';
 
 /// An [OcrService] that returns canned lines and remembers what it was given.
 class FakeOcrService implements OcrService {
-  FakeOcrService({this.supported = true, this.lines = const <String>[]});
+  FakeOcrService({
+    this.supported = true,
+    this.lines = const <String>[],
+    this.scripts = const <OcrScript>[OcrScript.latin],
+  });
+
+  @override
+  final List<OcrScript> scripts;
+
+  /// The script each recognise call asked for.
+  final List<OcrScript> asked = <OcrScript>[];
 
   final bool supported;
   List<String> lines;
@@ -22,6 +32,7 @@ class FakeOcrService implements OcrService {
     OcrScript script = OcrScript.latin,
   }) async {
     seen.add(image);
+    asked.add(script);
     if (fail) return const Err(UnexpectedFailure('boom'));
     return Ok(<OcrLine>[for (final l in lines) OcrLine(l)]);
   }

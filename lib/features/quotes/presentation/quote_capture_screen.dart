@@ -43,6 +43,9 @@ class _QuoteCaptureScreenState extends ConsumerState<QuoteCaptureScreen> {
   final TextEditingController _body = TextEditingController();
   final TextEditingController _page = TextEditingController();
   bool _pagePrefilled = false;
+
+  /// The script the page is in; guessed from the book, changeable.
+  OcrScript? _script;
   String? _bodyError;
   String? _pageError;
   bool _saving = false;
@@ -87,7 +90,9 @@ class _QuoteCaptureScreenState extends ConsumerState<QuoteCaptureScreen> {
       final edited = await ref.read(pageEditorProvider)(
         PageEdit(photo, choice.quarterTurns, choice.crop),
       );
-      final r = await ref.read(ocrServiceProvider).recognise(edited);
+      final r = await ref
+          .read(ocrServiceProvider)
+          .recognise(edited, script: _script ?? OcrScript.latin);
       if (!mounted) return;
       switch (r) {
         case Err<List<OcrLine>>():
@@ -175,6 +180,11 @@ class _QuoteCaptureScreenState extends ConsumerState<QuoteCaptureScreen> {
       _pagePrefilled = true;
       if (book.currentPage > 0) _page.text = '${book.currentPage}';
     }
+    final scripts = ref.watch(ocrServiceProvider).scripts;
+    if (_script == null && book != null) {
+      final guess = guessOcrScript(book.language, book.title);
+      _script = scripts.contains(guess) ? guess : OcrScript.latin;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.quoteCaptureTitle),
@@ -196,6 +206,9 @@ class _QuoteCaptureScreenState extends ConsumerState<QuoteCaptureScreen> {
         child: switch (_phase) {
           _Phase.source => _Source(
             bookTitle: book?.title,
+            scripts: scripts,
+            script: _script ?? OcrScript.latin,
+            onScript: (s) => setState(() => _script = s),
             onCamera: () => _pick(PhotoSource.camera),
             onGallery: () => _pick(PhotoSource.gallery),
             onType: () => setState(() => _phase = _Phase.edit),
@@ -227,15 +240,37 @@ class _QuoteCaptureScreenState extends ConsumerState<QuoteCaptureScreen> {
   }
 }
 
+/// Devanagari for a book in Hindi, Marathi, Nepali or Sanskrit (by its
+/// language field, or Devanagari letters in its title); Latin otherwise.
+OcrScript guessOcrScript(String language, String title) {
+  const devanagariLanguages = <String>{
+    'hi', 'hin', 'hindi', 'हिन्दी', 'हिंदी', //
+    'mr', 'mar', 'marathi', 'मराठी', //
+    'ne', 'nep', 'nepali', 'नेपाली', //
+    'sa', 'san', 'sanskrit', 'संस्कृतम्', 'संस्कृत',
+  };
+  if (devanagariLanguages.contains(language.trim().toLowerCase())) {
+    return OcrScript.devanagari;
+  }
+  if (RegExp('[\u0900-\u097F]').hasMatch(title)) return OcrScript.devanagari;
+  return OcrScript.latin;
+}
+
 class _Source extends StatelessWidget {
   const _Source({
     required this.bookTitle,
+    required this.scripts,
+    required this.script,
+    required this.onScript,
     required this.onCamera,
     required this.onGallery,
     required this.onType,
   });
 
   final String? bookTitle;
+  final List<OcrScript> scripts;
+  final OcrScript script;
+  final ValueChanged<OcrScript> onScript;
   final VoidCallback onCamera;
   final VoidCallback onGallery;
   final VoidCallback onType;
@@ -256,6 +291,26 @@ class _Source extends StatelessWidget {
           ),
         const SizedBox(height: KSpacing.sm),
         Text(l10n.quoteSourceBody, style: theme.textTheme.bodyMedium),
+        if (scripts.length > 1) ...<Widget>[
+          const SizedBox(height: KSpacing.lg),
+          Text(l10n.quoteScriptLabel, style: theme.textTheme.titleSmall),
+          const SizedBox(height: KSpacing.sm),
+          Wrap(
+            spacing: KSpacing.sm,
+            runSpacing: KSpacing.sm,
+            children: <Widget>[
+              for (final s in scripts)
+                KFilterChip(
+                  label: switch (s) {
+                    OcrScript.latin => l10n.quoteScriptLatin,
+                    OcrScript.devanagari => l10n.quoteScriptDevanagari,
+                  },
+                  selected: s == script,
+                  onSelected: (_) => onScript(s),
+                ),
+            ],
+          ),
+        ],
         const SizedBox(height: KSpacing.xl),
         KButton(
           label: l10n.quoteTakePhoto,

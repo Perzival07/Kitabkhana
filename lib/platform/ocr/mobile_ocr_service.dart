@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart'
+    show TargetPlatform, defaultTargetPlatform;
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -25,10 +27,21 @@ class MobileOcrService implements OcrService {
   static TextRecognizer _defaultRecogniser(OcrScript script) =>
       switch (script) {
         OcrScript.latin => TextRecognizer(script: TextRecognitionScript.latin),
+        OcrScript.devanagari => TextRecognizer(
+          script: TextRecognitionScript.devanagiri,
+        ),
       };
 
   @override
   bool get isSupported => true;
+
+  /// Android bundles the Devanagari model (android/app/build.gradle.kts).
+  /// The iOS plugin's Swift package carries only the Latin model, so iPhone
+  /// reads Latin text only.
+  @override
+  List<OcrScript> get scripts => defaultTargetPlatform == TargetPlatform.android
+      ? const <OcrScript>[OcrScript.latin, OcrScript.devanagari]
+      : const <OcrScript>[OcrScript.latin];
 
   @override
   Future<Result<List<OcrLine>>> recognise(

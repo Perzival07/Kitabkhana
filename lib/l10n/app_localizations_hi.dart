@@ -1749,6 +1749,15 @@ class AppLocalizationsHi extends AppLocalizations {
       'Finish a book or log some pages this year, and your year in review will appear here.';
 
   @override
+  String get quoteScriptLabel => 'The page is in';
+
+  @override
+  String get quoteScriptLatin => 'English and other Latin scripts';
+
+  @override
+  String get quoteScriptDevanagari => 'हिन्दी, मराठी (Devanagari)';
+
+  @override
   String get settingsReportProblem => 'Report a problem';
 
   @override

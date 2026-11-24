@@ -38,7 +38,8 @@ String cleanQuoteText(Iterable<String> lines) {
 }
 
 final RegExp _spaces = RegExp(r'[ \t  -  ]+');
-final RegExp _spaceBeforePunct = RegExp(r' +([,.;:!?%)\]])');
+// The Devanagari danda (। and ॥) ends a sentence like a full stop.
+final RegExp _spaceBeforePunct = RegExp(r' +([,.;:!?%)\]।॥])');
 
 String _tidySpaces(String s) => s
     .replaceAll('​', '')

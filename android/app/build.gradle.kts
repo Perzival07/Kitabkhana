@@ -101,6 +101,9 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+    // Snap-a-Quote reads Hindi and other Devanagari text (the plugin only
+    // declares it compileOnly). The model is bundled, so it works offline.
+    implementation("com.google.mlkit:text-recognition-devanagari:16.0.1")
 }
 
 // A production bundle must carry the upload key. Fail early rather than let a

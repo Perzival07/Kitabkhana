@@ -18,15 +18,18 @@ final class OcrLine {
   String toString() => 'OcrLine($text)';
 }
 
-/// The scripts text can be read in. Latin only for now; add more here (for
-/// example Devanagari) together with the recogniser that handles them.
-enum OcrScript { latin }
+/// The scripts text can be read in. Devanagari (Hindi, Marathi, Nepali,
+/// Sanskrit) also reads Latin letters mixed in.
+enum OcrScript { latin, devanagari }
 
 /// Reads text from a photo of a page, on the device.
 abstract interface class OcrService {
   /// False where there is no on-device reader (the web); callers then go
   /// straight to typing.
   bool get isSupported;
+
+  /// The scripts this device can read, Latin first. Empty when unsupported.
+  List<OcrScript> get scripts;
 
   /// The lines of text in [image] (any common image format), in reading
   /// order. An image with no text gives an empty list, not an error.
