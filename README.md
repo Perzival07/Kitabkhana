@@ -805,19 +805,19 @@ Guides: [Releasing](docs/RELEASING.md) · [Android](docs/ANDROID_RELEASE.md) ·
 
 ## Localisation
 
-Strings live in ARB files (`lib/l10n/`), with about 900 keys in English. Locale files for
-**Hindi** (`hi`) and **Bengali** (`bn`) are set up but **not translated yet**: they are
-empty, so the app currently shows English everywhere. Search and title matching already
-handle Devanagari and Bengali text (Unicode normalisation, FTS5 with diacritic folding).
+The app is fully translated into **English**, **Hindi (हिन्दी)** and **Bengali (বাংলা)**,
+about 700 messages each, in `lib/l10n/app_*.arb`. It follows the phone's language.
+`test/l10n/arb_parity_test.dart` fails if a translation is missing, or if it drops or adds
+a placeholder or a plural case. `test/l10n/translated_screens_test.dart` opens every main
+screen in each language on a 360 dp phone and fails on any overflow. Search and title
+matching handle Devanagari and Bengali text (Unicode normalisation, FTS5 with diacritic
+folding).
 
-To translate, fill `app_hi.arb` / `app_bn.arb` with the keys from `app_en.arb`. The
-localisations are regenerated on the next build.
-
----
+To add a language, copy `app_en.arb` to `app_<code>.arb`, translate the values (keep
+`{placeholders}` and plural cases), and add the code to the two l10n tests.
 
 ## Known limits
 
-- **Hindi and Bengali** UI translations are empty (see above).
 - **Hindi OCR is Android-only.** The ML Kit plugin's iOS Swift package carries only the Latin
   model, so iPhones read Latin text.
 - **Web**: no barcode scanning in Firefox, no OCR, no notifications, no automatic backup.

@@ -834,7 +834,7 @@
   "settingsExportCsv": "Export as spreadsheet (CSV)",
   "settingsErase": "Erase all data",
   "settingsPrivacy": "Privacy",
-  "settingsPrivacyBody": "Your library never leaves this device unless you share a backup or an export yourself. There are no accounts and no tracking. Book details are looked up by ISBN or title on Open Library, and covers are downloaded from it; nothing else is sent.",
+  "settingsPrivacyBody": "Your library never leaves this device unless you share a backup or an export yourself. There are no accounts and no tracking. Book details are looked up by ISBN or title on Open Library (and on Google Books when Open Library has no answer), and covers are downloaded from there; nothing else is sent.",
   "settingsCrashReports": "Offer to send problem reports",
   "settingsCrashReportsBody": "After something goes wrong, Kitabkhana offers to email a report to the developer. Nothing is sent unless you press Send in your mail app.",
   "settingsSaveCopy": "Save a copy to…",

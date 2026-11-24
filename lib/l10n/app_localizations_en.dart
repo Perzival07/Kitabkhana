@@ -1529,7 +1529,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsPrivacyBody =>
-      'Your library never leaves this device unless you share a backup or an export yourself. There are no accounts and no tracking. Book details are looked up by ISBN or title on Open Library, and covers are downloaded from it; nothing else is sent.';
+      'Your library never leaves this device unless you share a backup or an export yourself. There are no accounts and no tracking. Book details are looked up by ISBN or title on Open Library (and on Google Books when Open Library has no answer), and covers are downloaded from there; nothing else is sent.';
 
   @override
   String get settingsCrashReports => 'Offer to send problem reports';

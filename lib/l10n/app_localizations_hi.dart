@@ -11,222 +11,221 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String coverSemantics(String title, String author) {
-    return 'Cover of $title by $author';
+    return '$title का कवर, लेखक $author';
   }
 
   @override
   String coverSemanticsNoAuthor(String title) {
-    return 'Cover of $title';
+    return '$title का कवर';
   }
 
   @override
-  String get statusWant => 'Want to read';
+  String get statusWant => 'पढ़ना है';
 
   @override
-  String get statusReading => 'Reading';
+  String get statusReading => 'पढ़ रहे हैं';
 
   @override
-  String get statusFinished => 'Finished';
+  String get statusFinished => 'पढ़ ली';
 
   @override
-  String get statusDropped => 'Dropped';
+  String get statusDropped => 'छोड़ दी';
 
   @override
-  String get seeAll => 'See all';
+  String get seeAll => 'सब देखें';
 
   @override
-  String get loading => 'Loading';
+  String get loading => 'लोड हो रहा है';
 
   @override
   String percentSemantics(int percent) {
-    return '$percent percent';
+    return '$percent प्रतिशत';
   }
 
   @override
   String get appName => 'Kitabkhana';
 
   @override
-  String get navLibrary => 'Library';
+  String get navLibrary => 'लाइब्रेरी';
 
   @override
-  String get navScan => 'Scan';
+  String get navScan => 'स्कैन';
 
   @override
-  String get navReading => 'Reading';
+  String get navReading => 'पढ़ाई';
 
   @override
-  String get navStats => 'Stats';
+  String get navStats => 'आँकड़े';
 
   @override
-  String get navMore => 'More';
+  String get navMore => 'और';
 
   @override
-  String get libraryTitle => 'Your library';
+  String get libraryTitle => 'आपकी लाइब्रेरी';
 
   @override
   String get libraryEmptyBody =>
-      'Add your first book and start building your shelf.';
+      'अपनी पहली किताब जोड़ें और अपनी अलमारी सजाना शुरू करें।';
 
   @override
-  String get scanTitle => 'Never buy it twice';
+  String get scanTitle => 'दोबारा कभी न खरीदें';
 
   @override
   String get scanEmptyBody =>
-      'Scan a barcode to check whether you already own a book.';
+      'बारकोड स्कैन करके देखें कि किताब आपके पास पहले से है या नहीं।';
 
   @override
-  String get readingTitle => 'Now reading';
+  String get readingTitle => 'अभी पढ़ रहे हैं';
 
   @override
   String get readingEmptyBody =>
-      'Your progress, streaks and pace will show up here.';
+      'आपकी प्रगति, लगातार पढ़ाई के दिन और रफ़्तार यहाँ दिखेंगे।';
 
   @override
-  String get statsTitle => 'Your reading year';
+  String get statsTitle => 'आपका पढ़ाई का साल';
 
   @override
   String get statsEmptyBody =>
-      'Goals and charts will appear once you log some reading.';
+      'कुछ पढ़ाई दर्ज करते ही लक्ष्य और चार्ट यहाँ दिखेंगे।';
 
   @override
-  String get moreTitle => 'More';
+  String get moreTitle => 'और';
 
   @override
-  String get moreEmptyBody =>
-      'Loans, quotes, locations and settings live here.';
+  String get moreEmptyBody => 'उधार, उद्धरण, जगहें और सेटिंग्स यहाँ हैं।';
 
   @override
-  String get routeAddBook => 'Add a book';
+  String get routeAddBook => 'किताब जोड़ें';
 
   @override
-  String get routeBook => 'Book';
+  String get routeBook => 'किताब';
 
   @override
-  String get routeEditBook => 'Edit book';
+  String get routeEditBook => 'किताब बदलें';
 
   @override
-  String get routeLoans => 'Loans';
+  String get routeLoans => 'उधार';
 
   @override
-  String get routeQuotes => 'Quotes';
+  String get routeQuotes => 'उद्धरण';
 
   @override
-  String get routeLocations => 'Locations';
+  String get routeLocations => 'जगहें';
 
   @override
-  String get routeSettings => 'Settings';
+  String get routeSettings => 'सेटिंग्स';
 
   @override
-  String get routeOnboarding => 'Welcome';
+  String get routeOnboarding => 'स्वागत है';
 
   @override
-  String get routeStubBody => 'This screen is on its way.';
+  String get routeStubBody => 'यह स्क्रीन जल्द आ रही है।';
 
   @override
-  String get notFoundTitle => 'We can\'t find that page';
+  String get notFoundTitle => 'यह पेज नहीं मिला';
 
   @override
-  String get notFoundBody => 'The link may be old or mistyped.';
+  String get notFoundBody => 'लिंक पुराना या गलत लिखा हो सकता है।';
 
   @override
-  String get goToLibrary => 'Go to your library';
+  String get goToLibrary => 'अपनी लाइब्रेरी पर जाएँ';
 
   @override
-  String get detailPlaceholderTitle => 'Pick a book';
+  String get detailPlaceholderTitle => 'कोई किताब चुनें';
 
   @override
   String get detailPlaceholderBody =>
-      'Choose a book on the left to see its details here.';
+      'बाईं ओर कोई किताब चुनें, उसका ब्योरा यहाँ दिखेगा।';
 
   @override
   String get failureOffline =>
-      'You appear to be offline. Everything else still works.';
+      'लगता है आप ऑफ़लाइन हैं। बाकी सब ठीक से चलता रहेगा।';
 
   @override
-  String get failureTimeout => 'That took too long. Please try again.';
+  String get failureTimeout => 'बहुत देर लग गई। कृपया फिर कोशिश करें।';
 
   @override
   String get failureServer =>
-      'The book service is having trouble. Please try again later.';
+      'किताबों की सेवा में दिक्कत है। कृपया थोड़ी देर बाद कोशिश करें।';
 
   @override
   String get failureRateLimited =>
-      'Too many lookups at once. Give it a moment.';
+      'एक साथ बहुत ज़्यादा खोज हो गईं। ज़रा रुकें।';
 
   @override
-  String get failureNotFound => 'We couldn\'t find that.';
+  String get failureNotFound => 'यह नहीं मिला।';
 
   @override
-  String get failureValidation => 'Please check what you entered.';
+  String get failureValidation => 'कृपया जो लिखा है उसे जाँच लें।';
 
   @override
-  String get failureConflict => 'That conflicts with something already saved.';
+  String get failureConflict => 'यह पहले से सहेजी किसी चीज़ से टकराता है।';
 
   @override
-  String get failureBookAlreadyLent => 'This book is already lent out.';
+  String get failureBookAlreadyLent => 'यह किताब पहले से उधार दी हुई है।';
 
   @override
-  String get failureStorage => 'We couldn\'t save that on this device.';
+  String get failureStorage => 'यह इस डिवाइस पर सहेजा नहीं जा सका।';
 
   @override
   String get failurePermissionCamera =>
-      'Camera access is needed to scan barcodes.';
+      'बारकोड स्कैन करने के लिए कैमरे की अनुमति चाहिए।';
 
   @override
   String get failurePermissionNotifications =>
-      'Notifications are needed for loan reminders.';
+      'उधार की याद दिलाने के लिए सूचनाओं की अनुमति चाहिए।';
 
   @override
-  String get failurePermissionFiles => 'File access is needed to do that.';
+  String get failurePermissionFiles => 'इसके लिए फ़ाइलों तक पहुँच चाहिए।';
 
   @override
-  String get failureUnsupported => 'That isn\'t available on this device.';
+  String get failureUnsupported => 'यह इस डिवाइस पर उपलब्ध नहीं है।';
 
   @override
-  String get failureUnexpected => 'Something went wrong. Please try again.';
+  String get failureUnexpected => 'कुछ गड़बड़ हो गई। कृपया फिर कोशिश करें।';
 
   @override
-  String get errorWidgetTitle => 'Something went wrong here';
+  String get errorWidgetTitle => 'यहाँ कुछ गड़बड़ हो गई';
 
   @override
-  String get errorWidgetBody => 'Go back and try again. Your library is safe.';
+  String get errorWidgetBody =>
+      'वापस जाकर फिर कोशिश करें। आपकी लाइब्रेरी सुरक्षित है।';
 
   @override
-  String get addBookTitle => 'Add a book';
+  String get addBookTitle => 'किताब जोड़ें';
 
   @override
-  String get addScanTitle => 'Scan barcode';
+  String get addScanTitle => 'बारकोड स्कैन करें';
 
   @override
-  String get addScanBody => 'Point your camera at the back cover';
+  String get addScanBody => 'कैमरा किताब के पिछले कवर पर रखें';
 
   @override
-  String get addIsbnTitle => 'Type ISBN';
+  String get addIsbnTitle => 'ISBN लिखें';
 
   @override
-  String get addIsbnBody => 'Enter the 10 or 13 digit number';
+  String get addIsbnBody => '10 या 13 अंकों का नंबर डालें';
 
   @override
-  String get addSearchTitle => 'Search by title';
+  String get addSearchTitle => 'नाम से खोजें';
 
   @override
-  String get addSearchBody => 'Find it in the Open Library catalogue';
+  String get addSearchBody => 'Open Library के कैटलॉग में ढूँढें';
 
   @override
-  String get addManualTitle => 'Enter manually';
+  String get addManualTitle => 'खुद भरें';
 
   @override
-  String get addManualBody => 'Fill in the details yourself';
+  String get addManualBody => 'ब्योरा खुद भरें';
 
   @override
-  String get scanHint => 'Point at the barcode on the back cover';
+  String get scanHint => 'कैमरा पिछले कवर के बारकोड पर रखें';
 
   @override
-  String get scanUnavailableTitle => 'Camera scanning isn\'t available here';
+  String get scanUnavailableTitle => 'यहाँ कैमरे से स्कैन नहीं हो सकता';
 
   @override
-  String get scanUnavailableBody =>
-      'You can still add the book by typing its ISBN.';
+  String get scanUnavailableBody => 'आप ISBN लिखकर भी किताब जोड़ सकते हैं।';
 
   @override
   String get isbnFieldLabel => 'ISBN';
@@ -235,167 +234,166 @@ class AppLocalizationsHi extends AppLocalizations {
   String get isbnFieldHint => '978…';
 
   @override
-  String get isbnInvalid =>
-      'That doesn\'t look like a valid ISBN. Please check the digits.';
+  String get isbnInvalid => 'यह सही ISBN नहीं लगता। कृपया अंक जाँच लें।';
 
   @override
-  String get isbnIncomplete => 'An ISBN has 10 or 13 digits.';
+  String get isbnIncomplete => 'ISBN में 10 या 13 अंक होते हैं।';
 
   @override
-  String get isbnValid => 'Valid ISBN';
+  String get isbnValid => 'सही ISBN';
 
   @override
-  String get lookUp => 'Look up';
+  String get lookUp => 'खोजें';
 
   @override
-  String get pasteFromClipboard => 'Paste';
+  String get pasteFromClipboard => 'चिपकाएँ';
 
   @override
-  String get lookingUp => 'Looking it up…';
+  String get lookingUp => 'खोज रहे हैं…';
 
   @override
-  String get lookupNotFound =>
-      'We couldn\'t find that ISBN. You can fill in the details yourself.';
+  String get lookupNotFound => 'यह ISBN नहीं मिला। आप ब्योरा खुद भर सकते हैं।';
 
   @override
-  String get searchFieldHint => 'Search by title or author';
+  String get searchFieldHint => 'नाम या लेखक से खोजें';
 
   @override
-  String get searchPrompt => 'Type a title to search the catalogue.';
+  String get searchPrompt => 'कैटलॉग में खोजने के लिए किताब का नाम लिखें।';
 
   @override
   String get searchNoResults =>
-      'No matches. Try different words, or enter the book manually.';
+      'कुछ नहीं मिला। दूसरे शब्द आज़माएँ या किताब खुद भरें।';
 
   @override
   String get searchOffline =>
-      'You\'re offline, so catalogue search isn\'t available. You can still enter the book manually.';
+      'आप ऑफ़लाइन हैं, इसलिए कैटलॉग में खोज नहीं हो सकती। किताब खुद भर सकते हैं।';
 
   @override
   String get searchFailed =>
-      'Search didn\'t work this time. You can try again or enter the book manually.';
+      'इस बार खोज नहीं हो पाई। फिर कोशिश करें या किताब खुद भरें।';
 
   @override
-  String get enterManually => 'Enter manually';
+  String get enterManually => 'खुद भरें';
 
   @override
-  String get fieldTitle => 'Title';
+  String get fieldTitle => 'नाम';
 
   @override
-  String get fieldSubtitle => 'Subtitle';
+  String get fieldSubtitle => 'उपशीर्षक';
 
   @override
-  String get fieldAuthors => 'Authors';
+  String get fieldAuthors => 'लेखक';
 
   @override
-  String get fieldPages => 'Pages';
+  String get fieldPages => 'पन्ने';
 
   @override
-  String get fieldGenre => 'Genre';
+  String get fieldGenre => 'विधा';
 
   @override
-  String get fieldLanguage => 'Language';
+  String get fieldLanguage => 'भाषा';
 
   @override
-  String get fieldNotes => 'Notes';
+  String get fieldNotes => 'नोट्स';
 
   @override
-  String get fieldOwnership => 'Ownership';
+  String get fieldOwnership => 'किसकी है';
 
   @override
-  String get fieldStatus => 'Reading status';
+  String get fieldStatus => 'पढ़ाई की स्थिति';
 
   @override
-  String get fieldLocation => 'Location';
+  String get fieldLocation => 'जगह';
 
   @override
-  String get noLocation => 'No location';
+  String get noLocation => 'कोई जगह नहीं';
 
   @override
-  String get ownershipOwned => 'Owned';
+  String get ownershipOwned => 'मेरी';
 
   @override
-  String get ownershipWishlist => 'Wishlist';
+  String get ownershipWishlist => 'इच्छा-सूची';
 
   @override
-  String get ownershipBorrowed => 'Borrowed';
+  String get ownershipBorrowed => 'उधार ली';
 
   @override
-  String get titleRequired => 'Please enter a title';
+  String get titleRequired => 'कृपया किताब का नाम लिखें';
 
   @override
-  String get pagesInvalid => 'Pages must be a whole number above 0';
+  String get pagesInvalid =>
+      'पन्नों की संख्या 0 से ज़्यादा पूरी संख्या होनी चाहिए';
 
   @override
-  String get save => 'Save';
+  String get save => 'सहेजें';
 
   @override
-  String get saveAndAddAnother => 'Save and add another';
+  String get saveAndAddAnother => 'सहेजें और एक और जोड़ें';
 
   @override
-  String get coverSection => 'Cover';
+  String get coverSection => 'कवर';
 
   @override
-  String get coverTakePhoto => 'Take photo';
+  String get coverTakePhoto => 'फ़ोटो लें';
 
   @override
-  String get coverChoosePhoto => 'Choose photo';
+  String get coverChoosePhoto => 'फ़ोटो चुनें';
 
   @override
-  String get coverUseGenerated => 'Use generated cover';
+  String get coverUseGenerated => 'बना हुआ कवर लगाएँ';
 
   @override
-  String get coverPhotoFailed => 'We couldn\'t use that photo.';
+  String get coverPhotoFailed => 'यह फ़ोटो इस्तेमाल नहीं हो सकी।';
 
   @override
   String get fromCatalogue =>
-      'From the Open Library catalogue. Edit anything before saving.';
+      'Open Library कैटलॉग से। सहेजने से पहले कुछ भी बदल सकते हैं।';
 
   @override
-  String get duplicateTitle => 'You may already have this';
+  String get duplicateTitle => 'शायद यह आपके पास पहले से है';
 
   @override
   String duplicateBody(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'These look like books you already have.',
-      one: 'This looks like a book you already have.',
+      other: 'ये किताबें आपके पास पहले से लगती हैं।',
+      one: 'यह किताब आपके पास पहले से लगती है।',
     );
     return '$_temp0';
   }
 
   @override
-  String get openExisting => 'Open existing';
+  String get openExisting => 'वही खोलें';
 
   @override
-  String get addAnotherCopy => 'Add another copy';
+  String get addAnotherCopy => 'एक और प्रति जोड़ें';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'रद्द करें';
 
   @override
   String addedTo(String location) {
-    return 'Added to $location';
+    return '$location में जोड़ी गई';
   }
 
   @override
-  String get addedToLibrary => 'Added to your library';
+  String get addedToLibrary => 'आपकी लाइब्रेरी में जोड़ी गई';
 
   @override
-  String get view => 'View';
+  String get view => 'देखें';
 
   @override
-  String get saveFailed => 'We couldn\'t save that. Please try again.';
+  String get saveFailed => 'सहेजा नहीं जा सका। कृपया फिर कोशिश करें।';
 
   @override
   String inLocation(String location) {
-    return 'In $location';
+    return '$location में';
   }
 
   @override
   String yearAndPages(int year, int pages) {
-    return '$year · $pages pages';
+    return '$year · $pages पन्ने';
   }
 
   @override
@@ -403,373 +401,372 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count pages',
-      one: '$count page',
+      other: '$count पन्ने',
+      one: '$count पन्ना',
     );
     return '$_temp0';
   }
 
   @override
-  String get tryAgain => 'Try again';
+  String get tryAgain => 'फिर कोशिश करें';
 
   @override
   String libraryBooksCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count books',
-      one: '$count book',
+      other: '$count किताबें',
+      one: '$count किताब',
     );
     return '$_temp0';
   }
 
   @override
   String libraryLentOutCount(int count) {
-    return '$count lent out';
+    return '$count उधार दी गईं';
   }
 
   @override
-  String get librarySearchHint => 'Search title or author';
+  String get librarySearchHint => 'नाम या लेखक खोजें';
 
   @override
-  String get libraryScanTooltip => 'Scan a barcode';
+  String get libraryScanTooltip => 'बारकोड स्कैन करें';
 
   @override
-  String get filterAll => 'All';
+  String get filterAll => 'सभी';
 
   @override
-  String get filterWishlist => 'Wishlist';
+  String get filterWishlist => 'इच्छा-सूची';
 
   @override
-  String get filterLentOut => 'Lent out';
+  String get filterLentOut => 'उधार दी';
 
   @override
-  String get filterBorrowed => 'Borrowed';
+  String get filterBorrowed => 'उधार ली';
 
   @override
-  String get filterLocation => 'Location';
+  String get filterLocation => 'जगह';
 
   @override
-  String get filterTag => 'Tag';
+  String get filterTag => 'टैग';
 
   @override
-  String get filterAnyLocation => 'Any location';
+  String get filterAnyLocation => 'कोई भी जगह';
 
   @override
-  String get filterAnyTag => 'Any tag';
+  String get filterAnyTag => 'कोई भी टैग';
 
   @override
-  String get filterNoTags => 'No tags yet';
+  String get filterNoTags => 'अभी कोई टैग नहीं';
 
   @override
-  String get sortTooltip => 'Sort';
+  String get sortTooltip => 'क्रम';
 
   @override
-  String get sortRecentlyAdded => 'Recently added';
+  String get sortRecentlyAdded => 'हाल में जोड़ी गई';
 
   @override
-  String get sortTitle => 'Title';
+  String get sortTitle => 'नाम';
 
   @override
-  String get sortAuthor => 'Author';
+  String get sortAuthor => 'लेखक';
 
   @override
-  String get sortRecentlyRead => 'Recently read';
+  String get sortRecentlyRead => 'हाल में पढ़ी गई';
 
   @override
-  String get sortRating => 'Rating';
+  String get sortRating => 'रेटिंग';
 
   @override
-  String get viewAsGrid => 'Show as grid';
+  String get viewAsGrid => 'ग्रिड में दिखाएँ';
 
   @override
-  String get viewAsList => 'Show as list';
+  String get viewAsList => 'सूची में दिखाएँ';
 
   @override
-  String get addBook => 'Add book';
+  String get addBook => 'किताब जोड़ें';
 
   @override
-  String get libraryEmptyTitle => 'Your shelf is empty';
+  String get libraryEmptyTitle => 'आपकी अलमारी खाली है';
 
   @override
-  String get libraryAddFirst => 'Add your first book';
+  String get libraryAddFirst => 'पहली किताब जोड़ें';
 
   @override
-  String get libraryScanBarcode => 'Scan a barcode';
+  String get libraryScanBarcode => 'बारकोड स्कैन करें';
 
   @override
   String libraryNoResultsQuery(String query) {
-    return 'Nothing matches “$query”';
+    return '“$query” से कुछ नहीं मिला';
   }
 
   @override
-  String get libraryNoResultsFilters => 'Nothing matches these filters';
+  String get libraryNoResultsFilters => 'इन फ़िल्टरों से कुछ नहीं मिला';
 
   @override
-  String get libraryClearFilters => 'Clear filters';
+  String get libraryClearFilters => 'फ़िल्टर हटाएँ';
 
   @override
-  String get lentRibbon => 'Lent';
+  String get lentRibbon => 'उधार';
 
   @override
-  String get quickChangeStatus => 'Change status';
+  String get quickChangeStatus => 'स्थिति बदलें';
 
   @override
-  String get quickMove => 'Move to a location';
+  String get quickMove => 'किसी जगह पर रखें';
 
   @override
-  String get quickDelete => 'Delete';
+  String get quickDelete => 'हटाएँ';
 
   @override
   String bookDeleted(String title) {
-    return '“$title” deleted';
+    return '“$title” हटाई गई';
   }
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'वापस लें';
 
   @override
   String bookMoved(String title) {
-    return 'Moved “$title”';
+    return '“$title” की जगह बदली';
   }
 
   @override
   String bookStatusChanged(String title, String status) {
-    return 'Marked “$title” $status';
+    return '“$title” को “$status” किया';
   }
 
   @override
-  String get seedDemoData => 'Add 300 demo books';
+  String get seedDemoData => '300 नमूना किताबें जोड़ें';
 
   @override
   String seedDemoDone(int count) {
-    return '$count demo books added';
+    return '$count नमूना किताबें जोड़ी गईं';
   }
 
   @override
-  String get libraryLoadFailed => 'Couldn\'t load your books';
+  String get libraryLoadFailed => 'आपकी किताबें लोड नहीं हो सकीं';
 
   @override
-  String get locationsTitle => 'Locations';
+  String get locationsTitle => 'जगहें';
 
   @override
   String locationsBookCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count books',
-      one: '1 book',
-      zero: 'No books',
+      other: '$count किताबें',
+      one: '1 किताब',
+      zero: 'कोई किताब नहीं',
     );
     return '$_temp0';
   }
 
   @override
-  String get locationAdd => 'Add location';
+  String get locationAdd => 'जगह जोड़ें';
 
   @override
-  String get locationRename => 'Rename location';
+  String get locationRename => 'जगह का नाम बदलें';
 
   @override
-  String get locationNameLabel => 'Name';
+  String get locationNameLabel => 'नाम';
 
   @override
-  String get locationNameExists =>
-      'You already have a location with that name.';
+  String get locationNameExists => 'इस नाम की जगह पहले से है।';
 
   @override
-  String get locationNameEmpty => 'Give the location a name.';
+  String get locationNameEmpty => 'जगह को कोई नाम दें।';
 
   @override
-  String get locationIconLabel => 'Icon';
+  String get locationIconLabel => 'आइकन';
 
   @override
-  String get locationIconShelf => 'Shelf';
+  String get locationIconShelf => 'अलमारी';
 
   @override
-  String get locationIconBox => 'Box';
+  String get locationIconBox => 'डिब्बा';
 
   @override
-  String get locationIconRoom => 'Room';
+  String get locationIconRoom => 'कमरा';
 
   @override
-  String get locationIconBag => 'Bag';
+  String get locationIconBag => 'बैग';
 
   @override
-  String get locationIconOffice => 'Office';
+  String get locationIconOffice => 'दफ़्तर';
 
   @override
-  String get locationIconOther => 'Other';
+  String get locationIconOther => 'अन्य';
 
   @override
-  String get locationParentLabel => 'Inside (optional)';
+  String get locationParentLabel => 'किसके अंदर (वैकल्पिक)';
 
   @override
-  String get locationNoParent => 'Nothing — top level';
+  String get locationNoParent => 'किसी के अंदर नहीं';
 
   @override
-  String get locationEdit => 'Rename or change icon';
+  String get locationEdit => 'नाम या आइकन बदलें';
 
   @override
-  String get locationDelete => 'Delete location';
+  String get locationDelete => 'जगह हटाएँ';
 
   @override
   String locationDeleteTitle(String name) {
-    return 'Delete \"$name\"?';
+    return '\"$name\" हटाएँ?';
   }
 
   @override
-  String get locationDeleteEmpty => 'No books are in this location.';
+  String get locationDeleteEmpty => 'इस जगह पर कोई किताब नहीं है।';
 
   @override
   String locationMoveBooksTitle(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Move $count books to…',
-      one: 'Move 1 book to…',
+      other: '$count किताबें कहाँ रखें…',
+      one: '1 किताब कहाँ रखें…',
     );
     return '$_temp0';
   }
 
   @override
-  String get locationDeleteConfirm => 'Delete and move';
+  String get locationDeleteConfirm => 'हटाएँ और किताबें रखें';
 
   @override
-  String get locationDeleted => 'Location deleted';
+  String get locationDeleted => 'जगह हटाई गई';
 
   @override
-  String get locationsEmptyTitle => 'Where do your books live?';
+  String get locationsEmptyTitle => 'आपकी किताबें कहाँ रहती हैं?';
 
   @override
   String get locationsEmptyBody =>
-      'Add shelves, boxes or rooms so you can find any book fast.';
+      'अलमारियाँ, डिब्बे या कमरे जोड़ें, ताकि कोई भी किताब झट से मिल जाए।';
 
   @override
-  String get locationsStarterTitle => 'Start with these?';
+  String get locationsStarterTitle => 'इनसे शुरू करें?';
 
   @override
-  String get locationsStarterAccept => 'Add all three';
+  String get locationsStarterAccept => 'तीनों जोड़ें';
 
   @override
-  String get locationsStarterSkip => 'Skip';
+  String get locationsStarterSkip => 'छोड़ें';
 
   @override
-  String get starterLivingRoom => 'Living room shelf';
+  String get starterLivingRoom => 'बैठक की अलमारी';
 
   @override
-  String get starterBedroom => 'Bedroom shelf';
+  String get starterBedroom => 'सोने के कमरे की अलमारी';
 
   @override
-  String get starterStorage => 'Storage box';
+  String get starterStorage => 'रखने का डिब्बा';
 
   @override
-  String get locationReorderHint => 'Drag to reorder';
+  String get locationReorderHint => 'क्रम बदलने के लिए खींचें';
 
   @override
-  String get locationPickerTitle => 'Choose a location';
+  String get locationPickerTitle => 'जगह चुनें';
 
   @override
-  String get locationPickerSearch => 'Search or create';
+  String get locationPickerSearch => 'खोजें या नई बनाएँ';
 
   @override
-  String get locationPickerRecent => 'Recent';
+  String get locationPickerRecent => 'हाल की';
 
   @override
-  String get locationPickerAll => 'All locations';
+  String get locationPickerAll => 'सभी जगहें';
 
   @override
   String locationCreateNew(String name) {
-    return 'Create \"$name\"';
+    return '\"$name\" बनाएँ';
   }
 
   @override
-  String get locationCreateNewPlain => 'Create new location';
+  String get locationCreateNewPlain => 'नई जगह बनाएँ';
 
   @override
-  String get locationsManage => 'Manage locations';
+  String get locationsManage => 'जगहें सँभालें';
 
   @override
-  String get bookNotFound => 'This book is no longer in your library.';
+  String get bookNotFound => 'यह किताब अब आपकी लाइब्रेरी में नहीं है।';
 
   @override
   String detailPageOf(int current, int total) {
-    return 'Page $current of $total';
+    return 'पन्ना $current / $total';
   }
 
   @override
   String detailPercentRead(int percent) {
-    return '$percent% read';
+    return '$percent% पढ़ी';
   }
 
   @override
-  String get detailUpdatePage => 'Update page';
+  String get detailUpdatePage => 'पन्ना बदलें';
 
   @override
-  String get detailUpdatePageTitle => 'Where are you now?';
+  String get detailUpdatePageTitle => 'आप अभी कहाँ तक पहुँचे?';
 
   @override
-  String get detailPageLabel => 'Page';
+  String get detailPageLabel => 'पन्ना';
 
   @override
-  String get detailPercentLabel => 'Percent read';
+  String get detailPercentLabel => 'कितने प्रतिशत पढ़ी';
 
   @override
-  String get detailPageDecrease => 'Previous page';
+  String get detailPageDecrease => 'पिछला पन्ना';
 
   @override
-  String get detailPageIncrease => 'Next page';
+  String get detailPageIncrease => 'अगला पन्ना';
 
   @override
   String detailPageAddPages(int count) {
-    return 'Add $count pages';
+    return '$count पन्ने जोड़ें';
   }
 
   @override
-  String get readingGreetingMorning => 'Good morning';
+  String get readingGreetingMorning => 'सुप्रभात';
 
   @override
-  String get readingGreetingAfternoon => 'Good afternoon';
+  String get readingGreetingAfternoon => 'नमस्ते';
 
   @override
-  String get readingGreetingEvening => 'Good evening';
+  String get readingGreetingEvening => 'शुभ संध्या';
 
   @override
   String readingStreakDays(int count) {
-    return '$count-day streak';
+    return '$count दिन लगातार';
   }
 
   @override
   String readingStreakLongest(int count) {
-    return 'Longest: $count';
+    return 'सबसे लंबा: $count';
   }
 
   @override
-  String get readingCurrentlyReading => 'Currently reading';
+  String get readingCurrentlyReading => 'अभी पढ़ रहे हैं';
 
   @override
   String readingPageOf(int current, int total) {
-    return 'Page $current of $total';
+    return 'पन्ना $current / $total';
   }
 
   @override
-  String get readingToday => 'Today';
+  String get readingToday => 'आज';
 
   @override
   String readingPagesToday(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count pages today',
-      one: '1 page today',
-      zero: 'No pages yet today',
+      other: 'आज $count पन्ने',
+      one: 'आज 1 पन्ना',
+      zero: 'आज अभी कोई पन्ना नहीं',
     );
     return '$_temp0';
   }
 
   @override
   String readingLast7Days(int count) {
-    return 'Last 7 days: $count pages';
+    return 'पिछले 7 दिन: $count पन्ने';
   }
 
   @override
@@ -777,56 +774,56 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count books are out past their date',
-      one: '1 book is out past its date',
+      other: '$count किताबों की तारीख निकल गई है',
+      one: '1 किताब की तारीख निकल गई है',
     );
     return '$_temp0';
   }
 
   @override
-  String get readingOverdueBody => 'See who has them';
+  String get readingOverdueBody => 'देखें किसके पास हैं';
 
   @override
-  String get readingUpNext => 'Up next';
+  String get readingUpNext => 'आगे पढ़ने को';
 
   @override
-  String get readingPickNext => 'Pick your next read';
+  String get readingPickNext => 'अगली किताब चुनें';
 
   @override
   String get readingPickNextBody =>
-      'Choose something from your want-to-read shelf, or add a new book.';
+      '\'पढ़ना है\' वाली सूची से कुछ चुनें, या नई किताब जोड़ें।';
 
   @override
   String get readingPickNextEmptyBody =>
-      'Add a book you want to read and it will wait for you here.';
+      'जो किताब पढ़नी है उसे जोड़ें, वह यहाँ आपका इंतज़ार करेगी।';
 
   @override
-  String get readingAddBook => 'Add a book';
+  String get readingAddBook => 'किताब जोड़ें';
 
   @override
-  String get statsYearPrevious => 'Previous year';
+  String get statsYearPrevious => 'पिछला साल';
 
   @override
-  String get statsYearNext => 'Next year';
+  String get statsYearNext => 'अगला साल';
 
   @override
-  String get statsGoalTitle => 'Reading goal';
+  String get statsGoalTitle => 'पढ़ाई का लक्ष्य';
 
   @override
   String statsGoalOf(int finished, int target) {
-    return '$finished of $target books';
+    return '$target में से $finished किताबें';
   }
 
   @override
-  String get statsGoalReached => 'Goal reached. Well read!';
+  String get statsGoalReached => 'लक्ष्य पूरा। शाबाश!';
 
   @override
   String statsGoalAhead(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count books ahead of pace',
-      one: '1 book ahead of pace',
+      other: 'रफ़्तार से $count किताबें आगे',
+      one: 'रफ़्तार से 1 किताब आगे',
     );
     return '$_temp0';
   }
@@ -836,247 +833,249 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count books behind pace',
-      one: '1 book behind pace',
+      other: 'रफ़्तार से $count किताबें पीछे',
+      one: 'रफ़्तार से 1 किताब पीछे',
     );
     return '$_temp0';
   }
 
   @override
-  String get statsGoalOnPace => 'Right on pace';
+  String get statsGoalOnPace => 'बिल्कुल सही रफ़्तार';
 
   @override
   String statsGoalMissed(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count books short',
-      one: '1 book short',
+      other: '$count किताबें कम रह गईं',
+      one: '1 किताब कम रह गई',
     );
     return '$_temp0';
   }
 
   @override
-  String get statsGoalUpcoming => 'A fresh year ahead';
+  String get statsGoalUpcoming => 'नया साल सामने है';
 
   @override
-  String get statsGoalSetTitle => 'Set a reading goal';
+  String get statsGoalSetTitle => 'पढ़ाई का लक्ष्य तय करें';
 
   @override
   String statsGoalSetBody(int year) {
-    return 'Pick how many books you would like to finish in $year.';
+    return '$year में कितनी किताबें पूरी करना चाहेंगे, चुनें।';
   }
 
   @override
-  String get statsGoalCta => 'Set a goal';
+  String get statsGoalCta => 'लक्ष्य तय करें';
 
   @override
-  String get statsGoalEdit => 'Edit goal';
+  String get statsGoalEdit => 'लक्ष्य बदलें';
 
   @override
   String statsGoalSheetTitle(int year) {
-    return 'Books to finish in $year';
+    return '$year में पूरी करनी हैं';
   }
 
   @override
-  String get statsGoalFewer => 'Fewer books';
+  String get statsGoalFewer => 'कम किताबें';
 
   @override
-  String get statsGoalMore => 'More books';
+  String get statsGoalMore => 'ज़्यादा किताबें';
 
   @override
-  String get statsGoalRemove => 'Remove goal';
+  String get statsGoalRemove => 'लक्ष्य हटाएँ';
 
   @override
-  String get statsGoalInvalid => 'Enter a number from 1 to 999';
+  String get statsGoalInvalid => '1 से 999 तक कोई संख्या लिखें';
 
   @override
-  String get statsMonthlyTitle => 'Books finished per month';
+  String get statsMonthlyTitle => 'हर महीने पूरी हुई किताबें';
 
   @override
-  String get statsMonthlyEmpty => 'Finish a book and its month lights up here.';
+  String get statsMonthlyEmpty =>
+      'कोई किताब पूरी करें, उसका महीना यहाँ चमक उठेगा।';
 
   @override
   String statsMonthBooks(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count books',
-      one: '1 book',
+      other: '$count किताबें',
+      one: '1 किताब',
     );
     return '$_temp0';
   }
 
   @override
   String statsMonthSheetTitle(String month) {
-    return 'Finished in $month';
+    return '$month में पूरी हुईं';
   }
 
   @override
-  String get statsWeeklyTitle => 'Pages per week';
+  String get statsWeeklyTitle => 'हर हफ़्ते के पन्ने';
 
   @override
   String get statsWeeklyEmpty =>
-      'Update your page as you read and your weeks will show up here.';
+      'पढ़ते हुए पन्ना बदलते रहें, आपके हफ़्ते यहाँ दिखेंगे।';
 
   @override
   String statsWeeklyTotal(int count) {
-    return '$count pages in 12 weeks';
+    return '12 हफ़्तों में $count पन्ने';
   }
 
   @override
-  String get statsGenresTitle => 'Top genres';
+  String get statsGenresTitle => 'पसंदीदा विधाएँ';
 
   @override
-  String get statsAuthorsTitle => 'Top authors';
+  String get statsAuthorsTitle => 'पसंदीदा लेखक';
 
   @override
-  String get statsTopEmpty => 'Nothing here yet for this year.';
+  String get statsTopEmpty => 'इस साल के लिए अभी यहाँ कुछ नहीं।';
 
   @override
-  String get statsFactsTitle => 'Your library';
+  String get statsFactsTitle => 'आपकी लाइब्रेरी';
 
   @override
-  String get statsFactTotal => 'Books';
+  String get statsFactTotal => 'किताबें';
 
   @override
-  String get statsFactOwned => 'Owned';
+  String get statsFactOwned => 'मेरी';
 
   @override
-  String get statsFactWishlist => 'Wishlist';
+  String get statsFactWishlist => 'इच्छा-सूची';
 
   @override
-  String get statsFactLent => 'Lent out';
+  String get statsFactLent => 'उधार दी';
 
   @override
-  String get statsFactRating => 'Average rating';
+  String get statsFactRating => 'औसत रेटिंग';
 
   @override
-  String get statsFactLongest => 'Longest read';
+  String get statsFactLongest => 'सबसे लंबी किताब';
 
   @override
   String statsFactPages(int count) {
-    return '$count pages';
+    return '$count पन्ने';
   }
 
   @override
-  String get statsFactNone => 'None yet';
+  String get statsFactNone => 'अभी कोई नहीं';
 
   @override
-  String get statsEmptyAdd => 'Add a book';
+  String get statsEmptyAdd => 'किताब जोड़ें';
 
   @override
-  String get statsEmptyTitle => 'Your reading year starts here';
+  String get statsEmptyTitle => 'आपका पढ़ाई का साल यहाँ से शुरू होता है';
 
   @override
-  String get quoteCaptureTitle => 'Snap a quote';
+  String get quoteCaptureTitle => 'उद्धरण खींचें';
 
   @override
   String get quoteSourceBody =>
-      'Photograph a page and tap the lines you love, or type them in. Only the text is kept; the photo is never saved.';
+      'पन्ने की फ़ोटो लें और पसंद की पंक्तियाँ छुएँ, या उन्हें लिख दें। सिर्फ़ शब्द रखे जाते हैं; फ़ोटो कभी सहेजी नहीं जाती।';
 
   @override
-  String get quoteTakePhoto => 'Take a photo';
+  String get quoteTakePhoto => 'फ़ोटो लें';
 
   @override
-  String get quoteChoosePhoto => 'Choose a photo';
+  String get quoteChoosePhoto => 'फ़ोटो चुनें';
 
   @override
-  String get quoteTypeIt => 'Type it instead';
+  String get quoteTypeIt => 'इसके बजाय लिखें';
 
   @override
-  String get quoteRotateLeft => 'Rotate left';
+  String get quoteRotateLeft => 'बाएँ घुमाएँ';
 
   @override
-  String get quoteRotateRight => 'Rotate right';
+  String get quoteRotateRight => 'दाएँ घुमाएँ';
 
   @override
-  String get quoteReadText => 'Read the text';
+  String get quoteReadText => 'शब्द पढ़ें';
 
   @override
-  String get quoteReading => 'Reading the page…';
+  String get quoteReading => 'पन्ना पढ़ रहे हैं…';
 
   @override
-  String get quotePickLines => 'Tap the lines you want to keep.';
+  String get quotePickLines => 'जो पंक्तियाँ रखनी हैं उन्हें छुएँ।';
 
   @override
-  String get quoteSelectAll => 'Select all';
+  String get quoteSelectAll => 'सब चुनें';
 
   @override
-  String get quoteUseSelected => 'Use selected lines';
+  String get quoteUseSelected => 'चुनी पंक्तियाँ लें';
 
   @override
-  String get quoteNoText => 'No text found. You can type the quote instead.';
+  String get quoteNoText => 'कोई शब्द नहीं मिले। आप उद्धरण लिख सकते हैं।';
 
   @override
   String get quoteReadFailed =>
-      'That photo could not be read. Try another, or type it.';
+      'यह फ़ोटो पढ़ी नहीं जा सकी। दूसरी आज़माएँ, या लिख दें।';
 
   @override
-  String get quoteBodyLabel => 'Quote';
+  String get quoteBodyLabel => 'उद्धरण';
 
   @override
-  String get quotePageLabel => 'Page (optional)';
+  String get quotePageLabel => 'पन्ना (वैकल्पिक)';
 
   @override
-  String get quotePageInvalid => 'Enter a page within the book';
+  String get quotePageInvalid => 'किताब के अंदर का कोई पन्ना लिखें';
 
   @override
-  String get quoteBodyRequired => 'Add the quote first';
+  String get quoteBodyRequired => 'पहले उद्धरण लिखें';
 
   @override
-  String get quotePickAgain => 'Pick lines again';
+  String get quotePickAgain => 'फिर से पंक्तियाँ चुनें';
 
   @override
-  String get quoteSave => 'Save quote';
+  String get quoteSave => 'उद्धरण सहेजें';
 
   @override
-  String get quoteSaved => 'Quote saved';
+  String get quoteSaved => 'उद्धरण सहेजा गया';
 
   @override
-  String get quotesSectionTitle => 'Quotes';
+  String get quotesSectionTitle => 'उद्धरण';
 
   @override
-  String get quotesSectionEmpty => 'Keep the lines you love from this book.';
+  String get quotesSectionEmpty => 'इस किताब की पसंदीदा पंक्तियाँ सँजोकर रखें।';
 
   @override
-  String get quoteSnap => 'Snap a quote';
+  String get quoteSnap => 'उद्धरण खींचें';
 
   @override
   String quotePageShort(int page) {
-    return 'p. $page';
+    return 'पृ. $page';
   }
 
   @override
-  String get quotesTitle => 'Quotes';
+  String get quotesTitle => 'उद्धरण';
 
   @override
-  String get quotesSearchHint => 'Search your quotes';
+  String get quotesSearchHint => 'अपने उद्धरण खोजें';
 
   @override
-  String get quotesFavourites => 'Favourites';
+  String get quotesFavourites => 'पसंदीदा';
 
   @override
-  String get quotesAllBooks => 'All books';
+  String get quotesAllBooks => 'सभी किताबें';
 
   @override
-  String get quotesPickBook => 'Which book is it from?';
+  String get quotesPickBook => 'यह किस किताब से है?';
 
   @override
-  String get quotesBookFilterTitle => 'Show quotes from';
+  String get quotesBookFilterTitle => 'इस किताब के उद्धरण दिखाएँ';
 
   @override
-  String get quotesEmptyTitle => 'No quotes yet';
+  String get quotesEmptyTitle => 'अभी कोई उद्धरण नहीं';
 
   @override
   String get quotesEmptyBody =>
-      'Snap a page or type a line, and the passages you love will live here.';
+      'पन्ने की फ़ोटो लें या कोई पंक्ति लिखें, आपके पसंदीदा अंश यहाँ रहेंगे।';
 
   @override
-  String get quotesNoMatch => 'No quotes match.';
+  String get quotesNoMatch => 'कोई उद्धरण नहीं मिला।';
 
   @override
-  String get quotesNoBooksYet => 'Add a book first, then save quotes from it.';
+  String get quotesNoBooksYet =>
+      'पहले कोई किताब जोड़ें, फिर उसके उद्धरण सहेजें।';
 
   @override
   String quoteAttribution(String title) {
@@ -1085,32 +1084,32 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String quoteAttributionPage(String title, int page) {
-    return '$title, p. $page';
+    return '$title, पृ. $page';
   }
 
   @override
-  String get quoteFavourite => 'Mark as favourite';
+  String get quoteFavourite => 'पसंदीदा बनाएँ';
 
   @override
-  String get quoteUnfavourite => 'Remove from favourites';
+  String get quoteUnfavourite => 'पसंदीदा से हटाएँ';
 
   @override
-  String get quoteEdit => 'Edit';
+  String get quoteEdit => 'बदलें';
 
   @override
-  String get quoteEditTitle => 'Edit quote';
+  String get quoteEditTitle => 'उद्धरण बदलें';
 
   @override
-  String get quoteShareImage => 'Share as image';
+  String get quoteShareImage => 'तस्वीर के रूप में भेजें';
 
   @override
-  String get quoteShareText => 'Share as text';
+  String get quoteShareText => 'शब्दों के रूप में भेजें';
 
   @override
-  String get quoteDelete => 'Delete';
+  String get quoteDelete => 'हटाएँ';
 
   @override
-  String get quoteDeleted => 'Quote deleted';
+  String get quoteDeleted => 'उद्धरण हटाया गया';
 
   @override
   String quoteShareTextBody(String body, String attribution) {
@@ -1118,115 +1117,114 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String get quoteMore => 'More';
+  String get quoteMore => 'और';
 
   @override
-  String get quoteOfWeekTitle => 'Quote of the week';
+  String get quoteOfWeekTitle => 'इस हफ़्ते का उद्धरण';
 
   @override
-  String get failureBackupNotABackup => 'This isn\'t a Kitabkhana backup.';
+  String get failureBackupNotABackup => 'यह Kitabkhana का बैकअप नहीं है।';
 
   @override
   String get failureBackupDamaged =>
-      'This backup looks damaged, so nothing was changed.';
+      'यह बैकअप खराब लगता है, इसलिए कुछ नहीं बदला गया।';
 
   @override
   String get failureBackupNewer =>
-      'This backup was made by a newer version. Update the app first.';
+      'यह बैकअप नए वर्ज़न से बना है। पहले ऐप अपडेट करें।';
 
   @override
-  String get backupExportTitle => 'Back up your library';
+  String get backupExportTitle => 'अपनी लाइब्रेरी का बैकअप लें';
 
   @override
   String get backupExportWarning =>
-      'The backup file holds everything in your library, including the names and phone numbers of people you have lent books to. Keep it somewhere private.';
+      'बैकअप फ़ाइल में आपकी पूरी लाइब्रेरी होती है, उन लोगों के नाम और फ़ोन नंबर भी जिन्हें आपने किताबें उधार दीं। इसे किसी निजी जगह रखें।';
 
   @override
-  String get backupExportAction => 'Create backup';
+  String get backupExportAction => 'बैकअप बनाएँ';
 
   @override
-  String get backupPreparing => 'Preparing your backup…';
+  String get backupPreparing => 'आपका बैकअप तैयार हो रहा है…';
 
   @override
-  String get backupOpening => 'Checking the file…';
+  String get backupOpening => 'फ़ाइल जाँच रहे हैं…';
 
   @override
-  String get backupRestoring => 'Restoring your library…';
+  String get backupRestoring => 'आपकी लाइब्रेरी वापस ला रहे हैं…';
 
   @override
-  String get backupRestoreTitle => 'Restore from a backup';
+  String get backupRestoreTitle => 'बैकअप से वापस लाएँ';
 
   @override
   String backupFound(String date, int books, int loans, int quotes) {
     String _temp0 = intl.Intl.pluralLogic(
       books,
       locale: localeName,
-      other: '$books books',
-      one: '1 book',
+      other: '$books किताबें',
+      one: '1 किताब',
     );
     String _temp1 = intl.Intl.pluralLogic(
       loans,
       locale: localeName,
-      other: '$loans loans',
-      one: '1 loan',
+      other: '$loans उधार',
+      one: '1 उधार',
     );
     String _temp2 = intl.Intl.pluralLogic(
       quotes,
       locale: localeName,
-      other: '$quotes quotes',
-      one: '1 quote',
+      other: '$quotes उद्धरण',
+      one: '1 उद्धरण',
     );
-    return 'Made on $date: $_temp0, $_temp1, $_temp2.';
+    return '$date को बना: $_temp0, $_temp1, $_temp2।';
   }
 
   @override
-  String get backupModeMerge => 'Merge with my library';
+  String get backupModeMerge => 'मेरी लाइब्रेरी में मिलाएँ';
 
   @override
   String get backupModeMergeBody =>
-      'Add what is missing and keep the newer version of anything that is in both.';
+      'जो नहीं है वह जोड़ें, और जो दोनों में है उसका नया रूप रखें।';
 
   @override
-  String get backupModeReplace => 'Replace my library';
+  String get backupModeReplace => 'मेरी लाइब्रेरी बदल दें';
 
   @override
-  String get backupModeReplaceBody =>
-      'Erase this library and use the backup instead.';
+  String get backupModeReplaceBody => 'यह लाइब्रेरी मिटाकर बैकअप वाली लगाएँ।';
 
   @override
-  String get backupReplaceConfirmTitle => 'Replace your library?';
+  String get backupReplaceConfirmTitle => 'अपनी लाइब्रेरी बदलें?';
 
   @override
   String get backupReplaceConfirmBody =>
-      'Everything here will be swapped for the backup. A safety copy of your current library is saved first.';
+      'यहाँ का सब कुछ बैकअप से बदल जाएगा। पहले आपकी अभी की लाइब्रेरी की एक सुरक्षा-प्रति सहेजी जाएगी।';
 
   @override
-  String get backupReplaceConfirm => 'Replace';
+  String get backupReplaceConfirm => 'बदलें';
 
   @override
-  String get backupDoneTitle => 'Backup restored';
+  String get backupDoneTitle => 'बैकअप वापस आ गया';
 
   @override
   String backupImported(int books, int loans, int quotes) {
     String _temp0 = intl.Intl.pluralLogic(
       books,
       locale: localeName,
-      other: '$books books',
-      one: '1 book',
+      other: '$books किताबें',
+      one: '1 किताब',
     );
     String _temp1 = intl.Intl.pluralLogic(
       loans,
       locale: localeName,
-      other: '$loans loans',
-      one: '1 loan',
+      other: '$loans उधार',
+      one: '1 उधार',
     );
     String _temp2 = intl.Intl.pluralLogic(
       quotes,
       locale: localeName,
-      other: '$quotes quotes',
-      one: '1 quote',
+      other: '$quotes उद्धरण',
+      one: '1 उद्धरण',
     );
-    return 'Imported $_temp0, $_temp1, $_temp2.';
+    return 'आयात हुए: $_temp0, $_temp1, $_temp2।';
   }
 
   @override
@@ -1234,233 +1232,233 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count covers could not be copied.',
-      one: '1 cover could not be copied.',
+      other: '$count कवर कॉपी नहीं हो सके।',
+      one: '1 कवर कॉपी नहीं हो सका।',
     );
     return '$_temp0';
   }
 
   @override
-  String get ok => 'OK';
+  String get ok => 'ठीक है';
 
   @override
-  String get csvPreparing => 'Preparing your spreadsheets…';
+  String get csvPreparing => 'आपकी स्प्रेडशीट तैयार हो रही हैं…';
 
   @override
-  String get csvExportTitle => 'Export as spreadsheet';
+  String get csvExportTitle => 'स्प्रेडशीट के रूप में निकालें';
 
   @override
   String get csvExportWarning =>
-      'books.csv and loans.csv open in Excel, Numbers or Google Sheets. Loans include the names and phone numbers of the people you lent to or borrowed from.';
+      'books.csv और loans.csv Excel, Numbers या Google Sheets में खुलती हैं। उधार में उन लोगों के नाम और फ़ोन नंबर होते हैं जिन्हें आपने दीं या जिनसे लीं।';
 
   @override
-  String get csvExportAction => 'Export';
+  String get csvExportAction => 'निकालें';
 
   @override
-  String get eraseTitle => 'Erase all data?';
+  String get eraseTitle => 'सारा डेटा मिटाएँ?';
 
   @override
   String get eraseBody =>
-      'This permanently deletes every book, loan, quote and reading record, your covers, settings and the backups kept on this device. It cannot be undone. Share a backup first if you might want your library again.';
+      'इससे हर किताब, उधार, उद्धरण और पढ़ाई का रिकॉर्ड, आपके कवर, सेटिंग्स और इस डिवाइस पर रखे बैकअप हमेशा के लिए मिट जाएँगे। यह वापस नहीं होगा। अगर लाइब्रेरी फिर चाहिए हो सकती है, तो पहले बैकअप भेज दें।';
 
   @override
-  String get eraseContinue => 'Continue';
+  String get eraseContinue => 'आगे बढ़ें';
 
   @override
   String eraseTypeTitle(String word) {
-    return 'Type $word to confirm';
+    return 'पक्का करने के लिए $word लिखें';
   }
 
   @override
-  String get eraseTypeHint => 'Type the word exactly, in capitals.';
+  String get eraseTypeHint => 'शब्द बिल्कुल वैसे ही, बड़े अक्षरों में लिखें।';
 
   @override
-  String get eraseAction => 'Erase everything';
+  String get eraseAction => 'सब कुछ मिटाएँ';
 
   @override
-  String get eraseWorking => 'Erasing…';
+  String get eraseWorking => 'मिटा रहे हैं…';
 
   @override
-  String get eraseDone => 'All data erased. Starting fresh.';
+  String get eraseDone => 'सारा डेटा मिट गया। नई शुरुआत।';
 
   @override
-  String get readingReminderTitle => 'Time for a few pages?';
+  String get readingReminderTitle => 'कुछ पन्ने पढ़ने का समय?';
 
   @override
-  String get readingReminderBody => 'Keep your reading streak going.';
+  String get readingReminderBody => 'लगातार पढ़ाई का सिलसिला जारी रखें।';
 
   @override
-  String get moreGroupLibrary => 'Your library';
+  String get moreGroupLibrary => 'आपकी लाइब्रेरी';
 
   @override
-  String get moreGroupApp => 'App';
+  String get moreGroupApp => 'ऐप';
 
   @override
-  String get moreLoans => 'Loans';
+  String get moreLoans => 'उधार';
 
   @override
-  String get moreQuotes => 'Quotes';
+  String get moreQuotes => 'उद्धरण';
 
   @override
-  String get moreLocations => 'Locations';
+  String get moreLocations => 'जगहें';
 
   @override
-  String get moreTags => 'Tags';
+  String get moreTags => 'टैग';
 
   @override
-  String get moreSettings => 'Settings';
+  String get moreSettings => 'सेटिंग्स';
 
   @override
-  String get moreAbout => 'About';
+  String get moreAbout => 'जानकारी';
 
   @override
   String moreCountOut(int count) {
-    return '$count out';
+    return '$count बाहर';
   }
 
   @override
-  String get tagsTitle => 'Tags';
+  String get tagsTitle => 'टैग';
 
   @override
-  String get tagsEmptyTitle => 'No tags yet';
+  String get tagsEmptyTitle => 'अभी कोई टैग नहीं';
 
   @override
   String get tagsEmptyBody =>
-      'Add tags to a book from its page and they will be listed here.';
+      'किताब के पेज से उसमें टैग जोड़ें, वे यहाँ दिखेंगे।';
 
   @override
   String tagsBooks(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count books',
-      one: '1 book',
-      zero: 'No books',
+      other: '$count किताबें',
+      one: '1 किताब',
+      zero: 'कोई किताब नहीं',
     );
     return '$_temp0';
   }
 
   @override
-  String get tagsRename => 'Rename';
+  String get tagsRename => 'नाम बदलें';
 
   @override
-  String get tagsRenameTitle => 'Rename tag';
+  String get tagsRenameTitle => 'टैग का नाम बदलें';
 
   @override
-  String get tagsNameLabel => 'Tag name';
+  String get tagsNameLabel => 'टैग का नाम';
 
   @override
-  String get tagsNameTaken => 'You already have a tag with that name.';
+  String get tagsNameTaken => 'इस नाम का टैग पहले से है।';
 
   @override
-  String get tagsDelete => 'Delete';
+  String get tagsDelete => 'हटाएँ';
 
   @override
-  String get tagsDeleteTitle => 'Delete this tag?';
+  String get tagsDeleteTitle => 'यह टैग हटाएँ?';
 
   @override
-  String get tagsDeleteBody =>
-      'It is removed from every book. The books themselves stay.';
+  String get tagsDeleteBody => 'यह हर किताब से हट जाएगा। किताबें बनी रहेंगी।';
 
   @override
-  String get tagsDeleted => 'Tag deleted';
+  String get tagsDeleted => 'टैग हटाया गया';
 
   @override
-  String get settingsTitle => 'Settings';
+  String get settingsTitle => 'सेटिंग्स';
 
   @override
-  String get settingsAppearance => 'Appearance';
+  String get settingsAppearance => 'रूप-रंग';
 
   @override
-  String get settingsTheme => 'Theme';
+  String get settingsTheme => 'थीम';
 
   @override
-  String get settingsThemeSystem => 'System';
+  String get settingsThemeSystem => 'सिस्टम';
 
   @override
-  String get settingsThemeLight => 'Light';
+  String get settingsThemeLight => 'हल्की';
 
   @override
-  String get settingsThemeDark => 'Dark';
+  String get settingsThemeDark => 'गहरी';
 
   @override
-  String get settingsDefaultView => 'Default library view';
+  String get settingsDefaultView => 'लाइब्रेरी किस तरह दिखे';
 
   @override
-  String get settingsViewGrid => 'Grid';
+  String get settingsViewGrid => 'ग्रिड';
 
   @override
-  String get settingsViewList => 'List';
+  String get settingsViewList => 'सूची';
 
   @override
-  String get settingsDensity => 'Grid density';
+  String get settingsDensity => 'ग्रिड का घनत्व';
 
   @override
-  String get settingsDensityComfortable => 'Comfortable';
+  String get settingsDensityComfortable => 'खुला-खुला';
 
   @override
-  String get settingsDensityCompact => 'Compact';
+  String get settingsDensityCompact => 'सघन';
 
   @override
-  String get settingsReading => 'Reading';
+  String get settingsReading => 'पढ़ाई';
 
   @override
-  String get settingsGoal => 'Yearly goal';
+  String get settingsGoal => 'सालाना लक्ष्य';
 
   @override
   String settingsGoalValue(int count, int year) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count books in $year',
-      one: '1 book in $year',
+      other: '$year में $count किताबें',
+      one: '$year में 1 किताब',
     );
     return '$_temp0';
   }
 
   @override
   String settingsGoalNone(int year) {
-    return 'Not set for $year';
+    return '$year के लिए तय नहीं';
   }
 
   @override
-  String get settingsReadingReminder => 'Daily reading reminder';
+  String get settingsReadingReminder => 'रोज़ पढ़ने की याद';
 
   @override
   String get settingsReadingReminderBody =>
-      'A gentle nudge at the time you choose. Skipped once you have read that day.';
+      'आपके चुने समय पर हल्की-सी याद। उस दिन पढ़ लिया हो तो नहीं आएगी।';
 
   @override
-  String get settingsReminderTime => 'Reminder time';
+  String get settingsReminderTime => 'याद का समय';
 
   @override
-  String get settingsLending => 'Lending';
+  String get settingsLending => 'उधार देना';
 
   @override
-  String get settingsLoanLength => 'Default loan length';
+  String get settingsLoanLength => 'उधार की सामान्य अवधि';
 
   @override
-  String get settingsLoanLengthNone => 'No due date';
+  String get settingsLoanLengthNone => 'कोई तारीख नहीं';
 
   @override
   String settingsLoanLengthDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count days',
-      one: '1 day',
+      other: '$count दिन',
+      one: '1 दिन',
     );
     return '$_temp0';
   }
 
   @override
-  String get settingsLoanLengthSheet => 'How long do you usually lend a book?';
+  String get settingsLoanLengthSheet =>
+      'आप आमतौर पर किताब कितने दिन के लिए देते हैं?';
 
   @override
-  String get settingsLoanLengthHelp => '0 means no due date.';
+  String get settingsLoanLengthHelp => '0 का मतलब कोई तारीख नहीं।';
 
   @override
-  String get settingsCountryCode => 'Default country code';
+  String get settingsCountryCode => 'डिफ़ॉल्ट देश कोड';
 
   @override
   String settingsCountryCodeValue(String code) {
@@ -1468,118 +1466,118 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String get settingsCountryCodeSheet => 'Country code for phone numbers';
+  String get settingsCountryCodeSheet => 'फ़ोन नंबरों का देश कोड';
 
   @override
   String get settingsCountryCodeHelp =>
-      'Used when a number is typed without one. Digits only, for example 91.';
+      'जब नंबर बिना कोड के लिखा हो तब काम आता है। सिर्फ़ अंक, जैसे 91।';
 
   @override
-  String get settingsLoanReminderTime => 'Loan reminder time';
+  String get settingsLoanReminderTime => 'उधार की याद का समय';
 
   @override
-  String get settingsData => 'Your data';
+  String get settingsData => 'आपका डेटा';
 
   @override
-  String get settingsBackupNow => 'Back up now';
+  String get settingsBackupNow => 'अभी बैकअप लें';
 
   @override
   String settingsBackupLast(String when) {
-    return 'Last backup: $when';
+    return 'पिछला बैकअप: $when';
   }
 
   @override
-  String get settingsBackupNever => 'Not backed up yet';
+  String get settingsBackupNever => 'अभी तक बैकअप नहीं';
 
   @override
-  String get settingsBackupToday => 'today';
+  String get settingsBackupToday => 'आज';
 
   @override
-  String get settingsBackupYesterday => 'yesterday';
+  String get settingsBackupYesterday => 'कल';
 
   @override
   String settingsBackupDaysAgo(int count) {
-    return '$count days ago';
+    return '$count दिन पहले';
   }
 
   @override
-  String get settingsBackupSaved => 'Backup saved on this device.';
+  String get settingsBackupSaved => 'बैकअप इस डिवाइस पर सहेजा गया।';
 
   @override
-  String get settingsAutoBackup => 'Automatic weekly backup';
+  String get settingsAutoBackup => 'हर हफ़्ते अपने-आप बैकअप';
 
   @override
   String get settingsAutoBackupBody =>
-      'Keeps the last 3 copies in this app\'s storage.';
+      'इस ऐप के स्टोरेज में आखिरी 3 प्रतियाँ रखता है।';
 
   @override
-  String get settingsShareBackup => 'Share a backup';
+  String get settingsShareBackup => 'बैकअप भेजें';
 
   @override
-  String get settingsRestore => 'Restore from backup';
+  String get settingsRestore => 'बैकअप से वापस लाएँ';
 
   @override
-  String get settingsExportCsv => 'Export as spreadsheet (CSV)';
+  String get settingsExportCsv => 'स्प्रेडशीट (CSV) के रूप में निकालें';
 
   @override
-  String get settingsErase => 'Erase all data';
+  String get settingsErase => 'सारा डेटा मिटाएँ';
 
   @override
-  String get settingsPrivacy => 'Privacy';
+  String get settingsPrivacy => 'निजता';
 
   @override
   String get settingsPrivacyBody =>
-      'Your library never leaves this device unless you share a backup or an export yourself. There are no accounts and no tracking. Book details are looked up by ISBN or title on Open Library, and covers are downloaded from it; nothing else is sent.';
+      'आपकी लाइब्रेरी इस डिवाइस से तभी बाहर जाती है जब आप खुद बैकअप या निर्यात भेजें। न कोई खाता है, न कोई ट्रैकिंग। किताबों का ब्योरा ISBN या नाम से Open Library पर खोजा जाता है (और वहाँ न मिले तो Google Books पर), और कवर वहीं से आते हैं; इसके अलावा कुछ नहीं भेजा जाता।';
 
   @override
-  String get settingsCrashReports => 'Offer to send problem reports';
+  String get settingsCrashReports => 'समस्या की रिपोर्ट भेजने का सुझाव दें';
 
   @override
   String get settingsCrashReportsBody =>
-      'After something goes wrong, Kitabkhana offers to email a report to the developer. Nothing is sent unless you press Send in your mail app.';
+      'कुछ गड़बड़ होने पर Kitabkhana डेवलपर को ईमेल से रिपोर्ट भेजने का सुझाव देता है। जब तक आप अपने मेल ऐप में भेजें न दबाएँ, कुछ नहीं जाता।';
 
   @override
-  String get settingsSaveCopy => 'Save a copy to…';
+  String get settingsSaveCopy => 'कॉपी यहाँ सहेजें…';
 
   @override
   String get settingsSaveCopyBody =>
-      'Google Drive, iCloud Drive, Downloads or a USB stick, so your library survives losing this phone.';
+      'Google Drive, iCloud Drive, Downloads या USB स्टिक, ताकि फ़ोन खोने पर भी लाइब्रेरी बची रहे।';
 
   @override
   String settingsSaveCopyLast(String when) {
-    return 'Last copy saved off this phone: $when';
+    return 'फ़ोन से बाहर पिछली कॉपी: $when';
   }
 
   @override
-  String get backupCopySaved => 'Copy saved';
+  String get backupCopySaved => 'कॉपी सहेजी गई';
 
   @override
-  String get offDeviceTitle => 'Your library is only on this phone';
+  String get offDeviceTitle => 'आपकी लाइब्रेरी सिर्फ़ इसी फ़ोन पर है';
 
   @override
   String get offDeviceBody =>
-      'Automatic backups stay on the phone, so they are lost with it. Save a copy to Google Drive, iCloud Drive or a computer.';
+      'अपने-आप बने बैकअप फ़ोन पर ही रहते हैं, फ़ोन के साथ वे भी चले जाएँगे। Google Drive, iCloud Drive या कंप्यूटर पर एक कॉपी रख लें।';
 
   @override
-  String get offDeviceSave => 'Save a copy';
+  String get offDeviceSave => 'कॉपी सहेजें';
 
   @override
-  String get offDeviceLater => 'Later';
+  String get offDeviceLater => 'बाद में';
 
   @override
-  String get settingsImportApp => 'Import from Goodreads or StoryGraph';
+  String get settingsImportApp => 'Goodreads या StoryGraph से लाएँ';
 
   @override
   String get settingsImportAppBody =>
-      'Use the CSV file from \"Export library\" in either app.';
+      'किसी भी ऐप के \"Export library\" वाली CSV फ़ाइल इस्तेमाल करें।';
 
   @override
   String get importNotAnExport =>
-      'This doesn\'t look like a Goodreads or StoryGraph export.';
+      'यह Goodreads या StoryGraph का निर्यात नहीं लगता।';
 
   @override
   String importTitle(String app) {
-    return 'Import from $app';
+    return '$app से लाएँ';
   }
 
   @override
@@ -1587,10 +1585,10 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count books in the file',
-      one: '1 book in the file',
+      other: 'फ़ाइल में $count किताबें',
+      one: 'फ़ाइल में 1 किताब',
     );
-    return '$_temp0, $existing already in your library.';
+    return '$_temp0, $existing पहले से आपकी लाइब्रेरी में।';
   }
 
   @override
@@ -1598,8 +1596,8 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Add $count books',
-      one: 'Add 1 book',
+      other: '$count किताबें जोड़ें',
+      one: '1 किताब जोड़ें',
     );
     return '$_temp0';
   }
@@ -1609,74 +1607,73 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other:
-          '$count books are on your want-to-read list. Where should they go?',
-      one: '1 book is on your want-to-read list. Where should it go?',
+      other: '$count किताबें आपकी \'पढ़नी है\' सूची में हैं। इन्हें कहाँ रखें?',
+      one: '1 किताब आपकी \'पढ़नी है\' सूची में है। इसे कहाँ रखें?',
     );
     return '$_temp0';
   }
 
   @override
-  String get importWantWishlist => 'On my wishlist (I don\'t own them)';
+  String get importWantWishlist => 'मेरी इच्छा-सूची में (ये मेरे पास नहीं हैं)';
 
   @override
-  String get importWantOwned => 'On my shelves (I own them)';
+  String get importWantOwned => 'मेरी अलमारी में (ये मेरे पास हैं)';
 
   @override
-  String get importNothingNew => 'Nothing new to add';
+  String get importNothingNew => 'जोड़ने को कुछ नया नहीं';
 
   @override
-  String get importWorking => 'Adding books…';
+  String get importWorking => 'किताबें जोड़ रहे हैं…';
 
   @override
   String importDone(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Added $count books',
-      one: 'Added 1 book',
-      zero: 'No new books added',
+      other: '$count किताबें जोड़ीं',
+      one: '1 किताब जोड़ी',
+      zero: 'कोई नई किताब नहीं जुड़ी',
     );
     return '$_temp0';
   }
 
   @override
-  String get batchTitle => 'Scan a shelf';
+  String get batchTitle => 'पूरी अलमारी स्कैन करें';
 
   @override
   String get batchBody =>
-      'Scan one barcode after another, then add them all at once';
+      'एक के बाद एक बारकोड स्कैन करें, फिर सब एक साथ जोड़ें';
 
   @override
-  String get batchHint => 'Scan each book\'s barcode; the camera stays open';
+  String get batchHint => 'हर किताब का बारकोड स्कैन करें; कैमरा खुला रहेगा';
 
   @override
   String get batchEmpty =>
-      'Books you scan appear here. Uncheck any you don\'t want.';
+      'स्कैन की हुई किताबें यहाँ दिखेंगी। जो नहीं चाहिए उनका निशान हटा दें।';
 
   @override
-  String get batchOwned => 'Already in your library';
+  String get batchOwned => 'पहले से आपकी लाइब्रेरी में';
 
   @override
-  String get batchNotFound => 'Not found; add it by hand later';
+  String get batchNotFound => 'नहीं मिली; बाद में खुद जोड़ें';
 
   @override
-  String get batchFailed => 'Couldn\'t look it up; check your connection';
+  String get batchFailed => 'खोज नहीं हो सकी; इंटरनेट जाँचें';
 
   @override
-  String get batchRemove => 'Remove';
+  String get batchRemove => 'हटाएँ';
 
   @override
-  String get batchPlace => 'Put them on';
+  String get batchPlace => 'इन्हें कहाँ रखें';
 
   @override
   String batchAdd(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Add $count books',
-      one: 'Add 1 book',
-      zero: 'Add books',
+      other: '$count किताबें जोड़ें',
+      one: '1 किताब जोड़ें',
+      zero: 'किताबें जोड़ें',
     );
     return '$_temp0';
   }
@@ -1686,22 +1683,22 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Added $count books',
-      one: 'Added 1 book',
-      zero: 'No books added',
+      other: '$count किताबें जोड़ीं',
+      one: '1 किताब जोड़ी',
+      zero: 'कोई किताब नहीं जुड़ी',
     );
     return '$_temp0';
   }
 
   @override
-  String get close => 'Close';
+  String get close => 'बंद करें';
 
   @override
-  String get statsShareYear => 'Share your year';
+  String get statsShareYear => 'अपना साल साझा करें';
 
   @override
   String yearReviewTitle(String year) {
-    return 'My $year in books';
+    return 'किताबों में मेरा $year';
   }
 
   @override
@@ -1709,124 +1706,123 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'books finished',
-      one: 'book finished',
+      other: 'किताबें पूरी कीं',
+      one: 'किताब पूरी की',
     );
     return '$_temp0';
   }
 
   @override
-  String get yearReviewPages => 'pages read';
+  String get yearReviewPages => 'पन्ने पढ़े';
 
   @override
-  String get yearReviewStreak => 'longest streak (days)';
+  String get yearReviewStreak => 'सबसे लंबा सिलसिला (दिन)';
 
   @override
-  String get yearReviewGoal => 'reading goal';
+  String get yearReviewGoal => 'पढ़ाई का लक्ष्य';
 
   @override
-  String get yearReviewTopGenre => 'Favourite genre';
+  String get yearReviewTopGenre => 'पसंदीदा विधा';
 
   @override
-  String get yearReviewTopAuthor => 'Most-read author';
+  String get yearReviewTopAuthor => 'सबसे ज़्यादा पढ़े लेखक';
 
   @override
-  String get yearReviewLongest => 'Longest book';
+  String get yearReviewLongest => 'सबसे लंबी किताब';
 
   @override
   String yearReviewLongestValue(String title, int pages) {
-    return '$title · $pages pages';
+    return '$title · $pages पन्ने';
   }
 
   @override
-  String get yearReviewFooter => 'Made with Kitabkhana';
+  String get yearReviewFooter => 'Kitabkhana के साथ बनाया';
 
   @override
-  String get yearReviewShare => 'Share';
+  String get yearReviewShare => 'भेजें';
 
   @override
   String get yearReviewEmpty =>
-      'Finish a book or log some pages this year, and your year in review will appear here.';
+      'इस साल कोई किताब पूरी करें या कुछ पन्ने दर्ज करें, आपका साल यहाँ दिखेगा।';
 
   @override
-  String get quoteScriptLabel => 'The page is in';
+  String get quoteScriptLabel => 'पन्ना किस लिपि में है';
 
   @override
-  String get quoteScriptLatin => 'English and other Latin scripts';
+  String get quoteScriptLatin => 'अंग्रेज़ी और अन्य लैटिन लिपियाँ';
 
   @override
-  String get quoteScriptDevanagari => 'हिन्दी, मराठी (Devanagari)';
+  String get quoteScriptDevanagari => 'हिन्दी, मराठी (देवनागरी)';
 
   @override
-  String get timerStart => 'Start the reading timer';
+  String get timerStart => 'पढ़ाई का टाइमर शुरू करें';
 
   @override
   String timerStop(String time) {
-    return 'Stop the timer ($time)';
+    return 'टाइमर रोकें ($time)';
   }
 
   @override
   String timerRunning(String time) {
-    return 'Reading for $time';
+    return '$time से पढ़ रहे हैं';
   }
 
   @override
   String timerLogged(String time) {
-    return 'Logged $time of reading';
+    return '$time की पढ़ाई दर्ज की';
   }
 
   @override
-  String get timerTooShort => 'Under a minute, so nothing was logged';
+  String get timerTooShort => 'एक मिनट से कम, इसलिए कुछ दर्ज नहीं हुआ';
 
   @override
   String durationMinutes(int minutes) {
-    return '$minutes min';
+    return '$minutes मिनट';
   }
 
   @override
   String durationHours(int hours) {
-    return '$hours h';
+    return '$hours घंटे';
   }
 
   @override
   String durationHoursMinutes(int hours, int minutes) {
-    return '$hours h $minutes min';
+    return '$hours घंटे $minutes मिनट';
   }
 
   @override
   String readingTimeToday(String time) {
-    return '$time with the timer';
+    return 'टाइमर से $time';
   }
 
   @override
-  String get statsTimeTitle => 'Time reading';
+  String get statsTimeTitle => 'पढ़ाई का समय';
 
   @override
-  String get statsTimeBody =>
-      'Measured with the reading timer on the Reading tab.';
+  String get statsTimeBody => 'पढ़ाई टैब के टाइमर से मापा गया।';
 
   @override
   String get statsTimeNone =>
-      'Start the timer on a book you are reading to see your reading time here.';
+      'जो किताब पढ़ रहे हैं उस पर टाइमर चलाएँ, आपका पढ़ाई का समय यहाँ दिखेगा।';
 
   @override
-  String get rereadAction => 'Read again';
+  String get rereadAction => 'फिर से पढ़ें';
 
   @override
-  String get rereadStarted => 'A new read starts today. The last one is kept.';
+  String get rereadStarted => 'नई पढ़ाई आज से शुरू। पिछली दर्ज रहेगी।';
 
   @override
   String rereadCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Read $count times',
+      other: '$count बार पढ़ी',
     );
     return '$_temp0';
   }
 
   @override
-  String get rereadEarlier => 'Earlier reads';
+  String get rereadEarlier => 'पहले की पढ़ाई';
 
   @override
   String rereadRange(String start, String end) {
@@ -1835,63 +1831,63 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String rereadFinishedOn(String date) {
-    return 'Finished $date';
+    return '$date को पूरी की';
   }
 
   @override
   String rereadStartedOn(String date) {
-    return 'Started $date';
+    return '$date को शुरू की';
   }
 
   @override
-  String get rereadUndated => 'Read before (no dates)';
+  String get rereadUndated => 'पहले पढ़ी (तारीख नहीं)';
 
   @override
-  String get fieldSeries => 'Series';
+  String get fieldSeries => 'शृंखला';
 
   @override
-  String get fieldSeriesNumber => 'No.';
+  String get fieldSeriesNumber => 'क्रमांक';
 
   @override
-  String get fieldSeriesNumberInvalid => 'A number';
+  String get fieldSeriesNumberInvalid => 'कोई संख्या';
 
   @override
   String seriesPlace(String number, String series) {
-    return 'Book $number of $series';
+    return '$series की किताब $number';
   }
 
   @override
   String seriesOnly(String series) {
-    return 'Part of $series';
+    return '$series का हिस्सा';
   }
 
   @override
-  String get seriesYouHave => 'In your library';
+  String get seriesYouHave => 'आपकी लाइब्रेरी में';
 
   @override
   String seriesMissing(String numbers) {
-    return 'Missing: $numbers';
+    return 'नहीं हैं: $numbers';
   }
 
   @override
-  String get seriesComplete => 'You have every book up to here.';
+  String get seriesComplete => 'यहाँ तक की हर किताब आपके पास है।';
 
   @override
-  String get lendFromContacts => 'Choose from contacts';
+  String get lendFromContacts => 'संपर्कों से चुनें';
 
   @override
-  String get widgetLabel => 'Currently reading';
+  String get widgetLabel => 'अभी पढ़ रहे हैं';
 
   @override
-  String get widgetNothing => 'Nothing on the go';
+  String get widgetNothing => 'अभी कुछ नहीं पढ़ रहे';
 
   @override
   String widgetOverdue(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count books overdue',
-      one: '1 book overdue',
+      other: '$count किताबों की तारीख निकली',
+      one: '1 किताब की तारीख निकली',
     );
     return '$_temp0';
   }
@@ -1901,8 +1897,8 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count books lent out',
-      one: '1 book lent out',
+      other: '$count किताबें उधार दीं',
+      one: '1 किताब उधार दी',
     );
     return '$_temp0';
   }
@@ -1912,170 +1908,169 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'and $count more on the go',
-      one: 'and 1 more on the go',
+      other: 'और $count किताबें चल रही हैं',
+      one: 'और 1 किताब चल रही है',
     );
     return '$_temp0';
   }
 
   @override
-  String get settingsReportProblem => 'Report a problem';
+  String get settingsReportProblem => 'समस्या बताएँ';
 
   @override
   String get settingsReportProblemBody =>
-      'Email the developer, with recent app messages attached.';
+      'डेवलपर को ईमेल करें, ऐप के हाल के संदेश साथ में जुड़े होंगे।';
 
   @override
-  String get crashPromptTitle => 'Something went wrong';
+  String get crashPromptTitle => 'कुछ गड़बड़ हो गई';
 
   @override
   String get crashPromptBody =>
-      'Kitabkhana ran into a problem the last time you used it. You can email a report to the developer to help fix it. Your mail app opens first, so you see everything before you press Send.';
+      'पिछली बार इस्तेमाल करते समय Kitabkhana में कोई दिक्कत आई। इसे ठीक करने में मदद के लिए आप डेवलपर को रिपोर्ट ईमेल कर सकते हैं। पहले आपका मेल ऐप खुलेगा, ताकि भेजने से पहले आप सब देख सकें।';
 
   @override
-  String get crashPromptScreenshot => 'Include a screenshot';
+  String get crashPromptScreenshot => 'स्क्रीनशॉट जोड़ें';
 
   @override
   String get crashPromptScreenshotHint =>
-      'It may show book titles that were on the screen.';
+      'इसमें स्क्रीन पर दिख रहे किताबों के नाम आ सकते हैं।';
 
   @override
-  String get crashPromptSend => 'Email report';
+  String get crashPromptSend => 'रिपोर्ट ईमेल करें';
 
   @override
-  String get crashPromptDismiss => 'Not now';
+  String get crashPromptDismiss => 'अभी नहीं';
 
   @override
   String get reportSentMailLink =>
-      'Your mail app opened without attachments; the details are in the message.';
+      'आपका मेल ऐप बिना अटैचमेंट के खुला; ब्योरा संदेश में है।';
 
   @override
   String get reportShared =>
-      'No mail app found, so the report was shared instead.';
+      'कोई मेल ऐप नहीं मिला, इसलिए रिपोर्ट दूसरे तरीके से भेजी गई।';
 
   @override
-  String get settingsHelp => 'Help';
+  String get settingsHelp => 'मदद';
 
   @override
-  String get settingsDiagnostics => 'Export diagnostics';
+  String get settingsDiagnostics => 'जाँच-जानकारी निकालें';
 
   @override
   String get settingsDiagnosticsBody =>
-      'Versions and recent app messages, with none of your library.';
+      'वर्ज़न और ऐप के हाल के संदेश, आपकी लाइब्रेरी का कुछ भी नहीं।';
 
   @override
-  String get settingsFeedback => 'Send feedback';
+  String get settingsFeedback => 'सुझाव भेजें';
 
   @override
-  String get settingsFeedbackSubject => 'Kitabkhana feedback';
+  String get settingsFeedbackSubject => 'Kitabkhana पर सुझाव';
 
   @override
-  String get settingsAbout => 'About';
+  String get settingsAbout => 'जानकारी';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'जानकारी';
 
   @override
   String aboutVersion(String version) {
-    return 'Version $version';
+    return 'वर्ज़न $version';
   }
 
   @override
-  String get aboutLicenses => 'Open-source licenses';
+  String get aboutLicenses => 'ओपन-सोर्स लाइसेंस';
 
   @override
-  String get aboutPrivacyPolicy => 'Privacy policy';
+  String get aboutPrivacyPolicy => 'निजता नीति';
 
   @override
-  String get aboutTagline =>
-      'A private home for the books you own, lend and love.';
+  String get aboutTagline => 'आपकी अपनी, उधार दी और प्यारी किताबों का निजी घर।';
 
   @override
-  String get aboutMadeWithCare => 'Made with care';
+  String get aboutMadeWithCare => 'प्यार से बनाया';
 
   @override
-  String get onboardingSkip => 'Skip';
+  String get onboardingSkip => 'छोड़ें';
 
   @override
-  String get onboardingNext => 'Next';
+  String get onboardingNext => 'आगे';
 
   @override
   String onboardingStep(int current, int total) {
-    return 'Step $current of $total';
+    return 'चरण $current / $total';
   }
 
   @override
-  String get onboarding1Title => 'Know what you own';
+  String get onboarding1Title => 'जानें आपके पास क्या है';
 
   @override
   String get onboarding1Body =>
-      'Every book and every shelf in one calm place, including the ones you have lent out.';
+      'हर किताब और हर अलमारी एक शांत जगह पर, उधार दी हुई किताबें भी।';
 
   @override
-  String get onboarding2Title => 'Never buy it twice';
+  String get onboarding2Title => 'दोबारा कभी न खरीदें';
 
   @override
   String get onboarding2Body =>
-      'Scan a barcode in the shop and Kitabkhana tells you at once whether it is already on your shelf.';
+      'दुकान में बारकोड स्कैन करें, Kitabkhana तुरंत बताएगा कि वह आपकी अलमारी में पहले से है या नहीं।';
 
   @override
-  String get onboarding3Title => 'Your books stay with you';
+  String get onboarding3Title => 'आपकी किताबें आपके पास';
 
   @override
   String get onboarding3Body =>
-      'No account, no sign-up and no tracking. Your library lives on this device, and you decide if it ever leaves.';
+      'न खाता, न साइन-अप, न ट्रैकिंग। आपकी लाइब्रेरी इसी डिवाइस पर रहती है, और बाहर जाए या नहीं, यह आप तय करते हैं।';
 
   @override
-  String get onboardingPlacesTitle => 'Where do your books live?';
+  String get onboardingPlacesTitle => 'आपकी किताबें कहाँ रहती हैं?';
 
   @override
   String get onboardingPlacesBody =>
-      'Pick a few places to start with. You can rename or add more any time.';
+      'शुरुआत के लिए कुछ जगहें चुनें। बाद में नाम बदल या और जोड़ सकते हैं।';
 
   @override
-  String get onboardingPlacesUse => 'Use these places';
+  String get onboardingPlacesUse => 'ये जगहें लें';
 
   @override
-  String get onboardingPlacesSkip => 'Not now';
+  String get onboardingPlacesSkip => 'अभी नहीं';
 
   @override
-  String get onboardingReadyTitle => 'You are all set';
+  String get onboardingReadyTitle => 'सब तैयार है';
 
   @override
   String get onboardingReadyBody =>
-      'Add your first book, bring your library back from a backup, or just look around.';
+      'पहली किताब जोड़ें, बैकअप से अपनी लाइब्रेरी वापस लाएँ, या बस घूमकर देखें।';
 
   @override
-  String get onboardingAddFirst => 'Add your first book';
+  String get onboardingAddFirst => 'पहली किताब जोड़ें';
 
   @override
-  String get onboardingRestore => 'Restore from backup';
+  String get onboardingRestore => 'बैकअप से वापस लाएँ';
 
   @override
-  String get onboardingExplore => 'Explore the app';
+  String get onboardingExplore => 'ऐप देखें';
 
   @override
   String bookTileByAuthor(String authors) {
-    return 'by $authors';
+    return 'लेखक $authors';
   }
 
   @override
   String bookTileAt(String place) {
-    return 'at $place';
+    return '$place में';
   }
 
   @override
-  String get devSeedStore => 'Load store demo data (dev)';
+  String get devSeedStore => 'स्टोर का नमूना डेटा लोड करें (dev)';
 
   @override
-  String get devSeedPerf => 'Seed 5,000 books (dev)';
+  String get devSeedPerf => '5,000 किताबें डालें (dev)';
 
   @override
-  String get devSeedPerfBusy => 'Seeding…';
+  String get devSeedPerfBusy => 'डाल रहे हैं…';
 
   @override
   String devSeedPerfDone(String summary) {
-    return 'Seeded: $summary';
+    return 'डाला गया: $summary';
   }
 
   @override
@@ -2083,81 +2078,81 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'About $count days left at your pace',
-      one: 'About 1 day left at your pace',
+      other: 'आपकी रफ़्तार से लगभग $count दिन बाकी',
+      one: 'आपकी रफ़्तार से लगभग 1 दिन बाकी',
     );
     return '$_temp0';
   }
 
   @override
   String paceFinishBy(String date) {
-    return 'Finish by $date';
+    return '$date तक पूरी';
   }
 
   @override
-  String get progressReachedEnd => 'That\'s the last page!';
+  String get progressReachedEnd => 'यह आखिरी पन्ना है!';
 
   @override
-  String get progressMarkFinished => 'Mark as finished';
+  String get progressMarkFinished => 'पढ़ ली के रूप में दर्ज करें';
 
   @override
   String detailPageInvalid(int max) {
-    return 'Enter a number from 0 to $max';
+    return '0 से $max तक कोई संख्या लिखें';
   }
 
   @override
-  String get detailRateIt => 'Rate it?';
+  String get detailRateIt => 'रेटिंग दें?';
 
   @override
   String detailRateStar(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Rate $count stars',
-      one: 'Rate 1 star',
+      other: '$count सितारे दें',
+      one: '1 सितारा दें',
     );
     return '$_temp0';
   }
 
   @override
-  String get detailFinishedCelebration => 'Finished! Nice one.';
+  String get detailFinishedCelebration => 'पूरी हो गई! बहुत खूब।';
 
   @override
-  String get detailChange => 'Change';
+  String get detailChange => 'बदलें';
 
   @override
   String detailLentTo(String name, String since) {
-    return 'Lent to $name since $since';
+    return '$since से $name को उधार दी';
   }
 
   @override
   String detailBorrowedFrom(String name, String since) {
-    return 'Borrowed from $name since $since';
+    return '$since से $name से उधार ली';
   }
 
   @override
   String detailDue(String date) {
-    return 'due $date';
+    return 'लौटाने की तारीख $date';
   }
 
   @override
-  String get detailReturn => 'Return';
+  String get detailReturn => 'लौटी';
 
   @override
-  String get detailReturned => 'Marked as returned';
+  String get detailReturned => 'लौटाई गई दर्ज की';
 
   @override
-  String get detailEdit => 'Edit';
+  String get detailEdit => 'बदलें';
 
   @override
-  String get detailShare => 'Share';
+  String get detailShare => 'भेजें';
 
   @override
-  String get detailMore => 'More';
+  String get detailMore => 'और';
 
   @override
   String detailShareText(String title, String authors) {
-    return '$title by $authors';
+    return '$title, लेखक $authors';
   }
 
   @override
@@ -2166,421 +2161,421 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String get detailDeleteTitle => 'Delete this book?';
+  String get detailDeleteTitle => 'यह किताब हटाएँ?';
 
   @override
   String get detailDeleteBody =>
-      'It leaves your library. You can undo right after.';
+      'यह आपकी लाइब्रेरी से हट जाएगी। तुरंत बाद वापस ले सकते हैं।';
 
   @override
-  String get detailSectionNotes => 'Notes';
+  String get detailSectionNotes => 'नोट्स';
 
   @override
-  String get detailNotesHint => 'Add a note';
+  String get detailNotesHint => 'नोट लिखें';
 
   @override
-  String get detailNotesSaved => 'Note saved';
+  String get detailNotesSaved => 'नोट सहेजा गया';
 
   @override
-  String get detailSectionTags => 'Tags';
+  String get detailSectionTags => 'टैग';
 
   @override
-  String get detailAddTag => 'Add tag';
+  String get detailAddTag => 'टैग जोड़ें';
 
   @override
-  String get detailTagHint => 'Tag name';
+  String get detailTagHint => 'टैग का नाम';
 
   @override
   String detailRemoveTag(String name) {
-    return 'Remove tag $name';
+    return 'टैग $name हटाएँ';
   }
 
   @override
-  String get detailSectionDetails => 'Details';
+  String get detailSectionDetails => 'ब्योरा';
 
   @override
   String get detailIsbn => 'ISBN';
 
   @override
-  String get detailOwner => 'Owner';
+  String get detailOwner => 'मालिक';
 
   @override
-  String get detailAddedOn => 'Added on';
+  String get detailAddedOn => 'जोड़ने की तारीख';
 
   @override
-  String get detailStarted => 'Started';
+  String get detailStarted => 'शुरू की';
 
   @override
-  String get detailFinished => 'Finished';
+  String get detailFinished => 'पूरी की';
 
   @override
-  String get detailBack => 'Back';
+  String get detailBack => 'वापस';
 
   @override
   String detailPagesYear(int pages) {
-    return '$pages pages';
+    return '$pages पन्ने';
   }
 
   @override
-  String get editBookTitle => 'Edit book';
+  String get editBookTitle => 'किताब बदलें';
 
   @override
-  String get bookSavedChanges => 'Changes saved';
+  String get bookSavedChanges => 'बदलाव सहेजे गए';
 
   @override
-  String get detailMove => 'Move';
+  String get detailMove => 'जगह बदलें';
 
   @override
-  String get scanSearchHint => 'Search by title';
+  String get scanSearchHint => 'नाम से खोजें';
 
   @override
-  String get scanTypeIsbn => 'Type ISBN';
+  String get scanTypeIsbn => 'ISBN लिखें';
 
   @override
-  String get scanTorch => 'Torch';
+  String get scanTorch => 'टॉर्च';
 
   @override
-  String get scanSwitchCamera => 'Switch camera';
+  String get scanSwitchCamera => 'कैमरा बदलें';
 
   @override
-  String get scanPermTitle => 'Let Kitabkhana use the camera';
+  String get scanPermTitle => 'Kitabkhana को कैमरा इस्तेमाल करने दें';
 
   @override
   String get scanPermBody =>
-      'The camera only reads barcodes on this device. Nothing is recorded or uploaded.';
+      'कैमरा सिर्फ़ इसी डिवाइस पर बारकोड पढ़ता है। कुछ रिकॉर्ड या अपलोड नहीं होता।';
 
   @override
-  String get scanPermAllow => 'Allow camera';
+  String get scanPermAllow => 'कैमरा चालू करें';
 
   @override
-  String get scanDeniedTitle => 'The camera is off';
+  String get scanDeniedTitle => 'कैमरा बंद है';
 
   @override
   String get scanDeniedBody =>
-      'Without the camera you can still search by title or type the ISBN.';
+      'बिना कैमरे के भी आप नाम से खोज सकते हैं या ISBN लिख सकते हैं।';
 
   @override
-  String get scanTryAgain => 'Try again';
+  String get scanTryAgain => 'फिर कोशिश करें';
 
   @override
-  String get scanBlockedTitle => 'Camera access is blocked';
+  String get scanBlockedTitle => 'कैमरे की अनुमति बंद है';
 
   @override
   String get scanBlockedBody =>
-      'Turn it on in Settings to scan barcodes. You can still search by title meanwhile.';
+      'बारकोड स्कैन करने के लिए इसे सेटिंग्स में चालू करें। तब तक नाम से खोज सकते हैं।';
 
   @override
-  String get scanOpenSettings => 'Open settings';
+  String get scanOpenSettings => 'सेटिंग्स खोलें';
 
   @override
   String get scanNoCameraNote =>
-      'No camera here, so search by title or type the ISBN.';
+      'यहाँ कैमरा नहीं है, इसलिए नाम से खोजें या ISBN लिखें।';
 
   @override
   String get scanWebHttpsNote =>
-      'Camera scanning on the web needs a secure (HTTPS) page.';
+      'वेब पर कैमरे से स्कैन के लिए सुरक्षित (HTTPS) पेज चाहिए।';
 
   @override
-  String get scanChecking => 'Checking your library…';
+  String get scanChecking => 'आपकी लाइब्रेरी देख रहे हैं…';
 
   @override
-  String get verdictOwned => 'You own this';
+  String get verdictOwned => 'यह आपके पास है';
 
   @override
   String verdictOwnedWhere(String place) {
-    return 'On $place';
+    return '$place पर';
   }
 
   @override
-  String get verdictNoPlace => 'No location set';
+  String get verdictNoPlace => 'कोई जगह तय नहीं';
 
   @override
-  String get verdictOtherEdition => 'You own another edition';
+  String get verdictOtherEdition => 'आपके पास इसका दूसरा संस्करण है';
 
   @override
-  String get verdictWishlist => 'On your wishlist';
+  String get verdictWishlist => 'आपकी इच्छा-सूची में';
 
   @override
-  String get verdictMarkBought => 'Mark as bought';
+  String get verdictMarkBought => 'खरीदी हुई दर्ज करें';
 
   @override
   String verdictLentTo(String name) {
-    return 'Lent to $name';
+    return '$name को उधार दी';
   }
 
   @override
   String verdictSince(String date) {
-    return 'Since $date';
+    return '$date से';
   }
 
   @override
   String verdictBorrowedFrom(String name) {
-    return 'Borrowed from $name';
+    return '$name से उधार ली';
   }
 
   @override
-  String get verdictBorrowed => 'Borrowed';
+  String get verdictBorrowed => 'उधार ली';
 
   @override
-  String get verdictDidYouMean => 'Did you mean…?';
+  String get verdictDidYouMean => 'क्या आपका मतलब…?';
 
   @override
-  String get verdictNoneOfThese => 'None of these';
+  String get verdictNoneOfThese => 'इनमें से कोई नहीं';
 
   @override
-  String get verdictNotInLibrary => 'Not in your library';
+  String get verdictNotInLibrary => 'आपकी लाइब्रेरी में नहीं';
 
   @override
-  String get verdictAddWishlist => 'Add to wishlist';
+  String get verdictAddWishlist => 'इच्छा-सूची में जोड़ें';
 
   @override
-  String get verdictBoughtIt => 'I bought it — add to library';
+  String get verdictBoughtIt => 'मैंने खरीद ली — लाइब्रेरी में जोड़ें';
 
   @override
-  String get verdictOpenBook => 'Open book';
+  String get verdictOpenBook => 'किताब खोलें';
 
   @override
-  String get verdictScanAnother => 'Scan another';
+  String get verdictScanAnother => 'दूसरी स्कैन करें';
 
   @override
-  String get verdictWishlistAdded => 'Added to your wishlist';
+  String get verdictWishlistAdded => 'इच्छा-सूची में जोड़ी गई';
 
   @override
-  String get verdictBoughtDone => 'Marked as bought';
+  String get verdictBoughtDone => 'खरीदी हुई दर्ज की';
 
   @override
   String verdictMatch(int percent) {
-    return '$percent% match';
+    return '$percent% मेल';
   }
 
   @override
-  String get verdictUnknownTitle => 'Unknown title';
+  String get verdictUnknownTitle => 'अज्ञात नाम';
 
   @override
-  String get scanSearchLabel => 'No barcode?';
+  String get scanSearchLabel => 'बारकोड नहीं है?';
 
   @override
-  String get lendAction => 'Lend';
+  String get lendAction => 'उधार दें';
 
   @override
-  String get lendSheetTitleLend => 'Lend this book';
+  String get lendSheetTitleLend => 'यह किताब उधार दें';
 
   @override
-  String get lendSheetTitleBorrow => 'Borrowed this book';
+  String get lendSheetTitleBorrow => 'यह किताब उधार ली';
 
   @override
-  String get lendToggleLend => 'Lend';
+  String get lendToggleLend => 'उधार दें';
 
   @override
-  String get lendToggleBorrow => 'Borrow';
+  String get lendToggleBorrow => 'उधार लें';
 
   @override
-  String get lendPersonLent => 'Lent to';
+  String get lendPersonLent => 'किसे दी';
 
   @override
-  String get lendPersonBorrowed => 'Borrowed from';
+  String get lendPersonBorrowed => 'किससे ली';
 
   @override
-  String get lendPhone => 'Phone (optional)';
+  String get lendPhone => 'फ़ोन (वैकल्पिक)';
 
   @override
-  String get lendPhoneHint => 'Number, with country code if different';
+  String get lendPhoneHint => 'नंबर, दूसरा देश हो तो कोड के साथ';
 
   @override
-  String get lendPhoneInvalid => 'That doesn\'t look like a phone number.';
+  String get lendPhoneInvalid => 'यह फ़ोन नंबर नहीं लगता।';
 
   @override
-  String get lendStarted => 'Started';
+  String get lendStarted => 'कब से';
 
   @override
-  String get lendDue => 'Due';
+  String get lendDue => 'लौटाने की तारीख';
 
   @override
-  String get lendDueNone => 'No due date';
+  String get lendDueNone => 'कोई तारीख नहीं';
 
   @override
-  String get lendDue1w => '1 week';
+  String get lendDue1w => '1 हफ़्ता';
 
   @override
-  String get lendDue2w => '2 weeks';
+  String get lendDue2w => '2 हफ़्ते';
 
   @override
-  String get lendDue1m => '1 month';
+  String get lendDue1m => '1 महीना';
 
   @override
-  String get lendDueCustom => 'Pick a date';
+  String get lendDueCustom => 'तारीख चुनें';
 
   @override
-  String get lendNote => 'Note (optional)';
+  String get lendNote => 'नोट (वैकल्पिक)';
 
   @override
-  String get lendSave => 'Save';
+  String get lendSave => 'सहेजें';
 
   @override
-  String get lendNameRequired => 'Who has it?';
+  String get lendNameRequired => 'किताब किसके पास है?';
 
   @override
   String lendSaved(String name) {
-    return 'Lent to $name';
+    return '$name को उधार दी';
   }
 
   @override
   String lendSavedBorrow(String name) {
-    return 'Borrowed from $name';
+    return '$name से उधार ली';
   }
 
   @override
-  String get returnPickLocationTitle => 'Where does it go back?';
+  String get returnPickLocationTitle => 'इसे वापस कहाँ रखें?';
 
   @override
   String get returnPickLocationBody =>
-      'Its old spot was deleted. Choose a new one.';
+      'इसकी पुरानी जगह हटा दी गई है। नई चुनें।';
 
   @override
   String returnBorrowedTitle(String name) {
-    return 'Returned to $name';
+    return '$name को लौटाई';
   }
 
   @override
-  String get returnBorrowedRemove => 'Remove from my library';
+  String get returnBorrowedRemove => 'मेरी लाइब्रेरी से हटाएँ';
 
   @override
-  String get returnBorrowedKeep => 'Keep it on my wishlist';
+  String get returnBorrowedKeep => 'इच्छा-सूची में रखें';
 
   @override
-  String get failureNeedsName => 'Add the person\'s name.';
+  String get failureNeedsName => 'उस व्यक्ति का नाम लिखें।';
 
   @override
-  String get reminderChannelName => 'Loan reminders';
+  String get reminderChannelName => 'उधार की याद';
 
   @override
   String get reminderChannelDesc =>
-      'Reminders when a lent or borrowed book is due';
+      'उधार दी या ली किताब लौटाने की तारीख पर याद';
 
   @override
   String reminderDueTitle(String book) {
-    return '“$book” is due today';
+    return '“$book” आज लौटानी है';
   }
 
   @override
   String reminderLentDueBody(String name) {
-    return '$name has it. A friendly nudge?';
+    return '$name के पास है। प्यार से याद दिलाएँ?';
   }
 
   @override
   String reminderBorrowedDueBody(String name) {
-    return 'Time to return it to $name.';
+    return '$name को लौटाने का समय है।';
   }
 
   @override
   String reminderOverdueTitle(String book) {
-    return '“$book” is overdue';
+    return '“$book” की तारीख निकल गई';
   }
 
   @override
   String reminderLentOverdueBody(String name) {
-    return '$name still has it. Send a reminder?';
+    return '$name के पास अब भी है। याद दिलाएँ?';
   }
 
   @override
   String reminderBorrowedOverdueBody(String name) {
-    return 'Return it to $name soon.';
+    return 'जल्द ही $name को लौटा दें।';
   }
 
   @override
-  String get reminderPermTitle => 'Get a nudge when it\'s due?';
+  String get reminderPermTitle => 'तारीख पर याद दिलाएँ?';
 
   @override
   String get reminderPermBody =>
-      'Kitabkhana can remind you on the day a book is due. Reminders stay on this device.';
+      'Kitabkhana किताब लौटाने के दिन आपको याद दिला सकता है। याद इसी डिवाइस पर रहती है।';
 
   @override
-  String get reminderPermAllow => 'Allow notifications';
+  String get reminderPermAllow => 'सूचनाएँ चालू करें';
 
   @override
-  String get reminderPermLater => 'Not now';
+  String get reminderPermLater => 'अभी नहीं';
 
   @override
   String nudgeMessage(String name, String book) {
-    return 'Hi $name! 📚 Could you return “$book” when you\'re done? Thanks!';
+    return 'नमस्ते $name! 📚 पढ़ लेने के बाद क्या “$book” लौटा देंगे? धन्यवाद!';
   }
 
   @override
-  String get nudgeWhatsApp => 'Remind on WhatsApp';
+  String get nudgeWhatsApp => 'WhatsApp पर याद दिलाएँ';
 
   @override
-  String get nudgeSms => 'Send SMS';
+  String get nudgeSms => 'SMS भेजें';
 
   @override
-  String get nudgeNoPhone => 'Add a phone number to send a reminder.';
+  String get nudgeNoPhone => 'याद दिलाने के लिए फ़ोन नंबर जोड़ें।';
 
   @override
-  String get nudgeFailed => 'Couldn\'t open a messaging app.';
+  String get nudgeFailed => 'कोई मैसेज ऐप नहीं खुल सका।';
 
   @override
-  String get overdueBannerOne => '1 book is overdue';
+  String get overdueBannerOne => '1 किताब की तारीख निकल गई है';
 
   @override
   String overdueBannerMany(int count) {
-    return '$count books are overdue';
+    return '$count किताबों की तारीख निकल गई है';
   }
 
   @override
-  String get devTestReminder => 'Schedule test reminder (2 min)';
+  String get devTestReminder => 'परीक्षण याद लगाएँ (2 मिनट)';
 
   @override
-  String get devTestReminderSet => 'Test reminder set for 2 minutes from now';
+  String get devTestReminderSet => 'परीक्षण याद 2 मिनट बाद के लिए लगी';
 
   @override
-  String get detailRemind => 'Remind';
+  String get detailRemind => 'याद दिलाएँ';
 
   @override
-  String get loansTitle => 'Loans';
+  String get loansTitle => 'उधार';
 
   @override
-  String get loansTabLent => 'Lent out';
+  String get loansTabLent => 'उधार दी';
 
   @override
-  String get loansTabBorrowed => 'Borrowed';
+  String get loansTabBorrowed => 'उधार ली';
 
   @override
-  String get loansTabOverdue => 'Overdue';
+  String get loansTabOverdue => 'तारीख निकली';
 
   @override
-  String get loansTabHistory => 'History';
+  String get loansTabHistory => 'इतिहास';
 
   @override
-  String get loansEmptyLent => 'Everyone has returned your books. Nice.';
+  String get loansEmptyLent => 'सबने आपकी किताबें लौटा दी हैं। बढ़िया।';
 
   @override
-  String get loansEmptyBorrowed => 'You haven\'t borrowed any books right now.';
+  String get loansEmptyBorrowed => 'अभी आपने कोई किताब उधार नहीं ली है।';
 
   @override
-  String get loansEmptyOverdue => 'Nothing is overdue. Lovely.';
+  String get loansEmptyOverdue => 'किसी की तारीख नहीं निकली। बहुत अच्छे।';
 
   @override
-  String get loansEmptyHistory => 'Returned books will show up here.';
+  String get loansEmptyHistory => 'लौटाई गई किताबें यहाँ दिखेंगी।';
 
   @override
   String loanSince(String date) {
-    return 'Since $date';
+    return '$date से';
   }
 
   @override
   String loanDueOn(String date) {
-    return 'Due $date';
+    return '$date तक लौटानी';
   }
 
   @override
-  String get loanDueToday => 'Due today';
+  String get loanDueToday => 'आज लौटानी है';
 
   @override
   String loanDueInDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Due in $count days',
-      one: 'Due tomorrow',
+      other: '$count दिन में लौटानी है',
+      one: 'कल लौटानी है',
     );
     return '$_temp0';
   }
@@ -2590,46 +2585,46 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count days overdue',
-      one: '1 day overdue',
+      other: '$count दिन देर',
+      one: '1 दिन देर',
     );
     return '$_temp0';
   }
 
   @override
-  String get loanNoDue => 'No due date';
+  String get loanNoDue => 'कोई तारीख नहीं';
 
   @override
   String loanReturnedOn(String date) {
-    return 'Returned $date';
+    return '$date को लौटी';
   }
 
   @override
-  String get loanActionReturn => 'Return';
+  String get loanActionReturn => 'लौटी';
 
   @override
-  String get loanActionExtend => 'Extend';
+  String get loanActionExtend => 'समय बढ़ाएँ';
 
   @override
-  String get loanReturnedToast => 'Marked as returned';
+  String get loanReturnedToast => 'लौटाई गई दर्ज की';
 
   @override
-  String get extendTitle => 'Extend the due date';
+  String get extendTitle => 'लौटाने की तारीख बढ़ाएँ';
 
   @override
-  String get extend1w => '+1 week';
+  String get extend1w => '+1 हफ़्ता';
 
   @override
-  String get extend2w => '+2 weeks';
+  String get extend2w => '+2 हफ़्ते';
 
   @override
-  String get extend1m => '+1 month';
+  String get extend1m => '+1 महीना';
 
   @override
   String extendDone(String date) {
-    return 'Now due $date';
+    return 'अब $date तक';
   }
 
   @override
-  String get loansOpenTooltip => 'Loans';
+  String get loansOpenTooltip => 'उधार';
 }

@@ -201,22 +201,20 @@ class _Carousel extends StatelessWidget {
         final width = (c.maxWidth * 0.82).clamp(0.0, 340.0);
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: SizedBox(
-            // Tall enough for the cover, text and button.
-            height: 290,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                for (final b in books)
-                  Padding(
-                    padding: const EdgeInsets.only(right: KSpacing.md),
-                    child: SizedBox(
-                      width: width,
-                      child: _ReadingCard(book: b),
-                    ),
+          // Each card takes the height its content needs, so longer text
+          // (other languages, a pace line, a running timer) never overflows.
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              for (final b in books)
+                Padding(
+                  padding: const EdgeInsets.only(right: KSpacing.md),
+                  child: SizedBox(
+                    width: width,
+                    child: _ReadingCard(book: b, fillHeight: false),
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
         );
       },
@@ -326,6 +324,26 @@ class _ReadingCard extends ConsumerWidget {
                   ],
                 ),
               ),
+            ],
+          ),
+          if (fillHeight) const Spacer(),
+          const SizedBox(height: KSpacing.md),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: KButton(
+                  label: l10n.detailUpdatePage,
+                  icon: Icons.edit_outlined,
+                  expand: true,
+                  onPressed: () => updateBookPage(
+                    context,
+                    ref,
+                    book,
+                    onMarkFinished: (b) => _finish(ref, b),
+                  ),
+                ),
+              ),
+              const SizedBox(width: KSpacing.sm),
               ReadingTimerButton(
                 book: book,
                 onStopped: (minutes) async {
@@ -348,19 +366,6 @@ class _ReadingCard extends ConsumerWidget {
                 },
               ),
             ],
-          ),
-          if (fillHeight) const Spacer(),
-          const SizedBox(height: KSpacing.md),
-          KButton(
-            label: l10n.detailUpdatePage,
-            icon: Icons.edit_outlined,
-            expand: true,
-            onPressed: () => updateBookPage(
-              context,
-              ref,
-              book,
-              onMarkFinished: (b) => _finish(ref, b),
-            ),
           ),
         ],
       ),

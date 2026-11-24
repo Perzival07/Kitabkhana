@@ -160,9 +160,33 @@ class _LoansScreenState extends ConsumerState<LoansScreen> {
       ),
     );
 
+    // Four tabs share the width only when their labels fit; with big text,
+    // a narrow screen or longer words (Hindi, Bengali) they scroll instead.
+    final scaler = MediaQuery.textScalerOf(context);
+    final style =
+        Theme.of(context).tabBarTheme.labelStyle ??
+        Theme.of(context).textTheme.titleSmall;
+    double labelWidth(String text, int count) {
+      final painter = TextPainter(
+        text: TextSpan(text: text, style: style),
+        textDirection: Directionality.of(context),
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      final w = painter.width + (count > 0 ? KSpacing.xs + 28 : 0);
+      painter.dispose();
+      return w + 2 * KSpacing.xs + 8;
+    }
+
+    final needed =
+        labelWidth(l10n.loansTabLent, lent.length) +
+        labelWidth(l10n.loansTabBorrowed, borrowed.length) +
+        labelWidth(l10n.loansTabOverdue, overdue.length) +
+        labelWidth(l10n.loansTabHistory, 0);
     final scrollTabs =
-        MediaQuery.textScalerOf(context).scale(1) > 1.2 ||
-        MediaQuery.sizeOf(context).width < 360;
+        scaler.scale(1) > 1.2 ||
+        MediaQuery.sizeOf(context).width < 360 ||
+        needed > MediaQuery.sizeOf(context).width;
     return DefaultTabController(
       length: 4,
       child: Scaffold(
