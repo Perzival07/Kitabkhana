@@ -1532,11 +1532,46 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your library never leaves this device unless you share a backup or an export yourself. There are no accounts and no tracking. Book details are looked up by ISBN or title on Open Library, and covers are downloaded from it; nothing else is sent.';
 
   @override
-  String get settingsCrashReports => 'Send crash reports';
+  String get settingsCrashReports => 'Offer to send problem reports';
 
   @override
   String get settingsCrashReportsBody =>
-      'Off unless you turn it on. Reporting is not connected in this version, so nothing is sent either way.';
+      'After something goes wrong, Kitabkhana offers to email a report to the developer. Nothing is sent unless you press Send in your mail app.';
+
+  @override
+  String get settingsReportProblem => 'Report a problem';
+
+  @override
+  String get settingsReportProblemBody =>
+      'Email the developer, with recent app messages attached.';
+
+  @override
+  String get crashPromptTitle => 'Something went wrong';
+
+  @override
+  String get crashPromptBody =>
+      'Kitabkhana ran into a problem the last time you used it. You can email a report to the developer to help fix it. Your mail app opens first, so you see everything before you press Send.';
+
+  @override
+  String get crashPromptScreenshot => 'Include a screenshot';
+
+  @override
+  String get crashPromptScreenshotHint =>
+      'It may show book titles that were on the screen.';
+
+  @override
+  String get crashPromptSend => 'Email report';
+
+  @override
+  String get crashPromptDismiss => 'Not now';
+
+  @override
+  String get reportSentMailLink =>
+      'Your mail app opened without attachments; the details are in the message.';
+
+  @override
+  String get reportShared =>
+      'No mail app found, so the report was shared instead.';
 
   @override
   String get settingsHelp => 'Help';

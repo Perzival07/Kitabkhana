@@ -6,14 +6,17 @@ import 'package:go_router/go_router.dart';
 import 'package:kitabkhana/app/app_config.dart';
 import 'package:kitabkhana/app/app_config_provider.dart';
 import 'package:kitabkhana/app/app_root.dart';
+import 'package:kitabkhana/app/crash_providers.dart';
 import 'package:kitabkhana/app/router/app_router.dart';
 import 'package:kitabkhana/app/reminder_providers.dart';
 import 'package:kitabkhana/app/scan_providers.dart';
 import 'package:kitabkhana/data/db/database_provider.dart';
 import 'package:kitabkhana/platform/camera_permission/camera_permission.dart';
+import 'package:kitabkhana/platform/crash/crash_store.dart';
 
 import 'fake_camera_permission.dart';
 import 'fake_notification_scheduler.dart';
+import 'fake_report_mailer.dart';
 import 'test_db.dart';
 
 /// Pumps the whole routed app at [size]; returns the container.
@@ -42,6 +45,11 @@ Future<ProviderContainer> pumpRouterApp(
   final suppliesScheduler = overrides.any(
     (o) => o.origin == notificationSchedulerProvider,
   );
+  // No files or mail apps in tests.
+  final suppliesCrashStore = overrides.any(
+    (o) => o.origin == crashStoreProvider,
+  );
+  final suppliesMailer = overrides.any((o) => o.origin == reportMailerProvider);
   final db = suppliesDb ? null : createTestDb();
   if (db != null) addTearDown(db.close);
   final container = ProviderContainer(
@@ -56,6 +64,10 @@ Future<ProviderContainer> pumpRouterApp(
         cameraPermissionProvider.overrideWithValue(
           FakeCameraPermission(current: CameraAccess.unavailable),
         ),
+      if (!suppliesCrashStore)
+        crashStoreProvider.overrideWithValue(MemoryCrashStore()),
+      if (!suppliesMailer)
+        reportMailerProvider.overrideWithValue(FakeReportMailer()),
       ...overrides,
     ],
   );

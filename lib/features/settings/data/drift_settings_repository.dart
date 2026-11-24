@@ -53,7 +53,7 @@ class DriftSettingsRepository implements SettingsRepository {
       readingReminderTime:
           DayTime.parse(m[readingTimeKey]) ??
           AppSettings.defaults.readingReminderTime,
-      crashReports: m[crashKey] == 'on',
+      crashReports: m[crashKey] != 'off',
     );
   }
 

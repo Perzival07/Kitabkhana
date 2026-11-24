@@ -2593,14 +2593,74 @@ abstract class AppLocalizations {
   /// No description provided for @settingsCrashReports.
   ///
   /// In en, this message translates to:
-  /// **'Send crash reports'**
+  /// **'Offer to send problem reports'**
   String get settingsCrashReports;
 
   /// No description provided for @settingsCrashReportsBody.
   ///
   /// In en, this message translates to:
-  /// **'Off unless you turn it on. Reporting is not connected in this version, so nothing is sent either way.'**
+  /// **'After something goes wrong, Kitabkhana offers to email a report to the developer. Nothing is sent unless you press Send in your mail app.'**
   String get settingsCrashReportsBody;
+
+  /// No description provided for @settingsReportProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Report a problem'**
+  String get settingsReportProblem;
+
+  /// No description provided for @settingsReportProblemBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Email the developer, with recent app messages attached.'**
+  String get settingsReportProblemBody;
+
+  /// No description provided for @crashPromptTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get crashPromptTitle;
+
+  /// No description provided for @crashPromptBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Kitabkhana ran into a problem the last time you used it. You can email a report to the developer to help fix it. Your mail app opens first, so you see everything before you press Send.'**
+  String get crashPromptBody;
+
+  /// No description provided for @crashPromptScreenshot.
+  ///
+  /// In en, this message translates to:
+  /// **'Include a screenshot'**
+  String get crashPromptScreenshot;
+
+  /// No description provided for @crashPromptScreenshotHint.
+  ///
+  /// In en, this message translates to:
+  /// **'It may show book titles that were on the screen.'**
+  String get crashPromptScreenshotHint;
+
+  /// No description provided for @crashPromptSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Email report'**
+  String get crashPromptSend;
+
+  /// No description provided for @crashPromptDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get crashPromptDismiss;
+
+  /// No description provided for @reportSentMailLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Your mail app opened without attachments; the details are in the message.'**
+  String get reportSentMailLink;
+
+  /// No description provided for @reportShared.
+  ///
+  /// In en, this message translates to:
+  /// **'No mail app found, so the report was shared instead.'**
+  String get reportShared;
 
   /// No description provided for @settingsHelp.
   ///

@@ -27,7 +27,7 @@ void main() {
     expect(AppSettings.defaults.defaultCountryCode, '91');
     expect(AppSettings.defaults.loanReminderTime, const DayTime(10, 0));
     expect(AppSettings.defaults.readingReminderEnabled, isFalse);
-    expect(AppSettings.defaults.crashReports, isFalse);
+    expect(AppSettings.defaults.crashReports, isTrue);
   });
 
   test('every setting round-trips', () async {
@@ -39,7 +39,7 @@ void main() {
     await repo.setLoanReminderTime(const DayTime(8, 5));
     await repo.setReadingReminderEnabled(enabled: true);
     await repo.setReadingReminderTime(const DayTime(21, 30));
-    await repo.setCrashReports(enabled: true);
+    await repo.setCrashReports(enabled: false);
     expect(
       await repo.load(),
       const AppSettings(
@@ -51,7 +51,7 @@ void main() {
         loanReminderTime: DayTime(8, 5),
         readingReminderEnabled: true,
         readingReminderTime: DayTime(21, 30),
-        crashReports: true,
+        crashReports: false,
       ),
     );
   });

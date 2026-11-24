@@ -58,6 +58,7 @@ dependencies:
   unorm_dart: ^0.3.3
   image: ^4.13.1
   permission_handler: ^13.0.2
+  flutter_email_sender: ^11.2.0
 
 dev_dependencies:
   flutter_test:

@@ -35,9 +35,10 @@ void main() {
     expect(policy, contains('Kitabkhana/$kAppVersion'));
   });
 
-  test('crash reports are said to be off, and are', () {
-    expect(policy, contains('off by default'));
-    expect(AppSettings.defaults.crashReports, isFalse);
+  test('problem reports are only ever sent by the reader', () {
+    expect(policy, contains('Nothing is sent unless you press Send'));
+    // The offer is on by default; sending is always the reader's own act.
+    expect(AppSettings.defaults.crashReports, isTrue);
   });
 
   test('the automatic backup count in the policy is the real one', () {
@@ -51,7 +52,8 @@ void main() {
       'Erase all data',
       'Share a backup',
       'Export as spreadsheet',
-      'Send crash reports',
+      'Offer to send problem reports',
+      'Report a problem',
     ]) {
       expect(strings, contains('"$label'), reason: label);
     }

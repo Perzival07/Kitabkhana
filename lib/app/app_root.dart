@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../features/crash/presentation/crash_prompt.dart';
 import '../l10n/app_localizations.dart';
 import 'app_config_provider.dart';
+import 'crash_screenshot.dart';
 import 'reminder_providers.dart';
 import 'router/app_router.dart';
 import 'router/routes.dart';
@@ -39,7 +41,14 @@ class AppRoot extends ConsumerWidget {
         final overlay = systemOverlayFor(Theme.of(context).brightness);
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: overlay,
-          child: child ?? const SizedBox.shrink(),
+          // The boundary lets a problem report carry a screenshot.
+          child: RepaintBoundary(
+            key: crashScreenshotKey,
+            child: CrashReportPrompt(
+              navigatorKey: router.routerDelegate.navigatorKey,
+              child: child ?? const SizedBox.shrink(),
+            ),
+          ),
         );
       },
     );

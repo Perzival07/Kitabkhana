@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/app_config.dart';
 import '../../../app/app_config_provider.dart';
 import '../../../app/backup_providers.dart';
+import '../../../app/crash_providers.dart';
 import '../../../app/l10n/failure_message.dart';
 import '../../../app/lending_providers.dart';
 import '../../../app/library_providers.dart';
@@ -26,6 +27,7 @@ import '../../../data/db/database_provider.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../ui/ui.dart';
 import '../../backup/presentation/backup_flows.dart';
+import '../../crash/presentation/crash_prompt.dart';
 import '../../reminders/presentation/reminder_permission.dart';
 import '../../stats/presentation/goal_sheet.dart';
 import '../application/diagnostics.dart';
@@ -520,6 +522,18 @@ class _HelpSection extends ConsumerWidget {
         );
   }
 
+  Future<void> _report(BuildContext context, WidgetRef ref) async {
+    final outcome = await ref
+        .read(problemReporterProvider)
+        .send(
+          schemaVersion: ref.read(appDatabaseProvider).schemaVersion,
+          locale: AppLocalizations.of(context).localeName,
+          now: ref.read(clockProvider).now(),
+          logLines: ref.read(appLoggerProvider).lines,
+        );
+    if (context.mounted) showReportOutcome(context, outcome);
+  }
+
   Future<void> _feedback(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context);
     final config = ref.read(appConfigProvider);
@@ -552,6 +566,12 @@ class _HelpSection extends ConsumerWidget {
           title: Text(l10n.settingsDiagnostics),
           subtitle: Text(l10n.settingsDiagnosticsBody),
           onTap: () => _diagnostics(context, ref),
+        ),
+        ListTile(
+          leading: const Icon(Icons.bug_report_outlined),
+          title: Text(l10n.settingsReportProblem),
+          subtitle: Text(l10n.settingsReportProblemBody),
+          onTap: () => _report(context, ref),
         ),
         ListTile(
           leading: const Icon(Icons.mail_outline_rounded),

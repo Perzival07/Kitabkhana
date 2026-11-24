@@ -309,8 +309,8 @@ paragraphs. On the web you type the quote instead.
 | Reading | Yearly goal, daily reading reminder (on/off and time) |
 | Lending | Default loan length, default country code (for phone numbers and WhatsApp), loan reminder time |
 | Your data | Back up now, automatic weekly backup (keeps the last 3), share a backup, restore from backup (*Replace* or *Merge*), export as spreadsheet (CSV), erase all data (type a word to confirm) |
-| Privacy | A plain-language summary, and *Send crash reports* (off by default; no provider is connected yet, so nothing is ever sent) |
-| Help | Export diagnostics (versions and recent app messages, with none of your library), send feedback (opens your mail app), About |
+| Privacy | A plain-language summary, and *Offer to send problem reports* (on by default; a report only ever leaves when you press Send in your own mail app) |
+| Help | Export diagnostics (versions and recent app messages, with none of your library), *Report a problem* (emails the developer with the diagnostics attached), send feedback, About |
 
 ### Dark theme
 
@@ -413,6 +413,7 @@ bar.
 | The library is only stored on the device | SQLite (Drift) in the app's own storage. No sync code exists. |
 | Only an ISBN or title is ever sent anywhere | The only requests go to Open Library (`openlibrary.org`, `covers.openlibrary.org`). A test checks every `https://` host in `lib/` against the web CSP. |
 | No tracking | No analytics, ads or crash SDKs in `pubspec.yaml`. A test forbids the advertising ID, tracking and SKAdNetwork keys ([ADR 0005](docs/adr/0005-no-analytics.md)). |
+| Problem reports are your choice | After an error, the app keeps a report on the device and asks next time whether to email it to the developer. Your mail app opens with the error, recent app messages and (optionally) a screenshot, and nothing is sent unless you press Send. |
 | Logs never hold library contents | A test checks that every log call at *info* and above uses constant text. The logger also masks phone-like digits and e-mail addresses. |
 | Quote photos are thrown away | The photo goes to a temp file for ML Kit and is deleted in a `finally`. Only the text is kept. |
 | No silent cloud copy (Android) | `allowBackup="false"` and data-extraction rules that exclude every domain. |
@@ -771,7 +772,6 @@ localisations are regenerated on the next build.
 - **Web**: no barcode scanning in Firefox, no OCR, no notifications, no automatic backup.
 - **iOS**: the database is in the documents folder, which iCloud device backup includes.
   Excluding it needs native code that is not written yet.
-- **Crash reporting** is a switch with nothing behind it yet.
 - **Automatic backups** stay in the app's own storage. Use *Share a backup* to keep a copy
   somewhere else.
 - **Release pipeline**: the Play, App Store and Cloudflare jobs have not run end to end yet.

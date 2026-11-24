@@ -56,7 +56,7 @@ final class AppSettings {
     this.loanReminderTime = const DayTime(10, 0),
     this.readingReminderEnabled = false,
     this.readingReminderTime = const DayTime(20, 0),
-    this.crashReports = false,
+    this.crashReports = true,
   });
 
   static const defaults = AppSettings();
@@ -78,8 +78,9 @@ final class AppSettings {
   final bool readingReminderEnabled;
   final DayTime readingReminderTime;
 
-  /// Off unless the reader turns it on. Nothing is sent anywhere yet: this
-  /// is where a crash-reporting provider would be wired in.
+  /// Whether to offer, after a problem, to email a report to the developer.
+  /// On by default: the offer is only an offer, and nothing leaves the device
+  /// unless the reader presses Send in their own mail app.
   final bool crashReports;
 
   AppSettings copyWith({

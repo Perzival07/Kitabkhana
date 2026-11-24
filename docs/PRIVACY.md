@@ -12,7 +12,7 @@ every promise in the policy, and what keeps it true.
 | Only ISBN or title text is sent to Open Library | `lib/data/open_library/` builds the only requests; `test/data/open_library` checks the URLs. The User-Agent is `Kitabkhana/<version>` and carries no contact address unless `--dart-define=CONTACT_EMAIL` is given. |
 | Those are the only hosts the app contacts | `test/security/web_csp_test.dart` finds every `https://` host in `lib/` and checks the web policy allows exactly Open Library and its cover hosts. |
 | No analytics, ads or tracking | None in `pubspec.yaml` (see `docs/LICENSES.md`); `test/security/platform_config_test.dart` forbids the advertising ID, tracking and SKAdNetwork keys. |
-| Crash reports are optional and off | `AppSettings.crashReports` defaults to false; reporting is not connected, so nothing is sent either way. |
+| Problem reports leave only by the reader's hand | `CrashRecorder` keeps the first error of a run on the device (`FileCrashStore`); `CrashReportPrompt` asks next launch; `ProblemReporter` opens the reader's own mail app (`flutter_email_sender`), falling back to a `mailto:` link or the share sheet. The app has no way to send mail itself. Tested in `test/features/crash`. |
 | Logs never hold library contents | `test/security/log_privacy_test.dart` checks every log call at info and above uses constant text (or an exception's type); `AppLogger` also masks phone-like digits and e-mail addresses. |
 | The diagnostics export has no library contents | `buildDiagnostics` takes versions and log lines only; `test/features/settings` proves a book's title never appears in it. |
 | No cloud backup of the library | `android:allowBackup="false"`, `android:fullBackupContent="false"` and data-extraction rules excluding every domain (cloud and device transfer); tested in `platform_config_test.dart`. iOS: the database is in the app's documents folder, which iCloud backs up with the device (see "Known gaps"). |
@@ -81,6 +81,5 @@ the matching release.
   servers" is true (we have none), but Apple's backup would copy the library to
   the user's own iCloud. To exclude it, set `isExcludedFromBackup` on the
   database file from native code; not done yet (no Xcode here).
-* **Crash reporting** is a switch with no provider behind it.
 * The Android merged manifest and the signed iOS build were not inspected here
   (no Android SDK or Xcode); the commands above do it.

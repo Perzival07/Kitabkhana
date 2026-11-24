@@ -1,15 +1,22 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../core/logger.dart';
+import '../features/crash/application/crash_recorder.dart';
+import '../platform/crash/crash_store.dart';
+import '../platform/crash/device_info.dart';
 import '../data/db/database_provider.dart';
 import 'app_config.dart';
 import 'today_provider.dart';
 import 'app_config_provider.dart';
 import 'app_root.dart';
 import 'backup_providers.dart';
+import 'crash_providers.dart';
+import 'crash_screenshot.dart';
 import 'error_handling.dart';
 import 'providers.dart';
 import 'reminder_providers.dart';
@@ -25,7 +32,20 @@ Future<void> bootstrap(AppConfig config) async {
     minLevel: config.enableVerboseLogs ? LogLevel.debug : LogLevel.info,
     console: config.enableVerboseLogs ? debugPrint : null,
   );
-  installGlobalErrorHandlers(config, logger);
+  // Problems are kept on the device; the reader decides next time whether to
+  // email one to the developer (see CrashReportPrompt).
+  final crashStore = kIsWeb
+      ? MemoryCrashStore()
+      : FileCrashStore(getApplicationSupportDirectory);
+  final recorder = CrashRecorder(
+    store: crashStore,
+    logger: logger,
+    appVersion: config.version,
+    platform: currentPlatformName(),
+    osVersion: currentOsVersion(),
+    screenshot: captureAppScreenshot,
+  );
+  installGlobalErrorHandlers(config, logger, recorder: recorder);
   enableEdgeToEdge();
   registerFontLicenses();
   logger.info('${config.appName} starting');
@@ -34,6 +54,7 @@ Future<void> bootstrap(AppConfig config) async {
     overrides: [
       appConfigProvider.overrideWithValue(config),
       appLoggerProvider.overrideWithValue(logger),
+      crashStoreProvider.overrideWithValue(crashStore),
       // Keep "today" correct for an app left open past midnight.
       midnightTimerProvider.overrideWithValue(true),
     ],

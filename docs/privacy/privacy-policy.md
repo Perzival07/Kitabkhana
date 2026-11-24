@@ -55,11 +55,22 @@ settings or in Kitabkhana's Settings.
 ## No analytics, no ads, no tracking
 
 Kitabkhana contains no analytics, no advertising and no tracking code, and no
-third-party library that sends information about you anywhere. There is an
-optional "Send crash reports" switch in Settings. It is **off by default**, and
-in this version it is not connected to any service, so nothing is sent whether
-it is on or off. If crash reporting is ever added, this page will say who
-receives what, and the switch will stay off until you turn it on.
+third-party library that sends information about you anywhere.
+
+## Problem reports
+
+If something goes wrong, Kitabkhana keeps a short report **on your device**:
+the error, the app's recent messages (with phone numbers and e-mail addresses
+masked), the app version, your phone's operating system version and, when it
+can, a screenshot of the screen at that moment. The next time you open the
+app it **asks** whether you want to email it to the developer. If you say yes,
+your own mail app opens with the email filled in, so you can read it, remove
+the screenshot, or not send it at all. **Nothing is sent unless you press Send
+yourself.** If you say "Not now", the report is deleted. You can turn the offer
+off with "Offer to send problem reports" in Settings, and send a report at any
+time with "Report a problem". A screenshot may show book titles that were on
+the screen. Reports you send go to the developer's e-mail inbox and are used
+only to fix the problem.
 
 ## Backups and the cloud
 

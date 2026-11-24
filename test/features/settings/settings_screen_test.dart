@@ -114,9 +114,10 @@ void main() {
     await reveal(t, 'Send feedback');
     for (final s in [
       'Privacy',
-      'Send crash reports',
+      'Offer to send problem reports',
       'Help',
       'Export diagnostics',
+      'Report a problem',
     ]) {
       expect(find.text(s), findsOneWidget, reason: s);
     }
@@ -323,23 +324,23 @@ void main() {
     await end(t);
   });
 
-  testWidgets('crash reports are off by default and can be turned on', (
+  testWidgets('the problem-report offer is on by default and can be turned off', (
     t,
   ) async {
     h = AddFlowHarness();
     await open(t);
-    await reveal(t, 'Send crash reports');
+    await reveal(t, 'Offer to send problem reports');
     Switch sw() => t.widget<Switch>(
       find.descendant(
-        of: find.widgetWithText(SwitchListTile, 'Send crash reports'),
+        of: find.widgetWithText(SwitchListTile, 'Offer to send problem reports'),
         matching: find.byType(Switch),
       ),
     );
-    expect(sw().value, isFalse);
-    await t.tap(find.text('Send crash reports'));
-    await t.pumpAndSettle();
     expect(sw().value, isTrue);
-    expect((await stored(t)).crashReports, isTrue);
+    await t.tap(find.text('Offer to send problem reports'));
+    await t.pumpAndSettle();
+    expect(sw().value, isFalse);
+    expect((await stored(t)).crashReports, isFalse);
     await end(t);
   });
 
