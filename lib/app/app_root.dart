@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/crash/presentation/crash_prompt.dart';
+import '../features/reading/presentation/home_widget_sync.dart';
 import '../l10n/app_localizations.dart';
 import 'app_config_provider.dart';
 import 'crash_screenshot.dart';
@@ -46,7 +47,7 @@ class AppRoot extends ConsumerWidget {
             key: crashScreenshotKey,
             child: CrashReportPrompt(
               navigatorKey: router.routerDelegate.navigatorKey,
-              child: child ?? const SizedBox.shrink(),
+              child: HomeWidgetSync(child: child ?? const SizedBox.shrink()),
             ),
           ),
         );

@@ -342,6 +342,15 @@ paragraphs. On the web you type the quote instead.
 | :---: | :---: | :---: | :---: |
 | <img src="docs/screenshots/dark-library.png" width="200"> | <img src="docs/screenshots/dark-book-detail.png" width="200"> | <img src="docs/screenshots/dark-stats.png" width="200"> | <img src="docs/screenshots/dark-reading.png" width="200"> |
 
+### Home-screen widget (Android)
+
+Long-press the home screen → *Widgets* → *Kitabkhana*. The widget shows the book you are
+reading (title, author, page and a progress bar) and your loans ("1 book overdue",
+"2 books lent out"); tapping it opens the app. The app pushes new text whenever the page
+or a loan changes, so it never polls and needs no extra permission. An iPhone widget needs
+a WidgetKit extension and an App Group set up in Xcode with a paid Apple Developer
+account, so it is not included yet.
+
 ### Tablets and the web
 
 Under 600 dp wide you get a bottom navigation bar. From 600 to 1000 dp you get a navigation
@@ -487,6 +496,7 @@ Details and the TalkBack/VoiceOver walkthrough: [docs/A11Y.md](docs/A11Y.md).
 | Quote OCR | ✅ ML Kit, Latin + Devanagari | ✅ ML Kit, Latin | ✍️ type it instead |
 | Reminders | ✅ local notifications | ✅ local notifications | Overdue banner |
 | Auto-backup | ✅ | ✅ | ❌ (no folder; use *Back up now*) |
+| Home-screen widget | ✅ | ❌ (needs a WidgetKit extension) | ❌ |
 | Covers stored in | `<documents>/covers/` | `<documents>/covers/` | `cover_blobs` table |
 | Works offline | ✅ | ✅ | ✅ (installable PWA) |
 

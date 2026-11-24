@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_label">Currently reading</string>
+    <string name="widget_empty">Open Kitabkhana to start</string>
+    <string name="widget_description">The book you are reading, your page and your loans</string>
+</resources>

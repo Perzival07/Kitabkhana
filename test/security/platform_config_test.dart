@@ -107,6 +107,20 @@ void main() {
       expect(config, isNot(contains('user"'))); // no user-installed CAs
     });
 
+    test('the home-screen widget is fed by the app only', () {
+      expect(
+        manifest,
+        contains(
+          '<receiver android:exported="false" '
+          'android:name=".ReadingWidgetProvider">',
+        ),
+      );
+      final widget = File(
+        'android/app/src/main/res/xml/reading_widget_info.xml',
+      ).readAsStringSync();
+      expect(widget, contains('android:updatePeriodMillis="0"'));
+    });
+
     test('only the main activity is exported', () {
       final exported = RegExp(r'android:exported="true"').allMatches(manifest);
       expect(exported, hasLength(1));

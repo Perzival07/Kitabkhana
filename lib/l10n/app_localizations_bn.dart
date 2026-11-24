@@ -1880,6 +1880,45 @@ class AppLocalizationsBn extends AppLocalizations {
   String get lendFromContacts => 'Choose from contacts';
 
   @override
+  String get widgetLabel => 'Currently reading';
+
+  @override
+  String get widgetNothing => 'Nothing on the go';
+
+  @override
+  String widgetOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count books overdue',
+      one: '1 book overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String widgetLentOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count books lent out',
+      one: '1 book lent out',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String widgetAlsoReading(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'and $count more on the go',
+      one: 'and 1 more on the go',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get settingsReportProblem => 'Report a problem';
 
   @override

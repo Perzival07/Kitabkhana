@@ -8,6 +8,7 @@ import 'package:kitabkhana/app/app_config_provider.dart';
 import 'package:kitabkhana/app/app_root.dart';
 import 'package:kitabkhana/app/crash_providers.dart';
 import 'package:kitabkhana/app/lending_providers.dart';
+import 'package:kitabkhana/app/reading_providers.dart';
 import 'package:kitabkhana/app/router/app_router.dart';
 import 'package:kitabkhana/app/reminder_providers.dart';
 import 'package:kitabkhana/app/scan_providers.dart';
@@ -17,6 +18,7 @@ import 'package:kitabkhana/platform/crash/crash_store.dart';
 
 import 'fake_camera_permission.dart';
 import 'fake_contact_picker.dart';
+import 'fake_home_screen_widget.dart';
 import 'fake_notification_scheduler.dart';
 import 'fake_report_mailer.dart';
 import 'test_db.dart';
@@ -55,6 +57,9 @@ Future<ProviderContainer> pumpRouterApp(
   final suppliesContacts = overrides.any(
     (o) => o.origin == contactPickerProvider,
   );
+  final suppliesHomeWidget = overrides.any(
+    (o) => o.origin == homeScreenWidgetProvider,
+  );
   final db = suppliesDb ? null : createTestDb();
   if (db != null) addTearDown(db.close);
   final container = ProviderContainer(
@@ -75,6 +80,8 @@ Future<ProviderContainer> pumpRouterApp(
         reportMailerProvider.overrideWithValue(FakeReportMailer()),
       if (!suppliesContacts)
         contactPickerProvider.overrideWithValue(FakeContactPicker()),
+      if (!suppliesHomeWidget)
+        homeScreenWidgetProvider.overrideWithValue(FakeHomeScreenWidget()),
       ...overrides,
     ],
   );

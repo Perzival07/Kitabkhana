@@ -1104,6 +1104,32 @@
   },
   "seriesComplete": "You have every book up to here.",
   "lendFromContacts": "Choose from contacts",
+  "widgetLabel": "Currently reading",
+  "widgetNothing": "Nothing on the go",
+  "widgetOverdue": "{count, plural, =1{1 book overdue} other{{count} books overdue}}",
+  "@widgetOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "widgetLentOut": "{count, plural, =1{1 book lent out} other{{count} books lent out}}",
+  "@widgetLentOut": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "widgetAlsoReading": "{count, plural, =1{and 1 more on the go} other{and {count} more on the go}}",
+  "@widgetAlsoReading": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "settingsReportProblem": "Report a problem",
   "settingsReportProblemBody": "Email the developer, with recent app messages attached.",
   "crashPromptTitle": "Something went wrong",

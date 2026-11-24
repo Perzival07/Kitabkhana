@@ -843,3 +843,54 @@ final class BookReadThroughsFamily extends $Family
   @override
   String toString() => r'bookReadThroughsProvider';
 }
+
+/// The home-screen widget (Android only). Tests swap in a fake.
+
+@ProviderFor(homeScreenWidget)
+final homeScreenWidgetProvider = HomeScreenWidgetProvider._();
+
+/// The home-screen widget (Android only). Tests swap in a fake.
+
+final class HomeScreenWidgetProvider
+    extends
+        $FunctionalProvider<
+          HomeScreenWidget,
+          HomeScreenWidget,
+          HomeScreenWidget
+        >
+    with $Provider<HomeScreenWidget> {
+  /// The home-screen widget (Android only). Tests swap in a fake.
+  HomeScreenWidgetProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'homeScreenWidgetProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$homeScreenWidgetHash();
+
+  @$internal
+  @override
+  $ProviderElement<HomeScreenWidget> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  HomeScreenWidget create(Ref ref) {
+    return homeScreenWidget(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(HomeScreenWidget value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<HomeScreenWidget>(value),
+    );
+  }
+}
+
+String _$homeScreenWidgetHash() => r'aa3a8eafee83674da12a75468ce768760bec5590';

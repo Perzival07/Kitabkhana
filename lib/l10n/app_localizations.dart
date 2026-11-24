@@ -3064,6 +3064,36 @@ abstract class AppLocalizations {
   /// **'Choose from contacts'**
   String get lendFromContacts;
 
+  /// No description provided for @widgetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Currently reading'**
+  String get widgetLabel;
+
+  /// No description provided for @widgetNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing on the go'**
+  String get widgetNothing;
+
+  /// No description provided for @widgetOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 book overdue} other{{count} books overdue}}'**
+  String widgetOverdue(int count);
+
+  /// No description provided for @widgetLentOut.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 book lent out} other{{count} books lent out}}'**
+  String widgetLentOut(int count);
+
+  /// No description provided for @widgetAlsoReading.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{and 1 more on the go} other{and {count} more on the go}}'**
+  String widgetAlsoReading(int count);
+
   /// No description provided for @settingsReportProblem.
   ///
   /// In en, this message translates to:

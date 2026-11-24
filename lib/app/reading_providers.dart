@@ -12,6 +12,7 @@ import '../features/reading/data/drift_reading_sessions.dart';
 import '../features/reading/domain/read_through.dart';
 import '../features/reading/domain/reading_log.dart';
 import '../features/reading/domain/reading_timer.dart';
+import '../platform/home_widget/home_screen_widget.dart';
 import '../features/reading/domain/streak.dart';
 import 'providers.dart';
 import 'repositories.dart';
@@ -182,3 +183,7 @@ ReadAgain readAgain(Ref ref) => ReadAgain(
 @riverpod
 Stream<List<ReadThrough>> bookReadThroughs(Ref ref, String bookId) =>
     ref.watch(readThroughRepositoryProvider).watchForBook(bookId);
+
+/// The home-screen widget (Android only). Tests swap in a fake.
+@Riverpod(keepAlive: true)
+HomeScreenWidget homeScreenWidget(Ref ref) => const AndroidHomeScreenWidget();
