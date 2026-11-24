@@ -68,6 +68,7 @@ if more than one person can push tags.
 6. **Result**: the signed AAB is on the Play **internal** track, the IPA is in
    TestFlight (processing takes some minutes), the web app is live, and a GitHub
    Release has the changelog, `kitabkhana.apk` (signed, installable),
+   `kitabkhana.ipa` (unsigned; sideload with AltStore or Sideloadly),
    the AAB and `kitabkhana-web.zip`. The changelog is
    from conventional commits (`tool/changelog.sh`): `feat`, `fix` and `perf`
    become sections, `test` and `docs` are left out.

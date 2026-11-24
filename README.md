@@ -36,6 +36,24 @@ lines you love (snap a page, tap the lines, keep the text).
 Every release is signed with the same key, so updates always install over the previous
 version.
 
+**iPhone and iPad:** [⬇️ Download the latest IPA](https://github.com/Perzival07/Kitabkhana/releases/latest/download/kitabkhana.ipa)
+
+iOS only runs apps signed by an Apple ID, and this IPA is unsigned, so you sign it
+yourself while installing. You need a computer and a free Apple ID:
+
+1. Install [AltStore](https://altstore.io) or [Sideloadly](https://sideloadly.io) on your
+   Mac or PC and follow its setup.
+2. Connect your iPhone, open `kitabkhana.ipa` with it and sign in with your Apple ID.
+3. On the iPhone, open *Settings → General → VPN & Device Management* and trust your
+   Apple ID.
+4. **To update**, install the newer IPA the same way. Your library stays.
+
+With a free Apple ID the signature lasts **7 days**. AltStore renews it in the background
+when your phone and computer are on the same Wi-Fi. A paid Apple Developer account makes it
+last a year, and also allows [TestFlight](https://developer.apple.com/testflight/), which
+installs and updates with no computer. The release workflow already supports TestFlight
+once its secrets are added (see [docs/RELEASING.md](docs/RELEASING.md)).
+
 ---
 
 ## Contents

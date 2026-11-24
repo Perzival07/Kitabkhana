@@ -105,6 +105,38 @@ jobs:
           track: internal
           status: completed
 
+  # An unsigned IPA for the GitHub Release. iPhones only run signed apps, so
+  # people sign it with their own Apple ID when installing (AltStore,
+  # Sideloadly). Needs no Apple Developer account here.
+  ios-ipa:
+    needs: ci
+    runs-on: macos-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.47.9"
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Build unsigned IPA
+        run: |
+          flutter build ios --release --no-codesign -t lib/main_prod.dart \
+            --build-name="${GITHUB_REF_NAME#v}" --build-number="${{ github.run_number }}"
+          mkdir Payload
+          cp -R build/ios/iphoneos/Runner.app Payload/
+          zip -qry kitabkhana.ipa Payload
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ios-ipa
+          path: kitabkhana.ipa
+
   ios:
     needs: [ci, config]
     if: needs.config.outputs.ios == 'yes'
@@ -180,12 +212,13 @@ jobs:
           command: pages deploy build/web --project-name=kitabkhana --branch=main
 
   github-release:
-    needs: [android, ios, web]
-    # iOS is skipped until its secrets exist; a skipped job is fine, a failed
-    # one is not.
+    needs: [android, ios-ipa, ios, web]
+    # TestFlight is skipped until its secrets exist; a skipped job is fine, a
+    # failed one is not.
     if: >-
       !cancelled() && needs.android.result == 'success' &&
-      needs.web.result == 'success' && needs.ios.result != 'failure'
+      needs.ios-ipa.result == 'success' && needs.web.result == 'success' &&
+      needs.ios.result != 'failure'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -207,5 +240,6 @@ jobs:
             --title "Kitabkhana ${GITHUB_REF_NAME#v}" \
             --notes-file RELEASE_NOTES.md \
             artifacts/android-release/kitabkhana.apk \
+            artifacts/ios-ipa/kitabkhana.ipa \
             artifacts/android-release/build/app/outputs/bundle/prodRelease/app-prod-release.aab \
             artifacts/web-release/kitabkhana-web.zip
